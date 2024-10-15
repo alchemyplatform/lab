@@ -6,7 +6,7 @@ export function parseTransfer(log: Log) {
   return decodeEventLog({
     abi: parseAbi([
       // ERC20
-      "event Transfer(address indexed from, address indexed to, uint256 value)",
+      // "event Transfer(address indexed from, address indexed to, uint256 value)",
       // "event Approval(address indexed owner, address indexed spender, uint256 value)",
       // ERC721
       "event Transfer(address indexed from, address indexed to, uint256 indexed tokenId)",
