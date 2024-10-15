@@ -1,4 +1,11 @@
-import type { InferOutput } from "@valibot/valibot";
-import type { Log } from "./schemas.ts";
-
-export type Log = InferOutput<typeof Log>;
+export type Log = {
+  // address: string;
+  topics: string[];
+  data: string;
+  // blockNumber: string;
+  // transactionHash: string;
+  // transactionIndex: string;
+  // blockHash: string;
+  // logIndex: string;
+  // removed: boolean;
+};
