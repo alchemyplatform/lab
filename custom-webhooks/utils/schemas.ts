@@ -13,7 +13,7 @@ const Hex = pipe(
 
 const Address = pipe(Hex, length(42, "The address is not 42 characters long."));
 
-const Log = strictObject({
+export const Log = strictObject({
   account: strictObject({
     address: Address,
   }),
