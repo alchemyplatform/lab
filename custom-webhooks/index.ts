@@ -31,8 +31,6 @@ app.post("/", async (c: Context) => {
         decodedLog.eventName === "TransferSingle" ||
         decodedLog.eventName === "TransferBatch";
 
-      console.log({ isErc721, isErc1155 });
-
       if (!isErc721 && !isErc1155) {
         throw new Error("Invalid event");
       }
