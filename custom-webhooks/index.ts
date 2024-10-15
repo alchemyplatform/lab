@@ -24,8 +24,7 @@ app.post("/", async (c: Context) => {
     const activity = logs.flatMap((log) => {
       const decodedLog = parseTransfer(log);
 
-      const isErc721 =
-        decodedLog.eventName === "Transfer" && "tokenId" in decodedLog.args;
+      const isErc721 = decodedLog.eventName === "Transfer";
 
       const isErc1155 =
         decodedLog.eventName === "TransferSingle" ||
@@ -49,10 +48,11 @@ app.post("/", async (c: Context) => {
         transactionIndex: toHex(log.transaction.index),
         blockHash,
         logIndex: toHex(log.index),
-        removed: null,
+        // TODO: remove field below
+        removed: false,
       };
 
-      if (isErc721 && "tokenId" in decodedLog.args) {
+      if (isErc721) {
         const category = "erc721";
         return {
           fromAddress,
