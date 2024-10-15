@@ -1,7 +1,6 @@
 import { Hono, type Context } from "@hono/hono";
 import { Payload, TestPayload } from "./utils/schemas.ts";
 import { parse, ValiError } from "@valibot/valibot";
-import { TRANSFER_EVENT_SIGNATURE } from "./utils/event-signatures.ts";
 import { parseTransfer } from "./utils/parseTransfer.ts";
 import { DecodeLogDataMismatch } from "npm:viem";
 
