@@ -1,19 +1,27 @@
 import { Hono, type Context } from "@hono/hono";
-import { Payload, TestPayload } from "./schemas/schemas.ts";
+import { Payload, TestPayload } from "./utils/schemas.ts";
 import { parse, ValiError } from "@valibot/valibot";
+import { TRANSFER_EVENT_SIGNATURE } from "./utils/event-signatures.ts";
 
 const app = new Hono();
 
 app.post("/", async (c: Context) => {
   try {
     const headers = c.req.header();
-    // console.log(headers);
+    // TODO: validate signature
 
     const body = await c.req.json();
-    console.log(body);
-
     const payload = parse(TestPayload, body);
-    console.log(payload);
+
+    const logs = payload.event.data.block.logs;
+    for (const log of logs) {
+      const [topic0] = log.topics;
+      switch (topic0) {
+        case TRANSFER_EVENT_SIGNATURE: {
+          continue;
+        }
+      }
+    }
   } catch (e) {
     if (e instanceof SyntaxError) {
       console.log("Invalid JSON");
