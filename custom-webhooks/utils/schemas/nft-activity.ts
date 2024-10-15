@@ -1,4 +1,43 @@
-const json = {
+const erc721 = {
+  webhookId: "wh_yq51m67bytws4rk8",
+  id: "whevt_afs8eq2g8v8wu514",
+  createdAt: "2024-10-15T21:04:01.355Z",
+  type: "NFT_ACTIVITY",
+  event: {
+    network: "ETH_SEPOLIA",
+    activity: [
+      {
+        fromAddress: "0x0000000000000000000000000000000000000000",
+        toAddress: "0x93f9ecdaf22f8b60bc24641dd5ed43ca92405cb7",
+        contractAddress: "0x07c39105a9bd23da07d728b7d5d7b8b21137a634",
+        blockNum: "0x69047e",
+        hash: "0x8e9617ecd2b46996d98a00f20da8cf31b332121494b7dfa77808b7f16853eaff",
+        erc721TokenId: "0xd",
+        category: "erc721",
+        log: {
+          address: "0x07c39105a9bd23da07d728b7d5d7b8b21137a634",
+          topics: [
+            "0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef",
+            "0x0000000000000000000000000000000000000000000000000000000000000000",
+            "0x00000000000000000000000093f9ecdaf22f8b60bc24641dd5ed43ca92405cb7",
+            "0x000000000000000000000000000000000000000000000000000000000000000d",
+          ],
+          data: "0x",
+          blockNumber: "0x69047e",
+          transactionHash:
+            "0x8e9617ecd2b46996d98a00f20da8cf31b332121494b7dfa77808b7f16853eaff",
+          transactionIndex: "0x4c",
+          blockHash:
+            "0xa25c879dbe6facac33310aab0ce771daa09ca6b820679102b62c1220dc469835",
+          logIndex: "0x4e",
+          removed: false,
+        },
+      },
+    ],
+  },
+};
+
+const erc1155 = {
   webhookId: "wh_yq51m67bytws4rk8",
   id: "whevt_yp2fw69pdk3mo1tf",
   createdAt: "2024-10-15T19:47:13.758Z",
