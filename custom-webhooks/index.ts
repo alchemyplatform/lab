@@ -12,12 +12,12 @@ app.post("/", async (c: Context) => {
     // TODO: validate signature
 
     const body = await c.req.json();
-    const payload = parse(TestPayload, body);
+    const payload = parse(Payload, body);
 
     const logs = payload.event.data.block.logs;
     for (const log of logs) {
       const decodedLog = parseTransfer(log);
-      console.log(decodedLog);
+      console.log({ address: log.account.address, ...decodedLog });
     }
   } catch (e) {
     if (e instanceof SyntaxError) {
