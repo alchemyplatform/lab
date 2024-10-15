@@ -37,8 +37,8 @@ app.post("/", async (c: Context) => {
         throw new Error("Invalid event");
       }
 
-      const fromAddress = decodedLog.args.from;
-      const toAddress = decodedLog.args.to;
+      const fromAddress = decodedLog.args.from.toLowerCase();
+      const toAddress = decodedLog.args.to.toLowerCase();
       const contractAddress = log.account.address;
       const blockNum = toHex(blockNumber);
       const hash = log.transaction.hash;
