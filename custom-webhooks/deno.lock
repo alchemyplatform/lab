@@ -2,7 +2,8 @@
   "version": "4",
   "specifiers": {
     "jsr:@hono/hono@^4.6.5": "4.6.5",
-    "jsr:@valibot/valibot@~0.42.1": "0.42.1"
+    "jsr:@valibot/valibot@~0.42.1": "0.42.1",
+    "npm:viem@*": "2.9.16_ws@8.13.0"
   },
   "jsr": {
     "@hono/hono@4.6.5": {
@@ -10,6 +11,63 @@
     },
     "@valibot/valibot@0.42.1": {
       "integrity": "ba0f6f7964aaeec0e4b1f793d575061f325ae6254cbb9d7ff01fb65068a0a23b"
+    }
+  },
+  "npm": {
+    "@adraffy/ens-normalize@1.10.0": {
+      "integrity": "sha512-nA9XHtlAkYfJxY7bce8DcN7eKxWWCWkU+1GR9d+U6MbNpfwQp8TI7vqOsBsMcHoT4mBu2kypKoSKnghEzOOq5Q=="
+    },
+    "@noble/curves@1.2.0": {
+      "integrity": "sha512-oYclrNgRaM9SsBUBVbb8M6DTV7ZHRTKugureoYEncY5c65HOmRzvSiTE3y5CYaPYJA/GVkrhXEoF0M3Ya9PMnw==",
+      "dependencies": [
+        "@noble/hashes"
+      ]
+    },
+    "@noble/hashes@1.3.2": {
+      "integrity": "sha512-MVC8EAQp7MvEcm30KWENFjgR+Mkmf+D189XJTkFIlwohU5hcBbn1ZkKq7KVTi2Hme3PMGF390DaL52beVrIihQ=="
+    },
+    "@scure/base@1.1.6": {
+      "integrity": "sha512-ok9AWwhcgYuGG3Zfhyqg+zwl+Wn5uE+dwC0NV/2qQkx4dABbb/bx96vWu8NSj+BNjjSjno+JRYRjle1jV08k3g=="
+    },
+    "@scure/bip32@1.3.2": {
+      "integrity": "sha512-N1ZhksgwD3OBlwTv3R6KFEcPojl/W4ElJOeCZdi+vuI5QmTFwLq3OFf2zd2ROpKvxFdgZ6hUpb0dx9bVNEwYCA==",
+      "dependencies": [
+        "@noble/curves",
+        "@noble/hashes",
+        "@scure/base"
+      ]
+    },
+    "@scure/bip39@1.2.1": {
+      "integrity": "sha512-Z3/Fsz1yr904dduJD0NpiyRHhRYHdcnyh73FZWiV+/qhWi83wNJ3NWolYqCEN+ZWsUz2TWwajJggcRE9r1zUYg==",
+      "dependencies": [
+        "@noble/hashes",
+        "@scure/base"
+      ]
+    },
+    "abitype@1.0.0": {
+      "integrity": "sha512-NMeMah//6bJ56H5XRj8QCV4AwuW6hB6zqz2LnhhLdcWVQOsXki6/Pn3APeqxCma62nXIcmZWdu1DlHWS74umVQ=="
+    },
+    "isows@1.0.3_ws@8.13.0": {
+      "integrity": "sha512-2cKei4vlmg2cxEjm3wVSqn8pcoRF/LX/wpifuuNquFO4SQmPwarClT+SUCA2lt+l581tTeZIPIZuIDo2jWN1fg==",
+      "dependencies": [
+        "ws"
+      ]
+    },
+    "viem@2.9.16_ws@8.13.0": {
+      "integrity": "sha512-FQRfN4G7uKEUs5DYvVrH/kZmTkwcSDpTBxnadpwG1EEP8nHm57WDpSaGN7PwSPVgJ6rMo5MENT5hgnqaNTlb2w==",
+      "dependencies": [
+        "@adraffy/ens-normalize",
+        "@noble/curves",
+        "@noble/hashes",
+        "@scure/bip32",
+        "@scure/bip39",
+        "abitype",
+        "isows",
+        "ws"
+      ]
+    },
+    "ws@8.13.0": {
+      "integrity": "sha512-x9vcZYTrFPC7aSIbj7sRCYo7L/Xb8Iy+pW0ng0wt2vCJv7M9HOMy0UoN3rr+IFC7hb7vXoqS+P9ktyLLLhO+LA=="
     }
   },
   "workspace": {
