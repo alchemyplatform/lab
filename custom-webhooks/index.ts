@@ -20,19 +20,55 @@ app.post("/", async (c: Context) => {
       number: blockNumber,
       logs,
     } = payload.event.data.block;
-    for (const log of logs) {
+
+    const activity = logs.flatMap((log) => {
       const decodedLog = parseTransfer(log);
+
+      const isErc721 =
+        decodedLog.eventName === "Transfer" && "tokenId" in decodedLog.args;
 
       const isErc1155 =
         decodedLog.eventName === "TransferSingle" ||
         decodedLog.eventName === "TransferBatch";
 
+      console.log({ isErc721, isErc1155 });
+
+      if (!isErc721 && !isErc1155) {
+        throw new Error("Invalid event");
+      }
+
+      const fromAddress = decodedLog.args.from;
+      const toAddress = decodedLog.args.to;
+      const contractAddress = log.account.address;
+      const blockNum = toHex(blockNumber);
+      const hash = log.transaction.hash;
+      const log2 = {
+        address: contractAddress,
+        topics: log.topics,
+        data: log.data,
+        blockNumber: toHex(blockNumber),
+        transactionHash: hash,
+        transactionIndex: toHex(log.transaction.index),
+        blockHash,
+        logIndex: toHex(log.index),
+        removed: null,
+      };
+
+      if (isErc721 && "tokenId" in decodedLog.args) {
+        const category = "erc721";
+        return {
+          fromAddress,
+          toAddress,
+          contractAddress,
+          blockNum,
+          hash,
+          erc721TokenId: toHex(decodedLog.args.tokenId),
+          category,
+          log: log2,
+        };
+      }
+
       if (isErc1155) {
-        const fromAddress = decodedLog.args.from;
-        const toAddress = decodedLog.args.to;
-        const contractAddress = log.account.address;
-        const blockNum = toHex(blockNumber);
-        const hash = log.transaction.hash;
         const erc1155Metadata =
           decodedLog.eventName === "TransferBatch"
             ? decodedLog.args.ids.map((tokenId, i) => ({
@@ -46,17 +82,6 @@ app.post("/", async (c: Context) => {
                 },
               ];
         const category = "erc1155";
-        const log2 = {
-          address: contractAddress,
-          topics: log.topics,
-          data: log.data,
-          blockNumber: toHex(blockNumber),
-          transactionHash: hash,
-          transactionIndex: toHex(log.transaction.index),
-          blockHash,
-          logIndex: toHex(log.index),
-          // removed: null,
-        };
 
         const activityItem = {
           fromAddress,
@@ -68,14 +93,16 @@ app.post("/", async (c: Context) => {
           category,
           log: log2,
         };
-        const activity =
-          decodedLog.eventName === "TransferBatch"
-            ? new Array(decodedLog.args.ids.length).fill(activityItem)
-            : [activityItem];
 
-        console.log(JSON.stringify(activity, null, 2));
+        const numTokens =
+          decodedLog.eventName === "TransferBatch"
+            ? decodedLog.args.ids.length
+            : 1;
+        return new Array(numTokens).fill(activityItem);
       }
-    }
+    });
+
+    console.log(JSON.stringify(activity, null, 2));
   } catch (e) {
     console.log(e);
     if (e instanceof SyntaxError) {
