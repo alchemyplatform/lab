@@ -1,5 +1,6 @@
 {
   "imports": {
-    "@hono/hono": "jsr:@hono/hono@^4.6.5"
+    "@hono/hono": "jsr:@hono/hono@^4.6.5",
+    "@valibot/valibot": "jsr:@valibot/valibot@^0.42.1"
   }
 }
