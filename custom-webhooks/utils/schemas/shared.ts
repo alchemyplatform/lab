@@ -1,15 +1,24 @@
 import {
   hexadecimal,
+  integer,
   isoTimestamp,
   length,
+  number,
   pipe,
   startsWith,
   string,
 } from "@valibot/valibot";
 
+export const Integer = pipe(number(), integer());
+
 export const Hex = pipe(
   string(),
   hexadecimal("The value is not a hexadecimal string.")
+);
+
+export const Hash = pipe(
+  Hex,
+  length(66, "The hash is not 66 characters long.")
 );
 
 export const Address = pipe(
@@ -35,3 +44,5 @@ export const IsoTimestamp = pipe(
   string(),
   isoTimestamp("The timestamp is badly formatted.")
 );
+
+export const Network = string();
