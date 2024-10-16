@@ -1,19 +1,19 @@
 import { Hono, type Context } from "@hono/hono";
-import { createMiddleware } from "@hono/hono/factory";
 import { Payload, TestPayload } from "./utils/schemas.ts";
 import { parse, ValiError } from "@valibot/valibot";
 import { parseTransfer } from "./utils/parseTransfer.ts";
 import { DecodeLogDataMismatch } from "npm:viem";
 import { toHex } from "npm:viem";
+import { validateSignature } from "./middleware/validate-signature.ts";
 
 const app = new Hono();
 
-const logger = createMiddleware(async (c, next) => {
-  console.log(`[${c.req.method}] ${c.req.url}`);
-  await next();
-});
-
-app.post("/", logger);
+app.post(
+  "/",
+  validateSignature({
+    signingKey: Deno.env.get("WEBHOOK_SIGNING_KEY")!,
+  })
+);
 
 app.post("/", async (c: Context) => {
   try {
