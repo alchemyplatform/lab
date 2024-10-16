@@ -2,7 +2,7 @@ import { literal, number, string } from "@valibot/valibot";
 import { array } from "@valibot/valibot";
 import { null_ } from "@valibot/valibot";
 import { strictObject } from "@valibot/valibot";
-import { Address, Hex, Id, WebhookId } from "./schemas/shared.ts";
+import { Address, Hex, Id, IsoTimestamp, WebhookId } from "./schemas/shared.ts";
 
 export const Log = strictObject({
   account: strictObject({
