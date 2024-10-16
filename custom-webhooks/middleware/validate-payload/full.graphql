@@ -1,0 +1,115 @@
+# ALL FIELDS THAT CAN BE RETURNED BY ALCHEMY CUSTOM WEBHOOKS
+query {
+  block {
+    number
+    hash
+    parent {
+      number
+    }
+    nonce
+    transactionsRoot
+    transactionCount
+    stateRoot
+    receiptsRoot
+    gasLimit
+    gasUsed
+    baseFeePerGas
+    timestamp
+    logsBloom
+    mixHash
+    difficulty
+    totalDifficulty
+    transactions {
+      hash
+      nonce
+      index
+      from {
+        address
+      }
+      to {
+        address
+      }
+      value
+      gasPrice
+      maxFeePerGas
+      maxPriorityFeePerGas
+      gas
+      inputData
+      status
+      gasUsed
+      cumulativeGasUsed
+      effectiveGasPrice
+      createdContract {
+        address
+      }
+      logs {
+        index
+        account {
+          address
+        }
+        topics
+        data
+      }
+      r
+      s
+      v
+      type
+      accessList {
+        address
+        storageKeys
+      }
+      block {
+        number
+      }
+    }
+    logs(filter: { addresses: [], topics: [] }) {
+      index
+      account {
+        address
+      }
+      topics
+      data
+      transaction {
+        hash
+        nonce
+        index
+        from {
+          address
+        }
+        to {
+          address
+        }
+        value
+        gasPrice
+        maxFeePerGas
+        maxPriorityFeePerGas
+        gas
+        status
+        gasUsed
+        cumulativeGasUsed
+        effectiveGasPrice
+        createdContract {
+          address
+        }
+      }
+    }
+    callTracerTraces {
+      from {
+        address
+      }
+      to {
+        address
+      }
+      type
+      input
+      output
+      value
+      gas
+      gasUsed
+      error
+      revertReason
+      subtraceCount
+      traceAddressPath
+    }
+  }
+}
