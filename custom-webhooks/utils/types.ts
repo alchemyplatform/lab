@@ -1,3 +1,6 @@
+import type { InferOutput } from "@valibot/valibot";
+import type { Payload } from "./schemas.ts";
+
 export type Log = {
   // address: string;
   topics: string[];
@@ -9,3 +12,5 @@ export type Log = {
   // logIndex: string;
   // removed: boolean;
 };
+
+export type Payload = InferOutput<typeof Payload>;

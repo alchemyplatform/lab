@@ -1,27 +1,27 @@
 import { Hono, type Context } from "@hono/hono";
-import { Payload, TestPayload } from "./utils/schemas.ts";
+// import { Payload, TestPayload } from "./utils/schemas.ts";
 import { parse, ValiError } from "@valibot/valibot";
 import { parseTransfer } from "./utils/parseTransfer.ts";
 import { DecodeLogDataMismatch } from "npm:viem";
 import { toHex } from "npm:viem";
 import { validateSignature } from "./middleware/validate-signature.ts";
+import { validatePayload } from "./middleware/validate-payload/index.ts";
+import type { Payload } from "./utils/types.ts";
 
-const app = new Hono();
+const app = new Hono<{ Variables: { payload: Payload } }>();
 
 app.post(
   "/",
+  validatePayload(),
   validateSignature({
     signingKey: Deno.env.get("WEBHOOK_SIGNING_KEY")!,
+    debug: true,
   })
 );
 
-app.post("/", async (c: Context) => {
+app.post("/", (ctx) => {
   try {
-    const headers = c.req.header();
-    // TODO: validate signature
-
-    const body = await c.req.json();
-    const payload = parse(Payload, body);
+    const payload = ctx.get("payload");
 
     const {
       hash: blockHash,
@@ -119,7 +119,7 @@ app.post("/", async (c: Context) => {
       console.log(e.message, e.params, e.data, e.abiItem);
     }
   }
-  return c.text("All good!");
+  return new Response("", { status: 200 });
 });
 
 Deno.serve(app.fetch);
