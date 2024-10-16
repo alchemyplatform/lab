@@ -1,4 +1,5 @@
 import { Hono, type Context } from "@hono/hono";
+import { createMiddleware } from "@hono/hono/factory";
 import { Payload, TestPayload } from "./utils/schemas.ts";
 import { parse, ValiError } from "@valibot/valibot";
 import { parseTransfer } from "./utils/parseTransfer.ts";
@@ -6,6 +7,13 @@ import { DecodeLogDataMismatch } from "npm:viem";
 import { toHex } from "npm:viem";
 
 const app = new Hono();
+
+const logger = createMiddleware(async (c, next) => {
+  console.log(`[${c.req.method}] ${c.req.url}`);
+  await next();
+});
+
+app.post("/", logger);
 
 app.post("/", async (c: Context) => {
   try {
@@ -111,7 +119,7 @@ app.post("/", async (c: Context) => {
       console.log(e.message, e.params, e.data, e.abiItem);
     }
   }
-  return c.status(200);
+  return c.text("All good!");
 });
 
 Deno.serve(app.fetch);
