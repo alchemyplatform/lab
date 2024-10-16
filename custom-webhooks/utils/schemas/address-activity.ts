@@ -1,7 +1,6 @@
 import {
   array,
   literal,
-  null_,
   number,
   pipe,
   startsWith,
@@ -55,6 +54,18 @@ const InternalTransfer = strictObject({
   }),
 });
 
+const Log = strictObject({
+  address: Address,
+  topics: array(Hex),
+  data: Hex,
+  blockNumber: Hex,
+  transactionHash: Hash,
+  transactionIndex: Hex,
+  blockHash: Hash,
+  logIndex: Hex,
+  removed: literal(false),
+});
+
 const Erc20Transfer = strictObject({
   blockNum: Hex,
   hash: Hash,
@@ -68,17 +79,7 @@ const Erc20Transfer = strictObject({
     address: Address,
     decimals: Integer,
   }),
-  log: strictObject({
-    address: Address,
-    topics: array(Hex),
-    data: Hex,
-    blockNumber: Hex,
-    transactionHash: Hash,
-    transactionIndex: Hex,
-    blockHash: Hash,
-    logIndex: Hex,
-    removed: literal(false),
-  }),
+  log: Log,
 });
 
 const Erc721Transfer = strictObject({
@@ -92,17 +93,7 @@ const Erc721Transfer = strictObject({
     rawValue: Hex,
     address: Address,
   }),
-  log: strictObject({
-    address: Address,
-    topics: array(Hex),
-    data: Hex,
-    blockNumber: Hex,
-    transactionHash: Hash,
-    transactionIndex: Hex,
-    blockHash: Hash,
-    logIndex: Hex,
-    removed: literal(false),
-  }),
+  log: Log,
 });
 
 const Erc1155Transfer = strictObject({
@@ -121,17 +112,7 @@ const Erc1155Transfer = strictObject({
     rawValue: Hex,
     address: Address,
   }),
-  log: strictObject({
-    address: Address,
-    topics: array(Hex),
-    data: Hex,
-    blockNumber: Hex,
-    transactionHash: Hash,
-    transactionIndex: Hex,
-    blockHash: Hash,
-    logIndex: Hex,
-    removed: literal(false),
-  }),
+  log: Log,
 });
 
 const Transfers = variant("category", [
