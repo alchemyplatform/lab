@@ -1,6 +1,5 @@
 import {
   array,
-  boolean,
   literal,
   null_,
   number,
@@ -140,6 +139,7 @@ const Erc1155Transfer = strictObject({
 const Transfers = union([
   EthTransfer,
   InternalTransfer,
+  Erc20Transfer,
   Erc721Transfer,
   Erc1155Transfer,
 ]);
