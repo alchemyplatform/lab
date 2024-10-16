@@ -3,6 +3,7 @@
   "specifiers": {
     "jsr:@hono/hono@^4.6.5": "4.6.5",
     "jsr:@valibot/valibot@~0.42.1": "0.42.1",
+    "npm:@types/node@*": "22.5.4",
     "npm:viem@*": "2.9.16_ws@8.13.0"
   },
   "jsr": {
@@ -44,6 +45,12 @@
         "@scure/base"
       ]
     },
+    "@types/node@22.5.4": {
+      "integrity": "sha512-FDuKUJQm/ju9fT/SeX/6+gBzoPzlVCzfzmGkwKvRHQVxi4BntVbyIwf6a4Xn62mrvndLiml6z/UBXIdEVjQLXg==",
+      "dependencies": [
+        "undici-types"
+      ]
+    },
     "abitype@1.0.0": {
       "integrity": "sha512-NMeMah//6bJ56H5XRj8QCV4AwuW6hB6zqz2LnhhLdcWVQOsXki6/Pn3APeqxCma62nXIcmZWdu1DlHWS74umVQ=="
     },
@@ -52,6 +59,9 @@
       "dependencies": [
         "ws"
       ]
+    },
+    "undici-types@6.19.8": {
+      "integrity": "sha512-ve2KP6f/JnbPBFyobGHuerC9g1FYGn/F8n1LWTwNxCEzd6IfqTwUQcNXgEtmmQ6DlRrC1hrSrBnCZPokRrDHjw=="
     },
     "viem@2.9.16_ws@8.13.0": {
       "integrity": "sha512-FQRfN4G7uKEUs5DYvVrH/kZmTkwcSDpTBxnadpwG1EEP8nHm57WDpSaGN7PwSPVgJ6rMo5MENT5hgnqaNTlb2w==",
