@@ -108,9 +108,41 @@ const Erc721Transfer = strictObject({
   }),
 });
 
-const Erc1155Transfer = strictObject({});
+const Erc1155Transfer = strictObject({
+  fromAddress: Address,
+  toAddress: Address,
+  blockNum: Hex,
+  hash: Hash,
+  erc1155Metadata: array(
+    strictObject({
+      tokenId: Hex,
+      value: Hex,
+    })
+  ),
+  category: literal("erc1155"),
+  rawContract: strictObject({
+    rawValue: Hex,
+    address: Address,
+  }),
+  log: strictObject({
+    address: Address,
+    topics: array(Hex),
+    data: Hex,
+    blockNumber: Hex,
+    transactionHash: Hash,
+    transactionIndex: Hex,
+    blockHash: Hash,
+    logIndex: Hex,
+    removed: literal(false),
+  }),
+});
 
-const Transfers = union([EthTransfer, InternalTransfer, Erc721Transfer]);
+const Transfers = union([
+  EthTransfer,
+  InternalTransfer,
+  Erc721Transfer,
+  Erc1155Transfer,
+]);
 
 export const AddressActivitySchema = strictObject({
   webhookId: WebhookId,
