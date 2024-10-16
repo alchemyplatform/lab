@@ -20,6 +20,18 @@ import {
   WebhookId,
 } from "./shared.ts";
 
+const Log = strictObject({
+  address: Address,
+  topics: array(Hex),
+  data: union([Hex, literal("0x")]),
+  blockNumber: Hex,
+  transactionHash: Hash,
+  transactionIndex: Hex,
+  blockHash: Hash,
+  logIndex: Hex,
+  removed: literal(false),
+});
+
 const EthTransfer = strictObject({
   fromAddress: Address,
   toAddress: Address,
@@ -54,18 +66,6 @@ const InternalTransfer = strictObject({
   }),
 });
 
-const Log = strictObject({
-  address: Address,
-  topics: array(Hex),
-  data: Hex,
-  blockNumber: Hex,
-  transactionHash: Hash,
-  transactionIndex: Hex,
-  blockHash: Hash,
-  logIndex: Hex,
-  removed: literal(false),
-});
-
 const Erc20Transfer = strictObject({
   blockNum: Hex,
   hash: Hash,
@@ -90,7 +90,7 @@ const Erc721Transfer = strictObject({
   erc721TokenId: Hex,
   category: literal("token"),
   rawContract: strictObject({
-    rawValue: Hex,
+    rawValue: union([Hex, literal("0x")]),
     address: Address,
   }),
   log: Log,
