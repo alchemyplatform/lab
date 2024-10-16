@@ -61,8 +61,6 @@ const Erc20Transfer = strictObject({
   fromAddress: Address,
   toAddress: Address,
   value: number(),
-  erc721TokenId: null_(),
-  erc1155Metadata: null_(),
   asset: string(),
   category: literal("token"),
   rawContract: strictObject({
