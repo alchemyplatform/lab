@@ -8,6 +8,7 @@ import {
   strictObject,
   string,
   union,
+  variant,
 } from "@valibot/valibot";
 import {
   Address,
@@ -136,7 +137,7 @@ const Erc1155Transfer = strictObject({
   }),
 });
 
-const Transfers = union([
+const Transfers = variant("category", [
   EthTransfer,
   InternalTransfer,
   Erc20Transfer,
