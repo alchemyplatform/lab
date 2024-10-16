@@ -33,7 +33,7 @@ export const validateSignature = (
     const signature = ctx.req.header(HEADER_SIGNATURE);
     if (debug) {
       console.debug(
-        `[validate-signature] => header ${HEADER_SIGNATURE}: ${signature}`
+        `[validate-signature] => ${HEADER_SIGNATURE}: ${signature}`
       );
     }
 
