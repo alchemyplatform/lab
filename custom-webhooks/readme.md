@@ -3,7 +3,7 @@
 ### Start server
 
 ```bash
-deno run --allow-net --watch index.ts
+deno run --allow-net --allow-env --env --watch index.ts
 ```
 
 ### Create custom webhook
