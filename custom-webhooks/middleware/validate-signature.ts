@@ -2,17 +2,47 @@ import type { Context, MiddlewareHandler, Next } from "@hono/hono";
 import { createMiddleware } from "@hono/hono/factory";
 import { createHmac } from "node:crypto";
 
+const TEST_WEBHOOK_SIGNING_KEY = "whsec_test";
 const HEADER_SIGNATURE = "X-Alchemy-Signature";
 
 type ValidateSignatureOptions = {
-  signingKey: string;
+  signingKey?: string;
+  // For testing purposes only. Do not use in production.
+  test?: boolean;
   debug?: boolean;
 };
+
+type CheckSignatureInput = {
+  rawPayload: string;
+  signature: string;
+  signingKey: string;
+};
+
+type CheckSignatureOutput = {
+  digest: string;
+  isValid: boolean;
+};
+
+function checkSignature({
+  rawPayload,
+  signature,
+  signingKey,
+}: CheckSignatureInput): CheckSignatureOutput {
+  const hmac = createHmac("sha256", signingKey);
+  hmac.update(rawPayload, "utf8");
+  const digest = hmac.digest("hex");
+  const isValid = digest === signature;
+  return {
+    digest,
+    isValid,
+  };
+}
 
 export const validateSignature = (
   options: ValidateSignatureOptions
 ): MiddlewareHandler => {
-  const signingKey = options.signingKey;
+  let signingKey = options.signingKey;
+  const test = options.test ?? false;
   const debug = options.debug ?? false;
 
   if (debug) {
@@ -21,12 +51,17 @@ export const validateSignature = (
   }
 
   if (!signingKey) {
-    if (debug) {
-      console.debug("[validate-signature] => Error: No signing key provided.");
+    if (!test) {
+      if (debug) {
+        console.debug(
+          "[validate-signature] => Error: No signing key provided."
+        );
+      }
+      throw new Error(
+        'validate signature middleware requires options for "signingKey"'
+      );
     }
-    throw new Error(
-      'validate signature middleware requires options for "signingKey"'
-    );
+    signingKey = TEST_WEBHOOK_SIGNING_KEY;
   }
 
   return createMiddleware(async (ctx: Context, next: Next) => {
@@ -50,20 +85,41 @@ export const validateSignature = (
       console.debug("[validate-signature] => rawPayload:", rawPayload);
     }
 
-    const hmac = createHmac("sha256", signingKey);
-    hmac.update(rawPayload, "utf8");
-
-    const digest = hmac.digest("hex");
-    const isValidSignature = digest === signature;
+    const { digest, isValid } = checkSignature({
+      rawPayload,
+      signature,
+      signingKey,
+    });
 
     if (debug) {
       console.debug(`[validate-signature] => digest: ${digest}
 [validate-signature] => signature: ${signature}
-[validate-signature] => isValid? (digest === signature): ${isValidSignature}`);
+[validate-signature] => digest === signature: ${isValid}`);
     }
 
-    if (!isValidSignature) {
-      throw new Error("Invalid signature");
+    if (!isValid) {
+      if (signingKey !== TEST_WEBHOOK_SIGNING_KEY) {
+        throw new Error("Invalid signature");
+      }
+
+      if (signingKey === TEST_WEBHOOK_SIGNING_KEY) {
+        throw new Error("Invalid signature");
+      }
+
+      // Fallback to checking against the test signing key
+      const { isValid: testIsValid } = checkSignature({
+        rawPayload,
+        signature,
+        signingKey,
+      });
+
+      if (!testIsValid) {
+        throw new Error("Invalid test signature");
+      }
+
+      ctx.header("X-Alchemy-Test-Payload", "1");
+    } else {
+      ctx.header("X-Alchemy-Test-Payload", "0");
     }
 
     await next();
