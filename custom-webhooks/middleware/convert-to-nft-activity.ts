@@ -1,22 +1,21 @@
 import { createMiddleware } from "@hono/hono/factory";
 import type { Context } from "@hono/hono";
-import type { Payload } from "../utils/types.ts";
-import { parseTransfer } from "../utils/parseTransfer.ts";
+import type { AlchemyPayload } from "../utils/schemas/index.ts";
 import { toHex } from "npm:viem";
+import { decodeLog } from "../utils/events/decode.ts";
+import { parse } from "@valibot/valibot";
+import { GraphQlToNftActivitySchema } from "../utils/schemas/convert.ts";
 
 export const convertToNftActivity = createMiddleware(
   async (
     ctx: Context<{
       Variables: {
-        payload: Payload;
+        payload: AlchemyPayload;
       };
     }>,
     next
   ) => {
-    const payload = ctx.get("payload");
-    if (!payload) {
-      throw new Error("Payload not found");
-    }
+    const payload = parse(GraphQlToNftActivitySchema, ctx.get("payload"));
 
     const {
       hash: blockHash,
@@ -25,13 +24,15 @@ export const convertToNftActivity = createMiddleware(
     } = payload.event.data.block;
 
     const activity = logs.flatMap((log) => {
-      const decodedLog = parseTransfer(log);
+      const decodedLog = decodeLog(log);
+      if (!decodedLog) {
+        return [];
+      }
 
-      const isErc721 = decodedLog.eventName === "Transfer";
-
+      const isErc721 =
+        decodedLog.type === "erc721" && decodedLog.category === "transfer";
       const isErc1155 =
-        decodedLog.eventName === "TransferSingle" ||
-        decodedLog.eventName === "TransferBatch";
+        decodedLog.type === "erc1155" && decodedLog.category === "transfer";
 
       if (!isErc721 && !isErc1155) {
         throw new Error("Invalid event");
@@ -70,18 +71,18 @@ export const convertToNftActivity = createMiddleware(
       }
 
       if (isErc1155) {
-        const erc1155Metadata =
-          decodedLog.eventName === "TransferBatch"
-            ? decodedLog.args.ids.map((tokenId, i) => ({
-                tokenId: toHex(tokenId),
-                value: toHex(decodedLog.args.values[i]),
-              }))
-            : [
-                {
-                  tokenId: toHex(decodedLog.args.id),
-                  value: toHex(decodedLog.args.value),
-                },
-              ];
+        const isBatchTransfer = decodedLog.eventName === "TransferBatch";
+        const erc1155Metadata = isBatchTransfer
+          ? decodedLog.args.ids.map((tokenId: string, i: number) => ({
+              tokenId: toHex(tokenId),
+              value: toHex(decodedLog.args.values[i]),
+            }))
+          : [
+              {
+                tokenId: toHex(decodedLog.args.id),
+                value: toHex(decodedLog.args.value),
+              },
+            ];
         const category = "erc1155";
 
         const activityItem = {
@@ -95,10 +96,7 @@ export const convertToNftActivity = createMiddleware(
           log: log2,
         };
 
-        const numTokens =
-          decodedLog.eventName === "TransferBatch"
-            ? decodedLog.args.ids.length
-            : 1;
+        const numTokens = isBatchTransfer ? decodedLog.args.ids.length : 1;
         return new Array(numTokens).fill(activityItem);
       }
     });
