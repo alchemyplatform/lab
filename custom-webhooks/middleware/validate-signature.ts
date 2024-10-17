@@ -5,9 +5,26 @@ import { createHmac } from "node:crypto";
 const HEADER_SIGNATURE = "X-Alchemy-Signature";
 
 type ValidateSignatureOptions = {
-  signingKey: string;
+  signingKey: string | Map<string, string>;
   debug?: boolean;
 };
+
+async function getSigningKey({
+  ctx,
+  webhookIdToKey,
+}: {
+  ctx: Context;
+  webhookIdToKey: Map<string, string>;
+}): Promise<string> {
+  const json = await ctx.req.json();
+  const webhookId = json.webhookId;
+
+  const key = webhookIdToKey.get(webhookId);
+  if (!key) {
+    throw new Error("No signing key found for webhookId: " + webhookId);
+  }
+  return key;
+}
 
 export const validateSignature = (
   options: ValidateSignatureOptions
@@ -45,12 +62,17 @@ export const validateSignature = (
       throw new Error(errMessage);
     }
 
+    const key =
+      signingKey instanceof Map
+        ? await getSigningKey({ ctx, webhookIdToKey: signingKey })
+        : signingKey;
+
     const rawPayload = await ctx.req.text();
     if (debug) {
       console.debug("[validate-signature] => rawPayload:", rawPayload);
     }
 
-    const hmac = createHmac("sha256", signingKey);
+    const hmac = createHmac("sha256", key);
     hmac.update(rawPayload, "utf8");
 
     const digest = hmac.digest("hex");
