@@ -128,7 +128,13 @@ export function decodeLog(log: Log) {
       } else if (log.topics.length === 4) {
         return decodeErc721Transfer(log);
       }
-      throw new Error("Invalid event");
+      throw new Error(
+        `Error decoding ERC20 or ERC721 transfer log: ${JSON.stringify(
+          log,
+          null,
+          2
+        )}`
+      );
     }
 
     case ERC20_APPROVAL:
@@ -138,7 +144,13 @@ export function decodeLog(log: Log) {
       } else if (log.topics.length === 4) {
         return decodeErc721Approval(log);
       }
-      throw new Error("Invalid event");
+      throw new Error(
+        `Error decoding ERC20 or ERC721 approval log: ${JSON.stringify(
+          log,
+          null,
+          2
+        )}`
+      );
     }
 
     case ERC721_APPROVAL_FOR_ALL: {
