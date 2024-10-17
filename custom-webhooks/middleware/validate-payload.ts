@@ -1,12 +1,12 @@
 import { createMiddleware } from "@hono/hono/factory";
 import { parse } from "@valibot/valibot";
 import {
-  type AlchemyPayloadSchema as PayloadSchema,
+  type AlchemyPayload,
   AlchemyPayloadSchema,
 } from "../utils/schemas/index.ts";
 
 export const validatePayload = createMiddleware<{
-  Variables: { payload: PayloadSchema };
+  Variables: { payload: AlchemyPayload };
 }>(async (ctx, next) => {
   const body = await ctx.req.json();
 
