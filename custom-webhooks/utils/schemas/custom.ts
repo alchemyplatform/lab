@@ -18,6 +18,7 @@ import {
   Integer,
   IsoTimestamp,
   Network,
+  Topics,
   WebhookId,
 } from "./shared.ts";
 
@@ -28,7 +29,7 @@ const Account = strictObject({
 const BaseLog = strictObject({
   index: Integer,
   account: Account,
-  topics: array(Hex),
+  topics: Topics,
   data: union([Hex, literal("0x")]),
 });
 

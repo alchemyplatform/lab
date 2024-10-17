@@ -5,6 +5,8 @@ import {
   isoTimestamp,
   length,
   literal,
+  maxLength,
+  minLength,
   number,
   pipe,
   startsWith,
@@ -51,10 +53,16 @@ export const IsoTimestamp = pipe(
 
 export const Network = string();
 
+export const Topics = pipe(
+  array(Hex),
+  minLength(1, "The topics array is empty."),
+  maxLength(4, "The topics array has more than 4 elements.")
+);
+
 // used in both Address Activity and NFT Activity schemas
 export const ActivityLog = strictObject({
   address: Address,
-  topics: array(Hex),
+  topics: Topics,
   data: union([Hex, literal("0x")]),
   blockNumber: Hex,
   transactionHash: Hash,
