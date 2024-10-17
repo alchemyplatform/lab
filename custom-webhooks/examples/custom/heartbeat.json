@@ -1,0 +1,15 @@
+{
+  "webhookId": "wh_3431k4v5vfzsq1pf",
+  "id": "whevt_taws915nnn1zb4z3",
+  "createdAt": "2024-10-17T12:25:13.528Z",
+  "type": "GRAPHQL",
+  "event": {
+    "data": {
+      "block": {
+        "logs": []
+      }
+    },
+    "sequenceNumber": "10000000374330584002",
+    "network": "ETH_MAINNET"
+  }
+}
