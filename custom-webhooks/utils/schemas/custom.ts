@@ -146,46 +146,61 @@ const CallTracerTrace = pipe(
   )
 );
 
+const Data = strictObject({
+  block: pipe(
+    strictObject(
+      {
+        number: optional(Integer),
+        hash: optional(Hash),
+        // TODO: update parent block schema
+        parent: optional(object({})),
+        nonce: optional(literal("0x0000000000000000")),
+        transactionsRoot: optional(Hash),
+        transactionCount: optional(Integer),
+        stateRoot: optional(Hash),
+        receiptsRoot: optional(Hash),
+        gasLimit: optional(Integer),
+        gasUsed: optional(Integer),
+        baseFeePerGas: optional(Hex),
+        timestamp: optional(Integer),
+        logsBloom: optional(Hex),
+        mixHash: optional(Hash),
+        difficulty: optional(literal("0x0")),
+        totalDifficulty: optional(Hex),
+        transactions: optional(array(Transaction)),
+        logs: optional(array(Log)),
+        callTracerTraces: optional(array(CallTracerTrace)),
+      },
+      "Payload must contain a valid block object."
+    ),
+    check(
+      (input) => Object.keys(input).length > 0,
+      "The block object must at least have one key."
+    )
+  ),
+});
+
 export const CustomSchema = strictObject({
   webhookId: WebhookId,
   id: Id,
   createdAt: IsoTimestamp,
   type: literal("GRAPHQL"),
   event: strictObject({
-    data: strictObject({
-      block: pipe(
-        strictObject(
-          {
-            number: optional(Integer),
-            hash: optional(Hash),
-            // TODO: update parent block schema
-            parent: optional(object({})),
-            nonce: optional(literal("0x0000000000000000")),
-            transactionsRoot: optional(Hash),
-            transactionCount: optional(Integer),
-            stateRoot: optional(Hash),
-            receiptsRoot: optional(Hash),
-            gasLimit: optional(Integer),
-            gasUsed: optional(Integer),
-            baseFeePerGas: optional(Hex),
-            timestamp: optional(Integer),
-            logsBloom: optional(Hex),
-            mixHash: optional(Hash),
-            difficulty: optional(literal("0x0")),
-            totalDifficulty: optional(Hex),
-            transactions: optional(array(Transaction)),
-            logs: optional(array(Log)),
-            callTracerTraces: optional(array(CallTracerTrace)),
-          },
-          "Payload must contain a valid block object."
-        ),
-        check(
-          (input) => Object.keys(input).length > 0,
-          "The block object must at least have one key."
-        )
-      ),
-    }),
+    data: Data,
     sequenceNumber: pipe(string(), digits()),
-    network: optional(Network),
+    network: Network,
+  }),
+});
+
+// Note - this is workaround around bug on test payload
+// Test payload for Custom webhook does not (yet!) contain the 'network' field.
+export const GraphQlTestSchema = strictObject({
+  webhookId: WebhookId,
+  id: Id,
+  createdAt: IsoTimestamp,
+  type: literal("GRAPHQL"),
+  event: strictObject({
+    data: Data,
+    sequenceNumber: pipe(string(), digits()),
   }),
 });
