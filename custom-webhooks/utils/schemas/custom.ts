@@ -180,7 +180,7 @@ const Data = strictObject({
   ),
 });
 
-export const CustomSchema = strictObject({
+export const GraphQlSchema = strictObject({
   webhookId: WebhookId,
   id: Id,
   createdAt: IsoTimestamp,
