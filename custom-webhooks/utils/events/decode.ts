@@ -22,67 +22,104 @@ type Log = {
   topics: string[];
 };
 
-function decodeErc20Transfer(log: Log) {
-  return decodeEventLog({
-    abi: parseAbi([ERC20_TRANSFER_ABI]),
-    data: log.data as Hex,
-    topics: log.topics as [Hex, Hex, Hex],
-  });
+type DecodedLog = {
+  type: "erc20" | "erc721" | "erc1155";
+  category: "transfer" | "approval";
+  eventName: string;
+  args: Record<string, any>;
+};
+
+function decodeErc20Transfer(log: Log): DecodedLog {
+  return {
+    type: "erc20",
+    category: "transfer",
+    ...decodeEventLog({
+      abi: parseAbi([ERC20_TRANSFER_ABI]),
+      data: log.data as Hex,
+      topics: log.topics as [Hex, Hex, Hex],
+    }),
+  };
 }
 
-function decodeErc20Approval(log: Log) {
-  return decodeEventLog({
-    abi: parseAbi([ERC_20_APPROVAL_ABI]),
-    data: log.data as Hex,
-    topics: log.topics as [Hex, Hex, Hex],
-  });
+function decodeErc20Approval(log: Log): DecodedLog {
+  return {
+    type: "erc20",
+    category: "approval",
+    ...decodeEventLog({
+      abi: parseAbi([ERC_20_APPROVAL_ABI]),
+      data: log.data as Hex,
+      topics: log.topics as [Hex, Hex, Hex],
+    }),
+  };
 }
 
-function decodeErc721Transfer(log: Log) {
-  return decodeEventLog({
-    abi: parseAbi([ERC_721_TRANSFER_ABI]),
-    data: log.data as Hex,
-    topics: log.topics as [Hex, Hex, Hex, Hex],
-  });
+function decodeErc721Transfer(log: Log): DecodedLog {
+  return {
+    type: "erc721",
+    category: "transfer",
+    ...decodeEventLog({
+      abi: parseAbi([ERC_721_TRANSFER_ABI]),
+      data: log.data as Hex,
+      topics: log.topics as [Hex, Hex, Hex, Hex],
+    }),
+  };
 }
 
-function decodeErc721Approval(log: Log) {
-  return decodeEventLog({
-    abi: parseAbi([ERC_721_APPROVAL_ABI]),
-    data: log.data as Hex,
-    topics: log.topics as [Hex, Hex, Hex, Hex],
-  });
+function decodeErc721Approval(log: Log): DecodedLog {
+  return {
+    type: "erc721",
+    category: "approval",
+    ...decodeEventLog({
+      abi: parseAbi([ERC_721_APPROVAL_ABI]),
+      data: log.data as Hex,
+      topics: log.topics as [Hex, Hex, Hex, Hex],
+    }),
+  };
 }
 
-function decodeErc721ApprovalForAll(log: Log) {
-  return decodeEventLog({
-    abi: parseAbi([ERC_721_APPROVAL_FOR_ALL_ABI]),
-    data: log.data as Hex,
-    topics: log.topics as [Hex, Hex, Hex],
-  });
+function decodeErc721ApprovalForAll(log: Log): DecodedLog {
+  return {
+    type: "erc721",
+    category: "approval",
+    ...decodeEventLog({
+      abi: parseAbi([ERC_721_APPROVAL_FOR_ALL_ABI]),
+      data: log.data as Hex,
+      topics: log.topics as [Hex, Hex, Hex],
+    }),
+  };
 }
 
-function decodeErc1155TransferSingle(log: Log) {
-  return decodeEventLog({
-    abi: parseAbi([ERC_1155_TRANSFER_SINGLE_ABI]),
-    data: log.data as Hex,
-    topics: log.topics as [Hex, Hex, Hex, Hex, Hex],
-  });
+function decodeErc1155TransferSingle(log: Log): DecodedLog {
+  return {
+    type: "erc1155",
+    category: "transfer",
+    ...decodeEventLog({
+      abi: parseAbi([ERC_1155_TRANSFER_SINGLE_ABI]),
+      data: log.data as Hex,
+      topics: log.topics as [Hex, Hex, Hex, Hex, Hex],
+    }),
+  };
 }
 
-function decodeErc1155TransferBatch(log: Log) {
-  return decodeEventLog({
-    abi: parseAbi([ERC_1155_TRANSFER_BATCH_ABI]),
-    data: log.data as Hex,
-    topics: log.topics as [Hex, Hex, Hex, Hex, Hex],
-  });
+function decodeErc1155TransferBatch(log: Log): DecodedLog {
+  return {
+    type: "erc1155",
+    category: "transfer",
+    ...decodeEventLog({
+      abi: parseAbi([ERC_1155_TRANSFER_BATCH_ABI]),
+      data: log.data as Hex,
+      topics: log.topics as [Hex, Hex, Hex, Hex, Hex],
+    }),
+  };
 }
 
-function decodeErc1155ApprovalForAll(log: Log) {
+function decodeErc1155ApprovalForAll(log: Log): DecodedLog {
   throw new Error("Not implemented");
 }
 
-export function decodeLog({ signature, log }: { signature: string; log: Log }) {
+export function decodeLog(log: Log) {
+  const signature = log.topics[0];
+
   switch (signature) {
     case ERC20_TRANSFER:
     case ERC721_TRANSFER: {
@@ -118,6 +155,10 @@ export function decodeLog({ signature, log }: { signature: string; log: Log }) {
 
     case ERC1155_APPROVAL_FOR_ALL: {
       return decodeErc1155ApprovalForAll(log);
+    }
+
+    default: {
+      return null;
     }
   }
 }
