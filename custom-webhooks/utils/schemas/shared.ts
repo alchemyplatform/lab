@@ -1,12 +1,16 @@
 import {
+  array,
   hexadecimal,
   integer,
   isoTimestamp,
   length,
+  literal,
   number,
   pipe,
   startsWith,
+  strictObject,
   string,
+  union,
 } from "@valibot/valibot";
 
 export const Integer = pipe(number(), integer());
@@ -46,3 +50,24 @@ export const IsoTimestamp = pipe(
 );
 
 export const Network = string();
+
+// used in both Address Activity and NFT Activity schemas
+export const ActivityLog = strictObject({
+  address: Address,
+  topics: array(Hex),
+  data: union([Hex, literal("0x")]),
+  blockNumber: Hex,
+  transactionHash: Hash,
+  transactionIndex: Hex,
+  blockHash: Hash,
+  logIndex: Hex,
+  removed: literal(false),
+});
+
+// used in both Address Activity and NFT Activity schemas
+export const Erc1155Metadata = array(
+  strictObject({
+    tokenId: Hex,
+    value: Hex,
+  })
+);

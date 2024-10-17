@@ -10,6 +10,7 @@ import {
   variant,
 } from "@valibot/valibot";
 import {
+  ActivityLog as Log,
   Address,
   Hash,
   Hex,
@@ -18,19 +19,8 @@ import {
   IsoTimestamp,
   Network,
   WebhookId,
+  Erc1155Metadata,
 } from "./shared.ts";
-
-const Log = strictObject({
-  address: Address,
-  topics: array(Hex),
-  data: union([Hex, literal("0x")]),
-  blockNumber: Hex,
-  transactionHash: Hash,
-  transactionIndex: Hex,
-  blockHash: Hash,
-  logIndex: Hex,
-  removed: literal(false),
-});
 
 const EthTransfer = strictObject({
   fromAddress: Address,
@@ -67,10 +57,10 @@ const InternalTransfer = strictObject({
 });
 
 const Erc20Transfer = strictObject({
-  blockNum: Hex,
-  hash: Hash,
   fromAddress: Address,
   toAddress: Address,
+  blockNum: Hex,
+  hash: Hash,
   value: number(),
   asset: string(),
   category: literal("token"),
@@ -101,12 +91,7 @@ const Erc1155Transfer = strictObject({
   toAddress: Address,
   blockNum: Hex,
   hash: Hash,
-  erc1155Metadata: array(
-    strictObject({
-      tokenId: Hex,
-      value: Hex,
-    })
-  ),
+  erc1155Metadata: Erc1155Metadata,
   category: literal("erc1155"),
   rawContract: strictObject({
     rawValue: Hex,
