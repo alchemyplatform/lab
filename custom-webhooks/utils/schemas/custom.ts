@@ -24,7 +24,9 @@ import {
   WebhookId,
 } from "./shared.ts";
 
-const Account = pipe(
+export const SequenceNumber = pipe(string(), digits());
+
+export const Account = pipe(
   strictObject({
     address: Address,
   }),
@@ -187,7 +189,7 @@ export const GraphQlSchema = strictObject({
   type: literal("GRAPHQL"),
   event: strictObject({
     data: Data,
-    sequenceNumber: pipe(string(), digits()),
+    sequenceNumber: SequenceNumber,
     network: Network,
   }),
 });
@@ -201,6 +203,6 @@ export const GraphQlTestSchema = strictObject({
   type: literal("GRAPHQL"),
   event: strictObject({
     data: Data,
-    sequenceNumber: pipe(string(), digits()),
+    sequenceNumber: SequenceNumber,
   }),
 });
