@@ -177,7 +177,7 @@ export const CustomSchema = strictObject({
             logs: optional(array(Log)),
             callTracerTraces: optional(array(CallTracerTrace)),
           },
-          "Payload must contain a block object."
+          "Payload must contain a valid block object."
         ),
         check(
           (input) => Object.keys(input).length > 0,
