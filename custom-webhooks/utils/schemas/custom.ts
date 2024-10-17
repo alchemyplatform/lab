@@ -1,5 +1,6 @@
 import {
   array,
+  check,
   digits,
   literal,
   null_,
@@ -105,28 +106,34 @@ export const CustomSchema = strictObject({
   type: literal("GRAPHQL"),
   event: strictObject({
     data: strictObject({
-      block: strictObject({
-        number: Integer,
-        hash: Hash,
-        // TODO: update parent block schema
-        parent: object({}),
-        nonce: literal("0x0000000000000000"),
-        transactionsRoot: Hash,
-        transactionCount: Integer,
-        stateRoot: Hash,
-        receiptsRoot: Hash,
-        gasLimit: Integer,
-        gasUsed: Integer,
-        baseFeePerGas: Hex,
-        timestamp: Integer,
-        logsBloom: Hex,
-        mixHash: Hash,
-        difficulty: literal("0x0"),
-        totalDifficulty: Hex,
-        transactions: array(Transaction),
-        logs: array(Log),
-        callTracerTraces: array(CallTracerTrace),
-      }),
+      block: pipe(
+        strictObject({
+          number: Integer,
+          hash: Hash,
+          // TODO: update parent block schema
+          parent: object({}),
+          nonce: literal("0x0000000000000000"),
+          transactionsRoot: Hash,
+          transactionCount: Integer,
+          stateRoot: Hash,
+          receiptsRoot: Hash,
+          gasLimit: Integer,
+          gasUsed: Integer,
+          baseFeePerGas: Hex,
+          timestamp: Integer,
+          logsBloom: Hex,
+          mixHash: Hash,
+          difficulty: literal("0x0"),
+          totalDifficulty: Hex,
+          transactions: array(Transaction),
+          logs: array(Log),
+          callTracerTraces: array(CallTracerTrace),
+        }),
+        check(
+          (input) => Object.keys(input).length > 0,
+          "The block object must at least have one key."
+        )
+      ),
     }),
     sequenceNumber: pipe(string(), digits()),
     network: Network,
