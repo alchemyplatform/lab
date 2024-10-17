@@ -38,7 +38,8 @@ const BaseTransaction = strictObject({
   nonce: Integer,
   index: Integer,
   from: Account,
-  to: Account,
+  // Note - to will be null if contract is created
+  to: nullable(Account),
   value: Hex,
   gasPrice: Hex,
   maxFeePerGas: nullable(Hex),
@@ -48,7 +49,8 @@ const BaseTransaction = strictObject({
   gasUsed: Integer,
   cumulativeGasUsed: Integer,
   effectiveGasPrice: Hex,
-  createdContract: null_(),
+  // Note - createdContract will be null if to is not null
+  createdContract: nullable(Account),
 });
 
 const Log = strictObject({
@@ -83,6 +85,7 @@ const CallTracerTrace = strictObject({
     literal("STATICCALL"),
     literal("DELEGATECALL"),
     literal("CREATE"),
+    literal("CREATE2"),
   ]),
   input: union([Hex, literal("0x")]),
   output: nullable(Hex),
