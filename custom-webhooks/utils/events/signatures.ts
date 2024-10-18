@@ -1,3 +1,5 @@
+import { encodeEventTopics } from "npm:viem";
+
 /***
  *
  * ERC20 Events
@@ -69,7 +71,9 @@ export const WETH_TRANSFER_ABI = {
   type: "event",
 };
 
-export const WETH_DEPOSIT_ABI = {
+export const WETH_DEPOSIT_ABI =
+  "event Deposit(address indexed dst, uint256 wad)";
+export const WETH_DEPOSIT_ABI2 = {
   anonymous: false,
   inputs: [
     { indexed: true, name: "dst", type: "address" },
@@ -78,8 +82,14 @@ export const WETH_DEPOSIT_ABI = {
   name: "Deposit",
   type: "event",
 };
+export const WETH_DEPOSIT = encodeEventTopics({
+  abi: [WETH_DEPOSIT_ABI2],
+  eventName: "Deposit",
+});
 
-export const WETH_WITHDRAWAL_ABI = {
+export const WETH_WITHDRAWAL_ABI =
+  "event Withdrawal(address indexed src, uint256 wad)";
+export const WETH_WITHDRAWAL_ABI2 = {
   anonymous: false,
   inputs: [
     { indexed: true, name: "src", type: "address" },
@@ -88,6 +98,10 @@ export const WETH_WITHDRAWAL_ABI = {
   name: "Withdrawal",
   type: "event",
 };
+export const WETH_WITHDRAWAL = encodeEventTopics({
+  abi: [WETH_WITHDRAWAL_ABI2],
+  eventName: "Withdrawal",
+});
 
 export const WETH_APPROVAL_ABI = {
   anonymous: false,
