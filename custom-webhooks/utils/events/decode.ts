@@ -26,7 +26,7 @@ type Log = {
   topics: string[];
 };
 
-type DecodedLog = {
+export type DecodedLog = {
   type: "erc20" | "erc721" | "erc1155" | "weth";
   category: "transfer" | "approval" | "deposit" | "withdrawal";
   eventName: string;
