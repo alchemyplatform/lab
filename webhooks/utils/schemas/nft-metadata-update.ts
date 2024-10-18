@@ -33,14 +33,16 @@ const Event1 = strictObject({
 
 const Event2 = strictObject({
   ...BaseEvent.entries,
-  name: string(),
-  description: string(),
   imageUri: Url,
-  attributes: array(
-    object({
-      traitType: string(),
-      value: string(),
-    })
+  name: optional(string()),
+  description: optional(string()),
+  attributes: optional(
+    array(
+      object({
+        traitType: string(),
+        value: string(),
+      })
+    )
   ),
   rawMetadata: object({
     // Some optional fields to get you started
@@ -56,6 +58,7 @@ const Event2 = strictObject({
               literal("number"),
               literal("date"),
               literal("object"),
+              string(),
             ])
           ),
           value: union([string(), number(), object({})]),
