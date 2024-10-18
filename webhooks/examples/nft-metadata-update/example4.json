@@ -1,0 +1,259 @@
+{
+  "webhookId": "wh_7eb0ri7rx7u6q85g",
+  "id": "whevt_tqi7ro335mg46zg6",
+  "createdAt": "2024-10-18T19:19:33.521Z",
+  "type": "NFT_METADATA_UPDATE",
+  "event": {
+    "network": "ETH_MAINNET",
+    "contractAddress": "0x4c4ac03c1bb12af4229d0019444a9048a8cae60b",
+    "tokenId": "10000009000092",
+    "networkId": 0,
+    "metadataUri": "https://ps.atlasnavi.com/api/nft/metadata/10000009000092",
+    "updatedAt": "2024-10-18T19:19:32.508Z",
+    "name": "Atlas Navi Sedan #92",
+    "description": "Everyday Sedan vehicle NFT with booster rewards used in Atlas Navi to earn rewards for driving.",
+    "imageUri": "https://atlas-cdn.fra1.digitaloceanspaces.com/public/assets/nft/10000009.png",
+    "attributes": [
+      {
+        "traitType": "NFT Type",
+        "value": "Common"
+      },
+      {
+        "traitType": "Brand",
+        "value": "Atlas Navi"
+      },
+      {
+        "traitType": "Model",
+        "value": "Sedan"
+      },
+      {
+        "traitType": "Year",
+        "value": "2024"
+      },
+      {
+        "traitType": "Color",
+        "value": "Green"
+      },
+      {
+        "traitType": "Trim",
+        "value": "Everyday"
+      },
+      {
+        "traitType": "Battery Size (kWH)",
+        "value": "53"
+      },
+      {
+        "traitType": "Power (HP)",
+        "value": "150"
+      },
+      {
+        "traitType": "Torque (Nm)",
+        "value": "300"
+      },
+      {
+        "traitType": "Top Speed (mph)",
+        "value": "130"
+      },
+      {
+        "traitType": "0-60mph (s)",
+        "value": "6.9"
+      },
+      {
+        "traitType": "Fuel Type",
+        "value": "Diesel"
+      },
+      {
+        "traitType": "Fuel Consumption Category",
+        "value": "1"
+      },
+      {
+        "traitType": "Yearly Tax Category",
+        "value": "1"
+      },
+      {
+        "traitType": "Weight (kg)",
+        "value": "1700"
+      },
+      {
+        "traitType": "Traction",
+        "value": "Front"
+      },
+      {
+        "traitType": "Official License",
+        "value": "Created by Atlas Navi."
+      },
+      {
+        "traitType": "Manufacture Date",
+        "value": "1714198355"
+      },
+      {
+        "traitType": "XP",
+        "value": "488.1484706058113"
+      },
+      {
+        "traitType": "Level",
+        "value": "20"
+      },
+      {
+        "traitType": "Mileage",
+        "value": "5746.707979219664"
+      },
+      {
+        "traitType": "Main Fuel Tank (miles)",
+        "value": "26.208048607834552"
+      },
+      {
+        "traitType": "Extra Fuel Tanks",
+        "value": "0"
+      },
+      {
+        "traitType": "Refuel Duration (s)",
+        "value": "21600"
+      },
+      {
+        "traitType": "Refuel Amount",
+        "value": "25"
+      },
+      {
+        "traitType": "Reward Rate",
+        "value": "370"
+      }
+    ],
+    "rawMetadata": {
+      "image": "https://atlas-cdn.fra1.digitaloceanspaces.com/public/assets/nft/10000009.png",
+      "car_type_id": 10000009,
+      "animation_url": "https://atlas-cdn.fra1.digitaloceanspaces.com/public/assets/glb/10000009.glb",
+      "assets": {
+        "ios": {
+          "low_res": "https://atlas-cdn.fra1.digitaloceanspaces.com/public/assets/android/low_res/10000009.zip",
+          "high_res": "https://atlas-cdn.fra1.digitaloceanspaces.com/public/assets/ios/high_res/10000009.zip",
+          "2d": "https://atlas-cdn.fra1.digitaloceanspaces.com/public/assets/ios/low_res/2d/10000009.zip"
+        },
+        "android": {
+          "low_res": "https://atlas-cdn.fra1.digitaloceanspaces.com/public/assets/android/low_res/10000009.zip",
+          "high_res": "https://atlas-cdn.fra1.digitaloceanspaces.com/public/assets/android/high_res/10000009.zip",
+          "2d": "https://atlas-cdn.fra1.digitaloceanspaces.com/public/assets/android/low_res/2d/10000009.zip"
+        }
+      },
+      "name": "Atlas Navi Sedan #92",
+      "description": "Everyday Sedan vehicle NFT with booster rewards used in Atlas Navi to earn rewards for driving.",
+      "attributes": [
+        {
+          "value": "Common",
+          "trait_type": "NFT Type"
+        },
+        {
+          "value": "Atlas Navi",
+          "trait_type": "Brand"
+        },
+        {
+          "value": "Sedan",
+          "trait_type": "Model"
+        },
+        {
+          "value": "2024",
+          "trait_type": "Year"
+        },
+        {
+          "value": "Green",
+          "trait_type": "Color"
+        },
+        {
+          "value": "Everyday",
+          "trait_type": "Trim"
+        },
+        {
+          "display_type": "boost_number",
+          "value": 53,
+          "trait_type": "Battery Size (kWH)"
+        },
+        {
+          "value": 150,
+          "trait_type": "Power (HP)"
+        },
+        {
+          "value": 300,
+          "trait_type": "Torque (Nm)"
+        },
+        {
+          "value": 130,
+          "trait_type": "Top Speed (mph)"
+        },
+        {
+          "value": 6.9,
+          "trait_type": "0-60mph (s)"
+        },
+        {
+          "value": "Diesel",
+          "trait_type": "Fuel Type"
+        },
+        {
+          "value": "1",
+          "trait_type": "Fuel Consumption Category"
+        },
+        {
+          "value": "1",
+          "trait_type": "Yearly Tax Category"
+        },
+        {
+          "value": 1700,
+          "trait_type": "Weight (kg)"
+        },
+        {
+          "value": "Front",
+          "trait_type": "Traction"
+        },
+        {
+          "value": "Created by Atlas Navi.",
+          "trait_type": "Official License"
+        },
+        {
+          "display_type": "date",
+          "value": 1714198355,
+          "trait_type": "Manufacture Date"
+        },
+        {
+          "display_type": "boost_number",
+          "value": 488.1484706058113,
+          "max_value": 1000,
+          "trait_type": "XP"
+        },
+        {
+          "value": 20,
+          "max_value": 30,
+          "trait_type": "Level"
+        },
+        {
+          "value": 5746.707979219664,
+          "trait_type": "Mileage"
+        },
+        {
+          "value": 26.208048607834552,
+          "max_value": 50,
+          "trait_type": "Main Fuel Tank (miles)"
+        },
+        {
+          "display_type": "boost_number",
+          "value": 0,
+          "max_value": 2,
+          "trait_type": "Extra Fuel Tanks"
+        },
+        {
+          "display_type": "boost_number",
+          "value": 21600,
+          "trait_type": "Refuel Duration (s)"
+        },
+        {
+          "display_type": "boost_percentage",
+          "value": 25,
+          "trait_type": "Refuel Amount"
+        },
+        {
+          "display_type": "boost_percentage",
+          "value": 370,
+          "trait_type": "Reward Rate"
+        }
+      ]
+    }
+  }
+}

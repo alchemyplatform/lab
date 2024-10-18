@@ -1,0 +1,102 @@
+{
+  "webhookId": "wh_7eb0ri7rx7u6q85g",
+  "id": "whevt_wncrpjd6m02o8ncu",
+  "createdAt": "2024-10-18T19:15:12.264Z",
+  "type": "NFT_METADATA_UPDATE",
+  "event": {
+    "network": "ETH_MAINNET",
+    "contractAddress": "0x932261f9fc8da46c4a22e31b45c4de60623848bf",
+    "tokenId": "151167",
+    "networkId": 0,
+    "metadataUri": "https://dna.zerion.io/api/v1/avatars/onepointo/151167",
+    "updatedAt": "2024-10-18T19:15:10.982Z",
+    "name": "#151167",
+    "description": "Zerion DNA is a first of a kind Dynamic NFT Avatar – a generative, living NFT that evolves over time to reflect your digital identity. Every wallet action renders unique attributes so that no two NFTs are alike. Wallet actions that will cause the NFT to evolve include buying and selling tokens, interacting with different networks and exploring the Zerion app.\n\nTo claim your DNA, create a Zerion Wallet via our Zerion iOS and Android apps.",
+    "imageUri": "https://zerion-dna.s3.us-east-1.amazonaws.com/onepointo/d1f6648f1f1b97122fcc1c15efa75c15ca55c1a0.png",
+    "attributes": [
+      {
+        "traitType": "Age",
+        "value": "63 weeks"
+      },
+      {
+        "traitType": "Gas Spend",
+        "value": "$0–$50"
+      },
+      {
+        "traitType": "Transactions",
+        "value": "7"
+      },
+      {
+        "traitType": "Balance",
+        "value": "$0–$100"
+      },
+      {
+        "traitType": "Assets",
+        "value": "30"
+      },
+      {
+        "traitType": "Favorite Network",
+        "value": "Base"
+      },
+      {
+        "traitType": "Enabled",
+        "value": "Yes"
+      },
+      {
+        "traitType": "Body",
+        "value": "Level 6"
+      },
+      {
+        "traitType": "Background",
+        "value": "It's All On Chain"
+      }
+    ],
+    "rawMetadata": {
+      "name": "#151167",
+      "image": "https://zerion-dna.s3.us-east-1.amazonaws.com/onepointo/d1f6648f1f1b97122fcc1c15efa75c15ca55c1a0.png",
+      "image_preview": "https://zerion-dna-mini.s3.us-east-1.amazonaws.com/onepointo/cda9402939557382b36bfbb47c17f1e56860ea8f.270x270.png",
+      "description": "Zerion DNA is a first of a kind Dynamic NFT Avatar – a generative, living NFT that evolves over time to reflect your digital identity. Every wallet action renders unique attributes so that no two NFTs are alike. Wallet actions that will cause the NFT to evolve include buying and selling tokens, interacting with different networks and exploring the Zerion app.\n\nTo claim your DNA, create a Zerion Wallet via our Zerion iOS and Android apps.",
+      "external_url": "https://app.zerion.io/nfts/0x932261f9fc8da46c4a22e31b45c4de60623848bf:151167",
+      "attributes": [
+        {
+          "value": "63 weeks",
+          "trait_type": "Age"
+        },
+        {
+          "value": "$0–$50",
+          "trait_type": "Gas Spend"
+        },
+        {
+          "display_type": "number",
+          "value": 7,
+          "trait_type": "Transactions"
+        },
+        {
+          "value": "$0–$100",
+          "trait_type": "Balance"
+        },
+        {
+          "display_type": "number",
+          "value": 30,
+          "trait_type": "Assets"
+        },
+        {
+          "value": "Base",
+          "trait_type": "Favorite Network"
+        },
+        {
+          "value": "Yes",
+          "trait_type": "Enabled"
+        },
+        {
+          "value": "Level 6",
+          "trait_type": "Body"
+        },
+        {
+          "value": "It's All On Chain",
+          "trait_type": "Background"
+        }
+      ]
+    }
+  }
+}
