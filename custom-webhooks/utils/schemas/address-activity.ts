@@ -22,11 +22,15 @@ import {
   Erc1155Metadata,
 } from "./shared.ts";
 
-const EthTransfer = strictObject({
+const BaseTransfer = strictObject({
   fromAddress: Address,
   toAddress: Address,
   blockNum: Hex,
   hash: Hash,
+});
+
+const EthTransfer = strictObject({
+  ...BaseTransfer.entries,
   value: number(),
   asset: literal("ETH"),
   category: literal("external"),
@@ -38,10 +42,7 @@ const EthTransfer = strictObject({
 
 // TODO: rename?
 const InternalTransfer = strictObject({
-  fromAddress: Address,
-  toAddress: Address,
-  blockNum: Hex,
-  hash: Hash,
+  ...BaseTransfer.entries,
   value: number(),
   typeTraceAddress: union([
     pipe(string(), startsWith("CALL_")),
@@ -57,10 +58,7 @@ const InternalTransfer = strictObject({
 });
 
 const Erc20Transfer = strictObject({
-  fromAddress: Address,
-  toAddress: Address,
-  blockNum: Hex,
-  hash: Hash,
+  ...BaseTransfer.entries,
   value: number(),
   asset: string(),
   category: literal("token"),
@@ -73,10 +71,7 @@ const Erc20Transfer = strictObject({
 });
 
 const Erc721Transfer = strictObject({
-  fromAddress: Address,
-  toAddress: Address,
-  blockNum: Hex,
-  hash: Hash,
+  ...BaseTransfer.entries,
   erc721TokenId: Hex,
   category: literal("token"),
   rawContract: strictObject({
@@ -87,10 +82,7 @@ const Erc721Transfer = strictObject({
 });
 
 const Erc1155Transfer = strictObject({
-  fromAddress: Address,
-  toAddress: Address,
-  blockNum: Hex,
-  hash: Hash,
+  ...BaseTransfer.entries,
   erc1155Metadata: Erc1155Metadata,
   category: literal("erc1155"),
   rawContract: strictObject({
