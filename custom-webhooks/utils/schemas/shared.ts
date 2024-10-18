@@ -55,7 +55,6 @@ export const Network = string();
 
 export const Topics = pipe(
   array(Hex),
-  minLength(1, "The topics array is empty."),
   maxLength(4, "The topics array has more than 4 elements.")
 );
 
