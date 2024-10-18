@@ -8,6 +8,7 @@ import {
   string,
   union,
   variant,
+  type InferOutput,
 } from "@valibot/valibot";
 import {
   ActivityLog as Log,
@@ -57,6 +58,7 @@ const InternalTransfer = strictObject({
   }),
 });
 
+export type AddressActivityErc20Transfer = InferOutput<typeof Erc20Transfer>;
 const Erc20Transfer = strictObject({
   ...BaseTransfer.entries,
   value: number(),
@@ -70,6 +72,7 @@ const Erc20Transfer = strictObject({
   log: Log,
 });
 
+export type AddressActivityErc721Transfer = InferOutput<typeof Erc721Transfer>;
 const Erc721Transfer = strictObject({
   ...BaseTransfer.entries,
   erc721TokenId: Hex,
@@ -81,6 +84,9 @@ const Erc721Transfer = strictObject({
   log: Log,
 });
 
+export type AddressActivityErc1155Transfer = InferOutput<
+  typeof Erc1155Transfer
+>;
 const Erc1155Transfer = strictObject({
   ...BaseTransfer.entries,
   erc1155Metadata: Erc1155Metadata,
