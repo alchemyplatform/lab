@@ -6,7 +6,6 @@ import {
   length,
   literal,
   maxLength,
-  minLength,
   number,
   pipe,
   startsWith,
