@@ -48,6 +48,7 @@ export const superWebhook = createMiddleware(
       });
     console.log(decodedLogs);
 
+    // TODO: batch calls
     // Fetch metadata for all addresses
     for (const address of addresses) {
       const metadata = await fetchMetadata(address);
