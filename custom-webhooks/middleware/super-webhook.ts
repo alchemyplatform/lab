@@ -54,6 +54,10 @@ export const superWebhook = createMiddleware(
       contractAddressToMetadata.set(address, metadata);
     }
 
+    if (addresses.size > 0) {
+      console.log(`# of metadata entries: ${contractAddressToMetadata.size}`);
+    }
+
     await next();
   }
 );
