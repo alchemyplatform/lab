@@ -1,0 +1,86 @@
+{
+  "webhookId": "wh_m766mh4g8qy4nxiz",
+  "id": "whevt_kon2h3t89x5q1mde",
+  "createdAt": "2024-10-18T18:24:51.901Z",
+  "type": "NFT_METADATA_UPDATE",
+  "event": {
+    "network": "ETH_MAINNET",
+    "contractAddress": "0x57f1887a8bf19b14fc0df6fd9b2acc9af147ea85",
+    "tokenId": "0x0548274c4be004976424de9f6f485fbe40a8f13e41524cd574fead54e448415c",
+    "networkId": 0,
+    "metadataUri": "https://metadata.ens.domains/mainnet/0x57f1887a8bf19b14fc0df6fd9b2acc9af147ea85/0x0548274c4be004976424de9f6f485fbe40a8f13e41524cd574fead54e448415c",
+    "updatedAt": "2024-10-18T18:24:50.383Z",
+    "name": "takeover.eth",
+    "description": "takeover.eth, an ENS name.",
+    "imageUri": "https://metadata.ens.domains/mainnet/0x57f1887a8bf19b14fc0df6fd9b2acc9af147ea85/0x0548274c4be004976424de9f6f485fbe40a8f13e41524cd574fead54e448415c/image",
+    "attributes": [
+      {
+        "traitType": "Created Date",
+        "value": "1494719470000"
+      },
+      {
+        "traitType": "Length",
+        "value": "8"
+      },
+      {
+        "traitType": "Segment Length",
+        "value": "8"
+      },
+      {
+        "traitType": "Character Set",
+        "value": "letter"
+      },
+      {
+        "traitType": "Registration Date",
+        "value": "1623157746000"
+      },
+      {
+        "traitType": "Expiration Date",
+        "value": "1970284218000"
+      }
+    ],
+    "rawMetadata": {
+      "background_image": "https://metadata.ens.domains/mainnet/avatar/takeover.eth",
+      "image": "https://metadata.ens.domains/mainnet/0x57f1887a8bf19b14fc0df6fd9b2acc9af147ea85/0x0548274c4be004976424de9f6f485fbe40a8f13e41524cd574fead54e448415c/image",
+      "last_request_date": 1729275890078,
+      "is_normalized": true,
+      "image_url": "https://metadata.ens.domains/mainnet/0x57f1887a8bf19b14fc0df6fd9b2acc9af147ea85/0x0548274c4be004976424de9f6f485fbe40a8f13e41524cd574fead54e448415c/image",
+      "name": "takeover.eth",
+      "description": "takeover.eth, an ENS name.",
+      "attributes": [
+        {
+          "display_type": "date",
+          "value": 1494719470000,
+          "trait_type": "Created Date"
+        },
+        {
+          "display_type": "number",
+          "value": 8,
+          "trait_type": "Length"
+        },
+        {
+          "display_type": "number",
+          "value": 8,
+          "trait_type": "Segment Length"
+        },
+        {
+          "display_type": "string",
+          "value": "letter",
+          "trait_type": "Character Set"
+        },
+        {
+          "display_type": "date",
+          "value": 1623157746000,
+          "trait_type": "Registration Date"
+        },
+        {
+          "display_type": "date",
+          "value": 1970284218000,
+          "trait_type": "Expiration Date"
+        }
+      ],
+      "version": 0,
+      "url": "https://app.ens.domains/name/takeover.eth"
+    }
+  }
+}
