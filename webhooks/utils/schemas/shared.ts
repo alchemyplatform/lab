@@ -12,6 +12,7 @@ import {
   strictObject,
   string,
   union,
+  url,
 } from "@valibot/valibot";
 
 export const Integer = pipe(number(), integer());
@@ -77,3 +78,5 @@ export const Erc1155Metadata = array(
     value: Hex,
   })
 );
+
+export const Url = pipe(string(), url());
