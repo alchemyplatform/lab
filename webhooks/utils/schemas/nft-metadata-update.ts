@@ -1,8 +1,9 @@
 import {
   array,
-  boolean,
   literal,
   number,
+  object,
+  optional,
   strictObject,
   string,
   union,
@@ -36,28 +37,34 @@ const Event2 = strictObject({
   description: string(),
   imageUri: Url,
   attributes: array(
-    strictObject({
+    object({
       traitType: string(),
       value: string(),
     })
   ),
-  rawMetadata: strictObject({
-    background_image: Url,
-    image: Url,
-    last_request_date: number(),
-    is_normalized: boolean(),
-    image_url: Url,
-    name: string(),
-    description: string(),
-    attributes: array(
-      strictObject({
-        display_type: string(),
-        value: union([string(), number()]),
-        trait_type: string(),
-      })
+  rawMetadata: object({
+    // Some optional fields to get you started
+    name: optional(string()),
+    image: optional(Url),
+    description: optional(string()),
+    attributes: optional(
+      array(
+        object({
+          display_type: optional(
+            union([
+              literal("string"),
+              literal("number"),
+              literal("date"),
+              literal("object"),
+            ])
+          ),
+          value: union([string(), number(), object({})]),
+          trait_type: string(),
+        })
+      )
     ),
-    version: number(),
-    url: Url,
+    version: optional(number()),
+    url: optional(Url),
   }),
 });
 

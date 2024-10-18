@@ -79,4 +79,5 @@ export const Erc1155Metadata = array(
   })
 );
 
-export const Url = pipe(string(), url());
+// Careful! - adding a Valibot action like url() will likely break schemas
+export const Url = string();
