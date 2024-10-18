@@ -52,6 +52,9 @@ export const GraphQlToNftActivitySchema = strictObject(
 );
 
 // Required fields to go from Custom webhook -> Address Activity webhook
+export type GraphQlToAddressActivity = InferOutput<
+  typeof GraphQlToAddressActivitySchema
+>;
 export const GraphQlToAddressActivitySchema = strictObject(
   {
     webhookId: WebhookId,
