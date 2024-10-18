@@ -1,0 +1,9 @@
+{
+  "webhookId": "wh_zxnc43yrtqx6d3xn",
+  "id": "whevt_xifdl5se547b7yvz",
+  "createdAt": "2024-10-18T20:38:50.925010934Z",
+  "type": "NFT_METADATA_UPDATE",
+  "event": {
+    "eventDetails": "<EVENT_DETAILS>"
+  }
+}
