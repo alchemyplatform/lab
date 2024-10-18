@@ -52,3 +52,50 @@ export const ERC1155_APPROVAL_FOR_ALL =
   "0xe4A99F34be5f749AAD26cbcFD6B9213aC8Bc0589";
 export const ERC_1155_APPROVAL_FOR_ALL_ABI =
   "event ApprovalForAll(address indexed owner, address indexed operator, bool approved)";
+
+/***
+ *
+ * WETH Events
+ *
+ */
+export const WETH_TRANSFER_ABI = {
+  anonymous: false,
+  inputs: [
+    { indexed: true, name: "src", type: "address" },
+    { indexed: true, name: "dst", type: "address" },
+    { indexed: false, name: "wad", type: "uint256" },
+  ],
+  name: "Transfer",
+  type: "event",
+};
+
+export const WETH_DEPOSIT_ABI = {
+  anonymous: false,
+  inputs: [
+    { indexed: true, name: "dst", type: "address" },
+    { indexed: false, name: "wad", type: "uint256" },
+  ],
+  name: "Deposit",
+  type: "event",
+};
+
+export const WETH_WITHDRAWAL_ABI = {
+  anonymous: false,
+  inputs: [
+    { indexed: true, name: "src", type: "address" },
+    { indexed: false, name: "wad", type: "uint256" },
+  ],
+  name: "Withdrawal",
+  type: "event",
+};
+
+export const WETH_APPROVAL_ABI = {
+  anonymous: false,
+  inputs: [
+    { indexed: true, name: "src", type: "address" },
+    { indexed: true, name: "guy", type: "address" },
+    { indexed: false, name: "wad", type: "uint256" },
+  ],
+  name: "Approval",
+  type: "event",
+};
