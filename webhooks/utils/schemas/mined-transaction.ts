@@ -1,4 +1,4 @@
-import { literal, strictObject, string } from "@valibot/valibot";
+import { literal, strictObject, string, union } from "@valibot/valibot";
 import {
   Address,
   Hash,
@@ -26,7 +26,7 @@ const Transaction = strictObject({
   s: Hex,
   to: Address,
   transactionIndex: Hex,
-  type: Hex,
+  type: union([literal("0x0"), literal("0x1"), literal("0x2"), literal("0x3")]),
   v: Hex,
   value: Hex,
 });
