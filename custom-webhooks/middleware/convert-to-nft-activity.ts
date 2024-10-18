@@ -5,6 +5,7 @@ import { toHex } from "npm:viem";
 import { decodeLog } from "../utils/events/decode.ts";
 import { parse } from "@valibot/valibot";
 import { GraphQlToNftActivitySchema } from "../utils/schemas/convert.ts";
+import { NftActivitySchema } from "../utils/schemas/nft-activity.ts";
 
 export const convertToNftActivity = createMiddleware(
   async (
@@ -29,12 +30,12 @@ export const convertToNftActivity = createMiddleware(
         return [];
       }
 
-      const isErc721 =
+      const isErc721Transfer =
         decodedLog.type === "erc721" && decodedLog.category === "transfer";
-      const isErc1155 =
+      const isErc1155Transfer =
         decodedLog.type === "erc1155" && decodedLog.category === "transfer";
 
-      if (!isErc721 && !isErc1155) {
+      if (!isErc721Transfer && !isErc1155Transfer) {
         return [];
       }
 
@@ -56,7 +57,7 @@ export const convertToNftActivity = createMiddleware(
         removed: false,
       };
 
-      if (isErc721) {
+      if (isErc721Transfer) {
         const category = "erc721";
         return {
           fromAddress,
@@ -70,7 +71,7 @@ export const convertToNftActivity = createMiddleware(
         };
       }
 
-      if (isErc1155) {
+      if (isErc1155Transfer) {
         const isBatchTransfer = decodedLog.eventName === "TransferBatch";
         const erc1155Metadata = isBatchTransfer
           ? decodedLog.args.ids.map((tokenId: string, i: number) => ({
@@ -101,7 +102,22 @@ export const convertToNftActivity = createMiddleware(
       }
     });
 
-    console.log(JSON.stringify(activity, null, 2));
+    if (activity.length > 0) {
+      const nftActivityPayload = {
+        webhookId: payload.webhookId,
+        id: payload.id,
+        createdAt: payload.createdAt,
+        type: "NFT_ACTIVITY",
+        event: {
+          network: payload.event.network,
+          activity,
+        },
+      };
+      console.log(nftActivityPayload);
+
+      const parsed = parse(NftActivitySchema, nftActivityPayload);
+      console.log("Valid NFT Activity Payload:", parsed !== undefined);
+    }
 
     await next();
   }
