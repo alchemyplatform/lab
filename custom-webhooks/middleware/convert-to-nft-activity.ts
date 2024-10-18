@@ -35,7 +35,7 @@ export const convertToNftActivity = createMiddleware(
         decodedLog.type === "erc1155" && decodedLog.category === "transfer";
 
       if (!isErc721 && !isErc1155) {
-        throw new Error("Invalid event");
+        return [];
       }
 
       const fromAddress = decodedLog.args.from.toLowerCase();
