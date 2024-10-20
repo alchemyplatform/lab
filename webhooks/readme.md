@@ -36,11 +36,11 @@ We built a set of Hono middlewares to help you validate webhook signatures and p
 
 - Validates webhook signature parsing the `X-Alchemy-Signature` header and a user provided signing secret.
 
-- You can pass a single secret or a map of webhook ids to secrets to validate multiple webhook signatures.
+- You can also pass a map of webhook ids to secrets to validate multiple webhook signatures.
 
 ### validatePayload
 
-- Validates webhook payload against schemas defined in [`utils/schemas.ts`](./utils/schemas.ts).
+- Validates webhook payload against schemas defined in [`utils/schemas`](./utils/schemas).
 
 - Main advantage is that you'll get access to a typed payload object in your handler. 🪄
 
@@ -59,6 +59,8 @@ _Most teams won't need to use this middleware._
 ### events
 
 ### schemas
+
+Schemas to validate all Alchemy webhook payloads and check for required fields to transform Custom into Address Activity or NFT Activity webhook payloads.
 
 ## CLI
 
