@@ -32,19 +32,19 @@ deno run --allow-env scripts/create-webhook.ts
 
 We built a set of Hono middlewares to help you validate webhook signatures and payloads.
 
-### validateSignature
+### _validateSignature_
 
 - Validates webhook signature parsing the `X-Alchemy-Signature` header and a user provided signing secret.
 
 - You can also pass a map of webhook ids to secrets to validate multiple webhook signatures.
 
-### validatePayload
+### _validatePayload_
 
 - Validates webhook payload against schemas defined in [`utils/schemas`](./utils/schemas).
 
 - Main advantage is that you'll get access to a typed payload object in your handler. 🪄
 
-### transformPayload
+### _transformPayload_
 
 _Most teams won't need to use this middleware._
 
@@ -52,7 +52,7 @@ _Most teams won't need to use this middleware._
 
 - This can be useful if transitioning from Address Activity or NFT Activity webhooks to our new Custom webhooks and you want to keep your existing handlers.
 
-### superWebhook
+### _superWebhook_
 
 ## Utils
 
