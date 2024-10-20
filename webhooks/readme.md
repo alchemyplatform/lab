@@ -44,6 +44,8 @@ We built a set of Hono middlewares to help you validate webhook signatures and p
 
 - Main advantage is that you'll get access to a typed payload object in your handler. 🪄
 
+- ⚠️ Test payloads will fail validation. They differ slightly from production payloads - we're working on a fix. In meantime, we would recommend testing with production payloads.
+
 ### _transformPayload_
 
 _Most teams won't need to use this middleware._
