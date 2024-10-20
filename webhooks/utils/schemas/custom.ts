@@ -196,7 +196,7 @@ export const GraphQlSchema = strictObject({
 
 // Note - this is workaround around bug on test payload
 // Test payload for Custom webhook does not (yet!) contain the 'network' field.
-export const GraphQlTestSchema = strictObject({
+const GraphQlTestSchema = strictObject({
   webhookId: WebhookId,
   id: Id,
   createdAt: IsoTimestamp,
