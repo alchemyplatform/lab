@@ -15,6 +15,7 @@ export const validatePayload = createMiddleware<{
     await next();
   } catch (e) {
     if (e instanceof ValiError) {
+      console.log(e.message);
       console.log(
         e.issues.map((i) => i.path.map((path) => path.key).join("."))
       );
