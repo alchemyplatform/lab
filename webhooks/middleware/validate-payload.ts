@@ -8,9 +8,8 @@ import {
 export const validatePayload = createMiddleware<{
   Variables: { payload: AlchemyPayload };
 }>(async (ctx, next) => {
-  const body = await ctx.req.json();
-
   try {
+    const body = await ctx.req.json();
     const payload = parse(AlchemyPayloadSchema, body);
     ctx.set("payload", payload);
     await next();
@@ -19,7 +18,6 @@ export const validatePayload = createMiddleware<{
       console.log(
         e.issues.map((i) => i.path.map((path) => path.key).join("."))
       );
-      console.log(JSON.stringify(body, null, 2));
     }
     return ctx.json({ error: "Invalid payload" }, { status: 400 });
   }
