@@ -19,6 +19,9 @@ import {
 import { Account, SequenceNumber } from "./custom.ts";
 
 // Required fields to go from Custom webhook -> NFT Activity webhook
+export type GraphQlToNftActivity = InferOutput<
+  typeof GraphQlToNftActivitySchema
+>;
 export const GraphQlToNftActivitySchema = strictObject(
   {
     webhookId: WebhookId,
