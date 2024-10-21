@@ -1,0 +1,81 @@
+{
+  "webhookId": "wh_qmvp5zkwv3bdhjan",
+  "id": "whevt_hkrxf1wftgrsnxfp",
+  "createdAt": "2024-10-21T10:36:01.328Z",
+  "type": "ADDRESS_ACTIVITY",
+  "event": {
+    "network": "ETH_MAINNET",
+    "activity": [
+      {
+        "fromAddress": "0x055c48651015cf5b21599a4ded8c402fdc718058",
+        "toAddress": "0x7a250d5630b4cf539739df2c5dacb4c659f2488d",
+        "blockNum": "0x140a393",
+        "hash": "0x0a20777dadad23b885daf4cd95a955293f230de3abd64705db324f45ae0f664e",
+        "value": 0.0495,
+        "typeTraceAddress": "CALL_0",
+        "asset": "ETH",
+        "category": "internal",
+        "rawContract": {
+          "rawValue": "0xafdbfcdc61c000",
+          "decimals": 18
+        }
+      },
+      {
+        "fromAddress": "0x7a250d5630b4cf539739df2c5dacb4c659f2488d",
+        "toAddress": "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2",
+        "blockNum": "0x140a393",
+        "hash": "0x0a20777dadad23b885daf4cd95a955293f230de3abd64705db324f45ae0f664e",
+        "value": 0.0495,
+        "typeTraceAddress": "CALL_0_1",
+        "asset": "ETH",
+        "category": "internal",
+        "rawContract": {
+          "rawValue": "0xafdbfcdc61c000",
+          "decimals": 18
+        }
+      },
+      {
+        "fromAddress": "0x7a250d5630b4cf539739df2c5dacb4c659f2488d",
+        "toAddress": "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2",
+        "blockNum": "0x140a393",
+        "hash": "0x0a20777dadad23b885daf4cd95a955293f230de3abd64705db324f45ae0f664e",
+        "value": 0,
+        "typeTraceAddress": "CALL_0_2",
+        "asset": "ETH",
+        "category": "internal",
+        "rawContract": {
+          "rawValue": "0x0",
+          "decimals": 18
+        }
+      },
+      {
+        "fromAddress": "0x7a250d5630b4cf539739df2c5dacb4c659f2488d",
+        "toAddress": "0x7044c1c41af779bf762c3d50ab179c50c95093ec",
+        "blockNum": "0x140a393",
+        "hash": "0x0a20777dadad23b885daf4cd95a955293f230de3abd64705db324f45ae0f664e",
+        "value": 0,
+        "typeTraceAddress": "STATICCALL_0_0",
+        "asset": "ETH",
+        "category": "internal",
+        "rawContract": {
+          "rawValue": "0x0",
+          "decimals": 18
+        }
+      },
+      {
+        "fromAddress": "0x7a250d5630b4cf539739df2c5dacb4c659f2488d",
+        "toAddress": "0x7044c1c41af779bf762c3d50ab179c50c95093ec",
+        "blockNum": "0x140a393",
+        "hash": "0x0a20777dadad23b885daf4cd95a955293f230de3abd64705db324f45ae0f664e",
+        "value": 0,
+        "typeTraceAddress": "CALL_0_3",
+        "asset": "ETH",
+        "category": "internal",
+        "rawContract": {
+          "rawValue": "0x0",
+          "decimals": 18
+        }
+      }
+    ]
+  }
+}
