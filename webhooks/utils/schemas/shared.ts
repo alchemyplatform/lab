@@ -46,12 +46,25 @@ export const Id = pipe(
   length(22, "The ID is not 16 characters long.")
 );
 
+// eg. whsec_test
+export const WebhookSigningKey = pipe(
+  string(),
+  startsWith("whsec_", "The webhook signing key does not start with 'whsec_'."),
+  length(30, "The webhook signing key is not 30 characters long.")
+);
+
+export const WebhookType = union([literal("GRAPHQL"), literal("NFT_ACTIVITY")]);
+
 export const IsoTimestamp = pipe(
   string(),
   isoTimestamp("The timestamp is badly formatted.")
 );
 
-export const Network = string();
+export const Network = union([
+  literal("ETH_MAINNET"),
+  literal("ETH_SEPOLIA"),
+  string(),
+]);
 
 export const Topics = pipe(
   array(Hex),
