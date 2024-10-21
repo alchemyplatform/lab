@@ -16,14 +16,15 @@ export const validatePayload = createMiddleware<{
   } catch (e) {
     if (e instanceof SyntaxError) {
       const errMessage = `Error parsing payload: ${e.message}`;
+      console.error(errMessage);
       return ctx.json({ error: errMessage }, { status: 400 });
     }
 
     if (e instanceof ValiError) {
-      console.log(e.message);
       const errMessage = `Error validating payload: ${e.message}`;
-      const issuePath = e.issues.map((i) =>
-        i.path.map((path) => path.key).join(".")
+      console.error(errMessage);
+      const issuePath = e.issues.map((i: any) =>
+        i.path.map((path: { key: string }) => path.key).join(".")
       );
       return ctx.json(
         { error: errMessage, issues: issuePath },

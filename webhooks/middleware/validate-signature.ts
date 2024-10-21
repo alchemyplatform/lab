@@ -86,13 +86,17 @@ export const validateSignature = (
       }
 
       if (!isValidSignature) {
-        throw new Error("Invalid signature");
+        throw new Error(
+          "Invalid signature - make sure to include the correct signing secret. You can find it at https://dashboard.alchemy.com/webhooks or in the API response body when creating a new webhook."
+        );
       }
 
       await next();
     } catch (err) {
       if (err instanceof Error) {
-        return ctx.json({ error: err.message }, { status: 400 });
+        const errMessage = `Error validating signature: ${err.message}`;
+        console.error(errMessage);
+        return ctx.json({ error: errMessage }, { status: 400 });
       }
 
       return ctx.json(
