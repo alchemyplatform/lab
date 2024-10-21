@@ -32,7 +32,7 @@ export const validatePayload = createMiddleware<{
     }
 
     return ctx.json(
-      { error: "Error in validatePayload middleware" },
+      { error: "Unknown error validating payload" },
       { status: 400 }
     );
   }
