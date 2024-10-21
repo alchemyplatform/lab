@@ -1,5 +1,7 @@
 import { decodeEventLog, parseAbi, type Hex } from "npm:viem";
 import {
+  CRYPTOKITTIES_TRANSFER,
+  CRYPTOKITTIES_TRANSFER_ABI,
   ERC1155_APPROVAL_FOR_ALL,
   ERC1155_TRANSFER_BATCH,
   ERC1155_TRANSFER_SINGLE,
@@ -27,7 +29,7 @@ type Log = {
 };
 
 export type DecodedLog = {
-  type: "erc20" | "erc721" | "erc1155" | "weth";
+  type: "erc20" | "erc721" | "erc1155" | "weth" | "cryptokitties";
   category: "transfer" | "approval" | "deposit" | "withdrawal";
   eventName: string;
   args: Record<string, any>;
@@ -65,6 +67,18 @@ function decodeErc721Transfer(log: Log): DecodedLog {
       abi: parseAbi([ERC_721_TRANSFER_ABI]),
       data: log.data as Hex,
       topics: log.topics as [Hex, Hex, Hex, Hex],
+    }),
+  };
+}
+
+function decodeCryptoKittiesTransfer(log: Log): DecodedLog {
+  return {
+    type: "cryptokitties",
+    category: "transfer",
+    ...decodeEventLog({
+      abi: parseAbi([CRYPTOKITTIES_TRANSFER_ABI]),
+      data: log.data as Hex,
+      topics: log.topics as [Hex],
     }),
   };
 }
@@ -156,13 +170,21 @@ export function decodeLog(log: Log) {
       } else if (log.topics.length === 4) {
         return decodeErc721Transfer(log);
       }
-      throw new Error(
+      // throw new Error(
+      //   `Error decoding ERC20 or ERC721 transfer log: ${JSON.stringify(
+      //     log,
+      //     null,
+      //     2
+      //   )}`
+      // );
+      console.error(
         `Error decoding ERC20 or ERC721 transfer log: ${JSON.stringify(
           log,
           null,
           2
         )}`
       );
+      return null;
     }
 
     case ERC20_APPROVAL:
@@ -195,6 +217,10 @@ export function decodeLog(log: Log) {
 
     case ERC1155_APPROVAL_FOR_ALL: {
       return decodeErc1155ApprovalForAll(log);
+    }
+
+    case CRYPTOKITTIES_TRANSFER: {
+      return decodeCryptoKittiesTransfer(log);
     }
 
     case WETH_DEPOSIT: {
