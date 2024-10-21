@@ -1,0 +1,25 @@
+{
+  block {
+    hash
+    number
+    logs(
+      filter: {
+        topics: [
+          # event UserOperationEvent (bytes32 indexed userOpHash, address indexed sender, address indexed paymaster, uint256 nonce, bool success, uint256 actualGasCost, uint256 actualGasUsed)
+          "0x49628fd1471006c1482da88028e9ce4dbb080b815c9b0344d39e5a8e6ec1419f"
+        ]
+      }
+    ) {
+      data
+      topics
+      index
+      account {
+        address
+      }
+      transaction {
+        hash
+        index
+      }
+    }
+  }
+}
