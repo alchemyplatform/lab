@@ -19,13 +19,14 @@ export const convertToAddressActivity = createMiddleware(
     const activity = convertLogsToTransferActivity(payload);
 
     if (activity.length > 0) {
+      const { webhookId, id, createdAt, event } = payload;
       const addressActivityPayload = {
-        webhookId: payload.webhookId,
-        id: payload.id,
-        createdAt: payload.createdAt,
+        webhookId,
+        id,
+        createdAt,
         type: "ADDRESS_ACTIVITY",
         event: {
-          network: payload.event.network,
+          network: event.network,
           activity,
         },
       };
