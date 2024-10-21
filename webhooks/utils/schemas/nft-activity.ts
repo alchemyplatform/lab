@@ -1,4 +1,10 @@
-import { array, literal, strictObject, variant } from "@valibot/valibot";
+import {
+  array,
+  literal,
+  strictObject,
+  variant,
+  type InferOutput,
+} from "@valibot/valibot";
 import {
   ActivityLog as Log,
   Id,
@@ -11,6 +17,7 @@ import { Address } from "./shared.ts";
 import { Hex } from "./shared.ts";
 import { Hash } from "./shared.ts";
 
+export type NftActivityErc721Transfer = InferOutput<typeof Erc721Transfer>;
 const Erc721Transfer = strictObject({
   fromAddress: Address,
   toAddress: Address,
@@ -22,6 +29,7 @@ const Erc721Transfer = strictObject({
   log: Log,
 });
 
+export type NftActivityErc1155Transfer = InferOutput<typeof Erc1155Transfer>;
 const Erc1155Transfer = strictObject({
   fromAddress: Address,
   toAddress: Address,
