@@ -55,6 +55,16 @@ export const ERC1155_APPROVAL_FOR_ALL =
 export const ERC_1155_APPROVAL_FOR_ALL_ABI =
   "event ApprovalForAll(address indexed owner, address indexed operator, bool approved)";
 
+/**
+ *
+ * CryptoKitties Events
+ *
+ */
+export const CRYPTOKITTIES_TRANSFER =
+  "0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef";
+export const CRYPTOKITTIES_TRANSFER_ABI =
+  "event Transfer(address from, address to, uint256 tokenId)";
+
 /***
  *
  * WETH Events
