@@ -4,6 +4,8 @@ import { createHmac } from "node:crypto";
 
 const HEADER_SIGNATURE = "X-Alchemy-Signature";
 
+const TEST_SIGNING_KEY = "whsec_test";
+
 type ValidateSignatureOptions = {
   signingKey: string | Map<string, string>;
   debug?: boolean;
