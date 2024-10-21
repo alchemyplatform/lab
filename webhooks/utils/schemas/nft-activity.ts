@@ -41,6 +41,7 @@ const Erc1155Transfer = strictObject({
   log: Log,
 });
 
+export type NftActivityTransfer = InferOutput<typeof Transfers>;
 const Transfers = variant("category", [Erc721Transfer, Erc1155Transfer]);
 
 export const NftActivitySchema = strictObject({
