@@ -29,6 +29,14 @@
       transaction {
         hash
         index
+        from {
+          address
+        }
+        to {
+          address
+        }
+        type
+        status
       }
     }
   }
