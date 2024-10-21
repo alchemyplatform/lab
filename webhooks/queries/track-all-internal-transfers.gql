@@ -1,0 +1,20 @@
+{
+  block {
+    hash,
+    number,
+    callTracerTraces {
+      from {
+        address
+      }
+      to {
+        address
+      }
+      value
+      type
+      traceAddressPath
+      subtraceCount
+      # error
+      # revertReason
+    }
+  }
+}

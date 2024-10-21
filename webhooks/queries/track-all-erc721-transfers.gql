@@ -1,0 +1,30 @@
+{
+  block {
+    hash
+    number
+    logs(
+      filter: {
+        addresses: [
+          # MutantApeYachtClub (MAYC) contract address on Ethereum
+          # https://etherscan.io/token/0x60e4d786628fea6478f785a6d7e704777c86a7c6
+          "0x60E4d786628Fea6478F785A6d7e704777c86a7c6"
+        ]
+        topics: [
+          # event Transfer(address indexed from, address indexed to, uint256 indexed tokenId)
+          "0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef"
+        ]
+      }
+    ) {
+      data
+      topics
+      index
+      account {
+        address
+      }
+      transaction {
+        hash
+        index
+      }
+    }
+  }
+}

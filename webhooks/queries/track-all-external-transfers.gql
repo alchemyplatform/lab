@@ -1,0 +1,16 @@
+{
+  block {
+    hash,
+    number,
+    transactions {
+      hash,
+      from {
+        address
+      }
+      to {
+        address
+      }
+      value 
+    }
+  }
+}
