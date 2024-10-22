@@ -28,6 +28,7 @@ import {
   WebhookTypeNftMetadataUpdate,
   WebhookVersion,
 } from "../shared.ts";
+import { NftFilter } from "./shared.ts";
 
 const BaseCreateWebhook = strictObject({
   network: Network,
@@ -56,29 +57,19 @@ const CreateAddressActivityWebhook = strictObject({
 const CreateNftActivityWebhook = strictObject({
   ...BaseCreateWebhook.entries,
   type: WebhookTypeNftActivity,
-  nftFilters: array(
-    strictObject({
-      // TODO: check types
-      contractAddress: string(),
-      tokenId: string(),
-    })
-  ),
+  nftFilters: array(NftFilter),
 });
 
 const CreateNftMetadataUpdateWebhook = strictObject({
   ...BaseCreateWebhook.entries,
   type: WebhookTypeNftMetadataUpdate,
-  nftMetadataFilters: array(
-    strictObject({
-      contractAddress: string(),
-      tokenId: string(),
-    })
-  ),
+  nftMetadataFilters: array(NftFilter),
 });
 
 const CreateMinedTransactionWebhook = strictObject({
   ...BaseCreateWebhook.entries,
   type: WebhookTypeMinedTransaction,
+  // TODO: update appId schema
   appId: string(),
 });
 

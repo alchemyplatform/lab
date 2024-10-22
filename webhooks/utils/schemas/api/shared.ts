@@ -1,4 +1,4 @@
-import { boolean, optional, strictObject } from "@valibot/valibot";
+import { boolean, optional, strictObject, string } from "@valibot/valibot";
 import {
   Integer,
   WebhookId,
@@ -18,4 +18,10 @@ export const Webhook = strictObject({
   time_created: Integer,
   signing_key: WebhookSigningKey,
   version: WebhookVersion,
+});
+
+export const NftFilter = strictObject({
+  // TODO: check types
+  contractAddress: string(),
+  tokenId: string(),
 });
