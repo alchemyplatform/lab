@@ -53,7 +53,23 @@ export const WebhookSigningKey = pipe(
   length(30, "The webhook signing key is not 30 characters long.")
 );
 
-export const WebhookType = union([literal("GRAPHQL"), literal("NFT_ACTIVITY")]);
+export const WebhookTypeGraphQl = literal("GRAPHQL");
+export const WebhookTypeAddressActivity = literal("ADDRESS_ACTIVITY");
+export const WebhookTypeNftActivity = literal("NFT_ACTIVITY");
+export const WebhookTypeNftMetadataUpdate = literal("NFT_METADATA_UPDATE");
+export const WebhookTypeMinedTransaction = literal("MINED_TRANSACTION");
+export const WebhookTypeDroppedTransaction = literal("DROPPED_TRANSACTION");
+
+export const WebhookType = union([
+  WebhookTypeGraphQl,
+  WebhookTypeAddressActivity,
+  WebhookTypeNftActivity,
+  WebhookTypeNftMetadataUpdate,
+  WebhookTypeMinedTransaction,
+  WebhookTypeDroppedTransaction,
+]);
+
+export const WebhookVersion = union([literal("V2"), literal("V1")]);
 
 export const IsoTimestamp = pipe(
   string(),
