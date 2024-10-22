@@ -28,6 +28,10 @@ import {
   RequestUpdateNftMetadataFilters,
   ResponseUpdateNftMetadataFilters,
 } from "../../utils/schemas/api/update-nft-metadata-filters.ts";
+import {
+  RequestGetNftFilters,
+  ResponseGetNftFilters,
+} from "../../utils/schemas/api/get-nft-filters.ts";
 
 type RequestGetWebhook = {
   webhookId: string;
@@ -297,5 +301,32 @@ export class WebhookSdk {
     });
     const json = await response.json();
     return parse(ResponseUpdateNftMetadataFilters, json);
+  }
+
+  async getNftFilters(params: RequestGetNftFilters) {
+    const { webhookId, limit, after } = parse(RequestGetNftFilters, params);
+
+    const entries = [
+      ["webhook_id", webhookId],
+      ["limit", limit.toString()],
+      ["after", after],
+    ];
+    const filteredEntries = entries.filter(([, value]) => value) as [
+      string,
+      string
+    ][];
+    const queryParams = new URLSearchParams(filteredEntries);
+    const qs = queryParams.size > 1 ? `?${queryParams.toString()}` : "";
+    const url = `https://dashboard.alchemy.com/api/webhook-nft-filters${qs}`;
+    console.log(url);
+
+    const response = await fetch(url, {
+      headers: {
+        "X-Alchemy-Token": `${this.authToken}`,
+      },
+    });
+    const json = await response.json();
+    console.log(json);
+    return parse(ResponseGetNftFilters, json);
   }
 }
