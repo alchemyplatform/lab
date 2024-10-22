@@ -16,6 +16,10 @@ import {
   RequestReplaceAddresses,
   ResponseReplaceAddresses,
 } from "../../utils/schemas/api/replace-addresses.ts";
+import {
+  RequestUpdateStatus,
+  ResponseUpdateStatus,
+} from "../../utils/schemas/api/update-webhook-status.ts";
 
 type RequestGetWebhook = {
   webhookId: string;
@@ -221,5 +225,25 @@ export class WebhookSdk {
     });
     const json = await response.json();
     return parse(ResponseReplaceAddresses, json);
+  }
+
+  async updateStatus(params: RequestUpdateStatus) {
+    const { webhookId, isActive } = parse(RequestUpdateStatus, params);
+    const body = {
+      webhook_id: webhookId,
+      is_active: isActive,
+    };
+    const url = "https://dashboard.alchemy.com/api/update-webhook";
+    const response = await fetch(url, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        "X-Alchemy-Token": this.authToken,
+      },
+      body: JSON.stringify(body),
+    });
+    const json = await response.json();
+    console.log(json);
+    return parse(ResponseUpdateStatus, json);
   }
 }
