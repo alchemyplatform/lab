@@ -4,6 +4,10 @@ import {
   RequestGetAllAddresses,
   ResponseGetAllAddresses,
 } from "../../utils/schemas/api/get-all-addresses.ts";
+import {
+  RequestCreateWebhook,
+  ResponseCreateWebhook,
+} from "../../utils/schemas/api/create-webhook.ts";
 
 type RequestGetWebhook = {
   webhookId: string;
@@ -46,8 +50,8 @@ export class WebhookSdk {
 
   // TODO: rename to filter?
   // TODO: check if address webhook of type ADDRESS_ACTIVITY
-  async getAllAddresses(args: RequestGetAllAddresses) {
-    const { webhookId, limit, after } = parse(RequestGetAllAddresses, args);
+  async getAllAddresses(params: RequestGetAllAddresses) {
+    const { webhookId, limit, after } = parse(RequestGetAllAddresses, params);
 
     const entries = [
       ["webhook_id", webhookId],
@@ -77,5 +81,93 @@ export class WebhookSdk {
     }
     const json = await response.json();
     return parse(ResponseGetAllAddresses, json);
+  }
+
+  async create(params: RequestCreateWebhook) {
+    const args = parse(RequestCreateWebhook, params);
+
+    // TODO: refactor below in function
+
+    const {
+      type: webhookType,
+      network: webhookNetwork,
+      url: webhookUrl,
+    } = args;
+
+    const baseFields = {
+      network: webhookNetwork,
+      webhook_type: webhookType,
+      webhook_url: webhookUrl,
+    };
+
+    let body = null;
+    switch (webhookType) {
+      case "GRAPHQL": {
+        body = {
+          ...baseFields,
+          graphql_query:
+            typeof args.graphQlQuery === "string"
+              ? args.graphQlQuery
+              : {
+                  query: args.graphQlQuery.query,
+                  skip_empty_messages: args.graphQlQuery.skipEmptyMessages,
+                },
+        };
+        break;
+      }
+
+      case "ADDRESS_ACTIVITY": {
+        body = {
+          ...baseFields,
+          addresses: args.addresses,
+        };
+        break;
+      }
+
+      case "NFT_ACTIVITY": {
+        body = {
+          ...baseFields,
+          nft_filters: args.nftFilters.map(({ contractAddress, tokenId }) => ({
+            contract_address: contractAddress,
+            token_id: tokenId,
+          })),
+        };
+        break;
+      }
+
+      case "NFT_METADATA_UPDATE": {
+        body = {
+          ...baseFields,
+          nft_metadata_filters: args.nftMetadataFilters.map(
+            ({ contractAddress, tokenId }) => ({
+              contract_address: contractAddress,
+              token_id: tokenId,
+            })
+          ),
+        };
+        break;
+      }
+
+      case "MINED_TRANSACTION":
+      case "DROPPED_TRANSACTION": {
+        body = {
+          ...baseFields,
+          app_id: args.appId,
+        };
+        break;
+      }
+    }
+
+    const url = "https://dashboard.alchemy.com/api/create-webhook";
+    const response = await fetch(url, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "X-Alchemy-Token": this.authToken,
+      },
+      body: JSON.stringify(body),
+    });
+    const json = await response.json();
+    return parse(ResponseCreateWebhook, json);
   }
 }
