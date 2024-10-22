@@ -39,7 +39,7 @@ export const NftFilter = strictObject({
 export const ResNftFilter = strictObject({
   // TODO: check types
   contract_address: string(),
-  token_id: string(),
+  token_id: optional(string()),
 });
 
 // This validation is also usually done server side.
