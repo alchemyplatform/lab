@@ -29,3 +29,7 @@ await sdk.addRemoveAddresses({
   addressesToAdd: ["0x07c39105a9bd23da07d728b7d5d7b8b21137a635"],
   // addressesToRemove: ["test"],
 });
+
+await sdk.replaceAddresses({ webhookId: "wh_gb1pd3oa0hkmy2ax", addresses: [] });
+
+// console.log(await sdk.getAll());
