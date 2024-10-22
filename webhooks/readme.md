@@ -22,12 +22,6 @@ We still maintain mined and dropped webhooks created before Aug 2024 (disallowin
 deno run --allow-net --allow-env --env --watch index.ts
 ```
 
-### Create custom webhook
-
-```bash
-deno run --allow-env scripts/create-webhook.ts
-```
-
 ## Middleware
 
 We built a set of Hono middlewares to help you validate webhook signatures and payloads.
@@ -67,3 +61,52 @@ Schemas to validate all Alchemy webhook payloads and check for required fields t
 ## CLI
 
 > Coming soon! 👨‍💻
+
+## Examples
+
+You'll find more than 20 examples to get you started.
+If you can't find what you're looking for, feel free to create an issue.
+
+- Track ALL ETH transfers (external)
+
+- Track ALL ETH transfers FOR specific users
+
+- Track ALL internal transactions
+
+- Track ALL ERC20 events (_Transfer_, _Approval_)
+
+- Track ALL ERC20 _Transfer_ events
+
+- Track ERC20 _Transfer_ events FOR specific tokens (e.g. USDC)
+
+- Track ERC20 _Transfer_ events FOR specific addresses
+
+- Track ERC20 _Transfer_ events FOR specific tokens AND FOR specific addresses
+
+- Track ALL NFT events (ERC721, ERC1155, CryptoKitties, CryptoPunks)
+
+- Track ALL NFT _Transfer_ events (ERC721, ERC1155, CryptoKitties, CryptoPunks)
+
+- Track ALL ERC721 events (_Transfer_, _Approval_, _ApprovalForAll_)
+
+- Track ALL ERC721 _Transfer_ events
+
+- Track ERC721 _Transfer_ events FOR specific tokens (e.g. Bored Ape Yacht Club)
+
+- Track ERC721 _Transfer_ events FOR specific addresses
+
+- Track ERC721 _Transfer_ events FOR specific tokens AND FOR specific addresses
+
+- Track ALL ERC1155 events (_Transfer_, _Approval_, _ApprovalForAll_)
+
+- Track ALL ERC1155 _Transfer_ events
+
+- Track ERC1155 _Transfer_ events FOR specific tokens (e.g. Axie Infinity)
+
+- Track ERC1155 _Transfer_ events FOR specific addresses
+
+- Track ERC1155 _Transfer_ events FOR specific tokens AND FOR specific addresses
+
+- Track ALL user operations
+
+- Track user operations FOR specific users (i.e. sent by specific smart contract wallets)
