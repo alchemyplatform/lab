@@ -258,10 +258,10 @@ export class WebhookSdk {
     return parse(ResponseUpdateStatus, json);
   }
 
-  async updateNftFilters(args: RequestUpdateNftFilters) {
+  async updateNftFilters(params: RequestUpdateNftFilters) {
     const { webhookId, nftFiltersToAdd, nftFiltersToRemove } = parse(
       RequestUpdateNftFilters,
-      args
+      params
     );
     const body = {
       webhook_id: webhookId,
@@ -281,9 +281,9 @@ export class WebhookSdk {
     return parse(ResponseUpdateNftFilters, json);
   }
 
-  async updateNftMetadataFilters(args: RequestUpdateNftMetadataFilters) {
+  async updateNftMetadataFilters(params: RequestUpdateNftMetadataFilters) {
     const { webhookId, nftMetadataFiltersToAdd, nftMetadataFiltersToRemove } =
-      parse(RequestUpdateNftMetadataFilters, args);
+      parse(RequestUpdateNftMetadataFilters, params);
     const body = {
       webhook_id: webhookId,
       nft_metadata_filters_to_add: nftMetadataFiltersToAdd,
