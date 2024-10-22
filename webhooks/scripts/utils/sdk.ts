@@ -20,6 +20,10 @@ import {
   RequestUpdateStatus,
   ResponseUpdateStatus,
 } from "../../utils/schemas/api/update-webhook-status.ts";
+import {
+  RequestUpdateNftFilters,
+  ResponseUpdateNftFilters,
+} from "../../utils/schemas/api/update-webhook-nft-filters.ts";
 
 type RequestGetWebhook = {
   webhookId: string;
@@ -244,5 +248,29 @@ export class WebhookSdk {
     });
     const json = await response.json();
     return parse(ResponseUpdateStatus, json);
+  }
+
+  async updateNftFilters(args: RequestUpdateNftFilters) {
+    const { webhookId, nftFiltersToAdd, nftFiltersToRemove } = parse(
+      RequestUpdateNftFilters,
+      args
+    );
+    const body = {
+      webhook_id: webhookId,
+      nft_filters_to_add: nftFiltersToAdd,
+      nft_filters_to_remove: nftFiltersToRemove,
+    };
+    const url = "https://dashboard.alchemy.com/api/update-webhook-nft-filters";
+    const response = await fetch(url, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+        "X-Alchemy-Token": this.authToken,
+      },
+      body: JSON.stringify(body),
+    });
+    const json = await response.json();
+    console.log(json);
+    return parse(ResponseUpdateNftFilters, json);
   }
 }
