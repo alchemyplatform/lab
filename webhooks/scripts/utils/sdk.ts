@@ -32,6 +32,10 @@ import {
   RequestGetNftFilters,
   ResponseGetNftFilters,
 } from "../../utils/schemas/api/get-nft-filters.ts";
+import {
+  RequestDeleteWebhook,
+  ResponseDeleteWebhook,
+} from "../../utils/schemas/api/delete-webhook.ts";
 
 type RequestGetWebhook = {
   webhookId: string;
@@ -326,7 +330,24 @@ export class WebhookSdk {
       },
     });
     const json = await response.json();
-    console.log(json);
     return parse(ResponseGetNftFilters, json);
+  }
+
+  // TODO: handle error
+  async delete(params: RequestDeleteWebhook) {
+    const { webhookId } = parse(RequestDeleteWebhook, params);
+    const qs = `?${new URLSearchParams([
+      ["webhook_id", webhookId],
+    ]).toString()}`;
+    const url = `https://dashboard.alchemy.com/api/delete-webhook${qs}`;
+    const response = await fetch(url, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+        "X-Alchemy-Token": this.authToken,
+      },
+    });
+    const json = await response.json();
+    return parse(ResponseDeleteWebhook, json);
   }
 }

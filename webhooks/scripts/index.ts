@@ -45,12 +45,22 @@ const svixUrl = "https://play.svix.com/in/e_zrqf1pDjASk9O6n6t284bFymLv7/";
 //   isActive: false,
 // });
 
-const webhookIdNftActivity = "wh_dynjpog78q9tw8xc";
+// const webhookIdNftActivity = "wh_dynjpog78q9tw8xc";
 
-await sdk.updateNftFilters({
-  webhookId: webhookIdNftActivity,
-});
+// await sdk.updateNftFilters({
+//   webhookId: webhookIdNftActivity,
+// });
 
-await sdk.updateNftMetadataFilters({
-  webhookId: webhookIdNftActivity,
-});
+// await sdk.updateNftMetadataFilters({
+//   webhookId: webhookIdNftActivity,
+// });
+
+// await sdk.getNftFilters({
+//   webhookId: webhookIdNftActivity,
+// });
+
+const id = "wh_gb1pd3oa0hkmy2ax";
+
+await sdk.delete({ webhookId: id });
+
+console.log(await sdk.getAll());
