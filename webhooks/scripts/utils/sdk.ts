@@ -23,11 +23,11 @@ import {
 import {
   RequestUpdateNftFilters,
   ResponseUpdateNftFilters,
-} from "../../utils/schemas/api/update-webhook-nft-filters.ts";
+} from "../../utils/schemas/api/update-nft-filters.ts";
 import {
   RequestUpdateNftMetadataFilters,
   ResponseUpdateNftMetadataFilters,
-} from "../../utils/schemas/api/update-webhook-nft-metadata-filters.ts";
+} from "../../utils/schemas/api/update-nft-metadata-filters.ts";
 
 type RequestGetWebhook = {
   webhookId: string;
