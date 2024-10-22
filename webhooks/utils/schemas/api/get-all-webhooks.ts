@@ -3,18 +3,13 @@
  *
  * Docs - https://docs.alchemy.com/reference/team-webhooks
  */
-import {
-  array,
-  boolean,
-  literal,
-  optional,
-  strictObject,
-} from "@valibot/valibot";
+import { array, boolean, optional, strictObject } from "@valibot/valibot";
 import {
   Integer,
   WebhookId,
   WebhookSigningKey,
   WebhookType,
+  WebhookVersion,
 } from "../shared.ts";
 import { Network } from "../shared.ts";
 import { Url } from "../shared.ts";
@@ -27,7 +22,7 @@ const Webhook = strictObject({
   is_active: boolean(),
   time_created: Integer,
   signing_key: WebhookSigningKey,
-  version: literal("V2"),
+  version: WebhookVersion,
 });
 
 export const ResponseGetAllWebhooks = strictObject({
