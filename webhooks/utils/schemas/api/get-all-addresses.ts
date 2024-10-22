@@ -20,6 +20,7 @@ export const ResponseGetAllAddresses = strictObject({
     cursors: strictObject({
       after: PaginationAfter,
     }),
+    // TODO: check if total_count can be 0
     total_count: Integer,
   }),
 });
