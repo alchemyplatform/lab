@@ -1,11 +1,11 @@
-import { array, strictObject, type InferInput } from "@valibot/valibot";
-import { Address, WebhookId } from "../shared.ts";
-
 /***
  *
  *
  * Docs - https://docs.alchemy.com/reference/replace-webhook-addresses
  */
+import { array, strictObject, type InferInput } from "@valibot/valibot";
+import { Address, WebhookId } from "../shared.ts";
+
 export type RequestReplaceAddresses = InferInput<
   typeof RequestReplaceAddresses
 >;
