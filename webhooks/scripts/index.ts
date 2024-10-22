@@ -50,3 +50,7 @@ const webhookIdNftActivity = "wh_dynjpog78q9tw8xc";
 await sdk.updateNftFilters({
   webhookId: webhookIdNftActivity,
 });
+
+await sdk.updateNftMetadataFilters({
+  webhookId: webhookIdNftActivity,
+});
