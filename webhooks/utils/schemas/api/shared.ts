@@ -36,6 +36,12 @@ export const NftFilter = strictObject({
   tokenId: string(),
 });
 
+export const ResNftFilter = strictObject({
+  // TODO: check types
+  contract_address: string(),
+  token_id: string(),
+});
+
 // This validation is also usually done server side.
 // Limit needs to be between 1 and 100 (inclusive).
 export const PaginationLimit = optional(
