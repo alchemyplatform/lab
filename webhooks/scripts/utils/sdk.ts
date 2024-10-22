@@ -175,6 +175,7 @@ export class WebhookSdk {
     return parse(ResponseCreateWebhook, json);
   }
 
+  // TODO: rename this
   async addRemoveAddresses(params: RequestAddRemoveAddresses) {
     const { webhookId, addressesToAdd, addressesToRemove } = parse(
       RequestAddRemoveAddresses,
