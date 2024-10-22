@@ -1,4 +1,14 @@
-import { boolean, optional, strictObject, string } from "@valibot/valibot";
+import {
+  boolean,
+  maxValue,
+  minLength,
+  minValue,
+  number,
+  optional,
+  pipe,
+  strictObject,
+  string,
+} from "@valibot/valibot";
 import {
   Integer,
   WebhookId,
@@ -25,3 +35,16 @@ export const NftFilter = strictObject({
   contractAddress: string(),
   tokenId: string(),
 });
+
+// This validation is also usually done server side.
+// Limit needs to be between 1 and 100 (inclusive).
+export const PaginationLimit = optional(
+  pipe(
+    number(),
+    minValue(1, "Limit must be between 1 and 100."),
+    maxValue(100, "Limit must be between 1 and 100.")
+  ),
+  100
+);
+
+export const PaginationAfter = optional(pipe(string(), minLength(1)));
