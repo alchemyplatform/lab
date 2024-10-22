@@ -8,6 +8,10 @@ import {
   RequestCreateWebhook,
   ResponseCreateWebhook,
 } from "../../utils/schemas/api/create-webhook.ts";
+import {
+  RequestAddRemoveAddresses,
+  ResponseAddRemoveAddresses,
+} from "../../utils/schemas/api/add-remove-addresses.ts";
 
 type RequestGetWebhook = {
   webhookId: string;
@@ -169,5 +173,28 @@ export class WebhookSdk {
     });
     const json = await response.json();
     return parse(ResponseCreateWebhook, json);
+  }
+
+  async addRemoveAddresses(params: RequestAddRemoveAddresses) {
+    const { webhookId, addressesToAdd, addressesToRemove } = parse(
+      RequestAddRemoveAddresses,
+      params
+    );
+    const body = {
+      webhook_id: webhookId,
+      addresses_to_add: addressesToAdd,
+      addresses_to_remove: addressesToRemove,
+    };
+    const url = "https://dashboard.alchemy.com/api/update-webhook-addresses";
+    const response = await fetch(url, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+        "X-Alchemy-Token": this.authToken,
+      },
+      body: JSON.stringify(body),
+    });
+    const json = await response.json();
+    return parse(ResponseAddRemoveAddresses, json);
   }
 }
