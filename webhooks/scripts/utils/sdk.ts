@@ -243,7 +243,6 @@ export class WebhookSdk {
       body: JSON.stringify(body),
     });
     const json = await response.json();
-    console.log(json);
     return parse(ResponseUpdateStatus, json);
   }
 }
