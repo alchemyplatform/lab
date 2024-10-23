@@ -45,7 +45,10 @@ type FilterErc721TransferInput = {
 function filterErc721Transfer({
   activity,
   filters,
-}: FilterErc721TransferInput): boolean {}
+}: FilterErc721TransferInput): boolean {
+  const contractAddress = activity.contractAddress;
+  const tokenId = activity.erc721TokenId;
+}
 
 type FilterErc1155TransferInput = {
   activity: NftActivityErc1155Transfer;
