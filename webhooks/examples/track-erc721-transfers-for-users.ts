@@ -150,6 +150,8 @@ Network: ${webhook.network}
 Type:    ${webhook.webhook_type}
 Id:      ${webhook.id}
 Created at: ${new Date(webhook.time_created)}
+
+Signing key: ${webhook.signing_key}
 `
     );
   }
