@@ -8,7 +8,7 @@
  *
  */
 
-import { WebhookSdk } from "../../utils/sdk/index.ts";
+import { WebhookSdk } from "../utils/sdk/index.ts";
 
 const QUERY_ERC721_TRANSFER_OUT = `
 # Outgoing ERC721 transfers
