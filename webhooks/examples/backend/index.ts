@@ -1,9 +1,9 @@
 import { Hono } from "@hono/hono";
-import { validateSignature } from "./middleware/validate-signature.ts";
-import { validatePayload } from "./middleware/validate-payload.ts";
-import type { AlchemyPayload } from "./utils/schemas/index.ts";
-import { convertToNftActivity } from "./middleware/convert-to-nft-activity/index.ts";
-import { superWebhook } from "./middleware/super-webhook.ts";
+import { validateSignature } from "../../middleware/validate-signature.ts";
+import { validatePayload } from "../../middleware/validate-payload.ts";
+import type { AlchemyPayload } from "../../utils/schemas/index.ts";
+import { convertToNftActivity } from "../../middleware/convert-to-nft-activity/index.ts";
+import { superWebhook } from "../../middleware/super-webhook.ts";
 
 const app = new Hono<{ Variables: { payload: AlchemyPayload } }>();
 
