@@ -45,6 +45,10 @@ import {
   RequestGetVariableElements,
   ResponseGetVariableElements,
 } from "../schemas/api/get-variable-elements.ts";
+import {
+  RequestDeleteVariable,
+  ResponseDeleteVariable,
+} from "../schemas/api/delete-variable.ts";
 
 type RequestGetWebhook = {
   webhookId: string;
@@ -393,5 +397,18 @@ export class WebhookSdk {
     });
     const json = await response.json();
     return parse(ResponseCreateVariable, json);
+  }
+
+  async deleteVariable(params: RequestDeleteVariable) {
+    const { variable } = parse(RequestDeleteVariable, params);
+    const url = `https://dashboard.alchemy.com/api/graphql/variables/${variable}`;
+    const response = await fetch(url, {
+      method: "DELETE",
+      headers: {
+        "X-Alchemy-Token": `${this.authToken}`,
+      },
+    });
+    const json = await response.json();
+    return parse(ResponseDeleteVariable, json);
   }
 }
