@@ -14,14 +14,6 @@ We still maintain mined and dropped webhooks created before Aug 2024 (disallowin
 - _(deprecated)_ [Mined Transaction]()
 - _(deprecated)_ [Dropped Transaction]()
 
-## Usage
-
-### Start server
-
-```bash
-deno run --allow-net --allow-env --env --watch index.ts
-```
-
 ## Middleware
 
 We built a set of Hono middlewares to help you validate webhook signatures and payloads.
@@ -40,7 +32,7 @@ We built a set of Hono middlewares to help you validate webhook signatures and p
 
 - ⚠️ Test payloads will fail validation. They differ slightly from production payloads - we're working on a fix. In meantime, we would recommend testing with production payloads.
 
-### _transformPayload_
+<!-- ### _transformPayload_
 
 _Most teams won't need to use this middleware._
 
@@ -48,7 +40,7 @@ _Most teams won't need to use this middleware._
 
 - This can be useful if transitioning from Address Activity or NFT Activity webhooks to our new Custom webhooks and you want to keep your existing handlers.
 
-### _superWebhook_
+### _superWebhook_ -->
 
 ## Utils
 
@@ -58,16 +50,18 @@ _Most teams won't need to use this middleware._
 
 Schemas to validate all Alchemy webhook payloads and check for required fields to transform Custom into Address Activity or NFT Activity webhook payloads.
 
-## CLI
+<!-- ## CLI
 
-> Coming soon! 👨‍💻
+> Coming soon! 👨‍💻 -->
 
 ## Examples
 
 You'll find more than 20 examples to get you started.
 If you can't find what you're looking for, feel free to create an issue.
 
-- Track ALL ETH transfers (external) - [Query](./examples/track-all-eth-transfers.ts) | [Example](./examples/track-all-eth-transfers.ts)
+<!-- - Track ALL ETH transfers (external) - [Query](./examples/track-all-eth-transfers.ts) | [Example](./examples/track-all-eth-transfers.ts) -->
+
+- Track ALL ETH transfers (external)
 
 - Track ALL ETH transfers FOR specific users
 
