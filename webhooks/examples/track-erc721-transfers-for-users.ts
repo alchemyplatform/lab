@@ -8,6 +8,7 @@
  *
  */
 
+import { pad, type Hex } from "npm:viem";
 import { WebhookSdk } from "../utils/sdk/index.ts";
 
 const QUERY_ERC721_TRANSFER_OUT = `
@@ -155,5 +156,37 @@ Created at: ${new Date(webhook.time_created)}
 /**
  *
  * 6. Create Custom webhook variables for contract addresses and user addresses.
+ *
+ */
+const VARIABLE_CONTRACT_ADDRESSES = "contractAddresses";
+
+await client.createVariable({
+  variable: VARIABLE_CONTRACT_ADDRESSES,
+  items: Array.from(contractAddresses),
+});
+console.log(
+  '=> Created variable "contractAddresses"',
+  await client.getVariableElements({ variable: VARIABLE_CONTRACT_ADDRESSES })
+);
+
+const VARIABLE_USER_ADDRESSES = "userAddresses";
+await client.createVariable({
+  variable: VARIABLE_USER_ADDRESSES,
+  items: [...addresses].map((address) => pad(address as Hex)),
+});
+
+console.log(
+  '=> Created variable "userAddresses"',
+  await client.getVariableElements({ variable: VARIABLE_USER_ADDRESSES })
+);
+
+// await client.deleteVariable({ variable: VARIABLE_CONTRACT_ADDRESSES });
+// await client.deleteVariable({ variable: VARIABLE_USER_ADDRESSES });
+
+/**
+ *
+ * 7. Start backend server to receive events
+ *
+ * You'll need ngrok, localhost or some tunneling service to expose your local server to the internet (if developing locally).
  *
  */
