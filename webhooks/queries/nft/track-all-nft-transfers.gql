@@ -10,7 +10,7 @@
         topics: [
           [
             # Transfer event has is the same for ERC20, ERC721 and CryptoKitties so you'll need to check number of topics in your handler
-
+            
             # event Transfer(address indexed from, address indexed to, uint256 indexed tokenId)
             "0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef"
 
@@ -19,6 +19,10 @@
 
             # event TransferBatch(address indexed operator, address indexed from, address indexed to, uint256[] ids, uint256[] values)
             "0x4a39dc06d4c0dbc64b70af90fd698a233a518aa5d07e595d983b8c0526c8f7fb"
+
+            # Note - CryptoPunks transfers are a bit different 
+            # event PunkTransfer(address indexed from, address indexed to, uint256 punkIndex);
+          "0x05af636b70da6819000c49f85b21fa82081c632069bb626f30932034099107d8"
           ]
         ]
       }

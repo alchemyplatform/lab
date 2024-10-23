@@ -5,7 +5,7 @@
     logs(
       filter: {
         addresses: [
-          # CryptoPunks contract address on Ethereum
+          # CryptoPunks contract address on Ethereum Mainnet
           # https://etherscan.io/token/0xb47e3cd837dDF8e4c57F05d70Ab865de6e193BBB
           "0xb47e3cd837dDF8e4c57F05d70Ab865de6e193BBB"
         ]

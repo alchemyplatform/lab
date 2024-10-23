@@ -1,0 +1,30 @@
+{
+  block {
+    hash
+    number
+    logs(
+      filter: {
+        addresses: [
+          # CryptoKitties contract address on Ethereum Mainnet
+          # https://etherscan.io/token/0x06012c8cf97bead5deae237070f9587f8e7a266d
+          "0x06012c8cf97bead5deae237070f9587f8e7a266d"
+        ]
+        topics: [
+          # event Transfer(address from, address to, uint256 tokenId);
+          "0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef"
+        ]
+      }
+    ) {
+      data
+      topics
+      index
+      account {
+        address
+      }
+      transaction {
+        hash
+        index
+      }
+    }
+  }
+}
