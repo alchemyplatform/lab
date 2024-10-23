@@ -1,7 +1,7 @@
 // deno test --allow-net --allow-env --env
 
 import { describe } from "node:test";
-import { app } from "../index.ts";
+import { app } from "../examples/backend/index.ts";
 import test from "node:test";
 
 describe("Example", () => {
