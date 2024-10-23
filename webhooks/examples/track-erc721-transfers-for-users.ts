@@ -88,7 +88,9 @@ query ($contractAddresses: [Address!]!, $userAddresses: [Bytes32!]!) {
  */
 const authToken = Deno.env.get("WEBHOOK_AUTH_TOKEN");
 if (!authToken) {
-  throw new Error("WEBHOOK_AUTH_TOKEN env variable is required");
+  throw new Error(
+    "WEBHOOK_AUTH_TOKEN env variable is required. Did you set it your .env file?"
+  );
 }
 
 /**
