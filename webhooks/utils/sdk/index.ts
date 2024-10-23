@@ -37,6 +37,14 @@ import {
   ResponseDeleteWebhook,
 } from "../schemas/api/delete-webhook.ts";
 import { buildQueryString } from "./shared.ts";
+import {
+  RequestCreateVariable,
+  ResponseCreateVariable,
+} from "../schemas/api/create-variable.ts";
+import {
+  RequestGetVariableElements,
+  ResponseGetVariableElements,
+} from "../schemas/api/get-variable-elements.ts";
 
 type RequestGetWebhook = {
   webhookId: string;
@@ -340,5 +348,50 @@ export class WebhookSdk {
     });
     const json = await response.json();
     return parse(ResponseDeleteWebhook, json);
+  }
+
+  async getVariableElements(params: RequestGetVariableElements) {
+    const { variable, limit, after } = parse(
+      RequestGetVariableElements,
+      params
+    );
+
+    const entries = [
+      ["limit", limit.toString()],
+      ["after", after],
+    ];
+    const qs = buildQueryString(entries);
+    const url = `https://dashboard.alchemy.com/api/graphql/variables/${variable}${qs}`;
+    const response = await fetch(url, {
+      method: "GET",
+      headers: {
+        "X-Alchemy-Token": `${this.authToken}`,
+      },
+    });
+    if (!response.ok) {
+      throw new Error(
+        `Failed to fetch variable elements: ${response.statusText}`
+      );
+    }
+    const json = await response.json();
+    console.log(json);
+    return parse(ResponseGetVariableElements, json);
+  }
+
+  async createVariable(params: RequestCreateVariable) {
+    const { variable, items } = parse(RequestCreateVariable, params);
+    const body = { items };
+    const url = `https://dashboard.alchemy.com/api/graphql/variables/${variable}`;
+    console.log(url);
+    const response = await fetch(url, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "X-Alchemy-Token": `${this.authToken}`,
+      },
+      body: JSON.stringify(body),
+    });
+    const json = await response.json();
+    return parse(ResponseCreateVariable, json);
   }
 }
