@@ -36,6 +36,7 @@ import {
   RequestDeleteWebhook,
   ResponseDeleteWebhook,
 } from "../schemas/api/delete-webhook.ts";
+import { buildQueryString } from "./shared.ts";
 
 type RequestGetWebhook = {
   webhookId: string;
@@ -86,12 +87,7 @@ export class WebhookSdk {
       ["limit", limit.toString()],
       ["after", after],
     ];
-    const filteredEntries = entries.filter(([, value]) => value) as [
-      string,
-      string
-    ][];
-    const queryParams = new URLSearchParams(filteredEntries);
-    const qs = queryParams.size > 1 ? `?${queryParams.toString()}` : "";
+    const qs = buildQueryString(entries);
     const url = `https://dashboard.alchemy.com/api/webhook-addresses${qs}`;
     console.log(url);
 
@@ -315,12 +311,7 @@ export class WebhookSdk {
       ["limit", limit.toString()],
       ["after", after],
     ];
-    const filteredEntries = entries.filter(([, value]) => value) as [
-      string,
-      string
-    ][];
-    const queryParams = new URLSearchParams(filteredEntries);
-    const qs = queryParams.size > 1 ? `?${queryParams.toString()}` : "";
+    const qs = buildQueryString(entries);
     const url = `https://dashboard.alchemy.com/api/webhook-nft-filters${qs}`;
     console.log(url);
 
