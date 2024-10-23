@@ -56,12 +56,11 @@ export function convertToErc1155TransferActivity({
     ];
   }
 
-  const erc1155Metadata = [
-    {
-      tokenId: toHex(decodedLog.args.id),
-      value: toHex(decodedLog.args.value),
-    },
-  ];
+  const { ids, values } = decodedLog.args;
+  const erc1155Metadata = ids.map((id: bigint, i: number) => ({
+    tokenId: toHex(id),
+    value: toHex(values[i]),
+  }));
 
   const activityItem = {
     fromAddress: decodedLog.args.from.toLowerCase(),
