@@ -1,5 +1,7 @@
 import {
+  array,
   boolean,
+  maxLength,
   maxValue,
   minLength,
   minValue,
@@ -9,8 +11,11 @@ import {
   regex,
   strictObject,
   string,
+  union,
 } from "@valibot/valibot";
 import {
+  Address,
+  Hash,
   Integer,
   WebhookId,
   WebhookSigningKey,
@@ -64,5 +69,15 @@ export const Variable = pipe(
   regex(
     /^[A-Za-z0-9]*$/,
     "Variable must be alphanumeric string (e.g. myVariable)."
+  )
+);
+
+// TODO: add Byte32 schema? check if we can pass any string as items
+export const VariableItems = pipe(
+  array(union([Address, Hash]), "Item must be a valid address or hash"),
+  minLength(1, "'items' should at least have one element"),
+  maxLength(
+    10_000,
+    "'items' should have at most 10,000 elements - you can call the API multiple times."
   )
 );
