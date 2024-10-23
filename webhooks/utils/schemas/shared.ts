@@ -75,6 +75,7 @@ export const IsoTimestamp = pipe(
   isoTimestamp("The timestamp is badly formatted.")
 );
 
+// TODO: add list of networks we support
 export const Network = union([
   literal("ETH_MAINNET"),
   literal("ETH_SEPOLIA"),
