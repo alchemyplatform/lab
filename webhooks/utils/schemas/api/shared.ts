@@ -6,6 +6,7 @@ import {
   number,
   optional,
   pipe,
+  regex,
   strictObject,
   string,
 } from "@valibot/valibot";
@@ -54,3 +55,14 @@ export const PaginationLimit = optional(
 );
 
 export const PaginationAfter = optional(pipe(string(), minLength(1)));
+
+// Custom Webhook variable
+export const Variable = pipe(
+  string(),
+  minLength(1, "Variable must be non empty string (e.g. myVariable)."),
+  // https://stackoverflow.com/a/17481038
+  regex(
+    /^[A-Za-z0-9]*$/,
+    "Variable must be alphanumeric string (e.g. myVariable)."
+  )
+);
