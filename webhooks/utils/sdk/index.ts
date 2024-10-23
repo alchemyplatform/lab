@@ -1,41 +1,41 @@
 import { parse } from "@valibot/valibot";
-import { ResponseGetAllWebhooks } from "../../utils/schemas/api/get-all-webhooks.ts";
+import { ResponseGetAllWebhooks } from "../schemas/api/get-all-webhooks.ts";
 import {
   RequestGetAllAddresses,
   ResponseGetAllAddresses,
-} from "../../utils/schemas/api/get-all-addresses.ts";
+} from "../schemas/api/get-all-addresses.ts";
 import {
   RequestCreateWebhook,
   ResponseCreateWebhook,
-} from "../../utils/schemas/api/create-webhook.ts";
+} from "../schemas/api/create-webhook.ts";
 import {
   RequestAddRemoveAddresses,
   ResponseAddRemoveAddresses,
-} from "../../utils/schemas/api/add-remove-addresses.ts";
+} from "../schemas/api/add-remove-addresses.ts";
 import {
   RequestReplaceAddresses,
   ResponseReplaceAddresses,
-} from "../../utils/schemas/api/replace-addresses.ts";
+} from "../schemas/api/replace-addresses.ts";
 import {
   RequestUpdateStatus,
   ResponseUpdateStatus,
-} from "../../utils/schemas/api/update-webhook-status.ts";
+} from "../schemas/api/update-webhook-status.ts";
 import {
   RequestUpdateNftFilters,
   ResponseUpdateNftFilters,
-} from "../../utils/schemas/api/update-nft-filters.ts";
+} from "../schemas/api/update-nft-filters.ts";
 import {
   RequestUpdateNftMetadataFilters,
   ResponseUpdateNftMetadataFilters,
-} from "../../utils/schemas/api/update-nft-metadata-filters.ts";
+} from "../schemas/api/update-nft-metadata-filters.ts";
 import {
   RequestGetNftFilters,
   ResponseGetNftFilters,
-} from "../../utils/schemas/api/get-nft-filters.ts";
+} from "../schemas/api/get-nft-filters.ts";
 import {
   RequestDeleteWebhook,
   ResponseDeleteWebhook,
-} from "../../utils/schemas/api/delete-webhook.ts";
+} from "../schemas/api/delete-webhook.ts";
 
 type RequestGetWebhook = {
   webhookId: string;

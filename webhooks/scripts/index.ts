@@ -1,7 +1,7 @@
 // deno run --allow-net --allow-env --env --watch scripts/index.ts
 
-import { QUERY_TRACK_ALL_ERC20_EVENTS } from "../queries/track-all-erc20-events.ts";
-import { WebhookSdk } from "./utils/sdk.ts";
+import { QUERY_TRACK_ALL_ERC20_EVENTS } from "../queries/erc20/track-all-erc20-events.ts";
+import { WebhookSdk } from "../utils/sdk/index.ts";
 
 const sdk = new WebhookSdk({ authToken: Deno.env.get("WEBHOOK_AUTH_TOKEN")! });
 
@@ -59,8 +59,8 @@ const svixUrl = "https://play.svix.com/in/e_zrqf1pDjASk9O6n6t284bFymLv7/";
 //   webhookId: webhookIdNftActivity,
 // });
 
-const id = "wh_gb1pd3oa0hkmy2ax";
+// const id = "wh_gb1pd3oa0hkmy2ax";
 
-await sdk.delete({ webhookId: id });
+// await sdk.delete({ webhookId: id });
 
 console.log(await sdk.getAll());
