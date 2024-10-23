@@ -101,6 +101,7 @@ export const validateSignature = (
         return ctx.json({ error: errMessage }, { status: 400 });
       }
 
+      console.error("Unknown error validating signature");
       return ctx.json(
         { error: "Unknown error validating signature" },
         { status: 400 }
