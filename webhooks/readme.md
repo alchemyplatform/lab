@@ -67,7 +67,7 @@ Schemas to validate all Alchemy webhook payloads and check for required fields t
 You'll find more than 20 examples to get you started.
 If you can't find what you're looking for, feel free to create an issue.
 
-- Track ALL ETH transfers (external)
+- Track ALL ETH transfers (external) - [Query](./examples/track-all-eth-transfers.ts) | [Example](./examples/track-all-eth-transfers.ts)
 
 - Track ALL ETH transfers FOR specific users
 
