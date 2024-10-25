@@ -1,4 +1,5 @@
-# You'll need to create 2 webhooks - one for incoming transfers and one for outgoing transfers.
+# Vitalik's address on Ethereum Mainnet
+# https://etherscan.io/address/0xd8da6bf26964af9d7eed9e03e53415d37aa96045
 
 {
   block {
@@ -6,37 +7,17 @@
     number
     transactions(
       filter: {
-        addresses: {
-          # Vitalik's address on Ethereum
-          # https://etherscan.io/address/0xd8da6bf26964af9d7eed9e03e53415d37aa96045
-          from: "0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045"
-          to: []
-        } 
-      }
-    ) {
-      hash
-      from {
-        address
-      }
-      to {
-        address
-      }
-      value
-    }
-  }
-}
-
-# 
-{
-  block {
-    hash
-    number
-    transactions(
-      filter: {
-        addresses: {
-          from: [],
-          to: "0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045"
-        } 
+        # all filters in addresses list are OR'd
+        addresses: [
+          { 
+            from: "0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045"
+            to: [] 
+          }
+          {
+            from: []
+            to: "0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045"
+          }
+        ]
       }
     ) {
       hash
