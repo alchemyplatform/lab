@@ -1,0 +1,42 @@
+# Track ERC1155 transfers for a set of users
+
+# Note - You'll need to create a custom webhook variable named 'addresses' - see examples folder for more details.
+
+query($addresses: [Bytes32!]!) {
+  block {
+    hash
+    number
+    logs(
+      filter: {
+        addresses: [
+          # OpenSea Shared Storefront
+          # https://etherscan.io/token/0x495f947276749ce646f68ac8c248420045cb7b5e
+          "0x495f947276749Ce646f68AC8c248420045cb7b5e"
+        ]
+        topics: [
+          [
+            # event TransferSingle(address indexed operator, address indexed from, address indexed to, uint256 id, uint256 value)
+            "0xc3d58168c5ae7397731d063d5bbf3d657854427343f4c083240f7aacaa2d0f62"
+
+            # event TransferBatch(address indexed operator, address indexed from, address indexed to, uint256[] ids, uint256[] values)
+            "0x4a39dc06d4c0dbc64b70af90fd698a233a518aa5d07e595d983b8c0526c8f7fb"
+          ]
+          []
+          $addresses
+          $addresses
+        ]
+      }
+    ) {
+      data
+      topics
+      index
+      account {
+        address
+      }
+      transaction {
+        hash
+        index
+      }
+    }
+  }
+}
