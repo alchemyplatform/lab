@@ -1,3 +1,7 @@
+# Track ERC721 transfers for a set of users
+
+# Note - You'll need to create a custom webhook variable named 'addresses' - see examples folder for more details.
+
 query ($addresses: [Bytes32!]!) {
   block {
     hash
