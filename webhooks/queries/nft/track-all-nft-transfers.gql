@@ -22,7 +22,7 @@
 
             # Note - CryptoPunks transfers are a bit different 
             # event PunkTransfer(address indexed from, address indexed to, uint256 punkIndex);
-          "0x05af636b70da6819000c49f85b21fa82081c632069bb626f30932034099107d8"
+            "0x05af636b70da6819000c49f85b21fa82081c632069bb626f30932034099107d8"
           ]
         ]
       }
