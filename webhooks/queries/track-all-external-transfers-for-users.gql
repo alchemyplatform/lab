@@ -1,0 +1,34 @@
+# Track all external transfers for a set of addresses
+
+# Note - You'll need to create a custom webhook variable named 'addresses' - see examples folder for more details.
+
+query($addresses: [Address!]) {
+  block {
+    hash
+    number
+    transactions(
+      filter: {
+        # all filters in addresses list are OR'd
+        addresses: [
+          { 
+            from: $addresses
+            to: [] 
+          }
+          {
+            from: []
+            to: $addresses
+          }
+        ]
+      }
+    ) {
+      hash
+      from {
+        address
+      }
+      to {
+        address
+      }
+      value
+    }
+  }
+}

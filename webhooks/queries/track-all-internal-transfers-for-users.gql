@@ -1,0 +1,38 @@
+# Track all internal transfers for a set of addresses
+
+# Note - You'll need to create a custom webhook variable named 'addresses' - see examples folder for more details.
+
+query($addresses: [Address!]) {
+  block {
+    hash,
+    number,
+    callTracerTraces(
+      filter: {
+        # all filters in addresses list are OR'd
+        addresses: [
+          { 
+            from: $addresses
+            to: [] 
+          }
+          {
+            from: []
+            to: $addresses
+          }
+        ]
+      }
+    ) {
+      from {
+        address
+      }
+      to {
+        address
+      }
+      value
+      type
+      traceAddressPath
+      subtraceCount
+      # error
+      # revertReason
+    }
+  }
+}
