@@ -13,7 +13,7 @@ async function getTokenBalancesByAddress({ address, networks }: { address: strin
     body: JSON.stringify(request),
   });
   const json = await response.json();
-  return parse(GetTokenBalancesByAddressResponse, json).data;
+  return parse(GetTokenBalancesByAddressResponse, json).data.tokens;
 }
 
 export { getTokenBalancesByAddress };

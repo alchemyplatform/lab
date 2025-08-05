@@ -14,7 +14,7 @@ async function getNftsByAddress({ address, networks }: { address: string, networ
     body: JSON.stringify(request),
   });
   const json = await response.json();
-  return parse(GetNftsByAddressResponse, json).data;
+  return parse(GetNftsByAddressResponse, json).data.ownedNfts;
 }
 
 export { getNftsByAddress };
