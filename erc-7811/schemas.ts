@@ -105,6 +105,6 @@ type WalletGetAssetsResponse = InferOutput<typeof WalletGetAssetsResponse>;
 const WalletGetAssetsResponse = record(Eip155ChainId, array(Asset));
 
 export {
-  type WalletGetAssetsRequest,
+  WalletGetAssetsRequest,
   type WalletGetAssetsResponse,
 }
