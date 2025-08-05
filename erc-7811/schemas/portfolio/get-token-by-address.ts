@@ -6,7 +6,9 @@ import {
   optional,
   pipe,
   maxLength,
-  nullable
+  nullable,
+  type InferInput,
+  isoTimestamp
 } from "valibot";
 import { Address, Hex, Integer, Network } from "../shared";
 
@@ -37,8 +39,7 @@ const GetTokensByAddressRequest = object({
 const TokenPrice = object({
   currency: string(),
   value: string(),
-  // TODO: use stricter validation?
-  lastUpdatedAt: string(),
+  lastUpdatedAt: pipe(string(), isoTimestamp("YYYY-MM-DDTHH:mm:ssZ")),
 });
 
 const TokenPrices = object({
@@ -56,6 +57,8 @@ const TokenMetadata = object({
   symbol: nullable(string()),
 });
 
+// TODO: split Token into NativeToken and Erc20Token
+type Token = InferInput<typeof Token>;
 const Token = object({
   address: Address,
   network: Network,
@@ -74,6 +77,7 @@ const GetTokensByAddressResponse = object({
 });
 
 export {
+  Token,
   GetTokensByAddressRequest,
   GetTokensByAddressResponse,
 };

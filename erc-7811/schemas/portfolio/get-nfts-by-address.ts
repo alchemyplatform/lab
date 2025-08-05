@@ -8,9 +8,12 @@ import {
   maxLength,
   union,
   literal,
-  nullable
+  nullable,
+  type InferOutput,
+  strictObject,
+  isoTimestamp
 } from "valibot";
-import { Address, Integer, Network } from "../shared";
+import { Address, Hex, Integer, Network } from "../shared";
 
 /*
   NFTs by Wallet
@@ -33,86 +36,164 @@ const GetNftsByAddressRequest = object({
   sortOrder: optional(union([literal('asc'), literal('desc')])),
 });
 
+const TokenType = union([
+  literal('ERC721'),
+  literal('ERC1155'),
+  literal('NO_SUPPORTED_NFT_STANDARD'),
+  literal('NOT_A_CONTRACT')
+]);
+
+const SpamClassification = union([
+  literal('EmptyMetadata'),
+  literal('SpammyMetadata'),
+  literal('SuspiciousMetadata'),
+])
+
 // NFT Contract schema
 const NftContract = object({
-  address: Address,
-  name: optional(string()),
-  symbol: optional(string()),
-  totalSupply: optional(string()),
-  tokenType: optional(string()),
-  contractDeployer: optional(string()),
-  deployedBlockNumber: optional(string()),
-  openseaMetadata: optional(object({
-    floorPrice: optional(string()),
-    collectionName: optional(string()),
-    safelistRequestStatus: optional(string()),
-    imageUrl: optional(string()),
-    description: optional(string()),
-    externalUrl: optional(string()),
-    twitterUsername: optional(string()),
-    discordUrl: optional(string()),
-    bannerImageUrl: optional(string()),
-    lastIngestedAt: optional(string()),
+  address: nullable(Address),
+  name: nullable(string()),
+  symbol: nullable(string()),
+  totalSupply: nullable(string()),
+  tokenType: nullable(TokenType),
+  contractDeployer: nullable(Address),
+  // TODO: why is this marked as double in docs?
+  deployedBlockNumber: nullable(Integer),
+  openseaMetadata: nullable(object({
+    floorPrice: nullable(Integer),
+    collectionName: nullable(string()),
+    // TODO: this field is missing in docs
+    collectionSlug: nullable(string()),
+    safelistRequestStatus: nullable(string()),
+    imageUrl: nullable(string()),
+    description: nullable(string()),
+    externalUrl: nullable(string()),
+    twitterUsername: nullable(string()),
+    discordUrl: nullable(string()),
+    bannerImageUrl: nullable(string()),
+    lastIngestedAt: nullable(pipe(string(), isoTimestamp("YYYY-MM-DD'T'HH:mm:ss"))),
   })),
+  isSpam: boolean(),
+  spamClassifications: array(SpamClassification),
 });
 
-// NFT Image schema
 const NftImage = object({
-  cachedUrl: optional(string()),
-  thumbnailUrl: optional(string()),
-  pngUrl: optional(string()),
-  contentType: optional(string()),
-  size: optional(string()),
-  originalUrl: optional(string()),
+  cachedUrl: nullable(string()),
+  thumbnailUrl: nullable(string()),
+  pngUrl: nullable(string()),
+  contentType: nullable(string()),
+  size: nullable(Integer),
+  originalUrl: nullable(string()),
 });
 
-// NFT Raw Metadata schema
+// TODO: this field is missing in docs
+const NftAnimation = object({
+  cachedUrl: nullable(string()),
+  contentType: nullable(string()),
+  size: nullable(Integer),
+  originalUrl: nullable(string()),
+});
+
 const NftRawMetadata = object({
-  tokenUri: optional(string()),
-  metadata: optional(object({
-    image: optional(string()),
-    name: optional(string()),
-    description: optional(string()),
-    attributes: optional(array(object({
-      value: optional(string()),
-      trait_type: optional(string()),
+  tokenUri: nullable(string()),
+  metadata: nullable(object({
+    image: nullable(string()),
+    name: nullable(string()),
+    description: nullable(string()),
+    attributes: nullable(array(object({
+      value: nullable(string()),
+      trait_type: nullable(string()),
     }))),
   })),
-  error: optional(string()),
+  error: nullable(string()),
 });
 
-// NFT Collection schema
 const NftCollection = object({
-  name: optional(string()),
-  slug: optional(string()),
-  externalUrl: optional(string()),
-  bannerImageUrl: optional(string()),
+  name: nullable(string()),
+  slug: nullable(string()),
+  externalUrl: nullable(string()),
+  bannerImageUrl: nullable(string()),
 });
 
-// NFT AcquiredAt schema
+const NftMint = object({
+  mintAddress: nullable(Address),
+  blockNumber: nullable(Integer),
+  timestamp: nullable(pipe(string(), isoTimestamp("YYYY-MM-DD'T'HH:mm:ss.SSSZ"))),
+  transactionHash: nullable(Hex),
+});
+
 const NftAcquiredAt = object({
-  blockTimestamp: optional(string()),
-  blockNumber: optional(string()),
+  blockTimestamp: nullable(string()),
+  blockNumber: nullable(string()),
+});
+
+const NftWithoutMetadata = object({
+  network: Network,
+
+  address: Address,
+
+  contractAddress: Address,
+
+  tokenId: string(),
+
+  // TODO: balance field is missing in docs..
+  balance: string(),
+
+  // TODO: these spam fields are not in docs though they are returned..
+  isSpam: boolean(),
+
+  // TODO: do we have a list of all spam classifications & brief explanation in docs?
+  spamClassifications: array(SpamClassification),
+});
+
+const NftWithMetadata = strictObject({
+  // TODO: why is this field nullable in docs?
+  network: nullable(Network),
+
+  // TODO: why is this field nullable in docs?
+  address: nullable(Address),
+
+  // TODO: incorrect default value in docs
+  tokenId: nullable(string()),
+
+  // TODO: balance field is missing in docs..
+  balance: string(),
+
+  contract: nullable(NftContract),
+
+  // TODO: do we have a list of valid token types?
+  tokenType: nullable(TokenType),
+
+  name: nullable(string()),
+
+  description: nullable(string()),
+
+  tokenUri: nullable(string()),
+
+  // TODO: why is this field nullable in docs?
+  image: NftImage,
+
+  // TODO: this field is missing in docs
+  animation: NftAnimation,
+
+  // TODO: why is this field nullable in docs?
+  raw: NftRawMetadata,
+
+  // TODO: why is this field nullable in docs?
+  collection: NftCollection,
+
+  mint: NftMint,
+
+  // TODO: why is this field nullable in docs?
+  timeLastUpdated: pipe(string(), isoTimestamp("YYYY-MM-DD'T'HH:mm:ss.SSSZ")),
+
+  // TODO: why is this field nullable in docs?
+  acquiredAt: NftAcquiredAt,
 });
 
 // Owned NFT schema
-const OwnedNft = object({
-  network: string(),
-  address: string(),
-  contract: NftContract,
-  isSpam: optional(string()),
-  spamClassifications: optional(array(string())),
-  tokenId: string(),
-  tokenType: string(),
-  name: optional(string()),
-  description: optional(string()),
-  image: optional(NftImage),
-  raw: optional(NftRawMetadata),
-  collection: optional(NftCollection),
-  tokenUri: optional(string()),
-  timeLastUpdated: optional(string()),
-  acquiredAt: optional(NftAcquiredAt),
-});
+type OwnedNft = InferOutput<typeof OwnedNft>;
+const OwnedNft = union([NftWithoutMetadata, NftWithMetadata]);
 
 // Response schema for get-nfts-by-address
 const GetNftsByAddressResponse = object({
@@ -124,6 +205,7 @@ const GetNftsByAddressResponse = object({
 });
 
 export {
+  OwnedNft,
   GetNftsByAddressRequest,
   GetNftsByAddressResponse,
 };
