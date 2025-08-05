@@ -7,7 +7,8 @@ import {
   pipe,
   maxLength,
   union,
-  literal
+  literal,
+  nullable
 } from "valibot";
 import { Address, Integer, Network } from "../shared";
 
@@ -116,9 +117,9 @@ const OwnedNft = object({
 // Response schema for get-nfts-by-address
 const GetNftsByAddressResponse = object({
   data: object({
-    ownedNfts: array(OwnedNft),
-    totalCount: Integer,
-    pageKey: optional(string()),
+    ownedNfts: nullable(array(OwnedNft)),
+    totalCount: nullable(Integer),
+    pageKey: nullable(string()),
   }),
 });
 

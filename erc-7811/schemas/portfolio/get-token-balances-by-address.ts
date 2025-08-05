@@ -5,7 +5,8 @@ import {
   boolean,
   optional,
   pipe,
-  maxLength
+  maxLength,
+  nullable
 } from "valibot";
 import { Address, Hex, Network } from "../shared";
 
@@ -38,8 +39,8 @@ const TokenBalance = object({
 
 const GetTokenBalancesByAddressResponse = object({
   data: object({
-    tokens: array(TokenBalance),
-    pageKey: optional(string()),
+    tokens: nullable(array(TokenBalance)),
+    pageKey: nullable(string()),
   }),
 });
 
