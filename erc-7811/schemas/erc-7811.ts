@@ -48,12 +48,14 @@ const WalletGetAssetsRequest = object({
 //   metadata: any(),
 // });
 
+type NativeAsset = InferOutput<typeof NativeAsset>;
 const NativeAsset = object({
   address: literal("native"),
   balance: Hex,
   type: literal("native"),
 });
 
+type Erc20Asset = InferOutput<typeof Erc20Asset>;
 const Erc20Asset = object({
   address: Address,
   balance: Hex,
@@ -65,9 +67,11 @@ const Erc20Asset = object({
   })
 });
 
+type Erc721Asset = InferOutput<typeof Erc721Asset>;
 const Erc721Asset = object({
   address: Address,
-  balance: Hex,
+  // TODO: is balance always 1?
+  balance: literal('0x1'),
   type: literal("erc721"),
   metadata: object({
     name: string(),
@@ -90,6 +94,9 @@ type WalletGetAssetsResponse = InferOutput<typeof WalletGetAssetsResponse>;
 const WalletGetAssetsResponse = record(Eip155ChainId, array(Asset));
 
 export {
+  NativeAsset,
+  Erc20Asset,
+  Erc721Asset,
   WalletGetAssetsRequest,
   type WalletGetAssetsResponse,
 }
