@@ -1,20 +1,20 @@
+import { parse } from "valibot";
+import { GetNftsByAddressRequest, GetNftsByAddressResponse } from "../schemas/portfolio/get-nfts-by-address";
+
 async function getNftsByAddress({ address, networks }: { address: string, networks: string[] }) {
+  const request = parse(GetNftsByAddressRequest, {
+    addresses: [address],
+    networks: networks,
+    withMetadata: true,
+  });
   const key = process.env.ALCHEMY_API_KEY;
   const url = `https://api.g.alchemy.com/data/v1/${key}/assets/nfts/by-address`;
   const response = await fetch(url, {
     method: 'POST',
-    body: JSON.stringify({
-      addresses: [
-        {
-          address,
-          networks,
-        }
-      ],
-      withMetadata: true,
-    }),
+    body: JSON.stringify(request),
   });
-  const data = await response.json();
-  return data;
+  const json = await response.json();
+  return parse(GetNftsByAddressResponse, json).data;
 }
 
 export { getNftsByAddress };
