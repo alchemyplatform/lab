@@ -1,8 +1,5 @@
 import {
-  pipe,
   string,
-  hexadecimal,
-  length,
   literal,
   union,
   object,
@@ -10,22 +7,10 @@ import {
   record,
   array,
   any,
-  number,
-  integer,
   type InferInput,
   type InferOutput,
 } from "valibot";
-
-
-const Hex = pipe(
-  string(),
-  hexadecimal("The value is not a hexadecimal string.")
-);
-
-const Address = pipe(
-  Hex,
-  length(42, "The address is not 42 characters long.")
-);
+import { Address, Hex, Integer } from "./shared";
 
 const AssetType = union([
   literal("native"),
@@ -76,7 +61,7 @@ const Erc20Asset = object({
   metadata: object({
     name: string(),
     symbol: string(),
-    decimals: pipe(number(), integer()),
+    decimals: Integer,
   })
 });
 
