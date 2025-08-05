@@ -10,7 +10,8 @@ import {
   literal,
   nullable,
   type InferOutput,
-  isoTimestamp
+  isoTimestamp,
+  number
 } from "valibot";
 import { Address, Hex, Integer, Network } from "../shared";
 
@@ -42,6 +43,8 @@ const TokenType = union([
   literal('NOT_A_CONTRACT')
 ]);
 
+
+// TODO: do we have a list of all spam classifications & brief explanation in docs?
 const SpamClassification = union([
   literal('EmptyMetadata'),
   literal('SpammyMetadata'),
@@ -51,28 +54,48 @@ const SpamClassification = union([
 // NFT Contract schema
 const NftContract = strictObject({
   address: nullable(Address),
+
   name: nullable(string()),
+
   symbol: nullable(string()),
+
   totalSupply: nullable(string()),
+
   tokenType: nullable(TokenType),
+
   contractDeployer: nullable(Address),
+
   // TODO: why is this marked as double in docs?
   deployedBlockNumber: nullable(Integer),
-  openseaMetadata: nullable(strictObject({
-    floorPrice: nullable(Integer),
+
+  openSeaMetadata: nullable(strictObject({
+    floorPrice: nullable(number()),
+
     collectionName: nullable(string()),
+
     // TODO: this field is missing in docs
     collectionSlug: nullable(string()),
+
     safelistRequestStatus: nullable(string()),
+
     imageUrl: nullable(string()),
+
     description: nullable(string()),
+
     externalUrl: nullable(string()),
+
     twitterUsername: nullable(string()),
+
     discordUrl: nullable(string()),
+
     bannerImageUrl: nullable(string()),
-    lastIngestedAt: nullable(pipe(string(), isoTimestamp("YYYY-MM-DD'T'HH:mm:ss"))),
+
+    // TODO: use isoTimestamp if works?
+    lastIngestedAt: nullable(string()),
   })),
+
   isSpam: boolean(),
+
   spamClassifications: array(SpamClassification),
 });
 
@@ -95,15 +118,38 @@ const NftAnimation = strictObject({
 
 const NftRawMetadata = strictObject({
   tokenUri: nullable(string()),
+
   metadata: nullable(strictObject({
     image: nullable(string()),
+
     name: nullable(string()),
+
     description: nullable(string()),
+
     attributes: nullable(array(strictObject({
       value: nullable(string()),
       trait_type: nullable(string()),
+      // TODO: field missing in docs
+      display_type: optional(string()),
     }))),
+
+
+    // TODO: field missing in docs
+    external_url: optional(string()),
+
+    // TODO: field missing in docs
+    animation_url: optional(string()),
+
+    // TODO: field missing in docs
+    is_normalized: optional(boolean()),
+
+    // TODO: field missing in docs
+    image_url: optional(string()),
+
+    // TODO: field missing in docs
+    version: optional(string()),
   })),
+
   error: nullable(string()),
 });
 
@@ -141,7 +187,6 @@ const NftWithoutMetadata = strictObject({
   // TODO: these spam fields are not in docs though they are returned..
   isSpam: boolean(),
 
-  // TODO: do we have a list of all spam classifications & brief explanation in docs?
   spamClassifications: array(SpamClassification),
 });
 
@@ -183,8 +228,7 @@ const NftWithMetadata = strictObject({
 
   mint: NftMint,
 
-  // TODO: why is this field nullable in docs?
-  timeLastUpdated: pipe(string(), isoTimestamp("YYYY-MM-DD'T'HH:mm:ss.SSSZ")),
+  timeLastUpdated: nullable(pipe(string(), isoTimestamp("YYYY-MM-DD'T'HH:mm:ss.SSSZ"))),
 
   // TODO: why is this field nullable in docs?
   acquiredAt: NftAcquiredAt,
