@@ -2,13 +2,13 @@ import {
   string,
   literal,
   union,
-  object,
   optional,
   record,
   array,
   any,
   type InferInput,
   type InferOutput,
+  strictObject,
 } from "valibot";
 import { Address, Hex, Integer } from "./shared";
 
@@ -26,7 +26,7 @@ const AddressOrNative = union([
 
 const Eip155ChainId = Hex;
 
-const AssetFilter = record(Eip155ChainId, array(object({
+const AssetFilter = record(Eip155ChainId, array(strictObject({
   address: AddressOrNative,
   type: AssetType
 })));
@@ -34,14 +34,14 @@ const AssetFilter = record(Eip155ChainId, array(object({
 const AssetTypeFilter = array(AssetType);
 
 type WalletGetAssetsRequest = InferInput<typeof WalletGetAssetsRequest>;
-const WalletGetAssetsRequest = object({
+const WalletGetAssetsRequest = strictObject({
   account: Address,
   assetFilter: optional(AssetFilter),
   assetTypeFilter: optional(AssetTypeFilter),
   chainFilter: optional(array(Eip155ChainId))
 })
 
-// const Asset = object({
+// const Asset = strictObject({
 //   address: AddressOrNative,
 //   balance: Hex,
 //   type: AssetType,
@@ -49,18 +49,18 @@ const WalletGetAssetsRequest = object({
 // });
 
 type NativeAsset = InferOutput<typeof NativeAsset>;
-const NativeAsset = object({
+const NativeAsset = strictObject({
   address: literal("native"),
   balance: Hex,
   type: literal("native"),
 });
 
 type Erc20Asset = InferOutput<typeof Erc20Asset>;
-const Erc20Asset = object({
+const Erc20Asset = strictObject({
   address: Address,
   balance: Hex,
   type: literal("erc20"),
-  metadata: object({
+  metadata: strictObject({
     name: string(),
     symbol: string(),
     decimals: Integer,
@@ -68,12 +68,12 @@ const Erc20Asset = object({
 });
 
 type Erc721Asset = InferOutput<typeof Erc721Asset>;
-const Erc721Asset = object({
+const Erc721Asset = strictObject({
   address: Address,
   // TODO: is balance always 1?
   balance: literal('0x1'),
   type: literal("erc721"),
-  metadata: object({
+  metadata: strictObject({
     name: string(),
     symbol: string(),
     tokenId: Hex,
@@ -81,7 +81,7 @@ const Erc721Asset = object({
   })
 });
 
-const GenericAsset = object({
+const GenericAsset = strictObject({
   address: Address,
   balance: Hex,
   type: string(),

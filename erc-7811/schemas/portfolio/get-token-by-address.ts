@@ -1,5 +1,5 @@
 import {
-  object,
+  strictObject,
   array,
   string,
   boolean,
@@ -19,10 +19,10 @@ import { Address, Hex, Integer, Network } from "../shared";
 */
 
 // Request schema for get-tokens-by-address
-const GetTokensByAddressRequest = object({
+const GetTokensByAddressRequest = strictObject({
   addresses: pipe(
     array(
-      object({
+      strictObject({
         address: Address,
         networks: pipe(array(Network), maxLength(5, "Max 5 networks allowed per address.")),
       })
@@ -36,13 +36,13 @@ const GetTokensByAddressRequest = object({
   pageKey: optional(string()),
 });
 
-const TokenPrice = object({
+const TokenPrice = strictObject({
   currency: string(),
   value: string(),
   lastUpdatedAt: pipe(string(), isoTimestamp("YYYY-MM-DDTHH:mm:ssZ")),
 });
 
-const TokenPrices = object({
+const TokenPrices = strictObject({
   network: Network,
   address: Address,
   prices: array(TokenPrice),
@@ -50,7 +50,7 @@ const TokenPrices = object({
   error: string(),
 });
 
-const TokenMetadata = object({
+const TokenMetadata = strictObject({
   decimals: nullable(Integer),
   logo: nullable(string()),
   name: nullable(string()),
@@ -59,7 +59,7 @@ const TokenMetadata = object({
 
 // TODO: split Token into NativeToken and Erc20Token
 type Token = InferInput<typeof Token>;
-const Token = object({
+const Token = strictObject({
   address: Address,
   network: Network,
   tokenAddress: Address,
@@ -69,8 +69,8 @@ const Token = object({
 });
 
 // Response schema for get-tokens-by-address
-const GetTokensByAddressResponse = object({
-  data: object({
+const GetTokensByAddressResponse = strictObject({
+  data: strictObject({
     tokens: nullable(array(Token)),
     pageKey: nullable(string()),
   }),

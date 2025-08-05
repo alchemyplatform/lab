@@ -1,5 +1,5 @@
 import {
-  object,
+  strictObject,
   array,
   string,
   boolean,
@@ -10,7 +10,6 @@ import {
   literal,
   nullable,
   type InferOutput,
-  strictObject,
   isoTimestamp
 } from "valibot";
 import { Address, Hex, Integer, Network } from "../shared";
@@ -22,9 +21,9 @@ import { Address, Hex, Integer, Network } from "../shared";
 */
 
 // Request schema for get-nfts-by-address
-const GetNftsByAddressRequest = object({
+const GetNftsByAddressRequest = strictObject({
   addresses: pipe(array(
-    object({
+    strictObject({
       address: Address,
       networks: pipe(array(Network), maxLength(15, "Max 15 networks allowed.")),
     })
@@ -50,7 +49,7 @@ const SpamClassification = union([
 ])
 
 // NFT Contract schema
-const NftContract = object({
+const NftContract = strictObject({
   address: nullable(Address),
   name: nullable(string()),
   symbol: nullable(string()),
@@ -59,7 +58,7 @@ const NftContract = object({
   contractDeployer: nullable(Address),
   // TODO: why is this marked as double in docs?
   deployedBlockNumber: nullable(Integer),
-  openseaMetadata: nullable(object({
+  openseaMetadata: nullable(strictObject({
     floorPrice: nullable(Integer),
     collectionName: nullable(string()),
     // TODO: this field is missing in docs
@@ -77,7 +76,7 @@ const NftContract = object({
   spamClassifications: array(SpamClassification),
 });
 
-const NftImage = object({
+const NftImage = strictObject({
   cachedUrl: nullable(string()),
   thumbnailUrl: nullable(string()),
   pngUrl: nullable(string()),
@@ -87,20 +86,20 @@ const NftImage = object({
 });
 
 // TODO: this field is missing in docs
-const NftAnimation = object({
+const NftAnimation = strictObject({
   cachedUrl: nullable(string()),
   contentType: nullable(string()),
   size: nullable(Integer),
   originalUrl: nullable(string()),
 });
 
-const NftRawMetadata = object({
+const NftRawMetadata = strictObject({
   tokenUri: nullable(string()),
-  metadata: nullable(object({
+  metadata: nullable(strictObject({
     image: nullable(string()),
     name: nullable(string()),
     description: nullable(string()),
-    attributes: nullable(array(object({
+    attributes: nullable(array(strictObject({
       value: nullable(string()),
       trait_type: nullable(string()),
     }))),
@@ -108,26 +107,26 @@ const NftRawMetadata = object({
   error: nullable(string()),
 });
 
-const NftCollection = object({
+const NftCollection = strictObject({
   name: nullable(string()),
   slug: nullable(string()),
   externalUrl: nullable(string()),
   bannerImageUrl: nullable(string()),
 });
 
-const NftMint = object({
+const NftMint = strictObject({
   mintAddress: nullable(Address),
   blockNumber: nullable(Integer),
   timestamp: nullable(pipe(string(), isoTimestamp("YYYY-MM-DD'T'HH:mm:ss.SSSZ"))),
   transactionHash: nullable(Hex),
 });
 
-const NftAcquiredAt = object({
+const NftAcquiredAt = strictObject({
   blockTimestamp: nullable(string()),
   blockNumber: nullable(string()),
 });
 
-const NftWithoutMetadata = object({
+const NftWithoutMetadata = strictObject({
   network: Network,
 
   address: Address,
@@ -196,8 +195,8 @@ type OwnedNft = InferOutput<typeof OwnedNft>;
 const OwnedNft = union([NftWithoutMetadata, NftWithMetadata]);
 
 // Response schema for get-nfts-by-address
-const GetNftsByAddressResponse = object({
-  data: object({
+const GetNftsByAddressResponse = strictObject({
+  data: strictObject({
     ownedNfts: nullable(array(OwnedNft)),
     totalCount: nullable(Integer),
     pageKey: nullable(string()),

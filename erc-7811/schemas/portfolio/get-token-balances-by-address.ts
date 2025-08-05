@@ -1,5 +1,5 @@
 import {
-  object,
+  strictObject,
   array,
   string,
   boolean,
@@ -17,9 +17,9 @@ import { Address, Hex, Network } from "../shared";
 */
 
 // Request schema for get-token-balances-by-address
-const GetTokenBalancesByAddressRequest = object({
+const GetTokenBalancesByAddressRequest = strictObject({
   addresses: pipe(array(
-    object({
+    strictObject({
       address: Address,
       networks: pipe(array(Network), maxLength(20, "Max 20 networks allowed.")),
     })
@@ -30,15 +30,15 @@ const GetTokenBalancesByAddressRequest = object({
 });
 
 // Response schema for get-token-balances-by-address
-const TokenBalance = object({
+const TokenBalance = strictObject({
   network: Network,
   address: Address,
   tokenAddress: Address,
   tokenBalance: Hex,
 });
 
-const GetTokenBalancesByAddressResponse = object({
-  data: object({
+const GetTokenBalancesByAddressResponse = strictObject({
+  data: strictObject({
     tokens: nullable(array(TokenBalance)),
     pageKey: nullable(string()),
   }),
