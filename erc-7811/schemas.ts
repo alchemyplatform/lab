@@ -12,6 +12,8 @@ import {
   any,
   number,
   integer,
+  type InferInput,
+  type InferOutput,
 } from "valibot";
 
 
@@ -19,11 +21,6 @@ const Hex = pipe(
   string(),
   hexadecimal("The value is not a hexadecimal string.")
 );
-
-// const Hash = pipe(
-//   Hex,
-//   length(66, "The hash is not 66 characters long.")
-// );
 
 const Address = pipe(
   Hex,
@@ -51,6 +48,7 @@ const AssetFilter = record(Eip155ChainId, array(object({
 
 const AssetTypeFilter = array(AssetType);
 
+type WalletGetAssetsRequest = InferInput<typeof WalletGetAssetsRequest>;
 const WalletGetAssetsRequest = object({
   account: Address,
   assetFilter: optional(AssetFilter),
@@ -103,4 +101,10 @@ const GenericAsset = object({
 
 const Asset = union([NativeAsset, Erc20Asset, Erc721Asset, GenericAsset]);
 
+type WalletGetAssetsResponse = InferOutput<typeof WalletGetAssetsResponse>;
 const WalletGetAssetsResponse = record(Eip155ChainId, array(Asset));
+
+export {
+  type WalletGetAssetsRequest,
+  type WalletGetAssetsResponse,
+}
