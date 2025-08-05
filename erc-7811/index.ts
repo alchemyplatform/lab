@@ -1,5 +1,5 @@
 import { parse } from "valibot";
-import { WalletGetAssetsRequest, type WalletGetAssetsResponse } from "./schemas";
+import { WalletGetAssetsRequest, type WalletGetAssetsResponse } from "./schemas/erc-7811";
 import { getTokenBalancesByAddress } from "./helpers/get-token-balances-by-address";
 import { getNftsByAddress } from "./helpers/get-nfts-by-address";
 import { getAssetsByAddress } from "./helpers/get-assets-by-address";
