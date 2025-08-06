@@ -188,6 +188,7 @@ const NftAcquiredAt = strictObject({
   blockNumber: nullable(string()),
 });
 
+// TODO: would be cool to have token type here too
 const NftWithoutMetadata = strictObject({
   network: Network,
 
@@ -206,6 +207,7 @@ const NftWithoutMetadata = strictObject({
   spamClassifications: array(SpamClassification),
 });
 
+type NftWithMetadata = InferOutput<typeof NftWithMetadata>;
 const NftWithMetadata = strictObject({
   // TODO: why is this field nullable in docs?
   network: nullable(Network),
@@ -250,8 +252,6 @@ const NftWithMetadata = strictObject({
   acquiredAt: NftAcquiredAt,
 });
 
-// Owned NFT schema
-type OwnedNft = InferOutput<typeof OwnedNft>;
 const OwnedNft = union([NftWithoutMetadata, NftWithMetadata]);
 
 // Response schema for get-nfts-by-address
@@ -264,7 +264,7 @@ const GetNftsByAddressResponse = strictObject({
 });
 
 export {
-  OwnedNft,
+  type NftWithMetadata,
   GetNftsByAddressRequest,
   GetNftsByAddressResponse,
 };

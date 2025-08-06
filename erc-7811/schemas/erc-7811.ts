@@ -81,6 +81,7 @@ const Erc721Asset = strictObject({
   })
 });
 
+type GenericAsset = InferOutput<typeof GenericAsset>;
 const GenericAsset = strictObject({
   address: Address,
   balance: Hex,
@@ -94,9 +95,10 @@ type WalletGetAssetsResponse = InferOutput<typeof WalletGetAssetsResponse>;
 const WalletGetAssetsResponse = record(Eip155ChainId, array(Asset));
 
 export {
-  NativeAsset,
-  Erc20Asset,
-  Erc721Asset,
+  type NativeAsset,
+  type Erc20Asset,
+  type Erc721Asset,
+  type GenericAsset,
   WalletGetAssetsRequest,
   type WalletGetAssetsResponse,
 }
