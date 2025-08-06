@@ -25,12 +25,22 @@ Our Portfolio APIs offer a multi-chain way of fetching assets for a given addres
 }
 ```
 
-### Get native and ERC-20 assets ono= all networks
+### Get native and ERC-20 assets on all networks
 
 ```json
 {
   "account": "0xd8da6bf26964af9d7eed9e03e53415d37aa96045",
   "assetTypeFilter": ["native", "erc20"]
+}
+```
+
+### Get ERC-20 assets on Ethereum Mainnet
+
+```json
+{
+  "account": "0xd8da6bf26964af9d7eed9e03e53415d37aa96045",
+  "assetTypeFilter": ["erc20"],
+  "chainFilter": ["0x1"]
 }
 ```
 
