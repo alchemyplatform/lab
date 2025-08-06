@@ -8,7 +8,7 @@ Our Portfolio APIs offer a multi-chain way of fetching assets for a given addres
 
 ## Examples
 
-### Get all assets across all networks
+### Get all assets on all networks
 
 ```json
 {
@@ -16,7 +16,7 @@ Our Portfolio APIs offer a multi-chain way of fetching assets for a given addres
 }
 ```
 
-### Get all assets on 1 network (Ethereum Mainnet)
+### Get all assets on Ethereum Mainnet
 
 ```json
 {
@@ -25,7 +25,7 @@ Our Portfolio APIs offer a multi-chain way of fetching assets for a given addres
 }
 ```
 
-### Get native and ERC-20 assets across all networks
+### Get native and ERC-20 assets ono= all networks
 
 ```json
 {
@@ -34,12 +34,13 @@ Our Portfolio APIs offer a multi-chain way of fetching assets for a given addres
 }
 ```
 
-### Get USDC and USDG assets across Ethereum and Base Mainnet
+### Get USDC and USDG assets on Ethereum and Base Mainnet
 
-```json
+```jsonc
 {
   "account": "0xd8da6bf26964af9d7eed9e03e53415d37aa96045",
   "assetFilter": {
+    // chain id for ethereum mainnet
     "0x1": [
       {
         // USDC contract address on ethereum mainnet
