@@ -178,31 +178,4 @@ See https://eip.tools/eip/7811 for more details.`);
   return assetsByNetwork;
 }
 
-
-// vitalik.eth
-const account = "0xd8da6bf26964af9d7eed9e03e53415d37aa96045";
-
-const results = await getAssets({
-  "account": "0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045",
-  // "assetFilter": {
-  //   "0x1": [
-  //     {
-  //       "address": "0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045",
-  //       "type": "erc20"
-  //     },
-  //     {
-  //       "address": "native",
-  //       "type": "native"
-  //     }
-  //   ],
-  //   "0xa": [
-  //     {
-  //       "address": "0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045",
-  //       "type": "erc20"
-  //     }
-  //   ]
-  // },
-  // "assetTypeFilter": ["erc20", "native"],
-  // "chainFilter": ["0x1"]
-});
-console.log(`Results: ${JSON.stringify(results, null, 2)}`);
+export { getAssets };
