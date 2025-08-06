@@ -93,20 +93,7 @@ See https://eip.tools/eip/7811 for more details.`);
       }
     }
 
-    return {
-      "0x1": [
-        {
-          "address": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
-          "balance": "0xcaaea35047fe5702",
-          "type": "ERC20",
-          "metadata": {
-            "name": "Token",
-            "symbol": "TOK",
-            "decimals": 18
-          }
-        },
-      ]
-    };
+    throw new Error('Not implemented');
   }
 
   /*
