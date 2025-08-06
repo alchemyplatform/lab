@@ -68,10 +68,7 @@ export type Config = {
   nativeTokenDetails: NativeTokenDetails
 }
 
-export function getConfig(): Config {
-  // Update this value to the corresponding chain you want to deploy
-  const selectedNetwork = dataSource.network()
-
+export function getConfig(selectedNetwork: string): Config {
   if (selectedNetwork == SEPOLIA_NETWORK_NAME) {
     return {
       poolManagerAddress: '0xe03a1074c86cfedd5c142c4f04f1a1536e203543',
