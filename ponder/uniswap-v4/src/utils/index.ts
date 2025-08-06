@@ -9,3 +9,10 @@ export function exponentToBigDecimal(decimals: bigint): Decimal {
 
   return new Decimal(resultString);
 }
+
+export function convertTokenToDecimal(tokenAmount: bigint, exchangeDecimals: bigint): Decimal {
+  if (exchangeDecimals == 0n) {
+    return new Decimal(tokenAmount);
+  }
+  return new Decimal(tokenAmount).div(exponentToBigDecimal(exchangeDecimals));
+}

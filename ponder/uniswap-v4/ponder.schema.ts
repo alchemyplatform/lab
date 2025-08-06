@@ -8,7 +8,7 @@ export const poolManagers = onchainTable("pool_managers", (t) => ({
   poolCount: t.bigint().notNull(),
 
   // amount of transactions all time
-  txCount: t.bigint(),
+  txCount: t.bigint().notNull(),
 
   // total volume all time in derived USD
   totalVolumeUSD: t.doublePrecision(),
@@ -29,7 +29,7 @@ export const poolManagers = onchainTable("pool_managers", (t) => ({
   totalValueLockedUSD: t.doublePrecision(),
 
   // TVL derived in ETH
-  totalValueLockedETH: t.doublePrecision(),
+  totalValueLockedETH: t.doublePrecision().notNull(),
 
   // TVL derived in USD untracked
   totalValueLockedUSDUntracked: t.doublePrecision(),
@@ -47,7 +47,7 @@ export const bundles = onchainTable("bundles", (t) => ({
   id: t.text().primaryKey(),
 
   // price of ETH in usd
-  ethPriceUSD: t.doublePrecision(),
+  ethPriceUSD: t.doublePrecision().notNull(),
 }));
 
 export const pools = onchainTable("pools", (t) => ({
@@ -174,14 +174,14 @@ export const tokens = onchainTable("tokens", (t) => ({
   feesUSD: t.doublePrecision(),
 
   // transactions across all pools that include this token
-  txCount: t.bigint(),
+  txCount: t.bigint().notNull(),
 
   // TODO: use relation instead?
   // number of pools containing this token
   poolCount: t.bigint(),
 
   // liquidity across all pools in token units
-  totalValueLocked: t.doublePrecision(),
+  totalValueLocked: t.doublePrecision().notNull(),
 
   // liquidity across all pools in derived USD
   totalValueLockedUSD: t.doublePrecision(),
@@ -190,7 +190,7 @@ export const tokens = onchainTable("tokens", (t) => ({
   totalValueLockedUSDUntracked: t.doublePrecision(),
 
   // Note: for chains where ETH is not the native token, this will be the derived price of that chain's native token, effectively, this should be renamed derivedNative.
-  derivedETH: t.doublePrecision(),
+  derivedETH: t.doublePrecision().notNull(),
 }));
 
 export const tokensRelations = relations(tokens, ({ many }) => ({

@@ -24,3 +24,13 @@ export function sqrtPriceX96ToTokenPrices(
   const price0 = new Decimal(1).div(price1);
   return [price0, price1];
 }
+
+export function calculateAmountUSD(
+  amount0: Decimal,
+  amount1: Decimal,
+  token0DerivedETH: Decimal,
+  token1DerivedETH: Decimal,
+  ethPriceUSD: Decimal,
+): Decimal {
+  return amount0.times(token0DerivedETH.times(ethPriceUSD)).plus(amount1.times(token1DerivedETH.times(ethPriceUSD)));
+}
