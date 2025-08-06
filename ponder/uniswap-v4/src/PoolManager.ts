@@ -1,7 +1,8 @@
 import { ponder } from "ponder:registry";
 import { getConfig } from "./utils/chains";
-import { bundles, poolManagers, pools } from "ponder:schema";
+import { bundles, poolManagers, pools, tokens } from "ponder:schema";
 import { zeroAddress } from "viem";
+import { fetchTokenDecimals, fetchTokenName, fetchTokenSymbol, fetchTokenTotalSupply } from "./utils/token";
 
 ponder.on("PoolManager:Initialize", async ({ event, context }) => {
   console.log(event.args);
@@ -61,62 +62,84 @@ ponder.on("PoolManager:Initialize", async ({ event, context }) => {
     createdAtBlockNumber: event.block.number,
   });
 
-
-  let token0 = Token.load(event.params.currency0.toHexString())
-  let token1 = Token.load(event.params.currency1.toHexString())
+  let token0 = await context.db.find(tokens, { id: event.args.currency0 });
+  let token1 = await context.db.find(tokens, { id: event.args.currency1 });
 
   // fetch info if null
   if (token0 === null) {
-    token0 = new Token(event.params.currency0.toHexString())
-    token0.symbol = fetchTokenSymbol(event.params.currency0, tokenOverrides, nativeTokenDetails)
-    token0.name = fetchTokenName(event.params.currency0, tokenOverrides, nativeTokenDetails)
-    token0.totalSupply = fetchTokenTotalSupply(event.params.currency0)
-    const decimals = fetchTokenDecimals(event.params.currency0, tokenOverrides, nativeTokenDetails)
+    const tokenAddress = event.args.currency0;
+
+    const symbol = await fetchTokenSymbol(context.client, tokenAddress, tokenOverrides, nativeTokenDetails);
+
+    const name = await fetchTokenName(context.client, tokenAddress, tokenOverrides, nativeTokenDetails);
+
+    const totalSupply = await fetchTokenTotalSupply(context.client, tokenAddress);
+
+    const decimals = await fetchTokenDecimals(context.client, tokenAddress, tokenOverrides, nativeTokenDetails);
+
+    token0 = await context.db.insert(tokens).values({
+      id: tokenAddress,
+      symbol,
+      name,
+      decimals,
+      totalSupply,
+      // TODO: use defaults in schema instead?
+      derivedETH: 0,
+      volume: 0,
+      volumeUSD: 0,
+      feesUSD: 0,
+      untrackedVolumeUSD: 0,
+      totalValueLocked: 0,
+      totalValueLockedUSD: 0,
+      totalValueLockedUSDUntracked: 0,
+      txCount: 0n,
+      poolCount: 0n,
+      // whitelistPools
+    });
 
     // bail if we couldn't figure out the decimals
     if (decimals === null) {
-      log.debug('mybug the decimal on token 0 was null', [])
-      return
+      console.debug('mybug the decimal on token 0 was null', [])
+      return;
     }
-
-    token0.decimals = decimals
-    token0.derivedETH = ZERO_BD
-    token0.volume = ZERO_BD
-    token0.volumeUSD = ZERO_BD
-    token0.feesUSD = ZERO_BD
-    token0.untrackedVolumeUSD = ZERO_BD
-    token0.totalValueLocked = ZERO_BD
-    token0.totalValueLockedUSD = ZERO_BD
-    token0.totalValueLockedUSDUntracked = ZERO_BD
-    token0.txCount = ZERO_BI
-    token0.poolCount = ZERO_BI
-    token0.whitelistPools = []
   }
 
   if (token1 === null) {
-    token1 = new Token(event.params.currency1.toHexString())
-    token1.symbol = fetchTokenSymbol(event.params.currency1, tokenOverrides, nativeTokenDetails)
-    token1.name = fetchTokenName(event.params.currency1, tokenOverrides, nativeTokenDetails)
-    token1.totalSupply = fetchTokenTotalSupply(event.params.currency1)
-    const decimals = fetchTokenDecimals(event.params.currency1, tokenOverrides, nativeTokenDetails)
+    const tokenAddress = event.args.currency1;
 
+    const symbol = await fetchTokenSymbol(context.client, tokenAddress, tokenOverrides, nativeTokenDetails);
+
+    const name = await fetchTokenName(context.client, tokenAddress, tokenOverrides, nativeTokenDetails);
+
+    const totalSupply = await fetchTokenTotalSupply(context.client, tokenAddress);
+
+    const decimals = await fetchTokenDecimals(context.client, tokenAddress, tokenOverrides, nativeTokenDetails);
+
+    token1 = await context.db.insert(tokens).values({
+      id: tokenAddress,
+      symbol,
+      name,
+      decimals,
+      totalSupply,
+      // TODO: use defaults in schema instead?
+      derivedETH: 0,
+      volume: 0,
+      volumeUSD: 0,
+      feesUSD: 0,
+      untrackedVolumeUSD: 0,
+      totalValueLocked: 0,
+      totalValueLockedUSD: 0,
+      totalValueLockedUSDUntracked: 0,
+      txCount: 0n,
+      poolCount: 0n,
+      // whitelistPools
+    });
+
+    // bail if we couldn't figure out the decimals
     if (decimals === null) {
-      log.debug('mybug the decimal on token 0 was null', [])
-      return
+      console.debug('mybug the decimal on token 1 was null', [])
+      return;
     }
-
-    token1.decimals = decimals
-    token1.derivedETH = ZERO_BD
-    token1.volume = ZERO_BD
-    token1.volumeUSD = ZERO_BD
-    token1.untrackedVolumeUSD = ZERO_BD
-    token1.feesUSD = ZERO_BD
-    token1.totalValueLocked = ZERO_BD
-    token1.totalValueLockedUSD = ZERO_BD
-    token1.totalValueLockedUSDUntracked = ZERO_BD
-    token1.txCount = ZERO_BI
-    token1.poolCount = ZERO_BI
-    token1.whitelistPools = []
   }
 
   // update white listed pools
