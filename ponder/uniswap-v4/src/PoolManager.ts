@@ -1,5 +1,7 @@
 import { ponder } from "ponder:registry";
 import { getConfig } from "./utils/chains";
+import { poolManagers } from "ponder:schema";
+import { zeroAddress } from "viem";
 
 ponder.on("PoolManager:Initialize", async ({ event, context }) => {
   console.log(event.args);
@@ -23,21 +25,23 @@ ponder.on("PoolManager:Initialize", async ({ event, context }) => {
   }
 
   // load pool manager
-  let poolManager = PoolManager.load(poolManagerAddress)
+  let poolManager = await context.db.find(poolManagers, { id: poolManagerAddress });
   if (poolManager === null) {
-    poolManager = new PoolManager(poolManagerAddress)
-    poolManager.poolCount = ZERO_BI
-    poolManager.totalVolumeETH = ZERO_BD
-    poolManager.totalVolumeUSD = ZERO_BD
-    poolManager.untrackedVolumeUSD = ZERO_BD
-    poolManager.totalFeesUSD = ZERO_BD
-    poolManager.totalFeesETH = ZERO_BD
-    poolManager.totalValueLockedETH = ZERO_BD
-    poolManager.totalValueLockedUSD = ZERO_BD
-    poolManager.totalValueLockedUSDUntracked = ZERO_BD
-    poolManager.totalValueLockedETHUntracked = ZERO_BD
-    poolManager.txCount = ZERO_BI
-    poolManager.owner = ADDRESS_ZERO
+    poolManager = await context.db.insert(poolManagers).values({
+      id: poolManagerAddress,
+      poolCount: 0n,
+      totalVolumeETH: 0,
+      totalVolumeUSD: 0,
+      untrackedVolumeUSD: 0,
+      totalFeesUSD: 0,
+      totalFeesETH: 0,
+      totalValueLockedUSD: 0,
+      totalValueLockedETH: 0,
+      totalValueLockedUSDUntracked: 0,
+      totalValueLockedETHUntracked: 0,
+      txCount: 0n,
+      owner: zeroAddress,
+    });
 
     // create new bundle for tracking eth price
     const bundle = new Bundle('1')

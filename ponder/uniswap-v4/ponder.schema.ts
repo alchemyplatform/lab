@@ -1,4 +1,4 @@
-import { onchainTable, time } from "ponder";
+import { onchainTable } from "ponder";
 
 export const poolManagers = onchainTable("pool_managers", (t) => ({
   // poolManager address
