@@ -1,6 +1,6 @@
 import { ponder } from "ponder:registry";
 import { getConfig } from "./utils/chains";
-import { bundles, poolManagers } from "ponder:schema";
+import { bundles, poolManagers, pools } from "ponder:schema";
 import { zeroAddress } from "viem";
 
 ponder.on("PoolManager:Initialize", async ({ event, context }) => {
@@ -8,16 +8,17 @@ ponder.on("PoolManager:Initialize", async ({ event, context }) => {
 
   const config = getConfig(context.chain.name);
 
-  const poolManagerAddress = config.poolManagerAddress
-  const whitelistTokens = config.whitelistTokens
-  const tokenOverrides = config.tokenOverrides
-  const poolsToSkip = config.poolsToSkip
-  const stablecoinWrappedNativePoolId = config.stablecoinWrappedNativePoolId
-  const stablecoinIsToken0 = config.stablecoinIsToken0
-  const wrappedNativeAddress = config.wrappedNativeAddress
-  const stablecoinAddresses = config.stablecoinAddresses
-  const minimumNativeLocked = config.minimumNativeLocked
-  const nativeTokenDetails = config.nativeTokenDetails
+  const poolManagerAddress = config.poolManagerAddress;
+  const whitelistTokens = config.whitelistTokens;
+  const tokenOverrides = config.tokenOverrides;
+  const poolsToSkip = config.poolsToSkip;
+  const stablecoinWrappedNativePoolId = config.stablecoinWrappedNativePoolId;
+  const stablecoinIsToken0 = config.stablecoinIsToken0;
+  const wrappedNativeAddress = config.wrappedNativeAddress;
+  const stablecoinAddresses = config.stablecoinAddresses;
+  const minimumNativeLocked = config.minimumNativeLocked;
+  const nativeTokenDetails = config.nativeTokenDetails;
+
   const poolId = event.args.id;
 
   if (poolsToSkip.includes(poolId)) {
@@ -54,7 +55,13 @@ ponder.on("PoolManager:Initialize", async ({ event, context }) => {
 
   const poolCount = poolManager.poolCount + 1n;
 
-  const pool = new Pool(poolId)
+  const pool = await context.db.insert(pools).values({
+    id: poolId,
+    createdAtTimestamp: event.block.timestamp,
+    createdAtBlockNumber: event.block.number,
+  });
+
+
   let token0 = Token.load(event.params.currency0.toHexString())
   let token1 = Token.load(event.params.currency1.toHexString())
 

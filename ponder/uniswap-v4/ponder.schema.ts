@@ -49,3 +49,14 @@ export const bundles = onchainTable("bundles", (t) => ({
   // price of ETH in usd
   ethPriceUSD: t.doublePrecision(),
 }));
+
+export const pools = onchainTable("pools", (t) => ({
+  // pool address
+  id: t.text().primaryKey(),
+
+  // creation
+  createdAtTimestamp: t.bigint().notNull(),
+
+  // block pool was created at
+  createdAtBlockNumber: t.bigint().notNull(),
+}));
