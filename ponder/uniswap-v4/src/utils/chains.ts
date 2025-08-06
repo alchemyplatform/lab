@@ -25,7 +25,7 @@ const UNICHAIN_MAINNET_NETWORK_NAME = 'unichain-mainnet'
 const SONEIUM_MAINNET_NETWORK_NAME = 'soneium-mainnet'
 
 // Note: All token and pool addresses should be lowercased!
-export type SubgraphConfig = {
+export type Config = {
   // deployment address
   poolManagerAddress: string
 
@@ -68,7 +68,7 @@ export type SubgraphConfig = {
   nativeTokenDetails: NativeTokenDetails
 }
 
-export function getSubgraphConfig(): SubgraphConfig {
+export function getConfig(): Config {
   // Update this value to the corresponding chain you want to deploy
   const selectedNetwork = dataSource.network()
 
