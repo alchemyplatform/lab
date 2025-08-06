@@ -1,10 +1,10 @@
 import { ponder } from "ponder:registry";
 import { getConfig } from "./utils/chains";
-import { bundles, poolManagers, pools, tokens } from "ponder:schema";
+import { bundles, modifyLiquidities, poolManagers, pools, tokens } from "ponder:schema";
 import { zeroAddress } from "viem";
 import { fetchTokenDecimals, fetchTokenName, fetchTokenSymbol, fetchTokenTotalSupply } from "./utils/token";
 import { calculateAmountUSD, sqrtPriceX96ToTokenPrices } from "./utils/pricing";
-import { convertTokenToDecimal } from "./utils";
+import { convertTokenToDecimal, loadTransaction } from "./utils";
 import Decimal from "decimal.js";
 
 ponder.on("PoolManager:Initialize", async ({ event, context }) => {
@@ -308,46 +308,54 @@ ponder.on("PoolManager:ModifyLiquidity", async ({ event, context }) => {
     // We only want to update it if the new position includes the current tick.
     if (
       pool.tick !== null &&
-      BigInt.fromI32(event.params.tickLower).le(pool.tick as BigInt) &&
-      BigInt.fromI32(event.params.tickUpper).gt(pool.tick as BigInt)
+      BigInt(event.args.tickLower) <= pool.tick &&
+      BigInt(event.args.tickUpper) > pool.tick
     ) {
-      pool.liquidity = pool.liquidity.plus(event.params.liquidityDelta)
+      pool.liquidity = pool.liquidity + event.args.liquidityDelta;
     }
 
-    pool.totalValueLockedToken0 = pool.totalValueLockedToken0.plus(amount0)
-    pool.totalValueLockedToken1 = pool.totalValueLockedToken1.plus(amount1)
-    pool.totalValueLockedETH = pool.totalValueLockedToken0
+    pool.totalValueLockedToken0 = Decimal(pool.totalValueLockedToken0).plus(amount0).toNumber();
+    pool.totalValueLockedToken1 = Decimal(pool.totalValueLockedToken1).plus(amount1).toNumber();
+    pool.totalValueLockedETH = Decimal(pool.totalValueLockedToken0)
       .times(token0.derivedETH)
-      .plus(pool.totalValueLockedToken1.times(token1.derivedETH))
-    pool.totalValueLockedUSD = pool.totalValueLockedETH.times(bundle.ethPriceUSD)
+      .plus(Decimal(pool.totalValueLockedToken1).times(token1.derivedETH))
+      .toNumber();
+    pool.totalValueLockedUSD = Decimal(pool.totalValueLockedETH)
+      .times(bundle.ethPriceUSD)
+      .toNumber();
 
     // reset aggregates with new amounts
-    poolManager.totalValueLockedETH = poolManager.totalValueLockedETH.plus(pool.totalValueLockedETH)
-    poolManager.totalValueLockedUSD = poolManager.totalValueLockedETH.times(bundle.ethPriceUSD)
+    poolManager.totalValueLockedETH = Decimal(poolManager.totalValueLockedETH).plus(pool.totalValueLockedETH).toNumber();
+    poolManager.totalValueLockedUSD = Decimal(poolManager.totalValueLockedETH).times(bundle.ethPriceUSD).toNumber();
 
-    const transaction = loadTransaction(event)
-    const modifyLiquidity = new ModifyLiquidity(transaction.id.toString() + '-' + event.logIndex.toString())
-    modifyLiquidity.transaction = transaction.id
-    modifyLiquidity.timestamp = transaction.timestamp
-    modifyLiquidity.pool = pool.id
-    modifyLiquidity.token0 = pool.token0
-    modifyLiquidity.token1 = pool.token1
-    modifyLiquidity.sender = event.params.sender
-    modifyLiquidity.origin = event.transaction.from
-    modifyLiquidity.amount = event.params.liquidityDelta
-    modifyLiquidity.amount0 = amount0
-    modifyLiquidity.amount1 = amount1
-    modifyLiquidity.amountUSD = amountUSD
-    modifyLiquidity.tickLower = BigInt.fromI32(event.params.tickLower)
-    modifyLiquidity.tickUpper = BigInt.fromI32(event.params.tickUpper)
-    modifyLiquidity.logIndex = event.logIndex
+    const transaction = await loadTransaction(context, event);
+
+    const logIndex = event.log.logIndex;
+    const modifyLiquidity = await context.db.insert(modifyLiquidities).values({
+      // TODO:use composite key
+      id: transaction.id + '-' + logIndex,
+      transaction: transaction.id,
+      timestamp: transaction.timestamp,
+      pool: pool.id,
+      token0: pool.token0,
+      token1: pool.token1,
+      sender: event.args.sender,
+      origin: event.transaction.from,
+      amount: event.args.liquidityDelta,
+      amount0: amount0.toNumber(),
+      amount1: amount1.toNumber(),
+      amountUSD: amountUSD.toNumber(),
+      tickLower: BigInt(event.args.tickLower),
+      tickUpper: BigInt(event.args.tickUpper),
+      logIndex: BigInt(logIndex),
+    });
 
     // tick entities
-    const lowerTickIdx = event.params.tickLower
-    const upperTickIdx = event.params.tickUpper
+    const lowerTickIdx = event.args.tickLower
+    const upperTickIdx = event.args.tickUpper
 
-    const lowerTickId = poolId + '#' + BigInt.fromI32(event.params.tickLower).toString()
-    const upperTickId = poolId + '#' + BigInt.fromI32(event.params.tickUpper).toString()
+    const lowerTickId = poolId + '#' + BigInt(lowerTickIdx);
+    const upperTickId = poolId + '#' + BigInt(upperTickIdx);
 
     let lowerTick = Tick.load(lowerTickId)
     let upperTick = Tick.load(upperTickId)

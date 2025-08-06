@@ -199,3 +199,59 @@ export const tokensRelations = relations(tokens, ({ many }) => ({
   // pools token is in that are white listed for USD pricing
   whitelistPools: many(pools),
 }));
+
+
+export const transactions = onchainTable("transactions", (t) => ({
+  // txn hash
+  id: t.text().primaryKey(),
+  // block txn was included in
+  blockNumber: t.bigint().notNull(),
+  // timestamp txn was confirmed
+  timestamp: t.bigint().notNull(),
+  // gas used during txn execution
+  gasUsed: t.bigint().notNull(),
+  gasPrice: t.bigint().notNull(),
+}));
+
+export const transactionsRelations = relations(transactions, ({ many }) => ({
+  modifyLiquiditys: many(modifyLiquidities),
+}));
+
+export const modifyLiquidities = onchainTable("modify_liquidities", (t) => ({
+  // transaction hash + "#" + index in mints Transaction array
+  id: t.text().primaryKey(),
+  // which txn the ModifyLiquidity was included in
+  // TODO: use relation instead
+  transaction: t.text().notNull(),
+  // time of txn
+  timestamp: t.bigint().notNull(),
+  // pool position is within
+  pool: t.text().notNull(),
+  // token0
+  token0: t.text().notNull(),
+  // token1
+  token1: t.text().notNull(),
+  // owner of position where liquidity modified to
+  sender: t.text().notNull(),
+  // txn origin
+  origin: t.text().notNull(),
+  // amount of liquidity modified
+  amount: t.bigint().notNull(),
+  // amount of token 0 modified
+  amount0: t.doublePrecision().notNull(),
+  // amount of token 1 modified
+  amount1: t.doublePrecision().notNull(),
+  // derived amount based on available prices of tokens
+  amountUSD: t.doublePrecision().notNull(),
+  // lower tick of the position
+  tickLower: t.bigint().notNull(),
+  // upper tick of the position
+  tickUpper: t.bigint().notNull(),
+  // index within the txn
+  logIndex: t.bigint().notNull(),
+}));
+
+export const modifyLiquidityRelations = relations(modifyLiquidities, ({ one }) => ({
+  transaction: one(transactions, { fields: [modifyLiquidities.transaction], references: [transactions.id] }),
+}));
+
