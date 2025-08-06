@@ -3,8 +3,10 @@ import { GetNftsByAddressRequest, GetNftsByAddressResponse } from "../schemas/po
 
 async function getNftsByAddress({ address, networks }: { address: string, networks: string[] }) {
   const request = parse(GetNftsByAddressRequest, {
-    addresses: [address],
-    networks: networks,
+    addresses: [{
+      address,
+      networks,
+    }],
     withMetadata: true,
   });
   const key = process.env.ALCHEMY_API_KEY;
