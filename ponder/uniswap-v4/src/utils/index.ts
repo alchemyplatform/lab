@@ -12,6 +12,15 @@ export function exponentToBigDecimal(decimals: bigint): Decimal {
   return new Decimal(resultString);
 }
 
+// return 0 if denominator is 0 in division
+export function safeDiv(amount0: Decimal, amount1: Decimal): Decimal {
+  if (amount1.equals(Decimal(0))) {
+    return Decimal(0)
+  } else {
+    return amount0.div(amount1)
+  }
+}
+
 export function convertTokenToDecimal(tokenAmount: bigint, exchangeDecimals: bigint): Decimal {
   if (exchangeDecimals == 0n) {
     return new Decimal(tokenAmount);

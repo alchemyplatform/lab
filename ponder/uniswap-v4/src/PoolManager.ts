@@ -1,11 +1,12 @@
 import { ponder } from "ponder:registry";
 import { getConfig } from "./utils/chains";
-import { bundles, modifyLiquidities, poolManagers, pools, tokens } from "ponder:schema";
+import { bundles, modifyLiquidities, poolManagers, pools, ticks, tokens } from "ponder:schema";
 import { zeroAddress } from "viem";
 import { fetchTokenDecimals, fetchTokenName, fetchTokenSymbol, fetchTokenTotalSupply } from "./utils/token";
 import { calculateAmountUSD, sqrtPriceX96ToTokenPrices } from "./utils/pricing";
 import { convertTokenToDecimal, loadTransaction } from "./utils";
 import Decimal from "decimal.js";
+import { createTick } from "./utils/tick";
 
 ponder.on("PoolManager:Initialize", async ({ event, context }) => {
   console.log(event.args);
@@ -351,31 +352,34 @@ ponder.on("PoolManager:ModifyLiquidity", async ({ event, context }) => {
     });
 
     // tick entities
-    const lowerTickIdx = event.args.tickLower
-    const upperTickIdx = event.args.tickUpper
+    const lowerTickIdx = BigInt(event.args.tickLower)
+    const upperTickIdx = BigInt(event.args.tickUpper)
 
-    const lowerTickId = poolId + '#' + BigInt(lowerTickIdx);
-    const upperTickId = poolId + '#' + BigInt(upperTickIdx);
+    const lowerTickId = poolId + '#' + lowerTickIdx;
+    const upperTickId = poolId + '#' + upperTickIdx;
 
-    let lowerTick = Tick.load(lowerTickId)
-    let upperTick = Tick.load(upperTickId)
+    let lowerTick = await context.db.find(ticks, { id: lowerTickId })
+    let upperTick = await context.db.find(ticks, { id: upperTickId })
 
     if (lowerTick === null) {
-      lowerTick = createTick(lowerTickId, lowerTickIdx, pool.id, event)
+      lowerTick = await createTick(context, lowerTickId, lowerTickIdx, pool.id, event)
     }
 
     if (upperTick === null) {
-      upperTick = createTick(upperTickId, upperTickIdx, pool.id, event)
+      upperTick = await createTick(context, upperTickId, upperTickIdx, pool.id, event)
     }
 
-    const amount = event.params.liquidityDelta
-    lowerTick.liquidityGross = lowerTick.liquidityGross.plus(amount)
-    lowerTick.liquidityNet = lowerTick.liquidityNet.plus(amount)
-    upperTick.liquidityGross = upperTick.liquidityGross.plus(amount)
-    upperTick.liquidityNet = upperTick.liquidityNet.minus(amount)
+    const amount = event.args.liquidityDelta
 
-    lowerTick.save()
-    upperTick.save()
+    await context.db.update(ticks, { id: lowerTickId }).set({
+      liquidityGross: lowerTick.liquidityGross + amount,
+      liquidityNet: lowerTick.liquidityNet + amount,
+    });
+
+    await context.db.update(ticks, { id: upperTickId }).set({
+      liquidityGross: upperTick.liquidityGross + amount,
+      liquidityNet: upperTick.liquidityNet - amount,
+    });
 
     updateUniswapDayData(event, poolManagerAddress)
     updatePoolDayData(event.params.id.toHexString(), event)
