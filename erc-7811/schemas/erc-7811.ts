@@ -9,6 +9,7 @@ import {
   type InferInput,
   type InferOutput,
   strictObject,
+  nullable,
 } from "valibot";
 import { Address, Hex, Integer } from "./shared";
 
@@ -63,7 +64,7 @@ const Erc20Asset = strictObject({
   metadata: strictObject({
     name: string(),
     symbol: string(),
-    decimals: Integer,
+    decimals: nullable(Integer),
   })
 });
 
