@@ -228,7 +228,10 @@ describe('getNftsByAddress', () => {
               {
                 address: account,
                 networks: [
-                  'eth-mainnet'
+                  'eth-mainnet',
+                  'polygon-mainnet',
+                  'opt-mainnet',
+                  'base-mainnet',
                 ]
               }
             ],
@@ -241,8 +244,9 @@ describe('getNftsByAddress', () => {
         } catch (error) {
           if (error instanceof ValiError) {
             console.log(error.issues[0].path.map(p => p.key).join('.'));
-            console.log(error.issues[0].message);
+            console.log(error.issues[0]);
           }
+          throw error;
         }
       }).not.toThrow();
     });
