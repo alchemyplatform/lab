@@ -252,6 +252,7 @@ const NftWithMetadata = strictObject({
   acquiredAt: NftAcquiredAt,
 });
 
+type OwnedNft = InferOutput<typeof OwnedNft>;
 const OwnedNft = union([NftWithoutMetadata, NftWithMetadata]);
 
 // Response schema for get-nfts-by-address
@@ -265,6 +266,7 @@ const GetNftsByAddressResponse = strictObject({
 
 export {
   type NftWithMetadata,
+  type OwnedNft,
   GetNftsByAddressRequest,
   GetNftsByAddressResponse,
 };

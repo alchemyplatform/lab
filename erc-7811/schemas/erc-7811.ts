@@ -89,6 +89,7 @@ const GenericAsset = strictObject({
   metadata: any(),
 });
 
+type Asset = InferOutput<typeof Asset>;
 const Asset = union([NativeAsset, Erc20Asset, Erc721Asset, GenericAsset]);
 
 type WalletGetAssetsResponse = InferOutput<typeof WalletGetAssetsResponse>;
@@ -99,6 +100,7 @@ export {
   type Erc20Asset,
   type Erc721Asset,
   type GenericAsset,
+  type Asset,
   WalletGetAssetsRequest,
   type WalletGetAssetsResponse,
 }
