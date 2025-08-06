@@ -1,5 +1,5 @@
 import { parse } from "valibot";
-import { GetNftsByAddressRequest, GetNftsByAddressResponse } from "../schemas/portfolio/get-nfts-by-address";
+import { GetNftsByAddressRequest, GetNftsByAddressResponse, type NftWithMetadata } from "../schemas/portfolio/get-nfts-by-address";
 
 async function getNftsByAddress({ address, networks }: { address: string, networks: string[] }) {
   const request = parse(GetNftsByAddressRequest, {
@@ -16,7 +16,7 @@ async function getNftsByAddress({ address, networks }: { address: string, networ
     body: JSON.stringify(request),
   });
   const json = await response.json();
-  return parse(GetNftsByAddressResponse, json).data.ownedNfts;
+  return parse(GetNftsByAddressResponse, json).data.ownedNfts as NftWithMetadata[];
 }
 
 export { getNftsByAddress };

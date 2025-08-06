@@ -83,7 +83,7 @@ function convertToErc1155(nft: NftWithMetadata): GenericAsset {
   }
 }
 
-export function convertAsset(asset: Token | OwnedNft): Asset {
+export function convertAsset(asset: Token | NftWithMetadata): Asset {
   if ('tokenAddress' in asset) {
     if (asset.tokenAddress === null) {
       return convertToNative(asset);
