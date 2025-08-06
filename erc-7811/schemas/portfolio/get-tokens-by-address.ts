@@ -8,7 +8,8 @@ import {
   maxLength,
   nullable,
   type InferInput,
-  isoTimestamp
+  isoTimestamp,
+  type InferOutput
 } from "valibot";
 import { Address, Hex, Integer, Network } from "../shared";
 
@@ -72,6 +73,7 @@ const Token = strictObject({
 });
 
 // Response schema for get-tokens-by-address
+type GetTokensByAddressResponse = InferOutput<typeof GetTokensByAddressResponse>;
 const GetTokensByAddressResponse = strictObject({
   data: strictObject({
     tokens: nullable(array(Token)),
