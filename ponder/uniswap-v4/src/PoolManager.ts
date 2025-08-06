@@ -1,6 +1,6 @@
 import { ponder } from "ponder:registry";
 import { getConfig } from "./utils/chains";
-import { poolManagers } from "ponder:schema";
+import { bundles, poolManagers } from "ponder:schema";
 import { zeroAddress } from "viem";
 
 ponder.on("PoolManager:Initialize", async ({ event, context }) => {
@@ -26,6 +26,7 @@ ponder.on("PoolManager:Initialize", async ({ event, context }) => {
 
   // load pool manager
   let poolManager = await context.db.find(poolManagers, { id: poolManagerAddress });
+
   if (poolManager === null) {
     poolManager = await context.db.insert(poolManagers).values({
       id: poolManagerAddress,
@@ -44,12 +45,15 @@ ponder.on("PoolManager:Initialize", async ({ event, context }) => {
     });
 
     // create new bundle for tracking eth price
-    const bundle = new Bundle('1')
-    bundle.ethPriceUSD = ZERO_BD
-    bundle.save()
+    // TODO: why id: 1?
+    await context.db.insert(bundles).values({
+      id: '1',
+      ethPriceUsd: 0
+    });
   }
 
-  poolManager.poolCount = poolManager.poolCount.plus(ONE_BI)
+  const poolCount = poolManager.poolCount + 1n;
+
   const pool = new Pool(poolId)
   let token0 = Token.load(event.params.currency0.toHexString())
   let token1 = Token.load(event.params.currency1.toHexString())

@@ -5,7 +5,7 @@ export const poolManagers = onchainTable("pool_managers", (t) => ({
   id: t.text().primaryKey(),
 
   // amount of pools created
-  poolCount: t.bigint(),
+  poolCount: t.bigint().notNull(),
 
   // amount of transactions all time
   txCount: t.bigint(),
@@ -40,4 +40,12 @@ export const poolManagers = onchainTable("pool_managers", (t) => ({
   // current owner of the factory
   // TODO: create Owner entity?
   owner: t.text(),
+}));
+
+export const bundles = onchainTable("bundles", (t) => ({
+  // bundle id
+  id: t.text().primaryKey(),
+
+  // price of ETH in usd
+  ethPriceUSD: t.doublePrecision(),
 }));
