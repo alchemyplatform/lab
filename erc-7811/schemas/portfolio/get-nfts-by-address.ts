@@ -127,8 +127,8 @@ const NftRawMetadata = strictObject({
 
     description: nullable(string()),
 
-    attributes: nullable(array(strictObject({
-      value: nullable(string()),
+    attributes: nullable(array(object({
+      value: nullable(union([string(), boolean()])),
       trait_type: nullable(string()),
       // TODO: field missing in docs
       display_type: optional(string()),
