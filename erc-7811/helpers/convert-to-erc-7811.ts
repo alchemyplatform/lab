@@ -27,7 +27,7 @@ function convertToErc20(token: Token): Erc20Asset {
   }
 
   return {
-    address: token.address,
+    address: token.tokenAddress,
     balance: token.tokenBalance,
     type: "erc20",
     metadata: {
