@@ -11,7 +11,8 @@ import {
   nullable,
   type InferOutput,
   isoTimestamp,
-  number
+  number,
+  object
 } from "valibot";
 import { Address, Hex, Integer, Network } from "../shared";
 
@@ -119,7 +120,7 @@ const NftAnimation = strictObject({
 const NftRawMetadata = strictObject({
   tokenUri: nullable(string()),
 
-  metadata: nullable(strictObject({
+  metadata: nullable(object({
     image: nullable(string()),
 
     name: nullable(string()),
