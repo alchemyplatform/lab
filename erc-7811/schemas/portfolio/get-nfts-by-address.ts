@@ -12,7 +12,8 @@ import {
   type InferOutput,
   isoTimestamp,
   number,
-  object
+  object,
+  any
 } from "valibot";
 import { Address, Hex, Integer, Network } from "../shared";
 
@@ -48,8 +49,19 @@ const TokenType = union([
 // TODO: do we have a list of all spam classifications & brief explanation in docs?
 const SpamClassification = union([
   literal('EmptyMetadata'),
+  literal('Erc721TooManyOwners'),
+  literal('Erc721TooManyTokens'),
+  literal('HighAirdropPercent'),
+  literal('HighHoneyPotOwnerPercent'),
+  literal('HighHoneyPotPercent'),
+  literal('HoneyPotsOwnMultipleTokens'),
+  literal('LowDistinctOwnersPercent'),
+  literal('MissingFromMarketplace'),
+  literal('NoSalesActivity'),
   literal('SpammyMetadata'),
+  literal('SuspiciousActivity'),
   literal('SuspiciousMetadata'),
+  literal('TokenUriError')
 ])
 
 // NFT Contract schema
@@ -120,36 +132,39 @@ const NftAnimation = strictObject({
 const NftRawMetadata = strictObject({
   tokenUri: nullable(string()),
 
-  metadata: nullable(object({
-    image: nullable(string()),
+  metadata: nullable(union([
+    any(),
+    object({
+      image: nullable(string()),
 
-    name: nullable(string()),
+      name: nullable(string()),
 
-    description: nullable(string()),
+      description: nullable(string()),
 
-    attributes: nullable(array(object({
-      value: nullable(union([string(), boolean()])),
-      trait_type: nullable(string()),
+      attributes: nullable(array(object({
+        value: nullable(union([string(), boolean()])),
+        trait_type: nullable(string()),
+        // TODO: field missing in docs
+        display_type: optional(string()),
+      }))),
+
       // TODO: field missing in docs
-      display_type: optional(string()),
-    }))),
+      external_url: optional(string()),
 
+      // TODO: field missing in docs
+      animation_url: optional(string()),
 
-    // TODO: field missing in docs
-    external_url: optional(string()),
+      // TODO: field missing in docs
+      is_normalized: optional(boolean()),
 
-    // TODO: field missing in docs
-    animation_url: optional(string()),
+      // TODO: field missing in docs
+      image_url: optional(string()),
 
-    // TODO: field missing in docs
-    is_normalized: optional(boolean()),
+      // TODO: field missing in docs
+      version: optional(string()),
+    }),
+  ])),
 
-    // TODO: field missing in docs
-    image_url: optional(string()),
-
-    // TODO: field missing in docs
-    version: optional(string()),
-  })),
 
   error: nullable(string()),
 });
