@@ -3,6 +3,7 @@ import { WalletGetAssetsRequest, type WalletGetAssetsResponse } from "./schemas/
 import { getTokenBalancesByAddress } from "./helpers/get-token-balances-by-address";
 import { getNftsByAddress } from "./helpers/get-nfts-by-address";
 import { getAssetsByAddress } from "./helpers/get-assets-by-address";
+import { convertAsset } from "./helpers/convert-to-erc-7811";
 
 
 const chainIdToNetwork = new Map<string, string>([
@@ -83,6 +84,12 @@ See https://eip.tools/eip/7811 for more details.`);
     If the assetFilter field is omitted, the wallet SHOULD return all available assets for the requested account. It is RECOMMENDED that the returned assets be ordered by estimated value in descending order, as determined by the wallet.
   */
   const assets = await getAssetsByAddress({ address: account, networks: ['eth-mainnet'] });
+
+  const erc7811Assets = assets.map(convertAsset);
+
+  return {
+    [account]: erc7811Assets,
+  };
 }
 
 

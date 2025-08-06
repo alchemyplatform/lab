@@ -3,7 +3,7 @@ import type { NftWithMetadata, OwnedNft } from "../schemas/portfolio/get-nfts-by
 import type { Token } from "../schemas/portfolio/get-tokens-by-address";
 
 function convertToNative(token: Token): NativeAsset {
-  if (token.tokenAddress !== '0x0000000000000000000000000000000000000000') {
+  if (token.tokenAddress !== null) {
     throw new Error('Token is not a native token.');
   }
 
@@ -15,21 +15,24 @@ function convertToNative(token: Token): NativeAsset {
 }
 
 function convertToErc20(token: Token): Erc20Asset {
-  if (token.tokenAddress === '0x0000000000000000000000000000000000000000') {
+  if (token.tokenAddress === null) {
     throw new Error('Token is not an ERC20.');
   }
 
   const metadata = token.tokenMetadata;
-  if (!metadata?.name || !metadata?.symbol || !metadata?.decimals) {
+
+  if (!metadata || !metadata?.hasOwnProperty('decimals')) {
+    console.log(token);
     throw new Error('Missing required metadata to convert to Erc20Asset.');
   }
+
   return {
     address: token.address,
     balance: token.tokenBalance,
     type: "erc20",
     metadata: {
-      name: metadata.name,
-      symbol: metadata.symbol,
+      name: metadata?.name ?? '',
+      symbol: metadata?.symbol ?? '',
       decimals: metadata.decimals,
     }
   };
@@ -40,19 +43,20 @@ function convertToErc721(nft: NftWithMetadata): Erc721Asset {
     throw new Error('NFT is not an ERC721.');
   }
 
-  if (!nft.address || !nft.name || !nft.contract?.symbol || !nft.tokenId || !nft.tokenUri) {
-    throw new Error('Missing required metadata to convert to Erc721Asset.');
+  if (!nft.contract?.address) {
+    console.log(nft);
+    throw new Error('Missing required contractaddress to convert to Erc721Asset.');
   }
 
   return {
-    address: nft.address,
+    address: nft.contract?.address,
     balance: '0x1',
     type: "erc721",
     metadata: {
-      name: nft.name,
-      symbol: nft.contract.symbol,
-      tokenId: nft.tokenId,
-      tokenURI: nft.tokenUri,
+      name: nft.name ?? `${nft.contract?.name} #${nft.tokenId}`,
+      symbol: nft.contract?.symbol ?? '',
+      tokenId: nft.tokenId ?? '',
+      tokenURI: nft.tokenUri ?? '',
     },
   };
 }
@@ -62,12 +66,12 @@ function convertToErc1155(nft: NftWithMetadata): GenericAsset {
     throw new Error('NFT is not an ERC1155.');
   }
 
-  if (!nft.address || !nft.name || !nft.contract?.symbol || !nft.tokenId) {
+  if (!nft.contract?.address || !nft.name || !nft.contract?.symbol || !nft.tokenId) {
     throw new Error('Missing required metadata to convert to Erc1155Asset.');
   }
 
   return {
-    address: nft.address,
+    address: nft.contract?.address,
     balance: nft.balance,
     type: "erc1155",
     metadata: {
@@ -81,7 +85,7 @@ function convertToErc1155(nft: NftWithMetadata): GenericAsset {
 
 export function convertAsset(asset: Token | OwnedNft): Asset {
   if ('tokenAddress' in asset) {
-    if (asset.tokenAddress === '0x0000000000000000000000000000000000000000') {
+    if (asset.tokenAddress === null) {
       return convertToNative(asset);
     }
     return convertToErc20(asset);
