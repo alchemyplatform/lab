@@ -62,10 +62,13 @@ type Token = InferInput<typeof Token>;
 const Token = strictObject({
   address: Address,
   network: Network,
-  tokenAddress: Address,
+  // for native tokens, tokenAddress is null
+  tokenAddress: nullable(Address),
   tokenBalance: Hex,
   tokenMetadata: nullable(TokenMetadata),
-  tokenPrices: nullable(TokenPrices),
+  // TODO: fix docs for tokenPrices field
+  // tokenPrices: nullable(TokenPrices),
+  tokenPrices: nullable(array(TokenPrice)),
 });
 
 // Response schema for get-tokens-by-address
