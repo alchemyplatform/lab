@@ -1,6 +1,6 @@
-import type { Erc20Asset, Erc721Asset, GenericAsset, NativeAsset } from "../schemas/erc-7811";
-import type { NftWithMetadata } from "../schemas/portfolio/get-nfts-by-address";
-import type { Token } from "../schemas/portfolio/get-token-by-address";
+import type { Asset, Erc20Asset, Erc721Asset, GenericAsset, NativeAsset } from "../schemas/erc-7811";
+import type { NftWithMetadata, OwnedNft } from "../schemas/portfolio/get-nfts-by-address";
+import type { Token } from "../schemas/portfolio/get-tokens-by-address";
 
 function convertToNative(token: Token): NativeAsset {
   if (token.tokenAddress !== '0x0000000000000000000000000000000000000000') {
@@ -77,4 +77,23 @@ function convertToErc1155(nft: NftWithMetadata): GenericAsset {
       tokenURI: nft.tokenUri,
     }
   }
+}
+
+export function convertAsset(asset: Token | OwnedNft): Asset {
+  if ('tokenAddress' in asset) {
+    if (asset.tokenAddress === '0x0000000000000000000000000000000000000000') {
+      return convertToNative(asset);
+    }
+    return convertToErc20(asset);
+  }
+
+  if ('tokenType' in asset && asset.tokenType === 'ERC721') {
+    return convertToErc721(asset);
+  }
+
+  if ('tokenType' in asset && asset.tokenType === 'ERC1155') {
+    return convertToErc1155(asset);
+  }
+
+  throw new Error('Unknown asset type.');
 }
