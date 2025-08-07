@@ -6,7 +6,8 @@ import { EulerSwapAbi } from "./abis/EulerSwapAbi";
 
 export default createConfig({
   chains: {
-    base: { id: 8453, rpc: process.env.PONDER_RPC_URL_8453! }
+    base: { id: 8453, rpc: process.env.PONDER_RPC_URL_8453! },
+    ethereum: { id: 1, rpc: process.env.PONDER_RPC_URL_1! }
   },
   contracts: {
     // PoolManager: {
@@ -34,7 +35,11 @@ export default createConfig({
         base: {
           address: "0xf0CFe22d23699ff1B2CFe6B8f706A6DB63911262",
           startBlock: 31_658_691,
-        }
+        },
+        // ethereum: {
+        //   address: "0xb013be1D0D380C13B58e889f412895970A2Cf228",
+        //   startBlock: 22_676_162
+        // }
       }
     }
   },
