@@ -41,6 +41,7 @@ export function convertTokenToDecimal(tokenAmount: bigint, exchangeDecimals: big
   return new Decimal(tokenAmount).div(exponentToBigDecimal(exchangeDecimals));
 }
 
+// TODO: rename to findOrCreateTransaction
 export async function loadTransaction(context: Context, event: Event) {
   let transaction = await context.db.find(transactions, { id: event.transaction.hash });
 
