@@ -1,7 +1,10 @@
 import { Context, Event } from "ponder:registry";
 import { eulerHooks } from "ponder:schema";
 
-export async function handlePoolUninstalled({ event, context }: { event: Event<"EulerSwap:PoolUninstalled">, context: Context }): Promise<void> {
+export async function handlePoolUninstalled({ event, context }: {
+  event: Event<"EulerSwap:PoolUninstalled">,
+  context: Context
+}): Promise<void> {
   // ──────────────────────────────────────────────────────────────
   // Build the composite ID: eulerAccount-asset0-asset1
   // ──────────────────────────────────────────────────────────────
