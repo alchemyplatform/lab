@@ -10,16 +10,16 @@ export default createConfig({
     ethereum: { id: 1, rpc: process.env.PONDER_RPC_URL_1! }
   },
   contracts: {
-    // PoolManager: {
-    //   abi: PoolManagerAbi,
-    //   chain: {
-    //     base: {
-    //       address: "0x498581fF718922c3f8e6A244956aF099B2652b2b",
-    //       startBlock: 25_350_988,
-    //       // startBlock: "latest",
-    //     }
-    //   }
-    // },
+    PoolManager: {
+      abi: PoolManagerAbi,
+      chain: {
+        base: {
+          address: "0x498581fF718922c3f8e6A244956aF099B2652b2b",
+          startBlock: 25_350_988,
+          // startBlock: "latest",
+        }
+      }
+    },
     PositionManager: {
       abi: PositionManagerAbi,
       chain: {
