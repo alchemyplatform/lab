@@ -9,6 +9,7 @@ import { tokens } from "./schemas/tokens";
 import { transactions } from "./schemas/transactions";
 import { transfers } from "./schemas/transfer";
 import { uniswapDayDatas, poolDayDatas, poolHourDatas, tokenDayDatas, tokenHourDatas } from "./schemas/data";
+import { swaps } from "./schemas/swaps";
 
 
-export { bundles, eulerHooks, positions, poolManagers, pools, tokens, ticks, transactions, transfers, uniswapDayDatas, poolDayDatas, poolHourDatas, tokenDayDatas, tokenHourDatas };
+export { bundles, eulerHooks, modifyLiquidities, positions, poolManagers, pools, tokens, ticks, transactions, transfers, uniswapDayDatas, poolDayDatas, poolHourDatas, tokenDayDatas, tokenHourDatas, swaps };
