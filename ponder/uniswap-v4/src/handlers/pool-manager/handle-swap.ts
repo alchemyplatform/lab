@@ -6,6 +6,9 @@ import { ONE_BI, ZERO_BD } from "../../utils/constants";
 import { getTrackedAmountUSD, sqrtPriceX96ToTokenPrices } from "../../utils/pricing";
 import Decimal from "decimal.js";
 import { updatePoolDayData, updatePoolHourData, updateTokenDayData, updateTokenHourData, updateUniswapDayData } from "../../utils/intervalUpdates";
+import { findNativePerToken } from "../../utils/pricing/findNativePerToken";
+import { eq } from "ponder";
+import { getNativePriceInUSD } from "../../utils/pricing/getNativePriceInUsd";
 
 export async function handleSwap({ event, context }: {
   event: Event<"PoolManager:Swap">,
@@ -42,8 +45,8 @@ export async function handleSwap({ event, context }: {
     return;
   }
 
-  const token0 = await context.db.find(tokens, { id: pool.token0 });
-  const token1 = await context.db.find(tokens, { id: pool.token1 });
+  const token0 = await context.db.sql.query.tokens.findFirst({ where: eq(tokens.id, pool.token0), with: { whitelistPools: true } });
+  const token1 = await context.db.sql.query.tokens.findFirst({ where: eq(tokens.id, pool.token1), with: { whitelistPools: true } });
 
   if (token0 && token1) {
     // amounts - 0/1 are token deltas: can be positive or negative
@@ -131,11 +134,11 @@ export async function handleSwap({ event, context }: {
     pool.token1Price = prices[1].toNumber()
 
     // update USD pricing
-    bundle.ethPriceUSD = getNativePriceInUSD(stablecoinWrappedNativePoolId, stablecoinIsToken0)
+    bundle.ethPriceUSD = (await getNativePriceInUSD(context, stablecoinWrappedNativePoolId, stablecoinIsToken0)).toNumber()
     await context.db.update(bundles, bundle);
 
-    token0.derivedETH = findNativePerToken(token0, wrappedNativeAddress, stablecoinAddresses, minimumNativeLocked)
-    token1.derivedETH = findNativePerToken(token1, wrappedNativeAddress, stablecoinAddresses, minimumNativeLocked)
+    token0.derivedETH = (await findNativePerToken(context, token0, wrappedNativeAddress, stablecoinAddresses, new Decimal(minimumNativeLocked))).toNumber()
+    token1.derivedETH = (await findNativePerToken(context, token1, wrappedNativeAddress, stablecoinAddresses, new Decimal(minimumNativeLocked))).toNumber()
 
     /**
      * Things afffected by new USD rates
