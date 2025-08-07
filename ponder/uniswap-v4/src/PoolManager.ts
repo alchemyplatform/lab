@@ -7,6 +7,7 @@ import { calculateAmountUSD, sqrtPriceX96ToTokenPrices } from "./utils/pricing";
 import { convertTokenToDecimal, loadTransaction } from "./utils";
 import Decimal from "decimal.js";
 import { createTick } from "./utils/tick";
+import { updatePoolDayData, updatePoolHourData, updateTokenDayData, updateTokenHourData, updateUniswapDayData } from "./utils/intervalUpdates";
 
 ponder.on("PoolManager:Initialize", async ({ event, context }) => {
   console.log(event.args);
@@ -381,19 +382,19 @@ ponder.on("PoolManager:ModifyLiquidity", async ({ event, context }) => {
       liquidityNet: upperTick.liquidityNet - amount,
     });
 
-    updateUniswapDayData(event, poolManagerAddress)
-    updatePoolDayData(event.params.id.toHexString(), event)
-    updatePoolHourData(event.params.id.toHexString(), event)
-    updateTokenDayData(token0, event)
-    updateTokenDayData(token1, event)
-    updateTokenHourData(token0, event)
-    updateTokenHourData(token1, event)
+    await updateUniswapDayData(context, event, poolManagerAddress);
+    await updatePoolDayData(context, event, poolId);
+    await updatePoolHourData(context, event, poolId);
+    await updateTokenDayData(context, event, token0.id);
+    await updateTokenDayData(context, event, token1.id);
+    await updateTokenHourData(context, event, token0.id);
+    await updateTokenHourData(context, event, token1.id);
 
-    token0.save()
-    token1.save()
-    pool.save()
-    poolManager.save()
-    modifyLiquidity.save()
+    await context.db.update(tokens, { id: token0.id }).set(token0);
+    await context.db.update(tokens, { id: token1.id }).set(token1);
+    await context.db.update(pools, { id: pool.id }).set(pool);
+    await context.db.update(poolManagers, { id: poolManagerAddress }).set(poolManager);
+    await context.db.update(modifyLiquidities, { id: modifyLiquidity.id }).set(modifyLiquidity);
   }
 });
 
