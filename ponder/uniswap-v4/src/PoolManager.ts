@@ -8,6 +8,7 @@ import { convertTokenToDecimal, loadTransaction } from "./utils";
 import Decimal from "decimal.js";
 import { createTick } from "./utils/tick";
 import { updatePoolDayData, updatePoolHourData, updateTokenDayData, updateTokenHourData, updateUniswapDayData } from "./utils/intervalUpdates";
+import { getAmount0, getAmount1 } from "./utils/liquidityMath/liquidityAmounts";
 
 ponder.on("PoolManager:Initialize", async ({ event, context }) => {
   console.log(event.args);

@@ -21,6 +21,19 @@ export function safeDiv(amount0: Decimal, amount1: Decimal): Decimal {
   }
 }
 
+export function hexToBigInt(hex: string): bigint {
+  if (hex.startsWith('0x')) {
+    hex = hex.slice(2)
+  }
+  let result = 0n
+  for (let i = 0; i < hex.length; i++) {
+    result = result
+      * 16n
+      + BigInt(parseInt(hex.charAt(i), 16))
+  }
+  return result
+}
+
 export function convertTokenToDecimal(tokenAmount: bigint, exchangeDecimals: bigint): Decimal {
   if (exchangeDecimals == 0n) {
     return new Decimal(tokenAmount);
