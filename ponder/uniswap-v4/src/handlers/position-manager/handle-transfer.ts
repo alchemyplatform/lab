@@ -3,7 +3,10 @@ import { positions } from "../../../schemas/position";
 import { transfers } from "../../../schemas/transfer";
 import { loadTransaction } from "../../utils";
 
-export async function handleTransfer({ event, context }: { event: Event<"PositionManager:Transfer">, context: Context }): Promise<void> {
+export async function handleTransfer({ event, context }: {
+  event: Event<"PositionManager:Transfer">,
+  context: Context
+}): Promise<void> {
   const { id: tokenId, from, to } = event.args;
 
   let position = await context.db.find(positions, { id: tokenId });
