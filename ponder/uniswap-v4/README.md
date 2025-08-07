@@ -18,5 +18,5 @@ Convert Uniswap v4 subgraph to Ponder.
 
 [] EulerSwapFactory
 
-- [] PoolDeployed -> handlePoolDeployed
-- [] PoolUninstalled -> handlePoolUninstalled
+- [x] PoolDeployed -> handlePoolDeployed
+- [x] PoolUninstalled -> handlePoolUninstalled
