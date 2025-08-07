@@ -4,8 +4,6 @@ import { transfers } from "../../../schemas/transfer";
 import { loadTransaction } from "../../utils";
 
 export async function handleTransfer({ event, context }: { event: Event<"PositionManager:Transfer">, context: Context }): Promise<void> {
-  console.log(event.args);
-
   const { id: tokenId, from, to } = event.args;
 
   let position = await context.db.find(positions, { id: tokenId });
@@ -15,9 +13,9 @@ export async function handleTransfer({ event, context }: { event: Event<"Positio
 
     position = await context.db.insert(positions).values({
       id: tokenId,
+      owner: to,
       origin,
       createdAtTimestamp,
-      owner: to,
     });
   } else {
     position = await context.db
@@ -28,7 +26,7 @@ export async function handleTransfer({ event, context }: { event: Event<"Positio
   const transaction = await loadTransaction(context, event);
 
   const hash = event.transaction.hash;
-  const logIndex = BigInt(event.log.logIndex);
+  const logIndex = event.log.logIndex;
   const origin = event.transaction.from;
   const timestamp = event.block.timestamp;
 

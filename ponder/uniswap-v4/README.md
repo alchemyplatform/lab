@@ -14,7 +14,7 @@ Convert Uniswap v4 subgraph to Ponder.
 
 - [] Subscription -> handleSubscription
 - [] Unsubscription -> handleUnsubscription
-- [] Transfer -> handleTransfer
+- [x] Transfer -> handleTransfer
 
 [] EulerSwapFactory
 

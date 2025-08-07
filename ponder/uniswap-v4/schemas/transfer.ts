@@ -9,7 +9,8 @@ export const transfers = onchainTable(
     hash: t.text().notNull(),
 
     // log index
-    logIndex: t.bigint().notNull(),
+    // TODO: use bigint instead?
+    logIndex: t.integer().notNull(),
 
     // token id of position
     tokenId: t.bigint().notNull(),
