@@ -9,16 +9,16 @@ export default createConfig({
     base: { id: 8453, rpc: process.env.PONDER_RPC_URL_8453! }
   },
   contracts: {
-    PoolManager: {
-      abi: PoolManagerAbi,
-      chain: {
-        base: {
-          address: "0x498581fF718922c3f8e6A244956aF099B2652b2b",
-          startBlock: 25_350_988,
-          // startBlock: "latest",
-        }
-      }
-    },
+    // PoolManager: {
+    //   abi: PoolManagerAbi,
+    //   chain: {
+    //     base: {
+    //       address: "0x498581fF718922c3f8e6A244956aF099B2652b2b",
+    //       startBlock: 25_350_988,
+    //       // startBlock: "latest",
+    //     }
+    //   }
+    // },
     PositionManager: {
       abi: PositionManagerAbi,
       chain: {
