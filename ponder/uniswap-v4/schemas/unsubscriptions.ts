@@ -1,6 +1,6 @@
 import { onchainTable, primaryKey, relations } from "ponder";
 import { transactions } from "ponder:schema";
-import { positions } from "./position";
+import { positions } from "./positions";
 
 // TODO: same as subscriptions - do we need 2 tables?
 export const unsubscriptions = onchainTable(

@@ -1,6 +1,6 @@
 import { onchainTable, primaryKey, relations } from "ponder";
 import { transactions } from "ponder:schema";
-import { positions } from "./position";
+import { positions } from "./positions";
 
 export const subscriptions = onchainTable(
   "subscriptions",
