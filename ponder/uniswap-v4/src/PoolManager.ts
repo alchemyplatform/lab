@@ -1,6 +1,6 @@
 import { ponder } from "ponder:registry";
-import { handleInitialize } from "./handlers/pool-manager/handleInitialize";
-import { handleModifyLiquidity } from "./handlers/pool-manager/handleModifyLiquidity";
+import { handleInitialize } from "./handlers/pool-manager/handle-initialize";
+import { handleModifyLiquidity } from "./handlers/pool-manager/handle-modify-liquidity";
 
 ponder.on("PoolManager:Initialize", async ({ event, context }) => {
   await handleInitialize({ event, context });
