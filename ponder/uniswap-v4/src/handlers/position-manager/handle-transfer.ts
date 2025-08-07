@@ -1,6 +1,6 @@
 import { Context, Event } from "ponder:registry";
-import { loadTransaction } from "../../utils";
 import { positions, transfers } from "ponder:schema";
+import { findOrCreateTransaction } from "../../utils/findOrCreateTransaction";
 
 export async function handleTransfer({ event, context }: {
   event: Event<"PositionManager:Transfer">,
@@ -25,7 +25,7 @@ export async function handleTransfer({ event, context }: {
       .set({ owner: to });
   }
 
-  const transaction = await loadTransaction(context, event);
+  const transaction = await findOrCreateTransaction(context, event);
 
   const hash = event.transaction.hash;
   const logIndex = event.log.logIndex;

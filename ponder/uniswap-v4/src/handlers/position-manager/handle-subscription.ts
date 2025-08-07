@@ -1,6 +1,6 @@
 import { Context, Event } from "ponder:registry";
-import { loadTransaction } from "../../utils";
 import { subscriptions } from "ponder:schema";
+import { findOrCreateTransaction } from "../../utils/findOrCreateTransaction";
 
 export async function handleSubscription({ event, context }: {
   event: Event<"PositionManager:Subscription">,
@@ -12,7 +12,7 @@ export async function handleSubscription({ event, context }: {
   const logIndex = event.log.logIndex;
   const origin = event.transaction.from;
 
-  const transaction = await loadTransaction(context, event);
+  const transaction = await findOrCreateTransaction(context, event);
   const timestamp = transaction.timestamp;
 
   await context.db.insert(subscriptions).values({

@@ -1,6 +1,6 @@
 import { Context, Event } from "ponder:registry";
-import { loadTransaction } from "../../utils";
 import { unsubscriptions } from "ponder:schema";
+import { findOrCreateTransaction } from "../../utils/findOrCreateTransaction";
 
 // same as handleSubscription - do we need to keep both?
 export async function handleUnsubscription({ event, context }: {
@@ -13,7 +13,7 @@ export async function handleUnsubscription({ event, context }: {
   const logIndex = event.log.logIndex;
   const origin = event.transaction.from;
 
-  const transaction = await loadTransaction(context, event);
+  const transaction = await findOrCreateTransaction(context, event);
   const timestamp = transaction.timestamp;
 
   await context.db.insert(unsubscriptions).values({
