@@ -25,10 +25,9 @@ export async function handleTransfer({ event, context }: { event: Event<"Positio
       .set({ owner: to });
   }
 
-
   const transaction = await loadTransaction(context, event);
 
-  const hash = await event.transaction.hash;
+  const hash = event.transaction.hash;
   const logIndex = BigInt(event.log.logIndex);
   const origin = event.transaction.from;
   const timestamp = event.block.timestamp;

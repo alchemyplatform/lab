@@ -12,7 +12,7 @@ export async function handlePoolUninstalled({ event, context }: { event: Event<"
   // ──────────────────────────────────────────────────────────────
   const entity = await context.db.find(eulerHooks, { eulerAccount, asset0, asset1 });
 
-  if (entity != null && entity.hook == pool) {
+  if (entity !== null && entity.hook === pool) {
     await context.db.delete(eulerHooks, { eulerAccount, asset0, asset1 });
   }
 }

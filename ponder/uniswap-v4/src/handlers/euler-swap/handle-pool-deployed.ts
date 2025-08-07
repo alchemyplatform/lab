@@ -17,12 +17,12 @@ export async function handlePoolDeployed({ event, context }: { event: Event<"Eul
       eulerAccount,
       asset0,
       asset1,
-      hook: event.args.pool,
+      hook: pool,
     });
+  } else {
+    // Always overwrite the hook address so the latest hook is used
+    await context.db
+      .update(eulerHooks, { eulerAccount, asset0, asset1 })
+      .set({ hook: pool });
   }
-
-  // Always overwrite the hook address so the latest hook is used
-  await context.db
-    .update(eulerHooks, { eulerAccount, asset0, asset1 })
-    .set({ hook: pool });
 }
