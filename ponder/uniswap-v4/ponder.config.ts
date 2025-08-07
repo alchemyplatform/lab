@@ -2,6 +2,7 @@ import { createConfig } from "ponder";
 
 import { PoolManagerAbi } from "./abis/PoolManagerAbi";
 import { PositionManagerAbi } from "./abis/PositionManagerAbi";
+import { EulerSwapAbi } from "./abis/EulerSwapAbi";
 
 export default createConfig({
   chains: { base: { id: 8453, rpc: process.env.PONDER_RPC_URL_8453! } },
@@ -13,5 +14,11 @@ export default createConfig({
       // startBlock: 25_350_988,
       startBlock: "latest",
     },
+    EulerSwap: {
+      chain: "base",
+      address: "0xf0CFe22d23699ff1B2CFe6B8f706A6DB63911262",
+      abi: EulerSwapAbi,
+      startBlock: 31_658_691,
+    }
   },
 });
