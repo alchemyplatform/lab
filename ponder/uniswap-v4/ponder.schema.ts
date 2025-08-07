@@ -1,4 +1,5 @@
 import { onchainTable, relations } from "ponder";
+import { eulerHooks } from "./schemas/euler";
 
 export const poolManagers = onchainTable("pool_managers", (t) => ({
   // poolManager address
@@ -517,3 +518,4 @@ export const tokenHourDatas = onchainTable("token_hour_datas", (t) => ({
   close: t.doublePrecision().notNull(),
 }));
 
+export { eulerHooks };
