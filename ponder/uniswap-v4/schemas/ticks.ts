@@ -4,8 +4,8 @@ import { pools } from "ponder:schema";
 export const ticks = onchainTable(
   "ticks",
   (t) => ({
-
     // format: <pool address>#<tick index>
+    // TODO: use composite key
     id: t.text().primaryKey(),
 
     // pool address
