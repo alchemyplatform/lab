@@ -2,9 +2,8 @@ import { onchainTable, primaryKey, relations } from "ponder";
 import { transactions } from "ponder:schema";
 import { positions } from "./position";
 
-// TODO: same as subscriptions - do we need 2 tables?
-export const unsubscriptions = onchainTable(
-  "unsubscriptions",
+export const subscriptions = onchainTable(
+  "subscriptions",
   (t) => ({
     // transaction hash
     hash: t.text().notNull(),
@@ -13,11 +12,11 @@ export const unsubscriptions = onchainTable(
     // TODO: use bigint instead?
     logIndex: t.integer().notNull(),
 
-    // token id of position unsubscribed from
+    // token id of position subscribed to
     tokenId: t.bigint().notNull(),
 
-    // address of unsubscriber
-    // TODO: rename to unsubscriber?
+    // address of subscriber
+    // TODO: rename to subscriber?
     address: t.text().notNull(),
 
     // the EOA that initiated the tx
@@ -38,8 +37,8 @@ export const unsubscriptions = onchainTable(
   })
 );
 
-export const unsubscriptionRelations = relations(unsubscriptions, ({ one }) => ({
-  transaction: one(transactions, { fields: [unsubscriptions.transaction], references: [transactions.id] }),
+export const subscriptionRelations = relations(subscriptions, ({ one }) => ({
+  transaction: one(transactions, { fields: [subscriptions.transaction], references: [transactions.id] }),
 
-  position: one(positions, { fields: [unsubscriptions.position], references: [positions.id] }),
+  position: one(positions, { fields: [subscriptions.position], references: [positions.id] }),
 }));

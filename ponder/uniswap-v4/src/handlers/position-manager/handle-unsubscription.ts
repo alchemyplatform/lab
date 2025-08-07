@@ -2,6 +2,7 @@ import { Context, Event } from "ponder:registry";
 import { loadTransaction } from "../../utils";
 import { unsubscriptions } from "../../../schemas/unsubscriptions";
 
+// same as handleSubscription - do we need to keep both?
 export async function handleUnsubscription({ event, context }: {
   event: Event<"PositionManager:Unsubscription">,
   context: Context
