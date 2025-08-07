@@ -14,6 +14,12 @@ export default createConfig({
       // startBlock: 25_350_988,
       startBlock: "latest",
     },
+    PositionManager: {
+      chain: "base",
+      address: "0x0000000000000000000000000000000000000000",
+      abi: PositionManagerAbi,
+      startBlock: "latest",
+    },
     EulerSwap: {
       chain: "base",
       address: "0xf0CFe22d23699ff1B2CFe6B8f706A6DB63911262",
