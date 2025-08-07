@@ -1,5 +1,5 @@
 import { Context, Event } from "ponder:registry";
-import { positions } from "../../../schemas/position";
+import { positions } from "../../../schemas/positions";
 import { transfers } from "../../../schemas/transfer";
 import { loadTransaction } from "../../utils";
 
