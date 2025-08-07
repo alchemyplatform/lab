@@ -1,7 +1,6 @@
 import { Context, Event } from "ponder:registry";
-import { positions } from "../../../schemas/positions";
-import { transfers } from "../../../schemas/transfer";
 import { loadTransaction } from "../../utils";
+import { positions, transfers } from "ponder:schema";
 
 export async function handleTransfer({ event, context }: {
   event: Event<"PositionManager:Transfer">,

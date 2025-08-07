@@ -1,6 +1,6 @@
 import { Context, Event } from "ponder:registry";
 import { loadTransaction } from "../../utils";
-import { subscriptions } from "../../../schemas/subscriptions";
+import { subscriptions } from "ponder:schema";
 
 export async function handleSubscription({ event, context }: {
   event: Event<"PositionManager:Subscription">,
