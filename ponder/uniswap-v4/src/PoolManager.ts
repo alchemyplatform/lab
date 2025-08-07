@@ -55,7 +55,7 @@ ponder.on("PoolManager:Initialize", async ({ event, context }) => {
     // TODO: why id: 1?
     await context.db.insert(bundles).values({
       id: '1',
-      ethPriceUsd: 0
+      ethPriceUSD: 0
     });
   }
 
@@ -382,6 +382,7 @@ ponder.on("PoolManager:ModifyLiquidity", async ({ event, context }) => {
       liquidityNet: upperTick.liquidityNet - amount,
     });
 
+    // TODO: could we simplify this by only storing hourly data and then aggregating the daily data?
     await updateUniswapDayData(context, event, poolManagerAddress);
     await updatePoolDayData(context, event, poolId);
     await updatePoolHourData(context, event, poolId);
