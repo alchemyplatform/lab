@@ -15,15 +15,17 @@ export async function handleSubscription({ event, context }: {
   const transaction = await findOrCreateTransaction(context, event);
   const timestamp = transaction.timestamp;
 
-  await context.db.insert(subscriptions).values({
-    hash,
-    logIndex,
-    tokenId,
-    address: subscriber,
-    origin,
-    timestamp,
-    transaction: transaction.id,
-    position: tokenId,
-  });
+  await context.db
+    .insert(subscriptions)
+    .values({
+      hash,
+      logIndex,
+      tokenId,
+      address: subscriber,
+      origin,
+      timestamp,
+      transaction: transaction.id,
+      position: tokenId,
+    });
 }
 

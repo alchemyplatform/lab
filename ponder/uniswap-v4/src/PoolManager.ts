@@ -7,10 +7,12 @@ ponder.on("PoolManager:Initialize", async ({ event, context }) => {
   // await handleInitialize({ event, context });
 });
 
-// ponder.on("PoolManager:ModifyLiquidity", async ({ event, context }) => {
-//   await handleModifyLiquidity({ event, context });
-// });
+ponder.on("PoolManager:ModifyLiquidity", async ({ event, context }) => {
+  // await handleModifyLiquidity({ event, context });
+});
 
 ponder.on("PoolManager:Swap", async ({ event, context }) => {
   // await handleSwap({ event, context });
 });
+
+// 276 GB remaining

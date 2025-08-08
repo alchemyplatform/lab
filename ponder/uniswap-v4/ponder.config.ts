@@ -7,7 +7,10 @@ import { EulerSwapAbi } from "./abis/EulerSwapAbi";
 export default createConfig({
   chains: {
     base: { id: 8453, rpc: process.env.PONDER_RPC_URL_8453! },
-    ethereum: { id: 1, rpc: process.env.PONDER_RPC_URL_1! }
+    // ethereum: { id: 1, rpc: process.env.PONDER_RPC_URL_1! }
+
+    // Fatal error: Unable to sync 'base' from 29 564 874 to 29 564 899 on Alchemy
+    // transaction.to missing
   },
   contracts: {
     PoolManager: {

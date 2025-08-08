@@ -8,28 +8,23 @@ export async function handleTransfer({ event, context }: {
 }): Promise<void> {
   const { id: tokenId, from, to } = event.args;
 
-  let position = await context.db.find(positions, { id: tokenId });
-  if (position === null) {
-    const origin = event.transaction.from;
-    const createdAtTimestamp = event.block.timestamp;
+  const origin = event.transaction.from;
+  const createdAtTimestamp = event.block.timestamp;
 
-    position = await context.db.insert(positions).values({
+  const position = await context.db
+    .insert(positions)
+    .values({
       id: tokenId,
       owner: to,
       origin,
       createdAtTimestamp,
-    });
-  } else {
-    position = await context.db
-      .update(positions, { id: tokenId })
-      .set({ owner: to });
-  }
+    })
+    .onConflictDoUpdate({ owner: to });
 
   const transaction = await findOrCreateTransaction(context, event);
 
   const hash = event.transaction.hash;
   const logIndex = event.log.logIndex;
-  const origin = event.transaction.from;
   const timestamp = event.block.timestamp;
 
   await context.db
