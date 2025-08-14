@@ -7,7 +7,7 @@ A tiny Solidity helper to burn a target amount of gas in a single call, without 
 ## Estimating gas with viem
 
 ```bash
-bun run estimate-gas
+bun run estimate-gas --gas=20000000
 ```
 
 See [`src/scripts/estimate-gas.ts`](./src/scripts/estimate-gas.ts) for more.
@@ -16,7 +16,7 @@ See [`src/scripts/estimate-gas.ts`](./src/scripts/estimate-gas.ts) for more.
 
 | Network         | Contract Address                             | Explorer                                                                                                 |
 | --------------- | -------------------------------------------- | -------------------------------------------------------------------------------------------------------- |
-| Botanix Testnet | `0x60a7e16fe32fe0daaf615d469a6f4e4fcb3774ed` | [View on BotanixScan](https://testnet.botanixscan.io/address/0x60a7E16fe32fE0Daaf615D469A6f4E4fCB3774Ed) |
+| Botanix Testnet | `0xf337881430706c526cca7333a0b00cbe0d4d6bae` | [View on BotanixScan](https://testnet.botanixscan.io/address/0xf337881430706c526cca7333a0b00cbe0d4d6bae) |
 
 ### Deploying GasBurner contract to new chain
 

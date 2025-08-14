@@ -41,8 +41,6 @@ if (!contractAddress) {
   throw new Error(`No contract address found for ${network.name}`);
 }
 
-// 0x60a7e16fe32fe0daaf615d469a6f4e4fcb3774ed
-// 0xc0ec86363f891fdeb3cd50f14628b7a2b71ec08a
 const estimatedGas = await publicClient.estimateContractGas({
   abi,
   address: '0x60a7e16fe32fe0daaf615d469a6f4e4fcb3774ed',
