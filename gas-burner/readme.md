@@ -28,11 +28,11 @@ See [`src/scripts/deploy-contract`](.src/scripts/deploy-contract.ts) for more.
 
 ## How it works
 
-Coarse burn: Loops with keccak256(0, 0) (~30 gas/iter) to get close to target without memory growth.
+- Coarse burn: Loops with keccak256(0, 0) (~30 gas/iter) to get close to target without memory growth.
 
-Fine burn: Closes the remaining gap with cheap ops (PUSH1 + POP, ~5 gas/iter).
+- Fine burn: Closes the remaining gap with cheap ops (PUSH1 + POP, ~5 gas/iter).
 
-We track used = start - gasleft() continuously until we reach toSpend gas.
+- We track used = start - gasleft() continuously until we reach toSpend gas.
 
 ### Contract
 
