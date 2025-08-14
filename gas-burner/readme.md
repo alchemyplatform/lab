@@ -4,6 +4,28 @@ A tiny Solidity helper to burn a target amount of gas in a single call, without 
 
 > ⚠️ Exact equality is not guaranteed. Expect ±5–20 gas variation depending on client, compiler, and settings.
 
+## Estimating gas with viem
+
+```bash
+bun run estimate-gas
+```
+
+See [`src/scripts/estimate-gas.ts`](./src/scripts/estimate-gas.ts) for more.
+
+## Deployments
+
+| Network         | Contract Address                             |
+| --------------- | -------------------------------------------- |
+| Botanix Testnet | `0x60a7e16fe32fe0daaf615d469a6f4e4fcb3774ed` |
+
+### Deploying GasBurner contract to new chain
+
+```bash
+bun run deploy-contract
+```
+
+See [`src/scripts/deploy-contract](.src/scripts/deploy-contract.ts) for more.
+
 ## How it works
 
 Coarse burn: Loops with keccak256(0, 0) (~30 gas/iter) to get close to target without memory growth.
@@ -12,7 +34,7 @@ Fine burn: Closes the remaining gap with cheap ops (PUSH1 + POP, ~5 gas/iter).
 
 We track used = start - gasleft() continuously until we reach toSpend gas.
 
-## Contract
+### Contract
 
 ```solidity
 // SPDX-License-Identifier: MIT
@@ -36,72 +58,7 @@ contract GasBurner {
 }
 ```
 
-## Deploying to a new chain with viem
-
-```typescript
-import {
-  createPublicClient,
-  createWalletClient,
-  http,
-  parseAbi,
-  defineChain,
-} from "viem";
-import { privateKeyToAccount } from "viem/accounts";
-
-// Define custom/new chain
-const myChain = defineChain({
-  id: 12345,
-  name: "MyL2",
-  network: "myl2",
-  nativeCurrency: { name: "Ether", symbol: "ETH", decimals: 18 },
-  rpcUrls: { default: { http: ["https://rpc.myl2.example"] } },
-});
-
-const account = privateKeyToAccount(process.env.PRIV_KEY!);
-const walletClient = createWalletClient({
-  account,
-  chain: myChain,
-  transport: http(),
-});
-const publicClient = createPublicClient({ chain: myChain, transport: http() });
-
-const abi = parseAbi([
-  "event Burned(uint256 requested, uint256 used)",
-  "function burnInternal(uint256 toSpend) returns (uint256 used)",
-]);
-
-const bytecode = "0x..."; // from your build output
-const hash = await walletClient.deployContract({ abi, bytecode, account });
-const receipt = await publicClient.waitForTransactionReceipt({ hash });
-console.log("Deployed at:", receipt.contractAddress);
-```
-
-## Estimating gas with viem
-
-```typescript
-import { createPublicClient, http, parseAbi } from "viem";
-import { sepolia } from "viem/chains";
-
-const abi = parseAbi([
-  "function burnInternal(uint256 toSpend) returns (uint256 used)",
-]);
-
-const publicClient = createPublicClient({ chain: sepolia, transport: http() });
-const target = 12_345n;
-
-const estimatedGas = await publicClient.estimateContractGas({
-  abi,
-  address: "0xYourContract",
-  functionName: "burnInternal",
-  args: [target],
-  account: "0xYourAddress",
-  blockTag: "pending",
-});
-
-console.log("Estimated gas:", estimatedGas.toString());
-```
-
-## Tuning
+### Tuning
 
 - Pin solc and optimizer settings.
 - Adjust COARSE_HEADROOM if consistently over/undershooting.
