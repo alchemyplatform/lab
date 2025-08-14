@@ -24,7 +24,7 @@ See [`src/scripts/estimate-gas.ts`](./src/scripts/estimate-gas.ts) for more.
 bun run deploy-contract
 ```
 
-See [`src/scripts/deploy-contract](.src/scripts/deploy-contract.ts) for more.
+See [`src/scripts/deploy-contract`](.src/scripts/deploy-contract.ts) for more.
 
 ## How it works
 
