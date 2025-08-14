@@ -50,19 +50,25 @@ for (const network of networks) {
     throw new Error(`No contract address found for ${network.name}`);
   }
 
-  const estimatedGas = await publicClient.estimateContractGas({
-    abi,
-    address: contractAddress,
-    functionName: "burnInternal",
-    args: [targetGasBurn],
-  });
+  try {
+    const estimatedGas = await publicClient.estimateContractGas({
+      abi,
+      address: contractAddress,
+      functionName: "burnInternal",
+      args: [targetGasBurn],
+    });
 
-  results.push({
-    Network: network.name,
-    'Estimated Gas': nf.format(estimatedGas),
-    Delta: nf.format(estimatedGas - targetGasBurn),
-    'Delta %': `${((Number(estimatedGas - targetGasBurn) / Number(targetGasBurn)) * 100).toFixed(2)}%`,
-  });
+    results.push({
+      Network: network.name,
+      'Target Gas': nf.format(targetGasBurn),
+      'Estimated Gas': nf.format(estimatedGas),
+      Delta: nf.format(estimatedGas - targetGasBurn),
+      'Delta %': `${((Number(estimatedGas - targetGasBurn) / Number(targetGasBurn)) * 100).toFixed(2)}%`,
+    });
+  } catch (error) {
+    console.error(`Error estimating gas for ${network.name}:`, error.message);
+  }
+
 }
 
 console.table(results);
