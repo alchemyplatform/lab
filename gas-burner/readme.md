@@ -14,9 +14,9 @@ See [`src/scripts/estimate-gas.ts`](./src/scripts/estimate-gas.ts) for more.
 
 ## Deployments
 
-| Network         | Contract Address                             |
-| --------------- | -------------------------------------------- |
-| Botanix Testnet | `0x60a7e16fe32fe0daaf615d469a6f4e4fcb3774ed` |
+| Network         | Contract Address                             | Explorer                                                                                                 |
+| --------------- | -------------------------------------------- | -------------------------------------------------------------------------------------------------------- |
+| Botanix Testnet | `0x60a7e16fe32fe0daaf615d469a6f4e4fcb3774ed` | [View on BotanixScan](https://testnet.botanixscan.io/address/0x60a7E16fe32fE0Daaf615D469A6f4E4fCB3774Ed) |
 
 ### Deploying GasBurner contract to new chain
 
