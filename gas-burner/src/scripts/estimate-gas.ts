@@ -1,5 +1,5 @@
 import { createPublicClient, http, parseAbi } from "viem";
-import { baseSepolia, botanixTestnet } from "viem/chains";
+import { baseSepolia, botanixTestnet, sepolia } from "viem/chains";
 import { networkToGasBurnerContractAddress } from "./utils/contract-deployments";
 import { networkToEndpoint } from "./utils/endpoints";
 
@@ -32,7 +32,7 @@ const targetGasBurn = BigInt(gasLimit);
 console.log(`Target gas burn: ${nf.format(targetGasBurn)}`);
 
 
-const networks = [botanixTestnet, baseSepolia];
+const networks = [botanixTestnet, baseSepolia, sepolia];
 
 const results = [];
 

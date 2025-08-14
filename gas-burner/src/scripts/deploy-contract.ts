@@ -5,7 +5,7 @@ import {
   parseAbi,
   defineChain,
 } from "viem";
-import { baseSepolia, botanixTestnet } from "viem/chains";
+import { baseSepolia, botanixTestnet, sepolia } from "viem/chains";
 import { privateKeyToAccount } from "viem/accounts";
 import { BYTECODE } from "./utils/bytecode";
 
@@ -25,7 +25,7 @@ if (!privateKey) {
 }
 
 // TODO: update to network you want to deploy to
-const network = botanixTestnet;
+const network = sepolia;
 
 const account = privateKeyToAccount(privateKey);
 const walletClient = createWalletClient({
@@ -39,7 +39,6 @@ const publicClient = createPublicClient({
 });
 
 const abi = parseAbi([
-  "event Burned(uint256 requested, uint256 used)",
   "function burnInternal(uint256 toSpend) returns (uint256 used)",
 ]);
 

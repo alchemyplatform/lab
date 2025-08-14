@@ -7,22 +7,23 @@ A tiny Solidity helper to burn a target amount of gas in a single call, without 
 ## Estimating gas with viem
 
 ```bash
-bun run estimate-gas --gas=20000000
+bun estimate-gas --gas=50000000
 ```
 
 See [`src/scripts/estimate-gas.ts`](./src/scripts/estimate-gas.ts) for more.
 
 ## Deployments
 
-| Network         | Contract Address                             | Explorer                                                                                                 |
-| --------------- | -------------------------------------------- | -------------------------------------------------------------------------------------------------------- |
-| Base Sepolia    | `0x60a7e16fe32fe0daaf615d469a6f4e4fcb3774ed` | [View on BaseScan](https://sepolia.basescan.org/address/0x60a7e16fe32fe0daaf615d469a6f4e4fcb3774ed)      |
-| Botanix Testnet | `0x9a7df6a33ab18f17cc93d931311bc0b90269fe53` | [View on BotanixScan](https://testnet.botanixscan.io/address/0x9a7df6a33ab18f17cc93d931311bc0b90269fe53) |
+| Network          | Contract Address                             | Explorer                                                                                                 |
+| ---------------- | -------------------------------------------- | -------------------------------------------------------------------------------------------------------- |
+| Base Sepolia     | `0x60a7e16fe32fe0daaf615d469a6f4e4fcb3774ed` | [View on BaseScan](https://sepolia.basescan.org/address/0x60a7e16fe32fe0daaf615d469a6f4e4fcb3774ed)      |
+| Botanix Testnet  | `0x9a7df6a33ab18f17cc93d931311bc0b90269fe53` | [View on BotanixScan](https://testnet.botanixscan.io/address/0x9a7df6a33ab18f17cc93d931311bc0b90269fe53) |
+| Ethereum Sepolia | `0x9a7df6a33ab18f17cc93d931311bc0b90269fe53` | [View on EtherScan](https://sepolia.etherscan.io/address/0x4b556af4343e0a2a23c29d9ef6e363fa69f6ba86)     |
 
 ### Deploying GasBurner contract to new chain
 
 ```bash
-bun run deploy-contract
+bun deploy-contract
 ```
 
 See [`src/scripts/deploy-contract`](.src/scripts/deploy-contract.ts) for more.
