@@ -8,7 +8,10 @@ const abi = parseAbi([
   "function burnInternal(uint256 toSpend) returns (uint256 used)",
 ]);
 
-const publicClient = createPublicClient({ chain: botanixTestnet, transport: http() });
+const publicClient = createPublicClient({
+  chain: botanixTestnet,
+  transport: http(`https://botanix-testnet.g.alchemy.com/v2/${process.env.ALCHEMY_API_KEY}`)
+});
 
 const network = botanixTestnet;
 
