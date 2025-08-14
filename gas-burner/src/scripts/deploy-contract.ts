@@ -5,7 +5,7 @@ import {
   parseAbi,
   defineChain,
 } from "viem";
-import { botanixTestnet } from "viem/chains";
+import { baseSepolia, botanixTestnet } from "viem/chains";
 import { privateKeyToAccount } from "viem/accounts";
 import { BYTECODE } from "./utils/bytecode";
 
@@ -24,14 +24,17 @@ if (!privateKey) {
   throw new Error("PRIVATE_KEY is not set");
 }
 
+// TODO: update to network you want to deploy to
+const network = botanixTestnet;
+
 const account = privateKeyToAccount(privateKey);
 const walletClient = createWalletClient({
   account,
-  chain: botanixTestnet,
+  chain: network,
   transport: http(),
 });
 const publicClient = createPublicClient({
-  chain: botanixTestnet,
+  chain: network,
   transport: http(),
 });
 

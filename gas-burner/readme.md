@@ -16,7 +16,8 @@ See [`src/scripts/estimate-gas.ts`](./src/scripts/estimate-gas.ts) for more.
 
 | Network         | Contract Address                             | Explorer                                                                                                 |
 | --------------- | -------------------------------------------- | -------------------------------------------------------------------------------------------------------- |
-| Botanix Testnet | `0xf337881430706c526cca7333a0b00cbe0d4d6bae` | [View on BotanixScan](https://testnet.botanixscan.io/address/0xf337881430706c526cca7333a0b00cbe0d4d6bae) |
+| Base Sepolia    | `0x60a7e16fe32fe0daaf615d469a6f4e4fcb3774ed` | [View on BaseScan](https://sepolia.basescan.org/address/0x60a7e16fe32fe0daaf615d469a6f4e4fcb3774ed)      |
+| Botanix Testnet | `0x9a7df6a33ab18f17cc93d931311bc0b90269fe53` | [View on BotanixScan](https://testnet.botanixscan.io/address/0x9a7df6a33ab18f17cc93d931311bc0b90269fe53) |
 
 ### Deploying GasBurner contract to new chain
 
