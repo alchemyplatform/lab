@@ -2,6 +2,10 @@
   "name": "gas-burner",
   "version": "1.0.0",
   "private": true,
+  "scripts": {
+    "deploy-contract": "bun run src/scripts/deploy-contract.ts",
+    "estimate-gas": "bun run src/scripts/estimate-gas.ts"
+  },
   "dependencies": {
     "viem": "^2.33.3"
   }
