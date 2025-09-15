@@ -10,10 +10,10 @@ const app = new Hono<{ Variables: { payload: AlchemyPayload } }>();
 app.post(
   "/",
   validateSignature({
-    signingKey: "whsec_pAX4hIxJksTkD3wBDG0TnQX4",
+    signingKey: "whsec_test1",
     // signingKey: new Map([
-    //   ["wh_zkx600u6a74ntw19", "whsec_hye014cZDVAnzQEvZ2Qa45eZ"],
-    //   ["wh_yj2nnzb6dxontpm2", "whsec_7hmAMzxbN2YKBlp4H5F3CXg7"],
+    //   ["wh_zkx600u6a74ntw19", "whsec_test2"],
+    //   ["wh_yj2nnzb6dxontpm2", "whsec_test3"],
     // ]),
   }),
   validatePayload,
