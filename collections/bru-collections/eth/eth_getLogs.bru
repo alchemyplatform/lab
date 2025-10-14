@@ -1,0 +1,68 @@
+meta {
+  name: eth_getLogs
+  type: http
+}
+
+post {
+  url: https://eth-mainnet.g.alchemy.com/v2/{{api_key}}
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "jsonrpc": "2.0",
+    "method": "eth_getLogs",
+    "params": [
+      {
+        "fromBlock": "0x13738ca",
+        "toBlock": "0x13738ca",
+        "address": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+        "topics": []
+      }
+    ],
+    "id": 1
+  }
+}
+
+settings {
+  encodeUrl: true
+}
+
+docs {
+  Returns an array of all logs matching the specified filter criteria. This is the primary method for querying historical smart contract events and is essential for DApp indexing and analysis.
+  
+  **Use cases**:
+  - Event log collection and indexing
+  - DeFi protocol analytics and monitoring
+  - Smart contract event history analysis
+  - Real-time event streaming and notifications
+  - Audit trail construction for compliance
+  - Cross-contract interaction tracking
+  - Token transfer and approval monitoring
+  
+  **Args**:
+  - Filter object with criteria:
+    - `fromBlock`: Starting block number or tag ('earliest', 'latest', etc.)
+    - `toBlock`: Ending block number or tag
+    - `address`: Contract address(es) to filter by (single address or array)
+    - `topics`: Array of topic filters (indexed event parameters)
+      - Use null for wildcard topics
+      - Topics are 32-byte keccak256 hashes
+      - First topic is typically the event signature
+  
+  **Returns**: Array of log objects with:
+  - `address`: Contract that emitted the log
+  - `topics`: Array of indexed parameters
+  - `data`: Non-indexed parameters (ABI-encoded)
+  - `blockNumber`, `blockHash`: Block information
+  - `transactionHash`, `transactionIndex`: Transaction details
+  - `logIndex`: Position within the block
+  
+  **Edge cases & notes**:
+  - Large block ranges may be rate-limited—split into smaller chunks
+  - Results capped by providers (~10k logs or ~2k block range typically)
+  - Topic filtering follows Ethereum's bloom filter logic
+  - Empty topics array returns all events from specified addresses
+  - Critical for building event-driven applications and analytics
+}

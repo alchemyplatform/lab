@@ -1,0 +1,44 @@
+meta {
+  name: trace_callMany
+  type: http
+}
+
+post {
+  url: https://eth-mainnet.g.alchemy.com/v2/{{api_key}}
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "jsonrpc": "2.0",
+    "method": "trace_callMany",
+    "params": [
+      [
+        [
+          {
+            "to": "0x6B175474E89094C44Da98b954EedeAC495271d0F",
+            "data": "0x70a08231000000000000000000000000d8da6bf26964af9d7eed9e03e53415d37aa96045"
+          },
+          [
+            "trace"
+          ]
+        ]
+      ],
+      "latest"
+    ],
+    "id": 1
+  }
+}
+
+settings {
+  encodeUrl: true
+}
+
+docs {
+  Executes multiple trace_call operations in a single request.
+  Args:
+  - calls: array of [callObject, traceTypes]
+  - block: hex block number or tag
+  Returns: Array of trace results per call.
+}

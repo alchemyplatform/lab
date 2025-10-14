@@ -1,0 +1,20 @@
+meta {
+  name: Test nft owners
+  type: http
+  seq: 20
+}
+
+get {
+  url: /nft/v3/OlcZ_nhfzziQ2lgXiHHW12nA2REDZK_f/getNFTsForOwner?excludeFilters[]=SPAM&owner=
+  body: none
+  auth: inherit
+}
+
+params:query {
+  excludeFilters[]: SPAM
+  owner: 
+}
+
+settings {
+  encodeUrl: true
+}

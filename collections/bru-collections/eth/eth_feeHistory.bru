@@ -1,0 +1,45 @@
+meta {
+  name: eth_feeHistory
+  type: http
+}
+
+post {
+  url: https://eth-mainnet.g.alchemy.com/v2/{{api_key}}
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "jsonrpc": "2.0",
+    "method": "eth_feeHistory",
+    "params": [
+      "0xa",
+      "latest",
+      [
+        25,
+        50,
+        75
+      ]
+    ],
+    "id": 1
+  }
+}
+
+settings {
+  encodeUrl: true
+}
+
+docs {
+  Transaction fee history
+  
+  **Args**:
+  - blockCount: 0x-hex quantity (no leading zeros except 0 -> '0x0').
+  - newestBlock: Block selector: hex block number (0x...), or tag 'latest'|'safe'|'finalized'|'earliest'|'pending'.
+  - rewardPercentiles: rewardPercentiles
+  
+  **Returns**: feeHistoryResults
+  
+  **Edge cases & notes**:
+  - Includes baseFeePerGas and reward arrays; since Dencun, may include blobGasUsedRatio and baseFeePerBlobGas.
+}

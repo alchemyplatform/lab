@@ -1,0 +1,33 @@
+meta {
+  name: eth_newPendingTransactionFilter
+  type: http
+}
+
+post {
+  url: https://eth-mainnet.g.alchemy.com/v2/{{api_key}}
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "jsonrpc": "2.0",
+    "method": "eth_newPendingTransactionFilter",
+    "params": [],
+    "id": 1
+  }
+}
+
+settings {
+  encodeUrl: true
+}
+
+docs {
+  Creates a filter in the node, allowing for later polling. Registers client interest in new transactions, and returns an identifier.
+  
+  **Returns**: Hex quantity.
+  
+  **Edge cases & notes**:
+  - Filter IDs are ephemeral and may expire if not polled.
+  - Prefer eth_getLogs for historical ranges.
+}

@@ -1,0 +1,9 @@
+{
+  "version": "1",
+  "name": "Ethereum Core RPC",
+  "type": "collection",
+  "ignore": [
+    "node_modules",
+    ".git"
+  ]
+}

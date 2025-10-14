@@ -1,0 +1,38 @@
+meta {
+  name: eth_getStorageAt
+  type: http
+}
+
+post {
+  url: https://eth-mainnet.g.alchemy.com/v2/{{api_key}}
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "jsonrpc": "2.0",
+    "method": "eth_getStorageAt",
+    "params": [
+      "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+      "0x0",
+      "latest"
+    ],
+    "id": 1
+  }
+}
+
+settings {
+  encodeUrl: true
+}
+
+docs {
+  Returns the value from a storage position at a given address.
+  
+  **Args**:
+  - Address: 20-byte 0x-prefixed Ethereum address (EOA or contract).
+  - Storage slot: 32-byte 0x-prefixed value (e.g., storage slot key).
+  - Block: Block selector: hex block number (0x...), a tag ('latest'|'safe'|'finalized'|'earliest'|'pending'), or a block hash.
+  
+  **Returns**: 0x-prefixed byte array.
+}

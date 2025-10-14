@@ -1,0 +1,60 @@
+meta {
+  name: "Tokens By Wallet"
+  type: "request"
+  seq: 1
+}
+
+request {
+  method: "POST"
+  url: "https://api.g.alchemy.com/data/v1/{apiKey}/assets/tokens/by-address"
+  headers: {
+    "Content-Type": "application/json"
+  }
+  body: json({
+    "addresses": [
+      {
+        "address": "0xd8dA6BF26964aF9D7eEd9e03e53415D37aA96045",
+        "networks": ["eth-mainnet", "polygon-mainnet"]
+      }
+    ],
+    "withMetadata": true,
+    "withPrices": true,
+    "includeNativeTokens": true,
+    "includeErc20Tokens": true,
+    "pageKey": "string"
+  })
+  description: """
+  Fetches fungible tokens (native, ERC-20, and SPL) for multiple wallet addresses and networks.
+  Returns a list of tokens with balances, prices, and metadata for each wallet/network combination.
+
+  Supported networks: Ethereum, Solana, and 30+ EVM-compatible chains.
+
+  Example Response:
+  {
+    "data": {
+      "tokens": [
+        {
+          "address": "0xd8dA6BF26964aF9D7eEd9e03e53415D37aA96045",
+          "network": "eth-mainnet",
+          "tokenAddress": "0x6B175474E89094C44Da98b954EedeAC495271d0F",
+          "tokenBalance": "123000000000000000000",
+          "tokenMetadata": {
+            "name": "DAI Stablecoin",
+            "symbol": "DAI",
+            "decimals": 18
+          },
+          "tokenPrices": [
+            {"currency": "USD", "value": "1.00", "lastUpdatedAt": "2025-10-13T00:00:00Z"}
+          ]
+        }
+      ],
+      "pageKey": "next-page-key"
+    }
+  }
+
+  Edge cases:
+  - 400 Bad Request for malformed JSON or missing fields.
+  - 429 Too Many Requests when rate limit exceeded.
+  - Some tokens may omit metadata for non-standard ERC-20s.
+  """
+}

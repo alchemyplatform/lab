@@ -1,0 +1,27 @@
+meta {
+  name: debug_getRawBlock
+  type: http
+}
+
+post {
+  url: https://eth-mainnet.g.alchemy.com/v2/{{api_key}}
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "jsonrpc": "2.0",
+    "method": "debug_getRawBlock",
+    "params": [],
+    "id": 1
+  }
+}
+
+settings {
+  encodeUrl: true
+}
+
+docs {
+  Retrieves and returns the RLP encoded block by number.
+}

@@ -1,0 +1,40 @@
+meta {
+  name: eth_accounts
+  type: http
+}
+
+post {
+  url: https://eth-mainnet.g.alchemy.com/v2/{{api_key}}
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "jsonrpc": "2.0",
+    "method": "eth_accounts",
+    "params": [],
+    "id": 1
+  }
+}
+
+settings {
+  encodeUrl: true
+}
+
+docs {
+  Returns a list of addresses owned by the client. This method provides access to accounts that are available for signing transactions locally on the node.
+  
+  **Use cases**:
+  - Wallet applications checking available accounts
+  - DApps requesting user account access
+  - Development environments listing test accounts
+  
+  **Returns**: Array of 20-byte Ethereum addresses owned by the client
+  
+  **Edge cases & notes**:
+  - On hosted RPC providers (Infura, Alchemy, etc.), often returns an empty array because no local accounts are unlocked for security reasons
+  - In development environments like Ganache, returns pre-funded test accounts
+  - Production nodes typically require explicit account unlocking via --unlock flag
+  - Modern applications prefer eth_requestAccounts (EIP-1102) for account access
+}

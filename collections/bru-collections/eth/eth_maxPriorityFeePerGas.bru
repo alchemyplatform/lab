@@ -1,0 +1,32 @@
+meta {
+  name: eth_maxPriorityFeePerGas
+  type: http
+}
+
+post {
+  url: https://eth-mainnet.g.alchemy.com/v2/{{api_key}}
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "jsonrpc": "2.0",
+    "method": "eth_maxPriorityFeePerGas",
+    "params": [],
+    "id": 1
+  }
+}
+
+settings {
+  encodeUrl: true
+}
+
+docs {
+  Returns the current maxPriorityFeePerGas per gas in wei.
+  
+  **Returns**: Max priority fee per gas
+  
+  **Edge cases & notes**:
+  - Tip recommendation only; combine with current base fee to form EIP-1559 fees.
+}

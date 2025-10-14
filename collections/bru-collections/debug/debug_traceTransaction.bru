@@ -1,0 +1,36 @@
+meta {
+  name: debug_traceTransaction
+  type: http
+}
+
+post {
+  url: https://eth-mainnet.g.alchemy.com/v2/{{api_key}}
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "jsonrpc": "2.0",
+    "method": "debug_traceTransaction",
+    "params": [
+      "0x07104ffdf32b06b90e604f23c7b4e21fc985b68c5bb8c13140d0d3d2e151a385",
+      {
+        "tracer": "callTracer"
+      }
+    ],
+    "id": 1
+  }
+}
+
+settings {
+  encodeUrl: true
+}
+
+docs {
+  Executes transaction in the exact same manner and returns structured trace.
+  Args:
+  - txHash: 32-byte hash
+  - options: {tracer?: 'callTracer'|'prestateTracer'|custom, timeout?: '30s', tracerConfig?: {...}}
+  Returns: Trace result object—commonly with 'calls' tree, gas used, errors.
+}

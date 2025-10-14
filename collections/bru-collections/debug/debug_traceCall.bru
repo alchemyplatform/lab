@@ -1,0 +1,41 @@
+meta {
+  name: debug_traceCall
+  type: http
+}
+
+post {
+  url: https://eth-mainnet.g.alchemy.com/v2/{{api_key}}
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "jsonrpc": "2.0",
+    "method": "debug_traceCall",
+    "params": [
+      {
+        "to": "0x6B175474E89094C44Da98b954EedeAC495271d0F",
+        "data": "0x70a08231000000000000000000000000d8da6bf26964af9d7eed9e03e53415d37aa96045"
+      },
+      "latest",
+      {
+        "tracer": "callTracer"
+      }
+    ],
+    "id": 1
+  }
+}
+
+settings {
+  encodeUrl: true
+}
+
+docs {
+  Like eth_call but returns a detailed debug trace using the selected tracer.
+  Args:
+  - callObject: transaction call object
+  - block: hex block number or tag
+  - options: {tracer, timeout, tracerConfig}
+  Returns: Trace result (depends on tracer).
+}

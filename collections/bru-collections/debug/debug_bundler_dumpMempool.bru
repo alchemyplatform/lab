@@ -1,0 +1,29 @@
+meta {
+  name: debug_bundler_dumpMempool
+  type: http
+}
+
+post {
+  url: https://eth-mainnet.g.alchemy.com/v2/{{api_key}}
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "jsonrpc": "2.0",
+    "method": "debug_bundler_dumpMempool",
+    "params": [],
+    "id": 1
+  }
+}
+
+settings {
+  encodeUrl: true
+}
+
+docs {
+  Dumps current UserOperation mempool contents.
+  Args: none.
+  Returns: Array of UserOperation entries.
+}

@@ -1,0 +1,63 @@
+meta {
+  name: eth_call
+  type: http
+}
+
+post {
+  url: https://eth-mainnet.g.alchemy.com/v2/{{api_key}}
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "jsonrpc": "2.0",
+    "method": "eth_call",
+    "params": [
+      {
+        "from": "0xd8dA6BF26964aF9D7eEd9e03e53415D37aA96045",
+        "to": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+        "data": "0x70a08231000000000000000000000000d8da6bf26964af9d7eed9e03e53415d37aa96045"
+      },
+      "latest"
+    ],
+    "id": 1
+  }
+}
+
+settings {
+  encodeUrl: true
+}
+
+docs {
+  Executes a new message call immediately without creating a transaction on the blockchain. This is the primary method for reading data from smart contracts and simulating transaction effects without spending gas.
+  
+  **Use cases**:
+  - Reading smart contract state (balances, mappings, public variables)
+  - Simulating transactions to predict their outcome
+  - Calling view/pure functions that don't modify state
+  - Checking if a transaction would succeed before sending
+  - Building complex queries by calling multiple contract functions
+  - Oracle price feeds and data retrieval
+  
+  **Args**:
+  - Transaction: Transaction call object with fields:
+    - `to` (required): Contract address to call
+    - `data` (required for contract calls): ABI-encoded function call
+    - `from` (optional): Sender address (affects msg.sender)
+    - `gas` (optional): Gas limit for the call
+    - `gasPrice|maxFeePerGas|maxPriorityFeePerGas` (optional): Gas pricing
+    - `value` (optional): ETH value to send with call
+  - Block: Block selector - hex number, 'latest'|'safe'|'finalized'|'earliest'|'pending', or block hash
+  
+  **Returns**: 0x-prefixed byte array containing the contract function's return value
+  
+  **Edge cases & notes**:
+  - Does not modify blockchain state or consume gas from sender
+  - 'execution reverted' errors include revert reason when available
+  - Provide sufficient gas limit to avoid out-of-gas during simulation
+  - The 'from' field affects msg.sender in the contract context
+  - Can be used at historical block states for time-travel queries
+  - Some contracts behave differently when called vs. transacted
+  - Useful for MEV detection and sandwich attack analysis
+}

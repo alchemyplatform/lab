@@ -1,0 +1,36 @@
+meta {
+  name: trace_replayBlockTransactions
+  type: http
+}
+
+post {
+  url: https://eth-mainnet.g.alchemy.com/v2/{{api_key}}
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "jsonrpc": "2.0",
+    "method": "trace_replayBlockTransactions",
+    "params": [
+      "0xdc0818cf78f21a8e70579cb46a43643f78291264dda342ae31049421c82d21ae",
+      [
+        "trace"
+      ]
+    ],
+    "id": 1
+  }
+}
+
+settings {
+  encodeUrl: true
+}
+
+docs {
+  Replays all transactions in a block and returns requested traces.
+  Args:
+  - blockHash: 32-byte block hash
+  - traceTypes: array
+  Returns: Array of per-transaction trace results.
+}

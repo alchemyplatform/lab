@@ -1,0 +1,50 @@
+meta {
+  name: "Token Balances By Wallet"
+  type: "request"
+  seq: 2
+}
+
+request {
+  method: "POST"
+  url: "https://api.g.alchemy.com/data/v1/{apiKey}/assets/tokens/balances/by-address"
+  headers: {
+    "Content-Type": "application/json"
+  }
+  body: json({
+    "addresses": [
+      {
+        "address": "0x742d35Cc6634C0532925a3b844Bc454e4438f44e",
+        "networks": ["eth-mainnet", "arb-mainnet"]
+      }
+    ],
+    "includeNativeTokens": true,
+    "includeErc20Tokens": true,
+    "pageKey": "string"
+  })
+  description: """
+  Retrieves raw fungible token balances (native + ERC-20 + SPL) for multiple wallet addresses and networks.
+  Lightweight version of get-tokens-by-address (no metadata or prices).
+
+  Supported on Ethereum, Solana, and 30+ EVM chains.
+
+  Example Response:
+  {
+    "data": {
+      "tokens": [
+        {
+          "network": "eth-mainnet",
+          "address": "0x742d35Cc6634C0532925a3b844Bc454e4438f44e",
+          "tokenAddress": "0x6B175474E89094C44Da98b954EedeAC495271d0F",
+          "tokenBalance": "1000000000000000000"
+        }
+      ],
+      "pageKey": "next-page-key"
+    }
+  }
+
+  Edge cases:
+  - 400 for invalid or missing addresses.
+  - 429 when rate limit exceeded.
+  - Empty result if wallet holds no tokens.
+  """
+}

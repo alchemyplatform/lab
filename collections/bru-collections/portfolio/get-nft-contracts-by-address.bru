@@ -1,0 +1,66 @@
+meta {
+  name: "NFT Collections By Wallet"
+  type: "request"
+  seq: 4
+}
+
+request {
+  method: "POST"
+  url: "https://api.g.alchemy.com/data/v1/{apiKey}/assets/nfts/contracts/by-address"
+  headers: {
+    "Content-Type": "application/json"
+  }
+  body: json({
+    "addresses": [
+      {
+        "address": "0xabc1234567890abcdef1234567890abcdef12345",
+        "networks": ["eth-mainnet", "polygon-mainnet"],
+        "excludeFilters": ["SPAM"],
+        "includeFilters": [],
+        "spamConfidenceLevel": "MEDIUM"
+      }
+    ],
+    "withMetadata": true,
+    "pageKey": "string",
+    "pageSize": 25,
+    "orderBy": "transferTime",
+    "sortOrder": "asc"
+  })
+  description: """
+  Fetches NFT collections (contracts) owned by given wallet addresses across networks.
+  Includes contract metadata, token type, deployer info, spam classification, and OpenSea data (floor price, collection images).
+
+  Supported networks: Ethereum, Polygon, Arbitrum, Optimism, Base, World Chain.
+
+  Example Response:
+  {
+    "data": {
+      "contracts": [
+        {
+          "network": "eth-mainnet",
+          "address": "0xabc1234567890abcdef1234567890abcdef12345",
+          "contract": {
+            "name": "CoolNFTs",
+            "symbol": "COOL",
+            "tokenType": "ERC721",
+            "contractDeployer": "0x9999999999999999999999999999999999999999",
+            "openseaMetadata": {
+              "floorPrice": 1.2,
+              "collectionName": "Cool NFTs",
+              "imageUrl": "https://opensea.io/coolnfts.png"
+            }
+          }
+        }
+      ],
+      "totalCount": 10,
+      "pageKey": "next-page-key"
+    }
+  }
+
+  Edge cases:
+  - Spam contracts include spamClassifications array.
+  - OpenSea metadata may be missing or outdated.
+  - 400 Bad Request for malformed input.
+  - 429 Too Many Requests when throttled.
+  """
+}

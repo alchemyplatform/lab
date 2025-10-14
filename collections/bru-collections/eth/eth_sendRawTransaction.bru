@@ -1,0 +1,61 @@
+meta {
+  name: eth_sendRawTransaction
+  type: http
+}
+
+post {
+  url: https://eth-mainnet.g.alchemy.com/v2/{{api_key}}
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "jsonrpc": "2.0",
+    "method": "eth_sendRawTransaction",
+    "params": [
+      "0xf86c808504a817c80082520894d8da6bf26964af9d7eed9e03e53415d37aa9604588016345785d8a00008025a00000000000000000000000000000000000000000000000000000000000000000a00000000000000000000000000000000000000000000000000000000000000000"
+    ],
+    "id": 1
+  }
+}
+
+settings {
+  encodeUrl: true
+}
+
+docs {
+  Submits a pre-signed transaction to the Ethereum network for inclusion in the blockchain. This is the primary method for sending transactions when using external signing (hardware wallets, offline signing, etc.).
+  
+  **Use cases**:
+  - Hardware wallet transaction broadcasting
+  - Offline transaction signing and submission
+  - Multi-signature wallet implementations
+  - Automated trading and MEV bots
+  - Layer 2 transaction submission
+  - Enterprise wallet integrations
+  - Cold storage transaction workflows
+  
+  **Transaction Types Supported**:
+  - Legacy transactions (pre-EIP-155 and EIP-155)
+  - EIP-2930 transactions (with access lists)
+  - EIP-1559 transactions (with dynamic fees)
+  - EIP-4844 transactions (blob transactions with KZG commitments)
+  - EIP-7594 transactions (PeerDAS with cell proofs)
+  
+  **Args**:
+  - Transaction: RLP-encoded signed transaction as 0x-prefixed hex string
+    - Must include valid signature (v, r, s values)
+    - For blob transactions: includes blobs, KZG commitments, and proofs
+    - For PeerDAS: includes cell proofs in network format
+  
+  **Returns**: 32-byte transaction hash as hex string
+  
+  **Edge cases & notes**:
+  - Common errors: nonce too low, insufficient funds, replacement fee too low, already known
+  - Gas price too low errors during network congestion
+  - Invalid signature errors for malformed transactions
+  - Blob transaction handling varies during fork transitions
+  - Do not broadcast the example transaction—use properly signed transactions
+  - Transaction may be rejected if it would exceed block gas limit
+}

@@ -1,0 +1,69 @@
+meta {
+  name: "NFTs By Wallet"
+  type: "request"
+  seq: 3
+}
+
+request {
+  method: "POST"
+  url: "https://api.g.alchemy.com/data/v1/{apiKey}/assets/nfts/by-address"
+  headers: {
+    "Content-Type": "application/json"
+  }
+  body: json({
+    "addresses": [
+      {
+        "address": "0x1234567890abcdef1234567890abcdef12345678",
+        "networks": ["eth-mainnet", "polygon-mainnet"],
+        "excludeFilters": ["SPAM"],
+        "includeFilters": ["AIRDROPS"],
+        "spamConfidenceLevel": "HIGH"
+      }
+    ],
+    "withMetadata": true,
+    "pageKey": "string",
+    "pageSize": 50,
+    "orderBy": "transferTime",
+    "sortOrder": "desc"
+  })
+  description: """
+  Fetches NFTs for one or more wallet addresses and networks.
+  Returns full NFT data including metadata, contract details, collection info, and timestamps.
+
+  Supported networks: Ethereum, Polygon, Arbitrum, Optimism, Base, World Chain.
+
+  Example Response:
+  {
+    "data": {
+      "ownedNfts": [
+        {
+          "network": "eth-mainnet",
+          "address": "0x1234567890abcdef1234567890abcdef12345678",
+          "contract": {
+            "address": "0xABCDEF1234567890ABCDEF1234567890ABCDEF12",
+            "name": "CoolNFTs",
+            "symbol": "COOL",
+            "tokenType": "ERC721"
+          },
+          "tokenId": "1234",
+          "name": "Cool NFT #1234",
+          "image": {"thumbnailUrl": "https://ipfs.io/ipfs/Qm1234"},
+          "collection": {"name": "CoolNFT Collection", "slug": "coolnfts"},
+          "acquiredAt": {"blockTimestamp": "2025-10-13T00:00:00Z"}
+        }
+      ],
+      "totalCount": 25,
+      "pageKey": "next-page-key"
+    }
+  }
+
+  Filters:
+  - excludeFilters/includeFilters control spam + airdrops.
+  - pageKey, pageSize, orderBy, sortOrder manage pagination/sorting.
+
+  Edge cases:
+  - Metadata may fail for malformed contracts.
+  - ERC1155 NFTs include quantity field.
+  - Spam detection flags may appear for suspicious contracts.
+  """
+}

@@ -1,0 +1,71 @@
+meta {
+  name: trace_call
+  type: http
+}
+
+post {
+  url: https://eth-mainnet.g.alchemy.com/v2/{{api_key}}
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "jsonrpc": "2.0",
+    "method": "trace_call",
+    "params": [
+      {
+        "to": "0x6B175474E89094C44Da98b954EedeAC495271d0F",
+        "data": "0x70a08231000000000000000000000000d8da6bf26964af9d7eed9e03e53415d37aa96045"
+      },
+      [
+        "trace"
+      ],
+      "latest"
+    ],
+    "id": 1
+  }
+}
+
+settings {
+  encodeUrl: true
+}
+
+docs {
+  Executes a message call like eth_call but returns comprehensive execution traces. This method combines the functionality of eth_call with detailed tracing capabilities for analysis and debugging.
+  
+  **Use cases**:
+  - Smart contract call analysis and debugging
+  - Transaction simulation with full execution details
+  - Gas usage profiling for contract optimization
+  - MEV strategy development and testing
+  - Security analysis of contract interactions
+  - DeFi protocol behavior analysis
+  - State change impact assessment
+  
+  **Args**:
+  - callObject: Transaction call object with fields:
+    - `to`: Contract address to call
+    - `data`: ABI-encoded function call data
+    - `from` (optional): Caller address
+    - `gas` (optional): Gas limit
+    - `gasPrice|maxFeePerGas|maxPriorityFeePerGas` (optional): Gas pricing
+    - `value` (optional): ETH value to send
+  - traceTypes: Array of trace types to return:
+    - `trace`: Call frame execution traces
+    - `vmTrace`: Virtual machine opcode-level traces
+    - `stateDiff`: State changes caused by execution
+  - block: Block context for execution
+  
+  **Returns**: Object containing requested trace information:
+  - **trace**: Hierarchical call execution tree
+  - **vmTrace**: Detailed opcode execution steps
+  - **stateDiff**: Before/after state changes
+  
+  **Edge cases & notes**:
+  - More resource-intensive than regular eth_call
+  - Provides detailed insights into contract execution flow
+  - Essential for understanding complex DeFi interactions
+  - Different clients may format trace data differently
+  - Useful for gas optimization and security analysis
+}

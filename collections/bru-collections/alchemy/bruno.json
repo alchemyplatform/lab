@@ -1,0 +1,9 @@
+{
+  "version": "1",
+  "name": "Alchemy Enhanced APIs",
+  "type": "collection",
+  "ignore": [
+    "node_modules",
+    ".git"
+  ]
+}

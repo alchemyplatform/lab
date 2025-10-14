@@ -1,0 +1,38 @@
+meta {
+  name: eth_getProof
+  type: http
+}
+
+post {
+  url: https://eth-mainnet.g.alchemy.com/v2/{{api_key}}
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "jsonrpc": "2.0",
+    "method": "eth_getProof",
+    "params": [
+      "0xd8dA6BF26964aF9D7eEd9e03e53415D37aA96045",
+      [],
+      "latest"
+    ],
+    "id": 1
+  }
+}
+
+settings {
+  encodeUrl: true
+}
+
+docs {
+  Returns the merkle proof for a given account and optionally some storage keys.
+  
+  **Args**:
+  - Address: 20-byte 0x-prefixed Ethereum address (EOA or contract).
+  - StorageKeys: Storage keys
+  - Block: Block selector: hex block number (0x...), a tag ('latest'|'safe'|'finalized'|'earliest'|'pending'), or a block hash.
+  
+  **Returns**: Account and storage Merkle proofs for given keys.
+}

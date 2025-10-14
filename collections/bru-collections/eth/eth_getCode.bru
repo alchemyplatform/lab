@@ -1,0 +1,40 @@
+meta {
+  name: eth_getCode
+  type: http
+}
+
+post {
+  url: https://eth-mainnet.g.alchemy.com/v2/{{api_key}}
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "jsonrpc": "2.0",
+    "method": "eth_getCode",
+    "params": [
+      "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+      "latest"
+    ],
+    "id": 1
+  }
+}
+
+settings {
+  encodeUrl: true
+}
+
+docs {
+  Returns code at a given address.
+  
+  **Args**:
+  - Address: 20-byte 0x-prefixed Ethereum address (EOA or contract).
+  - Block: Block selector: hex block number (0x...), a tag ('latest'|'safe'|'finalized'|'earliest'|'pending'), or a block hash.
+  
+  **Returns**: 0x-prefixed byte array.
+  
+  **Edge cases & notes**:
+  - EOAs return '0x' (no bytecode).
+  - Proxy contracts may store implementation addresses in EIP-1967 slots; code size may be small.
+}

@@ -1,0 +1,29 @@
+meta {
+  name: debug_bundler_clearState
+  type: http
+}
+
+post {
+  url: https://eth-mainnet.g.alchemy.com/v2/{{api_key}}
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "jsonrpc": "2.0",
+    "method": "debug_bundler_clearState",
+    "params": [],
+    "id": 1
+  }
+}
+
+settings {
+  encodeUrl: true
+}
+
+docs {
+  Clears bundler mempool and reputation (testing only).
+  Args: none.
+  Returns: boolean or status string.
+}
