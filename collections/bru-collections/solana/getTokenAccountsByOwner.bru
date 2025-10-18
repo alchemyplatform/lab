@@ -1,0 +1,37 @@
+meta {
+  name: getTokenAccountsByOwner
+  type: http
+}
+
+post {
+  url: https://solana-mainnet.g.alchemy.com/v2/{{api_key}}
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "jsonrpc": "2.0",
+    "method": "getTokenAccountsByOwner",
+    "params": [
+      "GwsPP9HHhCvEQeu3HTFzsVL6DEtnnYw4ALEtA3fMBC9Q"
+    ],
+    "id": 1
+  }
+}
+
+settings {
+  encodeUrl: true
+}
+
+docs {
+  Returns all SPL Token accounts owned by the specified token owner.
+  
+  **Args**:
+  - Token owner Pubkey (required): The Pubkey of the account owner to query
+  - Token filter (optional): A filter object containing either the Mint Pubkey or the Token program Pubkey
+  - Configuration (optional): Optional configuration object containing additional settings
+  
+  **Returns**: An array of JSON objects representing the token accounts owned by the specified Pubkey
+}
+

@@ -1,0 +1,33 @@
+meta {
+  name: getRecentPrioritizationFees
+  type: http
+}
+
+post {
+  url: https://solana-mainnet.g.alchemy.com/v2/{{api_key}}
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "jsonrpc": "2.0",
+    "method": "getRecentPrioritizationFees",
+    "params": [],
+    "id": 1
+  }
+}
+
+settings {
+  encodeUrl: true
+}
+
+docs {
+  Returns a list of prioritization fees from recent blocks.
+  
+  **Args**:
+  - Account addresses (optional): An array of up to 128 account addresses. If provided, the response will reflect a fee to land a transaction locking all of the provided accounts as writable
+  
+  **Returns**: An array of prioritization fees observed in recent blocks
+}
+

@@ -1,0 +1,40 @@
+meta {
+  name: getBlock
+  type: http
+}
+
+post {
+  url: https://solana-mainnet.g.alchemy.com/v2/{{api_key}}
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "jsonrpc": "2.0",
+    "method": "getBlock",
+    "params": [
+      237158054,
+      {
+        "encoding": "json",
+        "transactionDetails": "none"
+      }
+    ],
+    "id": 1
+  }
+}
+
+settings {
+  encodeUrl: true
+}
+
+docs {
+  Returns identity and transaction information about a confirmed block in the ledger.
+  
+  **Args**:
+  - slot (required): Slot number as a u64 integer
+  - Configuration (optional): Optional configuration object containing additional settings
+  
+  **Returns**: Block information or null if the block is not confirmed
+}
+

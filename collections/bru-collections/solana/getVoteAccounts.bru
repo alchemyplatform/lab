@@ -1,0 +1,33 @@
+meta {
+  name: getVoteAccounts
+  type: http
+}
+
+post {
+  url: https://solana-mainnet.g.alchemy.com/v2/{{api_key}}
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "jsonrpc": "2.0",
+    "method": "getVoteAccounts",
+    "params": [],
+    "id": 1
+  }
+}
+
+settings {
+  encodeUrl: true
+}
+
+docs {
+  Returns the account info and associated stake for all voting accounts in the current bank.
+  
+  **Args**:
+  - Configuration (optional): Optional configuration object
+  
+  **Returns**: Information about current and delinquent vote accounts
+}
+

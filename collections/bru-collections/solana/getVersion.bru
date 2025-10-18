@@ -1,0 +1,30 @@
+meta {
+  name: getVersion
+  type: http
+}
+
+post {
+  url: https://solana-mainnet.g.alchemy.com/v2/{{api_key}}
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "jsonrpc": "2.0",
+    "method": "getVersion",
+    "params": [],
+    "id": 1
+  }
+}
+
+settings {
+  encodeUrl: true
+}
+
+docs {
+  Returns the current Solana version running on the node.
+  
+  **Returns**: The current Solana version running on the node
+}
+

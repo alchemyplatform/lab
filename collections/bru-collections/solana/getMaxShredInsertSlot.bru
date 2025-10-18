@@ -1,0 +1,30 @@
+meta {
+  name: getMaxShredInsertSlot
+  type: http
+}
+
+post {
+  url: https://solana-mainnet.g.alchemy.com/v2/{{api_key}}
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "jsonrpc": "2.0",
+    "method": "getMaxShredInsertSlot",
+    "params": [],
+    "id": 1
+  }
+}
+
+settings {
+  encodeUrl: true
+}
+
+docs {
+  Get the max slot seen from after shred insert.
+  
+  **Returns**: The maximum slot number seen after shred insert
+}
+

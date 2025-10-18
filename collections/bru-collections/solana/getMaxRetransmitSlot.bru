@@ -1,0 +1,30 @@
+meta {
+  name: getMaxRetransmitSlot
+  type: http
+}
+
+post {
+  url: https://solana-mainnet.g.alchemy.com/v2/{{api_key}}
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "jsonrpc": "2.0",
+    "method": "getMaxRetransmitSlot",
+    "params": [],
+    "id": 1
+  }
+}
+
+settings {
+  encodeUrl: true
+}
+
+docs {
+  Get the max slot seen from the retransmit stage.
+  
+  **Returns**: The maximum slot number seen from the retransmit stage
+}
+

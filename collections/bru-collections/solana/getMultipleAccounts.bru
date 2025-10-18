@@ -1,0 +1,39 @@
+meta {
+  name: getMultipleAccounts
+  type: http
+}
+
+post {
+  url: https://solana-mainnet.g.alchemy.com/v2/{{api_key}}
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "jsonrpc": "2.0",
+    "method": "getMultipleAccounts",
+    "params": [
+      [
+        "GwsPP9HHhCvEQeu3HTFzsVL6DEtnnYw4ALEtA3fMBC9Q",
+        "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v"
+      ]
+    ],
+    "id": 1
+  }
+}
+
+settings {
+  encodeUrl: true
+}
+
+docs {
+  Returns the account information for a list of Pubkeys.
+  
+  **Args**:
+  - Pubkeys (required): An array of Pubkeys to query
+  - Configuration (optional): Optional configuration object
+  
+  **Returns**: An array of JSON objects containing account details
+}
+

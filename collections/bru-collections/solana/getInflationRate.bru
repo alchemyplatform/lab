@@ -1,0 +1,30 @@
+meta {
+  name: getInflationRate
+  type: http
+}
+
+post {
+  url: https://solana-mainnet.g.alchemy.com/v2/{{api_key}}
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "jsonrpc": "2.0",
+    "method": "getInflationRate",
+    "params": [],
+    "id": 1
+  }
+}
+
+settings {
+  encodeUrl: true
+}
+
+docs {
+  Returns the specific inflation values for the current epoch.
+  
+  **Returns**: A JSON object containing the inflation values for the current epoch
+}
+

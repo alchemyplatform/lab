@@ -1,0 +1,30 @@
+meta {
+  name: getClusterNodes
+  type: http
+}
+
+post {
+  url: https://solana-mainnet.g.alchemy.com/v2/{{api_key}}
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "jsonrpc": "2.0",
+    "method": "getClusterNodes",
+    "params": [],
+    "id": 1
+  }
+}
+
+settings {
+  encodeUrl: true
+}
+
+docs {
+  Returns information about all the nodes participating in the cluster.
+  
+  **Returns**: An array of JSON objects, each containing information about a node in the cluster
+}
+
