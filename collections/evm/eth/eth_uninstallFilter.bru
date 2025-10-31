@@ -1,7 +1,7 @@
 meta {
   name: eth_uninstallFilter
   type: http
-  seq: 27
+  seq: 40
 }
 
 post {
@@ -33,7 +33,7 @@ docs {
   
   Returns true if the filter was successfully uninstalled, otherwise false.
   Should always be called when work with a filter is complete to free up resources.
-
+  
     **Edge cases & notes**:
   - Filter IDs are ephemeral and may expire if not polled.
   - Prefer eth_getLogs for historical ranges.
