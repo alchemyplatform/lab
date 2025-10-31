@@ -1,36 +1,49 @@
 meta {
   name: trace_rawTransaction
   type: http
+  seq: 6
 }
 
 post {
-  url: https://eth-mainnet.g.alchemy.com/v2/{{api_key}}
+  url: {{baseUrl}}
   body: json
-  auth: inherit
+}
+
+headers {
+  Content-Type: application/json
 }
 
 body:json {
   {
     "jsonrpc": "2.0",
+    "id": "bru",
     "method": "trace_rawTransaction",
     "params": [
-      "0xf86c808504a817c80082520894d8da6bf26964af9d7eed9e03e53415d37aa9604588016345785d8a00008025a00000000000000000000000000000000000000000000000000000000000000000a00000000000000000000000000000000000000000000000000000000000000000",
-      [
-        "trace"
-      ]
-    ],
-    "id": 1
+      "0xf86c808504a817c800825208943535353535353535353535353535353535353535880de0b6b3a76400008025a04f4c17305743700648bc4f6cd3038ec6f6af0df73e31757d64a07e776e2e6e5aa0",
+      ["trace"]
+    ]
   }
 }
 
-settings {
-  encodeUrl: true
-}
-
 docs {
-  Traces a raw, signed transaction without broadcasting.
-  Args:
-  - rawTx: RLP-encoded signed tx
-  - traceTypes: array of trace types
-  Returns: Traces for the simulated transaction.
+  Traces a raw transaction and returns the trace.
+  
+  This method traces a raw transaction without broadcasting it to the network.
+  
+  Parameters:
+  - `raw_transaction`: Raw transaction data as hex string.
+  - `trace_types`: Array of trace types ("trace", "vmTrace", "stateDiff").
+  
+  Returns:
+  - `object`: TraceResults object with requested trace data.
+  
+  Example:
+  ```json
+  {
+    "jsonrpc": "2.0",
+    "id": "bru",
+    "method": "trace_rawTransaction",
+    "params": ["0xf86c808504a817c800825208943535353535353535353535353535353535353535880de0b6b3a76400008025a04f4c17305743700648bc4f6cd3038ec6f6af0df73e31757d64a07e776e2e6e5aa0", ["trace"]]
+  }
+  ```
 }

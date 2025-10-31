@@ -1,71 +1,59 @@
 meta {
   name: trace_call
   type: http
+  seq: 2
 }
 
 post {
-  url: https://eth-mainnet.g.alchemy.com/v2/{{api_key}}
+  url: {{baseUrl}}
   body: json
-  auth: inherit
+}
+
+headers {
+  Content-Type: application/json
 }
 
 body:json {
   {
     "jsonrpc": "2.0",
+    "id": "bru",
     "method": "trace_call",
     "params": [
       {
-        "to": "0x6B175474E89094C44Da98b954EedeAC495271d0F",
-        "data": "0x70a08231000000000000000000000000d8da6bf26964af9d7eed9e03e53415d37aa96045"
+        "to": "0x2bd2326c993dfaef84f696526064ff22eba5b362",
+        "data": "0x16c72721"
       },
-      [
-        "trace"
-      ],
+      ["trace"],
       "latest"
-    ],
-    "id": 1
+    ]
   }
 }
 
-settings {
-  encodeUrl: true
-}
-
 docs {
-  Executes a message call like eth_call but returns comprehensive execution traces. This method combines the functionality of eth_call with detailed tracing capabilities for analysis and debugging.
+  Executes a call and returns a trace of the execution.
   
-  **Use cases**:
-  - Smart contract call analysis and debugging
-  - Transaction simulation with full execution details
-  - Gas usage profiling for contract optimization
-  - MEV strategy development and testing
-  - Security analysis of contract interactions
-  - DeFi protocol behavior analysis
-  - State change impact assessment
+  This method performs an ad-hoc trace of a hypothetical transaction call.
   
-  **Args**:
-  - callObject: Transaction call object with fields:
-    - `to`: Contract address to call
-    - `data`: ABI-encoded function call data
-    - `from` (optional): Caller address
-    - `gas` (optional): Gas limit
-    - `gasPrice|maxFeePerGas|maxPriorityFeePerGas` (optional): Gas pricing
-    - `value` (optional): ETH value to send
-  - traceTypes: Array of trace types to return:
-    - `trace`: Call frame execution traces
-    - `vmTrace`: Virtual machine opcode-level traces
-    - `stateDiff`: State changes caused by execution
-  - block: Block context for execution
+  Parameters:
+  - `call`: Transaction call object.
+    - `to`: Target address.
+    - `data`: Input data for the call.
+    - `from` (optional): Sender address.
+    - `value` (optional): Value to send.
+    - `gas` (optional): Gas limit.
+  - `trace_types`: Array of trace types ("trace", "vmTrace", "stateDiff").
+  - `block`: Block number (hex), hash, or tag ("latest", "earliest", "pending").
   
-  **Returns**: Object containing requested trace information:
-  - **trace**: Hierarchical call execution tree
-  - **vmTrace**: Detailed opcode execution steps
-  - **stateDiff**: Before/after state changes
+  Returns:
+  - `object`: TraceResults object with requested trace data.
   
-  **Edge cases & notes**:
-  - More resource-intensive than regular eth_call
-  - Provides detailed insights into contract execution flow
-  - Essential for understanding complex DeFi interactions
-  - Different clients may format trace data differently
-  - Useful for gas optimization and security analysis
+  Example:
+  ```json
+  {
+    "jsonrpc": "2.0",
+    "id": "bru",
+    "method": "trace_call",
+    "params": [{"to": "0x2bd2326c993dfaef84f696526064ff22eba5b362", "data": "0x16c72721"}, ["trace"], "latest"]
+  }
+  ```
 }

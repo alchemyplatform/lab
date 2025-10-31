@@ -1,38 +1,49 @@
 meta {
   name: trace_replayTransaction
   type: http
+  seq: 8
 }
 
 post {
-  url: https://eth-mainnet.g.alchemy.com/v2/{{api_key}}
+  url: {{baseUrl}}
   body: json
-  auth: inherit
+}
+
+headers {
+  Content-Type: application/json
 }
 
 body:json {
   {
     "jsonrpc": "2.0",
+    "id": "bru",
     "method": "trace_replayTransaction",
     "params": [
-      "0x07104ffdf32b06b90e604f23c7b4e21fc985b68c5bb8c13140d0d3d2e151a385",
-      [
-        "trace",
-        "vmTrace",
-        "stateDiff"
-      ]
-    ],
-    "id": 1
+      "0x17104ac9d3312d8c136b7f44d4b8b47852618065ebfa534bd2d3b5ef218ca1f3",
+      ["trace"]
+    ]
   }
 }
 
-settings {
-  encodeUrl: true
-}
-
 docs {
-  Replays a transaction and returns requested traces.
-  Args:
-  - txHash: 32-byte hash
-  - traceTypes: array (trace|vmTrace|stateDiff)
-  Returns: Traces for the transaction execution.
+  Replays a transaction and returns its trace.
+  
+  This method replays a specific transaction and provides detailed trace information.
+  
+  Parameters:
+  - `tx_hash`: Transaction hash as hex string.
+  - `trace_types`: Array of trace types ("trace", "vmTrace", "stateDiff").
+  
+  Returns:
+  - `object`: TraceResults object with requested trace data.
+  
+  Example:
+  ```json
+  {
+    "jsonrpc": "2.0",
+    "id": "bru",
+    "method": "trace_replayTransaction",
+    "params": ["0x17104ac9d3312d8c136b7f44d4b8b47852618065ebfa534bd2d3b5ef218ca1f3", ["trace"]]
+  }
+  ```
 }
