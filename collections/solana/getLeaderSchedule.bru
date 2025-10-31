@@ -1,6 +1,7 @@
 meta {
   name: getLeaderSchedule
   type: http
+  seq: 1
 }
 
 post {
@@ -12,6 +13,7 @@ post {
 body:json {
   {
     "jsonrpc": "2.0",
+    "id": "bru",
     "method": "getLeaderSchedule",
     "params": [
       null,
@@ -19,13 +21,13 @@ body:json {
         "commitment": "processed",
         "identity": "dv2eQHeP4RFrJZ6UeiZWoc3XTtmtZCUKxxCApCDcRNV"
       }
-    ],
-    "id": "bru"
+    ]
   }
 }
 
 settings {
   encodeUrl: true
+  timeout: 0
 }
 
 docs {
@@ -37,4 +39,3 @@ docs {
   
   **Returns**: Leader schedule information for the specified epoch
 }
-

@@ -1,6 +1,7 @@
 meta {
   name: getStakeActivation
   type: http
+  seq: 1
 }
 
 post {
@@ -12,16 +13,17 @@ post {
 body:json {
   {
     "jsonrpc": "2.0",
+    "id": "bru",
     "method": "getStakeActivation",
     "params": [
       "CYRJWqiSjLitBAcRxPvWpgX3s5TvmN2SuRY3eEYypFvT"
-    ],
-    "id": "bru"
+    ]
   }
 }
 
 settings {
   encodeUrl: true
+  timeout: 0
 }
 
 docs {
@@ -33,4 +35,3 @@ docs {
   
   **Returns**: Epoch activation information for the stake account
 }
-

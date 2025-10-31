@@ -1,6 +1,7 @@
 meta {
   name: getSlotLeaders
   type: http
+  seq: 1
 }
 
 post {
@@ -12,17 +13,18 @@ post {
 body:json {
   {
     "jsonrpc": "2.0",
+    "id": "bru",
     "method": "getSlotLeaders",
     "params": [
       100,
       10
-    ],
-    "id": "bru"
+    ]
   }
 }
 
 settings {
   encodeUrl: true
+  timeout: 0
 }
 
 docs {
@@ -34,4 +36,3 @@ docs {
   
   **Returns**: An array of node identity public keys as base-58 encoded strings
 }
-

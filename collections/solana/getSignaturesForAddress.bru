@@ -1,6 +1,7 @@
 meta {
   name: getSignaturesForAddress
   type: http
+  seq: 1
 }
 
 post {
@@ -12,16 +13,17 @@ post {
 body:json {
   {
     "jsonrpc": "2.0",
+    "id": "bru",
     "method": "getSignaturesForAddress",
     "params": [
       "Vote111111111111111111111111111111111111111"
-    ],
-    "id": "bru"
+    ]
   }
 }
 
 settings {
   encodeUrl: true
+  timeout: 0
 }
 
 docs {
@@ -33,4 +35,3 @@ docs {
   
   **Returns**: An array of objects containing transaction signature information
 }
-

@@ -1,6 +1,7 @@
 meta {
   name: getBlockTime
   type: http
+  seq: 1
 }
 
 post {
@@ -12,16 +13,17 @@ post {
 body:json {
   {
     "jsonrpc": "2.0",
+    "id": "bru",
     "method": "getBlockTime",
     "params": [
       237158054
-    ],
-    "id": "bru"
+    ]
   }
 }
 
 settings {
   encodeUrl: true
+  timeout: 0
 }
 
 docs {
@@ -32,4 +34,3 @@ docs {
   
   **Returns**: The estimated production time of the block as a Unix timestamp
 }
-

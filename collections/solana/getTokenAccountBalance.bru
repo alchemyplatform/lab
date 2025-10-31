@@ -1,6 +1,7 @@
 meta {
   name: getTokenAccountBalance
   type: http
+  seq: 1
 }
 
 post {
@@ -12,16 +13,17 @@ post {
 body:json {
   {
     "jsonrpc": "2.0",
+    "id": "bru",
     "method": "getTokenAccountBalance",
     "params": [
       "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v"
-    ],
-    "id": "bru"
+    ]
   }
 }
 
 settings {
   encodeUrl: true
+  timeout: 0
 }
 
 docs {
@@ -33,4 +35,3 @@ docs {
   
   **Returns**: The balance of the SPL Token account
 }
-

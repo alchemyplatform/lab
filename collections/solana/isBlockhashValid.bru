@@ -1,6 +1,7 @@
 meta {
   name: isBlockhashValid
   type: http
+  seq: 1
 }
 
 post {
@@ -12,16 +13,17 @@ post {
 body:json {
   {
     "jsonrpc": "2.0",
+    "id": "bru",
     "method": "isBlockhashValid",
     "params": [
       "J7rBdM6AecPDEZp8aPq5iPSNKVkU5Q76F3oAV4eW5wsW"
-    ],
-    "id": "bru"
+    ]
   }
 }
 
 settings {
   encodeUrl: true
+  timeout: 0
 }
 
 docs {
@@ -33,4 +35,3 @@ docs {
   
   **Returns**: Indicates if the blockhash is still valid
 }
-

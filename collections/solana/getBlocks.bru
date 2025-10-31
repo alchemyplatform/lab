@@ -1,6 +1,7 @@
 meta {
   name: getBlocks
   type: http
+  seq: 1
 }
 
 post {
@@ -12,17 +13,18 @@ post {
 body:json {
   {
     "jsonrpc": "2.0",
+    "id": "bru",
     "method": "getBlocks",
     "params": [
       237158000,
       237158050
-    ],
-    "id": "bru"
+    ]
   }
 }
 
 settings {
   encodeUrl: true
+  timeout: 0
 }
 
 docs {
@@ -35,4 +37,3 @@ docs {
   
   **Returns**: An array of u64 integers listing confirmed blocks
 }
-

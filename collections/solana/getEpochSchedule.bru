@@ -1,6 +1,7 @@
 meta {
   name: getEpochSchedule
   type: http
+  seq: 1
 }
 
 post {
@@ -12,14 +13,15 @@ post {
 body:json {
   {
     "jsonrpc": "2.0",
+    "id": "bru",
     "method": "getEpochSchedule",
-    "params": [],
-    "id": "bru"
+    "params": []
   }
 }
 
 settings {
   encodeUrl: true
+  timeout: 0
 }
 
 docs {
@@ -27,4 +29,3 @@ docs {
   
   **Returns**: An object containing information about the epoch schedule
 }
-

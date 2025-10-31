@@ -1,6 +1,7 @@
 meta {
   name: getTokenAccountsByDelegate
   type: http
+  seq: 1
 }
 
 post {
@@ -12,19 +13,20 @@ post {
 body:json {
   {
     "jsonrpc": "2.0",
+    "id": "bru",
     "method": "getTokenAccountsByDelegate",
     "params": [
       "4Nd1mBQtrMJVYVfKf2PJy9NZUZdTAsp7D4xWLs4gDB4T",
       {
         "programId": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"
       }
-    ],
-    "id": "bru"
+    ]
   }
 }
 
 settings {
   encodeUrl: true
+  timeout: 0
 }
 
 docs {
@@ -37,4 +39,3 @@ docs {
   
   **Returns**: An array of JSON objects representing the token accounts delegated to the specified Pubkey
 }
-

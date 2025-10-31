@@ -1,6 +1,7 @@
 meta {
   name: getMinimumBalanceForRentExemption
   type: http
+  seq: 1
 }
 
 post {
@@ -12,16 +13,17 @@ post {
 body:json {
   {
     "jsonrpc": "2.0",
+    "id": "bru",
     "method": "getMinimumBalanceForRentExemption",
     "params": [
       50
-    ],
-    "id": "bru"
+    ]
   }
 }
 
 settings {
   encodeUrl: true
+  timeout: 0
 }
 
 docs {
@@ -33,4 +35,3 @@ docs {
   
   **Returns**: The minimum number of lamports required in the account to remain rent-free
 }
-

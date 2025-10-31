@@ -1,6 +1,7 @@
 meta {
   name: requestAirdrop
   type: http
+  seq: 1
 }
 
 post {
@@ -12,17 +13,18 @@ post {
 body:json {
   {
     "jsonrpc": "2.0",
+    "id": "bru",
     "method": "requestAirdrop",
     "params": [
       "GwsPP9HHhCvEQeu3HTFzsVL6DEtnnYw4ALEtA3fMBC9Q",
       1000000000000000000
-    ],
-    "id": "bru"
+    ]
   }
 }
 
 settings {
   encodeUrl: true
+  timeout: 0
 }
 
 docs {
@@ -35,4 +37,3 @@ docs {
   
   **Returns**: Transaction Signature of the airdrop
 }
-

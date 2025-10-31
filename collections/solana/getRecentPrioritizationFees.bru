@@ -1,6 +1,7 @@
 meta {
   name: getRecentPrioritizationFees
   type: http
+  seq: 1
 }
 
 post {
@@ -12,14 +13,15 @@ post {
 body:json {
   {
     "jsonrpc": "2.0",
+    "id": "bru",
     "method": "getRecentPrioritizationFees",
-    "params": [],
-    "id": "bru"
+    "params": []
   }
 }
 
 settings {
   encodeUrl: true
+  timeout: 0
 }
 
 docs {
@@ -30,4 +32,3 @@ docs {
   
   **Returns**: An array of prioritization fees observed in recent blocks
 }
-
