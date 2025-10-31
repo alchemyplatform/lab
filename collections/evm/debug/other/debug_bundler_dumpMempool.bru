@@ -1,7 +1,7 @@
 meta {
-  name: debug_bundler_dumpPaymasterBalances
+  name: debug_bundler_dumpMempool
   type: http
-  seq: 1
+  seq: 7
 }
 
 post {
@@ -14,9 +14,8 @@ body:json {
   {
     "jsonrpc": "2.0",
     "id": "bru",
-    "method": "debug_bundler_dumpPaymasterBalances",
+    "method": "debug_bundler_dumpMempool",
     "params": []
-  }
 }
 
 settings {
@@ -25,7 +24,7 @@ settings {
 }
 
 docs {
-  Shows paymaster stake/balances (bundler view).
+  Dumps current UserOperation mempool contents.
   Args: none.
-  Returns: Balance map.
+  Returns: Array of UserOperation entries.
 }

@@ -1,6 +1,7 @@
 meta {
-  name: debug_dbAncients
+  name: debug_bundler_sendBundleNow
   type: http
+  seq: 11
 }
 
 post {
@@ -12,7 +13,7 @@ post {
 body:json {
   {
     "jsonrpc": "2.0",
-    "method": "debug_dbAncients",
+    "method": "debug_bundler_sendBundleNow",
     "params": [],
     "id": "bru"
   }
@@ -20,8 +21,11 @@ body:json {
 
 settings {
   encodeUrl: true
+  timeout: 0
 }
 
 docs {
-  DbAncients returns the ancient item numbers in the ancient store. It is a mapping to the AncientReaderOp.Ancients method.
+  Forces the bundler to create and submit a bundle from the current mempool.
+  Args: none.
+  Returns: submission result / tx hash.
 }

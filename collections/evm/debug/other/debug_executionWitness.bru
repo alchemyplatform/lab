@@ -1,6 +1,7 @@
 meta {
-  name: debug_bundler_sendBundleNow
+  name: debug_executionWitness
   type: http
+  seq: 17
 }
 
 post {
@@ -12,7 +13,7 @@ post {
 body:json {
   {
     "jsonrpc": "2.0",
-    "method": "debug_bundler_sendBundleNow",
+    "method": "debug_executionWitness",
     "params": [],
     "id": "bru"
   }
@@ -20,10 +21,9 @@ body:json {
 
 settings {
   encodeUrl: true
+  timeout: 0
 }
 
 docs {
-  Forces the bundler to create and submit a bundle from the current mempool.
-  Args: none.
-  Returns: submission result / tx hash.
+  Allows for re-execution of a block with the purpose of generating an execution witness
 }

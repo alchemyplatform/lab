@@ -1,6 +1,7 @@
 meta {
-  name: debug_getTrieFlushInterval
+  name: debug_dbAncients
   type: http
+  seq: 15
 }
 
 post {
@@ -12,7 +13,7 @@ post {
 body:json {
   {
     "jsonrpc": "2.0",
-    "method": "debug_getTrieFlushInterval",
+    "method": "debug_dbAncients",
     "params": [],
     "id": "bru"
   }
@@ -20,8 +21,9 @@ body:json {
 
 settings {
   encodeUrl: true
+  timeout: 0
 }
 
 docs {
-  Retrieves the current value of in-memory trie flush interval.
+  DbAncients returns the ancient item numbers in the ancient store. It is a mapping to the AncientReaderOp.Ancients method.
 }

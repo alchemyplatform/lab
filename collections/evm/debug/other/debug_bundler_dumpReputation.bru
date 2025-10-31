@@ -1,6 +1,7 @@
 meta {
-  name: debug_dbGet
+  name: debug_bundler_dumpReputation
   type: http
+  seq: 9
 }
 
 post {
@@ -12,7 +13,7 @@ post {
 body:json {
   {
     "jsonrpc": "2.0",
-    "method": "debug_dbGet",
+    "method": "debug_bundler_dumpReputation",
     "params": [],
     "id": "bru"
   }
@@ -20,8 +21,11 @@ body:json {
 
 settings {
   encodeUrl: true
+  timeout: 0
 }
 
 docs {
-  Returns the raw value of a key stored in the database.
+  Dumps reputation entries for paymasters/accounts/factories/aggregators.
+  Args: none.
+  Returns: Reputation table.
 }

@@ -1,7 +1,7 @@
 meta {
-  name: debug_bundler_dumpMempool
+  name: debug_bundler_clearMempool
   type: http
-  seq: 1
+  seq: 5
 }
 
 post {
@@ -14,8 +14,9 @@ body:json {
   {
     "jsonrpc": "2.0",
     "id": "bru",
-    "method": "debug_bundler_dumpMempool",
+    "method": "debug_bundler_clearMempool",
     "params": []
+  }
 }
 
 settings {
@@ -24,7 +25,7 @@ settings {
 }
 
 docs {
-  Dumps current UserOperation mempool contents.
+  Clears the bundler's mempool of UserOperations.
   Args: none.
-  Returns: Array of UserOperation entries.
+  Returns: boolean or status string.
 }
