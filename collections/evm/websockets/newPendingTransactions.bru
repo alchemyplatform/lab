@@ -1,7 +1,7 @@
 meta {
   name: newPendingTransactions
   type: ws
-  seq: 4
+  seq: 3
 }
 
 ws {
@@ -14,7 +14,14 @@ body:ws {
   name: message 1
   type: json
   content: '''
-    {"jsonrpc":"2.0","id": 2, "method": "eth_subscribe", "params": ["newPendingTransactions"]}
+    {
+      "jsonrpc": "2.0",
+      "id": "bru",
+      "method": "eth_subscribe",
+      "params": [
+        "newPendingTransactions"
+      ]
+    }
   '''
 }
 

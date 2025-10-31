@@ -1,7 +1,7 @@
 meta {
   name: alchemy_pendingTransactions
   type: ws
-  seq: 3
+  seq: 4
 }
 
 ws {
@@ -14,7 +14,21 @@ body:ws {
   name: message 1
   type: json
   content: '''
-    {"jsonrpc":"2.0","id": 2, "method": "eth_subscribe", "params": ["alchemy_pendingTransactions", {"toAddress": ["0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48", "0xdAC17F958D2ee523a2206206994597C13D831ec7"], "hashesOnly": false}]}
+    {
+      "jsonrpc": "2.0",
+      "id": "bru",
+      "method": "eth_subscribe",
+      "params": [
+        "alchemy_pendingTransactions",
+        {
+          "toAddress": [
+            "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+            "0xdAC17F958D2ee523a2206206994597C13D831ec7"
+          ],
+          "hashesOnly": false
+        }
+      ]
+    }
   '''
 }
 

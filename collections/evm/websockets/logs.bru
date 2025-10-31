@@ -1,7 +1,7 @@
 meta {
   name: logs
   type: ws
-  seq: 5
+  seq: 2
 }
 
 ws {
@@ -14,7 +14,20 @@ body:ws {
   name: message 1
   type: json
   content: '''
-    {"jsonrpc":"2.0","id": 1, "method": "eth_subscribe", "params": ["logs", {"address": "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48", "topics": ["0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef"]}]}
+    {
+      "jsonrpc": "2.0",
+      "id": "bru",
+      "method": "eth_subscribe",
+      "params": [
+        "logs",
+        {
+          "address": "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
+          "topics": [
+            "0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef"
+          ]
+        }
+      ]
+    }
   '''
 }
 

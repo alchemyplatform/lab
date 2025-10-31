@@ -1,7 +1,7 @@
 meta {
   name: newHeads
   type: ws
-  seq: 2
+  seq: 1
 }
 
 ws {
@@ -14,7 +14,14 @@ body:ws {
   name: message 1
   type: json
   content: '''
-    {"jsonrpc":"2.0","id": 1, "method": "eth_subscribe", "params": ["newHeads"]}
+    {
+      "jsonrpc": "2.0",
+      "id": "bru",
+      "method": "eth_subscribe",
+      "params": [
+        "newHeads"
+      ]
+    }
   '''
 }
 

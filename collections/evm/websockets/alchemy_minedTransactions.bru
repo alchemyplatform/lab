@@ -1,7 +1,7 @@
 meta {
   name: alchemy_minedTransactions
   type: ws
-  seq: 1
+  seq: 5
 }
 
 ws {
@@ -16,6 +16,7 @@ body:ws {
   content: '''
     {
       "jsonrpc": "2.0",
+      "id": "bru",
       "method": "eth_subscribe",
       "params": [
         "alchemy_minedTransactions",
@@ -32,8 +33,7 @@ body:ws {
           "includeRemoved": false,
           "hashesOnly": true
         }
-      ],
-      "id": 1
+      ]
     }
   '''
 }
