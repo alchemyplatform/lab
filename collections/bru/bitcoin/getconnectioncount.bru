@@ -1,0 +1,36 @@
+meta {
+  name: getconnectioncount
+  type: http
+  seq: 7
+}
+
+post {
+  url: {{baseUrl}}
+  body: json
+  auth: basic
+}
+
+auth:basic {
+  username: {{rpcUser}}
+  password: {{rpcPassword}}
+}
+
+headers {
+  Content-Type: application/json
+}
+
+body:json {
+  {
+    "jsonrpc": "1.0",
+    "id": "bru",
+    "method": "getconnectioncount",
+    "params": []
+  }
+}
+
+docs {
+  Returns the number of connections to other nodes.
+  
+  Returns a simple integer count of active peer connections.
+  This is useful for monitoring node connectivity and network health.
+}
