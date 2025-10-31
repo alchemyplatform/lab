@@ -1,37 +1,50 @@
 meta {
   name: getTokenAccountsByOwner
   type: http
+  seq: 12
 }
 
 post {
-  url: https://solana-mainnet.g.alchemy.com/v2/{{api_key}}
+  url: {{baseUrl}}
   body: json
-  auth: inherit
+  auth: none
+}
+
+headers {
+  Content-Type: application/json
 }
 
 body:json {
   {
     "jsonrpc": "2.0",
+    "id": "bru",
     "method": "getTokenAccountsByOwner",
     "params": [
-      "GwsPP9HHhCvEQeu3HTFzsVL6DEtnnYw4ALEtA3fMBC9Q"
-    ],
-    "id": 1
+      "4Qkev8aNZcqFNSRhQzwyLMFSsi94jHqE8WNVTJzTP99F",
+      {
+        "mint": "3wyAj7Rt1TWVPZVteFJPLa26JmLvdb1CAKEFZm3NY75E"
+      },
+      {
+        "encoding": "jsonParsed",
+        "commitment": "finalized"
+      }
+    ]
   }
 }
 
-settings {
-  encodeUrl: true
-}
-
 docs {
-  Returns all SPL Token accounts owned by the specified token owner.
+  Returns all SPL Token accounts by token owner.
   
-  **Args**:
-  - Token owner Pubkey (required): The Pubkey of the account owner to query
-  - Token filter (optional): A filter object containing either the Mint Pubkey or the Token program Pubkey
-  - Configuration (optional): Optional configuration object containing additional settings
+  Parameters:
+  1. Owner Pubkey (string, required) - Pubkey of account owner
+  2. Filter object (required) - Either:
+     - {"mint": "mint_pubkey"} - filter by specific token mint
+     - {"programId": "program_pubkey"} - filter by token program
+  3. Configuration object (optional):
+     - encoding: "base58", "base64", "jsonParsed"
+     - commitment: "finalized", "confirmed", "processed"
+     - dataSlice: limit returned account data
   
-  **Returns**: An array of JSON objects representing the token accounts owned by the specified Pubkey
+  Returns array of token accounts owned by the specified address.
+  Essential for wallet applications and token portfolio management.
 }
-

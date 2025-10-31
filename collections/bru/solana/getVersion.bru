@@ -1,30 +1,36 @@
 meta {
   name: getVersion
   type: http
+  seq: 9
 }
 
 post {
-  url: https://solana-mainnet.g.alchemy.com/v2/{{api_key}}
+  url: {{baseUrl}}
   body: json
-  auth: inherit
+  auth: none
+}
+
+headers {
+  Content-Type: application/json
 }
 
 body:json {
   {
     "jsonrpc": "2.0",
+    "id": "bru",
     "method": "getVersion",
-    "params": [],
-    "id": 1
+    "params": []
   }
-}
-
-settings {
-  encodeUrl: true
 }
 
 docs {
   Returns the current Solana version running on the node.
   
-  **Returns**: The current Solana version running on the node
+  No parameters required.
+  
+  Returns version information including:
+  - Solana core version
+  - Feature set identifier
+  
+  Useful for compatibility checking and debugging.
 }
-

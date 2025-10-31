@@ -1,33 +1,39 @@
 meta {
   name: getBlockHeight
   type: http
+  seq: 5
 }
 
 post {
-  url: https://solana-mainnet.g.alchemy.com/v2/{{api_key}}
+  url: {{baseUrl}}
   body: json
-  auth: inherit
+  auth: none
+}
+
+headers {
+  Content-Type: application/json
 }
 
 body:json {
   {
     "jsonrpc": "2.0",
+    "id": "bru",
     "method": "getBlockHeight",
-    "params": [],
-    "id": 1
+    "params": [
+      {
+        "commitment": "finalized"
+      }
+    ]
   }
-}
-
-settings {
-  encodeUrl: true
 }
 
 docs {
   Returns the current block height of the node.
   
-  **Args**:
-  - Configuration (optional): Optional configuration object containing additional request parameters
+  Parameters:
+  1. Configuration object (optional):
+     - commitment: "finalized", "confirmed", "processed"
   
-  **Returns**: The current block height, as a u64 integer
+  Returns the current slot that the node is processing.
+  Useful for monitoring blockchain progress and synchronization status.
 }
-
