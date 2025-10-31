@@ -1,6 +1,7 @@
 meta {
   name: debug_bundler_clearMempool
   type: http
+  seq: 1
 }
 
 post {
@@ -12,14 +13,15 @@ post {
 body:json {
   {
     "jsonrpc": "2.0",
+    "id": "bru",
     "method": "debug_bundler_clearMempool",
-    "params": [],
-    "id": 1
+    "params": []
   }
 }
 
 settings {
   encodeUrl: true
+  timeout: 0
 }
 
 docs {
