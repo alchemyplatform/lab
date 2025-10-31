@@ -1,40 +1,37 @@
 meta {
   name: eth_getBlockByHash
   type: http
+  seq: 10
 }
 
 post {
-  url: https://eth-mainnet.g.alchemy.com/v2/{{api_key}}
+  url: {{baseUrl}}
   body: json
-  auth: inherit
+  auth: none
+}
+
+headers {
+  Content-Type: application/json
 }
 
 body:json {
   {
     "jsonrpc": "2.0",
+    "id": "bru",
     "method": "eth_getBlockByHash",
     "params": [
-      "0xdc0818cf78f21a8e70579cb46a43643f78291264dda342ae31049421c82d21ae",
-      false
-    ],
-    "id": 1
+      "0x1b4",
+      true
+    ]
   }
-}
-
-settings {
-  encodeUrl: true
 }
 
 docs {
   Returns information about a block by hash.
   
-  **Args**:
-  - Block hash: 32-byte 0x-prefixed hash.
-  - Hydrated transactions: hydrated
+  Parameters:
+  1. DATA, 32 Bytes - Hash of a block
+  2. Boolean - If true it returns the full transaction objects, if false only the hashes of the transactions
   
-  **Returns**: Returns JSON-RPC result; see client docs.
-  
-  **Edge cases & notes**:
-  - Returns null if block hash not found on the canonical chain.
-  - On post-Merge Ethereum, 'nonce' is 0x0 and uncles count is 0.
+  Note: Replace the hash parameter with an actual block hash from your network.
 }

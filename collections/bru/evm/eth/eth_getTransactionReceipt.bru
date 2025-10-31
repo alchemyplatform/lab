@@ -1,38 +1,36 @@
 meta {
   name: eth_getTransactionReceipt
   type: http
+  seq: 20
 }
 
 post {
-  url: https://eth-mainnet.g.alchemy.com/v2/{{api_key}}
+  url: {{baseUrl}}
   body: json
-  auth: inherit
+  auth: none
+}
+
+headers {
+  Content-Type: application/json
 }
 
 body:json {
   {
     "jsonrpc": "2.0",
+    "id": "bru",
     "method": "eth_getTransactionReceipt",
     "params": [
-      "0x07104ffdf32b06b90e604f23c7b4e21fc985b68c5bb8c13140d0d3d2e151a385"
-    ],
-    "id": 1
+      "0x88df016429689c079f3b2f6ad39fa052532c56795b733da78a91ebe6a713944b"
+    ]
   }
-}
-
-settings {
-  encodeUrl: true
 }
 
 docs {
   Returns the receipt of a transaction by transaction hash.
   
-  **Args**:
-  - Transaction hash: 32-byte 0x-prefixed hash.
+  Parameters:
+  1. DATA, 32 Bytes - hash of a transaction
   
-  **Returns**: Returns JSON-RPC result; see client docs.
-  
-  **Edge cases & notes**:
-  - Returns null until the transaction is mined; 'status' is 0x1 for success, 0x0 for revert.
-  - During reorgs, receipt fields can reflect the canonical block only after finalization.
+  Returns transaction receipt with status, gas used, logs, etc.
+  Note: Replace the hash parameter with an actual transaction hash from your network.
 }

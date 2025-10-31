@@ -1,43 +1,38 @@
 meta {
   name: eth_chainId
   type: http
+  seq: 4
 }
 
 post {
-  url: https://eth-mainnet.g.alchemy.com/v2/{{api_key}}
+  url: {{baseUrl}}
   body: json
-  auth: inherit
+  auth: none
+}
+
+headers {
+  Content-Type: application/json
 }
 
 body:json {
   {
     "jsonrpc": "2.0",
+    "id": "bru",
     "method": "eth_chainId",
-    "params": [],
-    "id": 1
+    "params": []
   }
 }
 
-settings {
-  encodeUrl: true
-}
-
 docs {
-  Returns the chain ID of the current network as defined in EIP-155. Essential for preventing replay attacks across different Ethereum networks.
+  Returns the currently configured chain ID, a value used in replay-protected transaction signing.
   
-  **Use cases**:
-  - Validating network before transaction signing
-  - Preventing cross-chain replay attacks
-  - Network detection in multi-chain applications
-  - MetaMask network switching verification
-  - DApp network compatibility checks
+  Returns the chain ID as a hexadecimal string.
   
-  **Returns**: Hex-encoded chain ID (1=Mainnet, 5=Goerli, 11155111=Sepolia, 137=Polygon, etc.)
-  
-  **Edge cases & notes**:
-  - Critical for EIP-155 compliant transaction signing
-  - Must match expected network to prevent wrong-network transactions
-  - Used by wallets to verify they're connected to the correct network
-  - Some older networks may not support this method
-  - Essential for multi-chain DApp development
+  Common chain IDs:
+  - 0x1: Ethereum Mainnet
+  - 0x3: Ropsten Testnet (deprecated)
+  - 0x4: Rinkeby Testnet (deprecated)
+  - 0x5: Goerli Testnet
+  - 0xaa36a7: Sepolia Testnet
+  - 0x89: Polygon Mainnet
 }

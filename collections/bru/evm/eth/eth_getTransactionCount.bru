@@ -1,40 +1,38 @@
 meta {
   name: eth_getTransactionCount
   type: http
+  seq: 19
 }
 
 post {
-  url: https://eth-mainnet.g.alchemy.com/v2/{{api_key}}
+  url: {{baseUrl}}
   body: json
-  auth: inherit
+  auth: none
+}
+
+headers {
+  Content-Type: application/json
 }
 
 body:json {
   {
     "jsonrpc": "2.0",
+    "id": "bru",
     "method": "eth_getTransactionCount",
     "params": [
-      "0xd8dA6BF26964aF9D7eEd9e03e53415D37aA96045",
+      "0x407d73d8a49eeb85d32cf465507dd71d507100c1",
       "latest"
-    ],
-    "id": 1
+    ]
   }
 }
 
-settings {
-  encodeUrl: true
-}
-
 docs {
-  Returns the nonce of an account in the state. NOTE: The name eth_getTransactionCount reflects the historical fact that an account's nonce and sent transaction count were the same. After the Pectra fork, with the inclusion of EIP-7702, this is no longer true.
+  Returns the number of transactions sent from an address (nonce).
   
-  **Args**:
-  - Address: 20-byte 0x-prefixed Ethereum address (EOA or contract).
-  - Block: Block selector: hex block number (0x...), a tag ('latest'|'safe'|'finalized'|'earliest'|'pending'), or a block hash.
+  Parameters:
+  1. DATA, 20 Bytes - address
+  2. QUANTITY|TAG - integer block number, or the string "latest", "earliest" or "pending"
   
-  **Returns**: Hex quantity.
-  
-  **Edge cases & notes**:
-  - 'latest' excludes pending txs; use 'pending' to include mempool.
-  - Returns 0x0 for unused accounts.
+  Returns the integer of the number of transactions sent from this address.
+  This is commonly used to get the nonce for sending new transactions.
 }

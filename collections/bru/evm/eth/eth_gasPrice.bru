@@ -1,43 +1,34 @@
 meta {
   name: eth_gasPrice
   type: http
+  seq: 8
 }
 
 post {
-  url: https://eth-mainnet.g.alchemy.com/v2/{{api_key}}
+  url: {{baseUrl}}
   body: json
-  auth: inherit
+  auth: none
+}
+
+headers {
+  Content-Type: application/json
 }
 
 body:json {
   {
     "jsonrpc": "2.0",
+    "id": "bru",
     "method": "eth_gasPrice",
-    "params": [],
-    "id": 1
+    "params": []
   }
 }
 
-settings {
-  encodeUrl: true
-}
-
 docs {
-  Returns the current price per gas in wei as suggested by the network. This method provides a gas price recommendation for legacy (non-EIP-1559) transactions.
+  Returns the current price per gas in wei.
   
-  **Use cases**:
-  - Gas price discovery for legacy transactions
-  - Fee comparison across different networks
-  - Historical gas price tracking and analysis
-  - Fallback pricing when EIP-1559 not supported
-  - Bot and MEV gas price optimization
+  Returns the current gas price as a hexadecimal string.
+  This represents the amount of wei you need to pay per unit of gas.
   
-  **Returns**: Hex-encoded gas price in wei
-  
-  **Edge cases & notes**:
-  - On EIP-1559 networks, often returns (baseFee + 1-2 gwei) as suggestion
-  - May not reflect actual transaction priority during congestion
-  - Legacy method - consider eth_feeHistory for EIP-1559 networks
-  - Can be significantly outdated during network congestion
-  - Different providers may return different suggestions
+  Note: After EIP-1559, this method returns the base fee + priority fee.
+  For more precise gas pricing, consider using eth_feeHistory or eth_maxPriorityFeePerGas.
 }

@@ -1,43 +1,31 @@
 meta {
   name: eth_blockNumber
   type: http
+  seq: 2
 }
 
 post {
-  url: https://eth-mainnet.g.alchemy.com/v2/{{api_key}}
+  url: {{baseUrl}}
   body: json
-  auth: inherit
+  auth: none
+}
+
+headers {
+  Content-Type: application/json
 }
 
 body:json {
   {
     "jsonrpc": "2.0",
+    "id": "bru",
     "method": "eth_blockNumber",
-    "params": [],
-    "id": 1
+    "params": []
   }
 }
 
-settings {
-  encodeUrl: true
-}
-
 docs {
-  Returns the number of the most recent block in the canonical chain. This is one of the most fundamental methods for blockchain synchronization and state tracking.
+  Returns the number of most recent block.
   
-  **Use cases**:
-  - Monitoring blockchain progression and sync status
-  - Implementing block polling for new block detection
-  - Determining current blockchain height for applications
-  - Rate limiting and caching strategies based on block height
-  - Calculating block confirmations for transactions
-  
-  **Returns**: Hex-encoded block number of the latest block
-  
-  **Edge cases & notes**:
-  - Returns the highest block number the node has processed
-  - During network splits, different nodes may return different values
-  - Essential for determining if your node is synced with the network
-  - Should be called frequently to track chain progression
-  - Used as a heartbeat to verify node connectivity
+  This method returns the current block number as a hexadecimal string.
+  The block number represents the height of the blockchain.
 }
