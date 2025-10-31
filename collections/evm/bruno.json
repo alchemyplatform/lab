@@ -1,6 +1,6 @@
 {
   "version": "1",
-  "name": "evm",
+  "name": "",
   "type": "collection",
   "ignore": [
     "node_modules",
