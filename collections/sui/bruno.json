@@ -1,6 +1,6 @@
 {
   "version": "1",
-  "name": "Sui API",
+  "name": "sui",
   "type": "collection",
   "ignore": [
     "node_modules",
