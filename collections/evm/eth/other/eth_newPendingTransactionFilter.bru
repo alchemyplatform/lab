@@ -1,7 +1,7 @@
 meta {
-  name: eth_newBlockFilter
+  name: eth_newPendingTransactionFilter
   type: http
-  seq: 31
+  seq: 14
 }
 
 post {
@@ -18,14 +18,14 @@ body:json {
   {
     "jsonrpc": "2.0",
     "id": "bru",
-    "method": "eth_newBlockFilter",
+    "method": "eth_newPendingTransactionFilter",
     "params": []
   }
 }
 
 docs {
-  Creates a filter in the node, to notify when a new block arrives.
+  Creates a filter in the node, to notify when new pending transactions arrive.
   
   Returns a filter id to be used with eth_getFilterChanges.
-  Use this to get notifications of new blocks without polling eth_blockNumber.
+  Use this to monitor the mempool for pending transactions.
 }

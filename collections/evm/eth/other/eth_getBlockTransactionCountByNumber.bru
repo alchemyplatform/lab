@@ -1,7 +1,7 @@
 meta {
-  name: eth_getTransactionByBlockNumberAndIndex
+  name: eth_getBlockTransactionCountByNumber
   type: http
-  seq: 25
+  seq: 8
 }
 
 post {
@@ -13,10 +13,9 @@ post {
 body:json {
   {
     "jsonrpc": "2.0",
-    "method": "eth_getTransactionByBlockNumberAndIndex",
+    "method": "eth_getBlockTransactionCountByNumber",
     "params": [
-      "latest",
-      "0x0"
+      "latest"
     ],
     "id": "bru"
   }
@@ -28,15 +27,14 @@ settings {
 }
 
 docs {
-  Returns information about a transaction by block number and transaction index position.
+  Returns the number of transactions in a block matching the given block number.
   
   **Args**:
   - Block: Block selector: hex block number (0x...), or tag 'latest'|'safe'|'finalized'|'earliest'|'pending'.
-  - Transaction index: 0x-hex quantity (no leading zeros except 0 -> '0x0').
   
   **Returns**: Returns JSON-RPC result; see client docs.
   
   **Edge cases & notes**:
-  - Returns null if transaction hash is unknown or pruned.
-  - Pending transactions have null blockHash and blockNumber.
+  - Returns null if block not found or not yet indexed.
+  - If the boolean flag is false, transactions are hashes only.
 }
