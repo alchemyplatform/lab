@@ -1,0 +1,36 @@
+meta {
+  name: rootUnsubscribe
+  type: ws
+  seq: 10
+}
+
+ws {
+  url: wss://solana-mainnet.g.alchemy.com/v2/{{api_key}}
+  body: ws
+  auth: inherit
+}
+
+body:ws {
+  name: unsubscribe
+  type: json
+  content: '''
+    {
+      "jsonrpc": "2.0",
+      "id": "bru",
+      "method": "rootUnsubscribe",
+      "params": [
+        0
+      ]
+    }
+  '''
+}
+
+docs {
+  Unsubscribe from root change notifications.
+  
+  **Args**:
+  1. Subscription ID (required): ID of subscription to cancel (number)
+  
+  **Returns**: true if subscription was successfully cancelled, false otherwise.
+}
+

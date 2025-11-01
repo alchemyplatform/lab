@@ -1,0 +1,52 @@
+meta {
+  name: blockSubscribe
+  type: ws
+  seq: 3
+}
+
+ws {
+  url: wss://solana-mainnet.g.alchemy.com/v2/{{api_key}}
+  body: ws
+  auth: inherit
+}
+
+body:ws {
+  name: subscribe
+  type: json
+  content: '''
+    {
+      "jsonrpc": "2.0",
+      "id": "bru",
+      "method": "blockSubscribe",
+      "params": [
+        {
+          "mentionsAccountOrProgram": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"
+        },
+        {
+          "commitment": "confirmed",
+          "encoding": "json",
+          "transactionDetails": "full",
+          "showRewards": true,
+          "maxSupportedTransactionVersion": 0
+        }
+      ]
+    }
+  '''
+}
+
+docs {
+  Subscribe to receive notifications anytime a new block is confirmed or finalized.
+  
+  **Args**:
+  1. Filter criteria (required): Can be "all" or an object with:
+     - mentionsAccountOrProgram: Return only blocks that mention the provided public key
+  2. Configuration object (optional):
+     - commitment: "confirmed" or "finalized"
+     - encoding: "json", "jsonParsed", "base58", "base64"
+     - transactionDetails: "full", "signatures", "none"
+     - showRewards: boolean
+     - maxSupportedTransactionVersion: number
+  
+  **Returns**: Subscription ID that can be used to unsubscribe.
+}
+

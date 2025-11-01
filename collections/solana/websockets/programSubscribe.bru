@@ -1,0 +1,46 @@
+meta {
+  name: programSubscribe
+  type: ws
+  seq: 7
+}
+
+ws {
+  url: wss://solana-mainnet.g.alchemy.com/v2/{{api_key}}
+  body: ws
+  auth: inherit
+}
+
+body:ws {
+  name: subscribe
+  type: json
+  content: '''
+    {
+      "jsonrpc": "2.0",
+      "id": "bru",
+      "method": "programSubscribe",
+      "params": [
+        "11111111111111111111111111111111",
+        {
+          "encoding": "jsonParsed",
+          "commitment": "finalized"
+        }
+      ]
+    }
+  '''
+}
+
+docs {
+  Subscribe to a program to receive notifications when the lamports or data for an account owned by the given program changes.
+  
+  **Args**:
+  1. Program ID (required): Program public key as base-58 encoded string
+  2. Configuration object (optional):
+     - commitment: "finalized", "confirmed", "processed"
+     - encoding: "base58", "base64", "base64+zstd", "jsonParsed"
+     - filters: Array of filter objects
+  
+  **Returns**: Subscription ID that can be used to unsubscribe.
+  
+  **Use Case**: Useful for monitoring all accounts owned by a specific program (like a token program).
+}
+

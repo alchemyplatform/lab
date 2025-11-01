@@ -1,0 +1,43 @@
+meta {
+  name: slotsUpdatesSubscribe
+  type: ws
+  seq: 15
+}
+
+ws {
+  url: wss://solana-mainnet.g.alchemy.com/v2/{{api_key}}
+  body: ws
+  auth: inherit
+}
+
+body:ws {
+  name: subscribe
+  type: json
+  content: '''
+    {
+      "jsonrpc": "2.0",
+      "id": "bru",
+      "method": "slotsUpdatesSubscribe"
+    }
+  '''
+}
+
+docs {
+  Subscribe to receive a notification from the validator on a variety of updates on every slot.
+  
+  **Args**: None required
+  
+  **Returns**: Subscription ID that can be used to unsubscribe.
+  
+  **Notifications**: Returns notifications for different slot update types:
+  - firstShredReceived: First shred received
+  - completed: Slot completed
+  - createdBank: Bank created
+  - frozen: Slot frozen
+  - dead: Slot dead
+  - optimisticConfirmation: Optimistic confirmation
+  - root: Root confirmed
+  
+  **Note**: This provides more detailed slot lifecycle information than slotSubscribe.
+}
+

@@ -1,0 +1,42 @@
+meta {
+  name: voteSubscribe
+  type: ws
+  seq: 17
+}
+
+ws {
+  url: wss://solana-mainnet.g.alchemy.com/v2/{{api_key}}
+  body: ws
+  auth: inherit
+}
+
+body:ws {
+  name: subscribe
+  type: json
+  content: '''
+    {
+      "jsonrpc": "2.0",
+      "id": "bru",
+      "method": "voteSubscribe"
+    }
+  '''
+}
+
+docs {
+  Subscribe to receive notification anytime a new vote is observed in gossip.
+  
+  **Args**: None required
+  
+  **Returns**: Subscription ID that can be used to unsubscribe.
+  
+  **Notifications**: Returns vote information including:
+  - hash: Vote hash
+  - slots: Array of slot numbers being voted on
+  - timestamp: Vote timestamp
+  - signature: Vote signature
+  
+  **Note**: These are votes from the gossip network and will be sent at a very high rate.
+  
+  **WARNING**: This subscription can produce a very high volume of notifications.
+}
+
