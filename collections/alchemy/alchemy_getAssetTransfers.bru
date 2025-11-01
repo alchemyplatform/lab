@@ -1,6 +1,7 @@
 meta {
   name: alchemy_getAssetTransfers
   type: http
+  seq: 1
 }
 
 post {
@@ -16,12 +17,13 @@ body:json {
     "method": "alchemy_getAssetTransfers",
     "params": [
       {
-        "fromBlock": "0x13738ca",
-        "toBlock": "0x13738ca",
-        "fromAddress": "0xd8dA6BF26964aF9D7eEd9e03e53415D37aA96045",
+        "fromBlock": "0x0",
+        "toBlock": "latest",
+        "fromAddress": "0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045",
         "category": [
+          "external",
           "erc20",
-          "external"
+          "erc721"
         ],
         "withMetadata": true,
         "maxCount": "0x3"
@@ -32,6 +34,7 @@ body:json {
 
 settings {
   encodeUrl: true
+  timeout: 0
 }
 
 docs {
