@@ -1,0 +1,46 @@
+meta {
+  name: Subscribe to accounts
+  type: grpc
+  seq: 2
+}
+
+grpc {
+  url: https://solana-mainnet.g.alchemy.com/
+  method: /geyser.Geyser/Subscribe
+  body: grpc
+  protoPath: grpc/geyser.proto
+  auth: inherit
+  methodType: bidi-streaming
+}
+
+metadata {
+  x-token: {{solana_x_token}}
+}
+
+body:grpc {
+  name: message 1
+  content: '''
+    {
+      "accounts": {
+        "usdc_token_accounts": {
+          "owner": [
+            "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"
+          ],
+          "filters": [
+            {
+              "memcmp": {
+                "offset": 0,
+                "base58": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v"
+              }
+            }
+          ]
+        }
+      },
+      "slots": {},
+      "transactions": {},
+      "blocks": {},
+      "blocks_meta": {}
+    }
+  '''
+}
+
