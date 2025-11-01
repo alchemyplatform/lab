@@ -1,0 +1,40 @@
+meta {
+  name: eth_getFilterLogs
+  type: http
+  seq: 11
+}
+
+post {
+  url: https://eth-mainnet.g.alchemy.com/v2/{{api_key}}
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "jsonrpc": "2.0",
+    "method": "eth_getFilterLogs",
+    "params": [
+      "0x1"
+    ],
+    "id": "bru"
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}
+
+docs {
+  Returns an array of all logs matching the filter with the given ID (created using `eth_newFilter`).
+  
+  **Args**:
+  - Filter identifier: 0x-hex quantity (no leading zeros except 0 -> '0x0').
+  
+  **Returns**: Filter results
+  
+  **Edge cases & notes**:
+  - Filter IDs are ephemeral and may expire if not polled.
+  - Prefer eth_getLogs for historical ranges.
+}

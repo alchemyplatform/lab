@@ -1,0 +1,46 @@
+meta {
+  name: signatureSubscribe
+  type: ws
+  seq: 11
+}
+
+ws {
+  url: wss://solana-mainnet.g.alchemy.com/v2/{{api_key}}
+  body: ws
+  auth: inherit
+}
+
+body:ws {
+  name: subscribe
+  type: json
+  content: '''
+    {
+      "jsonrpc": "2.0",
+      "id": "bru",
+      "method": "signatureSubscribe",
+      "params": [
+        "5VERv8NMvzbJMEkV8xnrLkEaWRtSz9CosKDYjCJjBRnbJLgp8uirBgmQpjKhoR4tjF3ZpRzrFmBV6UjKdiSZkQUW",
+        {
+          "commitment": "finalized"
+        }
+      ]
+    }
+  '''
+}
+
+docs {
+  Subscribe to a transaction signature to receive notification when the transaction is confirmed.
+  
+  **Args**:
+  1. Transaction Signature (required): Transaction signature as base-58 encoded string
+  2. Configuration object (optional):
+     - commitment: "finalized", "confirmed", "processed"
+     - enableReceivedNotification: boolean - Enable received notification (default: false)
+  
+  **Returns**: Subscription ID that can be used to unsubscribe.
+  
+  **Notifications**: Returns the transaction status when confirmed or finalized.
+  
+  **Use Case**: Track transaction confirmation status in real-time.
+}
+

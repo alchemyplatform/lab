@@ -1,0 +1,36 @@
+meta {
+  name: getBlockTime
+  type: http
+  seq: 10
+}
+
+post {
+  url: https://solana-mainnet.g.alchemy.com/v2/{{api_key}}
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "jsonrpc": "2.0",
+    "id": "bru",
+    "method": "getBlockTime",
+    "params": [
+      237158054
+    ]
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}
+
+docs {
+  Returns the estimated production time of a block.
+  
+  **Args**:
+  - block (required): Block number, identified by Slot
+  
+  **Returns**: The estimated production time of the block as a Unix timestamp
+}

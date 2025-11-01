@@ -1,0 +1,41 @@
+meta {
+  name: getBalance
+  type: http
+  seq: 3
+}
+
+post {
+  url: https://solana-mainnet.g.alchemy.com/v2/{{api_key}}
+  body: json
+  auth: none
+}
+
+headers {
+  Content-Type: application/json
+}
+
+body:json {
+  {
+    "jsonrpc": "2.0",
+    "id": "bru",
+    "method": "getBalance",
+    "params": [
+      "83astBRguLMdt2h5U1Tpdq5tjFoJ6noeGwaY3mDLVcri",
+      {
+        "commitment": "finalized"
+      }
+    ]
+  }
+}
+
+docs {
+  Returns the lamport balance of the account of provided Pubkey.
+  
+  Parameters:
+  1. Pubkey (string, required) - Pubkey of account to query, as base-58 encoded string
+  2. Configuration object (optional):
+     - commitment: "finalized", "confirmed", "processed"
+  
+  Returns the balance in lamports (1 SOL = 1,000,000,000 lamports).
+  Most basic method for checking SOL balance of any account.
+}

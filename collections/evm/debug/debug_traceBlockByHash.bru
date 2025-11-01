@@ -1,0 +1,54 @@
+meta {
+  name: debug_traceBlockByHash
+  type: http
+  seq: 6
+}
+
+post {
+  url: https://eth-mainnet.g.alchemy.com/v2/{{api_key}}
+  body: json
+  auth: none
+}
+
+headers {
+  Content-Type: application/json
+}
+
+body:json {
+  {
+    "jsonrpc": "2.0",
+    "id": "bru",
+    "method": "debug_traceBlockByHash",
+    "params": [
+      "0x7eb25504e4c202cf3d62fd585d3e238f592c780cca82dacb2ed3cb5b38883add",
+      {
+        "tracer": "callTracer"
+      }
+    ]
+  }
+}
+
+docs {
+  Traces a block that is already present in the database by its hash.
+  
+  Similar to debug_traceBlock but accepts a block hash instead of RLP data.
+  
+  Parameters:
+  - `block_hash`: Block hash as hex string.
+  - `opts` (optional): Tracing options object.
+    - `tracer`: Tracer type ("callTracer", "prestateTracer", etc.).
+    - `timeout`: Timeout for the trace operation.
+  
+  Returns:
+  - `array`: Array of transaction traces with opcode-level details.
+  
+  Example:
+  ```json
+  {
+    "jsonrpc": "2.0",
+    "id": "bru",
+    "method": "debug_traceBlockByHash",
+    "params": ["0x7eb25504e4c202cf3d62fd585d3e238f592c780cca82dacb2ed3cb5b38883add", {"tracer": "callTracer"}]
+  }
+  ```
+}

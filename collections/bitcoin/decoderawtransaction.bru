@@ -1,0 +1,46 @@
+meta {
+  name: decoderawtransaction
+  type: http
+  seq: 10
+}
+
+post {
+  url: https://bitcoin-mainnet.g.alchemy.com/v2/{{api_key}}
+  body: json
+  auth: basic
+}
+
+headers {
+  Content-Type: application/json
+}
+
+auth:basic {
+  username: {{rpcUser}}
+  password: {{rpcPassword}}
+}
+
+body:json {
+  {
+    "jsonrpc": "1.0",
+    "id": "bru",
+    "method": "decoderawtransaction",
+    "params": [
+      "01000000010000000000000000000000000000000000000000000000000000000000000000ffffffff0704ffff001d0104ffffffff0100f2052a0100000043410496b538e853519c726a2c91e61ec11600ae1390813a627c66fb8be7947be63c52da7589379515d4e0a604f8141781e62294721166bf621e73a82cbf2342c858eeebf0f0ac00000000"
+    ]
+  }
+}
+
+docs {
+  Returns a JSON object representing the serialized, hex-encoded transaction.
+  
+  Parameters:
+  1. hexstring (string, required) - The transaction hex string
+  
+  Returns detailed transaction information including:
+  - Transaction ID and hash
+  - Version, size, and locktime
+  - Input and output details
+  - Script information and addresses
+  
+  Useful for analyzing transaction structure without broadcasting to the network.
+}

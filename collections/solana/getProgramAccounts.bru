@@ -1,0 +1,59 @@
+meta {
+  name: getProgramAccounts
+  type: http
+  seq: 30
+}
+
+post {
+  url: https://solana-mainnet.g.alchemy.com/v2/{{api_key}}
+  body: json
+  auth: none
+}
+
+headers {
+  Content-Type: application/json
+}
+
+body:json {
+  {
+    "jsonrpc": "2.0",
+    "id": "bru",
+    "method": "getProgramAccounts",
+    "params": [
+      "4Nd1mBQtrMJVYVfKf2PJy9NZUZdTAsp7D4xWLs4gDB4T",
+      {
+        "encoding": "jsonParsed",
+        "commitment": "finalized",
+        "filters": [
+          {
+            "dataSize": 17
+          },
+          {
+            "memcmp": {
+              "offset": 4,
+              "bytes": "3Mc6vR"
+            }
+          }
+        ]
+      }
+    ]
+  }
+}
+
+docs {
+  Returns all accounts owned by the provided program Pubkey.
+  
+  Parameters:
+  1. Program Pubkey (string, required) - Pubkey of program
+  2. Configuration object (optional):
+     - encoding: "base58", "base64", "jsonParsed"
+     - commitment: "finalized", "confirmed", "processed"
+     - dataSlice: limit returned account data
+     - filters: array of filter objects to limit results
+       - dataSize: filter by account data size
+       - memcmp: filter by memory comparison at specific offset
+  
+  Returns array of accounts owned by the specified program.
+  Essential for querying program state and finding related accounts.
+  Use filters to limit results and improve performance.
+}

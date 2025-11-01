@@ -1,0 +1,44 @@
+meta {
+  name: unsafe_payAllSui
+  type: http
+  seq: 5
+}
+
+post {
+  url: https://sui-mainnet.g.alchemy.com/v2/{{api_key}}
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "jsonrpc": "2.0",
+    "id": "bru",
+    "method": "unsafe_payAllSui",
+    "params": [
+      "0x94f1a597b4e8f709a396f7f6b1482bdcd65a673d111e49286c527fab7c2d0961",
+      ["0x123", "0x456"],
+      "0x789",
+      "1000000"
+    ]
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}
+
+docs {
+  Build a transaction to send all SUI coins to a recipient.
+  
+  **Parameters:**
+  1. signer (SuiAddress): The transaction signer's address
+  2. inputCoins (Array<ObjectID>): SUI coin objects to send
+  3. recipient (SuiAddress): Recipient address
+  4. gasBudget (BigInt): Gas budget for the transaction
+  
+  **Returns:**
+  TransactionBlockBytes containing serialized transaction data
+}
+

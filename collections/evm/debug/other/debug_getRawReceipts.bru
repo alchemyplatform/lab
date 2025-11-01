@@ -1,0 +1,48 @@
+meta {
+  name: debug_getRawReceipts
+  type: http
+  seq: 24
+}
+
+post {
+  url: https://eth-mainnet.g.alchemy.com/v2/{{api_key}}
+  body: json
+  auth: none
+}
+
+headers {
+  Content-Type: application/json
+}
+
+body:json {
+  {
+    "jsonrpc": "2.0",
+    "id": "bru",
+    "method": "debug_getRawReceipts",
+    "params": [
+      "latest"
+    ]
+  }
+}
+
+docs {
+  Returns an array of EIP-2718 binary-encoded receipts.
+  
+  This method returns raw receipt data for all transactions in a block.
+  
+  Parameters:
+  - `block`: Block number (hex), hash (hex), or tag ("latest", "earliest", "pending").
+  
+  Returns:
+  - `array`: Array of EIP-2718 binary-encoded receipts as hex strings.
+  
+  Example:
+  ```json
+  {
+    "jsonrpc": "2.0",
+    "id": "bru",
+    "method": "debug_getRawReceipts",
+    "params": ["latest"]
+  }
+  ```
+}

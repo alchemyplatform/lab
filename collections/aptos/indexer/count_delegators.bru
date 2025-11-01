@@ -1,0 +1,50 @@
+meta {
+  name: Count Delegators
+  type: graphql
+  seq: 8
+}
+
+post {
+  url: https://api.mainnet.aptoslabs.com/v1/graphql
+  body: graphql
+  auth: none
+}
+
+headers {
+  Content-Type: application/json
+}
+
+body:graphql {
+  query CountDelegators($pool_address: String) {
+    num_active_delegator_per_pool(
+      where: {pool_address: {_eq: $pool_address}}
+      order_by: {num_active_delegator: desc}
+    ) {
+      num_active_delegator
+      pool_address
+    }
+  }
+}
+
+body:graphql:vars {
+  {
+    "pool_address": "0x1"
+  }
+}
+
+docs {
+  Retrieve the number of active delegators in a staking pool.
+  
+  Variables:
+  - pool_address: The address of the staking pool
+  
+  Returns:
+  - num_active_delegator: Count of active delegators
+  - pool_address: The pool address
+  
+  This query is useful for understanding the size and activity of a staking pool
+  by counting how many delegators are actively staking with it.
+  
+  https://aptos.dev/build/indexer/indexer-api/delegator-count
+}
+

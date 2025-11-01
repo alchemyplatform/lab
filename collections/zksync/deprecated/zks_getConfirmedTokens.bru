@@ -1,0 +1,41 @@
+meta {
+  name: zks_getConfirmedTokens
+  type: http
+  seq: 2
+}
+
+post {
+  url: https://zksync-mainnet.g.alchemy.com/v2/{{api_key}}
+  body: json
+  auth: none
+}
+
+headers {
+  Content-Type: application/json
+}
+
+body:json {
+  {
+    "jsonrpc": "2.0",
+    "id": 1,
+    "method": "zks_getConfirmedTokens",
+    "params": [
+      0,
+      100
+    ]
+  }
+}
+
+docs {
+  DEPRECATED: Retrieves a list of confirmed tokens.
+  
+  Parameters:
+  1. uint32 - offset for pagination
+  2. uint32 - limit for pagination
+  
+  Returns:
+  - Array of token objects
+  
+  Note: This method is deprecated and may be removed in future versions.
+}
+

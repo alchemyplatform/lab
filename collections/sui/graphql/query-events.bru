@@ -1,0 +1,64 @@
+meta {
+  name: Query Events
+  type: graphql
+  seq: 6
+}
+
+post {
+  url: https://graphql.mainnet.sui.io/graphql
+  body: graphql
+  auth: inherit
+}
+
+body:graphql {
+  query GetEvents($eventType: String!) {
+    events(
+      first: 10
+      filter: {
+        eventType: $eventType
+      }
+    ) {
+      nodes {
+        sendingModule {
+          package {
+            address
+          }
+          name
+        }
+        type {
+          repr
+        }
+        sender {
+          address
+        }
+        timestamp
+        json
+        bcs
+      }
+      pageInfo {
+        hasNextPage
+        endCursor
+      }
+    }
+  }
+}
+
+body:graphql:vars {
+  {
+    "eventType": "0x2::coin::CoinMetadata"
+  }
+}
+
+docs {
+  Query events by type using GraphQL.
+  
+  This query retrieves:
+  - Module that emitted the event
+  - Event type
+  - Sender address
+  - Timestamp
+  - Event data in both JSON and BCS format
+  
+  **Variables:**
+  - eventType: The type of events to query
+}

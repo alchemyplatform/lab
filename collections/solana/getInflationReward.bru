@@ -1,0 +1,39 @@
+meta {
+  name: getInflationReward
+  type: http
+  seq: 22
+}
+
+post {
+  url: https://solana-mainnet.g.alchemy.com/v2/{{api_key}}
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "jsonrpc": "2.0",
+    "id": "bru",
+    "method": "getInflationReward",
+    "params": [
+      [
+        "6dmNQ5jwLeLk5REvio1JcMshcbvkYMwy26sJ8pbkvStu",
+        "BGsqMegLpV6n6Ve146sSX2dTjUMj3M92HnU8BbNRMhF2"
+      ]
+    ]
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}
+
+docs {
+  Returns the inflation or staking reward for a list of addresses for a specified epoch.
+  
+  **Args**:
+  - Addresses (required): An array of addresses to query
+  
+  **Returns**: A JSON array with reward details for each address
+}

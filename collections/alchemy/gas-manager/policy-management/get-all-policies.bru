@@ -1,0 +1,57 @@
+meta {
+  name: get-all-policies
+  type: http
+}
+
+get {
+  url: https://api.g.alchemy.com/v1/gas-manager/policy?limit=10&offset=0
+  body: none
+  auth: inherit
+}
+
+params:query {
+  limit: 10
+  offset: 0
+  ~status: active
+}
+
+headers {
+  Authorization: Bearer {{gas_manager_api_key}}
+}
+
+settings {
+  encodeUrl: true
+}
+
+docs {
+  Returns all policies. The results are paginated.
+  
+  **Use cases**:
+  - Listing all gas manager policies
+  - Auditing policy configurations
+  - Policy management dashboards
+  - Bulk policy operations
+  
+  **Args**:
+  - Query parameters:
+    - `limit` (optional): Number of policies to return (default: 10, max: 100)
+    - `offset` (optional): Number of policies to skip for pagination (default: 0)
+    - `status` (optional): Filter by status ("active" or "inactive")
+  
+  **Returns**: Object containing:
+  - `policies`: Array of policy objects
+    - Each policy includes: policyId, name, type, rules, status, timestamps
+  - `total`: Total number of policies matching filters
+  - `limit`: Applied limit
+  - `offset`: Applied offset
+  
+  **Edge cases & notes**:
+  - Requires Gas Manager API key authentication
+  - Results are paginated - use offset/limit for navigation
+  - Policies are ordered by creation date (newest first)
+  - Use status filter to get only active or inactive policies
+  - Maximum limit is 100 policies per request
+  
+  **Documentation**: https://www.alchemy.com/docs/wallets/api-reference/gas-manager-admin-api/admin-api-endpoints/get-all-policies
+}
+

@@ -1,0 +1,38 @@
+meta {
+  name: sui_getNormalizedMoveModulesByPackage
+  type: http
+  seq: 4
+}
+
+post {
+  url: https://sui-mainnet.g.alchemy.com/v2/{{api_key}}
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "jsonrpc": "2.0",
+    "id": "bru",
+    "method": "sui_getNormalizedMoveModulesByPackage",
+    "params": [
+      "0x2"
+    ]
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}
+
+docs {
+  Get all normalized Move modules in a package.
+  
+  **Parameters:**
+  1. package (ObjectID): The package object ID
+  
+  **Returns:**
+  Map of module names to SuiMoveNormalizedModule objects, containing all modules in the package
+}
+

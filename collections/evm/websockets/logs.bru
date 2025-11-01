@@ -1,0 +1,42 @@
+meta {
+  name: logs
+  type: ws
+  seq: 2
+}
+
+ws {
+  url: wss://eth-mainnet.g.alchemy.com/v2/{{api_key}}
+  body: ws
+  auth: inherit
+}
+
+body:ws {
+  name: message 1
+  type: json
+  content: '''
+    {
+      "jsonrpc": "2.0",
+      "id": "bru",
+      "method": "eth_subscribe",
+      "params": [
+        "logs",
+        {
+          "address": "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
+          "topics": [
+            "0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef"
+          ]
+        }
+      ]
+    }
+  '''
+}
+
+docs {
+  The logs subscription type emits logs attached to a new block that match certain topic filters. The params object accepts an address or an array of addresses to monitor for events emitted, and an array of topic hashes to specify the event type and its data.
+  
+  The response contains block information like number, hash alongside transaction specific data such as the address emitted, the tx hash, topic data etc
+  
+  Documentation on logs subscription type here
+  
+  https://www.alchemy.com/docs/reference/logs
+}

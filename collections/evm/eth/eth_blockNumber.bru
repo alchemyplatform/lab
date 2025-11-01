@@ -1,0 +1,31 @@
+meta {
+  name: eth_blockNumber
+  type: http
+  seq: 1
+}
+
+post {
+  url: https://eth-mainnet.g.alchemy.com/v2/{{api_key}}
+  body: json
+  auth: none
+}
+
+headers {
+  Content-Type: application/json
+}
+
+body:json {
+  {
+    "jsonrpc": "2.0",
+    "id": "bru",
+    "method": "eth_blockNumber",
+    "params": []
+  }
+}
+
+docs {
+  Returns the number of most recent block.
+  
+  This method returns the current block number as a hexadecimal string.
+  The block number represents the height of the blockchain.
+}

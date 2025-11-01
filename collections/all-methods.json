@@ -1,0 +1,694 @@
+{
+  "eth_accounts": {
+    "params": [],
+    "description": "Returns a list of addresses owned by the client. This method provides access to accounts that are available for signing transactions locally on the node.\n\n**Use cases**:\n- Wallet applications checking available accounts\n- DApps requesting user account access\n- Development environments listing test accounts\n\n**Returns**: Array of 20-byte Ethereum addresses owned by the client\n\n**Edge cases & notes**:\n- On hosted RPC providers (Infura, Alchemy, etc.), often returns an empty array because no local accounts are unlocked for security reasons\n- In development environments like Ganache, returns pre-funded test accounts\n- Production nodes typically require explicit account unlocking via --unlock flag\n- Modern applications prefer eth_requestAccounts (EIP-1102) for account access"
+  },
+  "eth_blobBaseFee": {
+    "params": [],
+    "description": "Returns the current base fee per blob gas in wei for EIP-4844 blob transactions. This method is essential for applications dealing with blob transactions introduced in the Dencun upgrade.\n\n**Use cases**:\n- Calculating fees for blob transactions (EIP-4844)\n- Layer 2 rollups budgeting blob space costs\n- Applications monitoring blob gas market dynamics\n- Fee estimation for data availability transactions\n\n**Returns**: Hex-encoded base fee per blob gas in wei\n\n**Edge cases & notes**:\n- Only available on networks that have activated EIP-4844 (Dencun upgrade)\n- Blob base fee follows similar dynamics to regular base fee but for blob gas market\n- Essential for rollups using blobs for data availability (cheaper than calldata)\n- Returns null or error on pre-Dencun networks\n- Blob gas pricing is independent of regular gas pricing"
+  },
+  "eth_blockNumber": {
+    "params": [],
+    "description": "Returns the number of the most recent block in the canonical chain. This is one of the most fundamental methods for blockchain synchronization and state tracking.\n\n**Use cases**:\n- Monitoring blockchain progression and sync status\n- Implementing block polling for new block detection\n- Determining current blockchain height for applications\n- Rate limiting and caching strategies based on block height\n- Calculating block confirmations for transactions\n\n**Returns**: Hex-encoded block number of the latest block\n\n**Edge cases & notes**:\n- Returns the highest block number the node has processed\n- During network splits, different nodes may return different values\n- Essential for determining if your node is synced with the network\n- Should be called frequently to track chain progression\n- Used as a heartbeat to verify node connectivity"
+  },
+  "eth_call": {
+    "params": [
+      {
+        "from": "0xd8dA6BF26964aF9D7eEd9e03e53415D37aA96045",
+        "to": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+        "data": "0x70a08231000000000000000000000000d8da6bf26964af9d7eed9e03e53415d37aa96045"
+      },
+      "latest"
+    ],
+    "description": "Executes a new message call immediately without creating a transaction on the blockchain. This is the primary method for reading data from smart contracts and simulating transaction effects without spending gas.\n\n**Use cases**:\n- Reading smart contract state (balances, mappings, public variables)\n- Simulating transactions to predict their outcome\n- Calling view/pure functions that don't modify state\n- Checking if a transaction would succeed before sending\n- Building complex queries by calling multiple contract functions\n- Oracle price feeds and data retrieval\n\n**Args**:\n- Transaction: Transaction call object with fields:\n  - `to` (required): Contract address to call\n  - `data` (required for contract calls): ABI-encoded function call\n  - `from` (optional): Sender address (affects msg.sender)\n  - `gas` (optional): Gas limit for the call\n  - `gasPrice|maxFeePerGas|maxPriorityFeePerGas` (optional): Gas pricing\n  - `value` (optional): ETH value to send with call\n- Block: Block selector - hex number, 'latest'|'safe'|'finalized'|'earliest'|'pending', or block hash\n\n**Returns**: 0x-prefixed byte array containing the contract function's return value\n\n**Edge cases & notes**:\n- Does not modify blockchain state or consume gas from sender\n- 'execution reverted' errors include revert reason when available\n- Provide sufficient gas limit to avoid out-of-gas during simulation\n- The 'from' field affects msg.sender in the contract context\n- Can be used at historical block states for time-travel queries\n- Some contracts behave differently when called vs. transacted\n- Useful for MEV detection and sandwich attack analysis"
+  },
+  "eth_chainId": {
+    "params": [],
+    "description": "Returns the chain ID of the current network as defined in EIP-155. Essential for preventing replay attacks across different Ethereum networks.\n\n**Use cases**:\n- Validating network before transaction signing\n- Preventing cross-chain replay attacks\n- Network detection in multi-chain applications\n- MetaMask network switching verification\n- DApp network compatibility checks\n\n**Returns**: Hex-encoded chain ID (1=Mainnet, 5=Goerli, 11155111=Sepolia, 137=Polygon, etc.)\n\n**Edge cases & notes**:\n- Critical for EIP-155 compliant transaction signing\n- Must match expected network to prevent wrong-network transactions\n- Used by wallets to verify they're connected to the correct network\n- Some older networks may not support this method\n- Essential for multi-chain DApp development"
+  },
+  "eth_coinbase": {
+    "params": [],
+    "description": "Returns the coinbase address of the client (the address that receives mining/validation rewards). In Proof of Stake, this represents the fee recipient address.\n\n**Use cases**:\n- Identifying the node's reward recipient address\n- Mining pool management and reward distribution\n- Validator configuration verification\n- Development environment account identification\n\n**Returns**: 20-byte hex-encoded Ethereum address\n\n**Edge cases & notes**:\n- On hosted providers, may return null or a default address\n- In PoS networks, represents the fee recipient rather than mining rewards\n- For validators, this is where transaction fees are collected\n- Not commonly used in modern applications\n- May require special node configuration to return a meaningful value"
+  },
+  "eth_createAccessList": {
+    "params": [
+      {
+        "from": "0xd8dA6BF26964aF9D7eEd9e03e53415D37aA96045",
+        "to": "0x00000000006c3852cbEf3e08E8dF289169EdE581",
+        "data": "0x"
+      },
+      "latest"
+    ],
+    "description": "Generates an access list for a transaction.\n\n**Args**:\n- Transaction: Transaction call object (from,to,gas,gasPrice|maxFeePerGas|maxPriorityFeePerGas,value,data).\n- Block: Block selector: hex block number (0x...), or tag 'latest'|'safe'|'finalized'|'earliest'|'pending'.\n\n**Returns**: Access list result"
+  },
+  "eth_estimateGas": {
+    "params": [
+      {
+        "from": "0xd8dA6BF26964aF9D7eEd9e03e53415D37aA96045",
+        "to": "0xd8dA6BF26964aF9D7eEd9e03e53415D37aA96045",
+        "value": "0x2386f26fc10000"
+      },
+      "latest"
+    ],
+    "description": "Generates and returns an estimate of how much gas is necessary for a transaction to complete successfully. Critical for proper transaction fee calculation and preventing out-of-gas failures.\n\n**Use cases**:\n- Pre-calculating gas limits before sending transactions\n- Fee estimation for user interfaces\n- Optimizing gas usage in contract interactions\n- Batch transaction planning and cost analysis\n- MEV bot gas budgeting\n- Wallet transaction preview functionality\n\n**Args**:\n- Transaction: Transaction call object with fields:\n  - `from` (optional): Sender address\n  - `to` (required): Destination address\n  - `value` (optional): ETH amount to send\n  - `data` (optional): Contract call data\n  - `gas` (optional): Gas limit upper bound\n  - `gasPrice|maxFeePerGas|maxPriorityFeePerGas` (optional): Gas pricing\n- Block: Block selector for state context\n\n**Returns**: Hex-encoded gas estimate\n\n**Edge cases & notes**:\n- Estimates can be slightly under actual usage—add 10-20% safety buffer\n- May revert if the transaction would fail, providing revert reason\n- Some clients cap estimates (e.g., 10x block gas limit)\n- Storage access patterns affect estimates significantly\n- Network congestion doesn't affect the estimate itself\n- Complex contracts may have variable gas usage based on state"
+  },
+  "eth_feeHistory": {
+    "params": [
+      "0xa",
+      "latest",
+      [
+        25,
+        50,
+        75
+      ]
+    ],
+    "description": "Transaction fee history\n\n**Args**:\n- blockCount: 0x-hex quantity (no leading zeros except 0 -> '0x0').\n- newestBlock: Block selector: hex block number (0x...), or tag 'latest'|'safe'|'finalized'|'earliest'|'pending'.\n- rewardPercentiles: rewardPercentiles\n\n**Returns**: feeHistoryResults\n\n**Edge cases & notes**:\n- Includes baseFeePerGas and reward arrays; since Dencun, may include blobGasUsedRatio and baseFeePerBlobGas."
+  },
+  "eth_gasPrice": {
+    "params": [],
+    "description": "Returns the current price per gas in wei as suggested by the network. This method provides a gas price recommendation for legacy (non-EIP-1559) transactions.\n\n**Use cases**:\n- Gas price discovery for legacy transactions\n- Fee comparison across different networks\n- Historical gas price tracking and analysis\n- Fallback pricing when EIP-1559 not supported\n- Bot and MEV gas price optimization\n\n**Returns**: Hex-encoded gas price in wei\n\n**Edge cases & notes**:\n- On EIP-1559 networks, often returns (baseFee + 1-2 gwei) as suggestion\n- May not reflect actual transaction priority during congestion\n- Legacy method - consider eth_feeHistory for EIP-1559 networks\n- Can be significantly outdated during network congestion\n- Different providers may return different suggestions"
+  },
+  "eth_getBalance": {
+    "params": [
+      "0xd8dA6BF26964aF9D7eEd9e03e53415D37aA96045",
+      "latest"
+    ],
+    "description": "Returns the balance of an account at a given address. This is one of the most fundamental methods for querying account states on Ethereum.\n\n**Use cases**:\n- Wallet balance display and management\n- DApp account validation before transactions\n- Smart contract balance verification\n- Historical balance analysis and tracking\n- Multi-sig wallet balance monitoring\n- Payment verification systems\n\n**Args**:\n- Address: 20-byte 0x-prefixed Ethereum address (EOA or contract)\n- Block: Block selector - hex number, 'latest'|'safe'|'finalized'|'earliest'|'pending', or block hash\n\n**Returns**: Hex-encoded balance in wei (18 decimal places)\n\n**Edge cases & notes**:\n- Returns 0x0 for accounts with zero balance or never used\n- Archive nodes required for historical block queries (older than 128 blocks)\n- 'safe' and 'finalized' tags provide different levels of finality guarantee\n- Contract addresses can hold ETH balances just like EOA addresses\n- Balance includes both sent ETH and contract-received ETH"
+  },
+  "eth_getBlockByHash": {
+    "params": [
+      "0xdc0818cf78f21a8e70579cb46a43643f78291264dda342ae31049421c82d21ae",
+      false
+    ],
+    "description": "Returns information about a block by hash.\n\n**Args**:\n- Block hash: 32-byte 0x-prefixed hash.\n- Hydrated transactions: hydrated\n\n**Returns**: Returns JSON-RPC result; see client docs.\n\n**Edge cases & notes**:\n- Returns null if block hash not found on the canonical chain.\n- On post-Merge Ethereum, 'nonce' is 0x0 and uncles count is 0."
+  },
+  "eth_getBlockByNumber": {
+    "params": [
+      "latest",
+      false
+    ],
+    "description": "Returns information about a block by number.\n\n**Args**:\n- Block: Block selector: hex block number (0x...), or tag 'latest'|'safe'|'finalized'|'earliest'|'pending'.\n- Hydrated transactions: hydrated\n\n**Returns**: Returns JSON-RPC result; see client docs.\n\n**Edge cases & notes**:\n- Returns null if block not found or not yet indexed.\n- If the boolean flag is false, transactions are hashes only."
+  },
+  "eth_getBlockReceipts": {
+    "params": [
+      "latest"
+    ],
+    "description": "Returns the receipts of a block by number or hash.\n\n**Args**:\n- Block: Block selector: hex block number (0x...), a tag ('latest'|'safe'|'finalized'|'earliest'|'pending'), or a block hash.\n\n**Returns**: Returns JSON-RPC result; see client docs.\n\n**Edge cases & notes**:\n- Not implemented by all clients historically; widely available on many providers."
+  },
+  "eth_getBlockTransactionCountByHash": {
+    "params": [
+      "0xdc0818cf78f21a8e70579cb46a43643f78291264dda342ae31049421c82d21ae"
+    ],
+    "description": "Returns the number of transactions in a block from a block matching the given block hash.\n\n**Args**:\n- Block hash: 32-byte 0x-prefixed hash.\n\n**Returns**: Returns JSON-RPC result; see client docs.\n\n**Edge cases & notes**:\n- Returns null if block not found or not yet indexed.\n- If the boolean flag is false, transactions are hashes only."
+  },
+  "eth_getBlockTransactionCountByNumber": {
+    "params": [
+      "latest"
+    ],
+    "description": "Returns the number of transactions in a block matching the given block number.\n\n**Args**:\n- Block: Block selector: hex block number (0x...), or tag 'latest'|'safe'|'finalized'|'earliest'|'pending'.\n\n**Returns**: Returns JSON-RPC result; see client docs.\n\n**Edge cases & notes**:\n- Returns null if block not found or not yet indexed.\n- If the boolean flag is false, transactions are hashes only."
+  },
+  "eth_getCode": {
+    "params": [
+      "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+      "latest"
+    ],
+    "description": "Returns code at a given address.\n\n**Args**:\n- Address: 20-byte 0x-prefixed Ethereum address (EOA or contract).\n- Block: Block selector: hex block number (0x...), a tag ('latest'|'safe'|'finalized'|'earliest'|'pending'), or a block hash.\n\n**Returns**: 0x-prefixed byte array.\n\n**Edge cases & notes**:\n- EOAs return '0x' (no bytecode).\n- Proxy contracts may store implementation addresses in EIP-1967 slots; code size may be small."
+  },
+  "eth_getFilterChanges": {
+    "params": [
+      "0x1"
+    ],
+    "description": "Polling method for the filter with the given ID (created using `eth_newFilter`). Returns an array of logs, block hashes, or transaction hashes since last poll, depending on the installed filter.\n\n**Args**:\n- Filter identifier: 0x-hex quantity (no leading zeros except 0 -> '0x0').\n\n**Returns**: Filter results\n\n**Edge cases & notes**:\n- Filter IDs are ephemeral and may expire if not polled.\n- Prefer eth_getLogs for historical ranges."
+  },
+  "eth_getFilterLogs": {
+    "params": [
+      "0x1"
+    ],
+    "description": "Returns an array of all logs matching the filter with the given ID (created using `eth_newFilter`).\n\n**Args**:\n- Filter identifier: 0x-hex quantity (no leading zeros except 0 -> '0x0').\n\n**Returns**: Filter results\n\n**Edge cases & notes**:\n- Filter IDs are ephemeral and may expire if not polled.\n- Prefer eth_getLogs for historical ranges."
+  },
+  "eth_getLogs": {
+    "params": [
+      {
+        "fromBlock": "0x13738ca",
+        "toBlock": "0x13738ca",
+        "address": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+        "topics": []
+      }
+    ],
+    "description": "Returns an array of all logs matching the specified filter criteria. This is the primary method for querying historical smart contract events and is essential for DApp indexing and analysis.\n\n**Use cases**:\n- Event log collection and indexing\n- DeFi protocol analytics and monitoring\n- Smart contract event history analysis\n- Real-time event streaming and notifications\n- Audit trail construction for compliance\n- Cross-contract interaction tracking\n- Token transfer and approval monitoring\n\n**Args**:\n- Filter object with criteria:\n  - `fromBlock`: Starting block number or tag ('earliest', 'latest', etc.)\n  - `toBlock`: Ending block number or tag\n  - `address`: Contract address(es) to filter by (single address or array)\n  - `topics`: Array of topic filters (indexed event parameters)\n    - Use null for wildcard topics\n    - Topics are 32-byte keccak256 hashes\n    - First topic is typically the event signature\n\n**Returns**: Array of log objects with:\n- `address`: Contract that emitted the log\n- `topics`: Array of indexed parameters\n- `data`: Non-indexed parameters (ABI-encoded)\n- `blockNumber`, `blockHash`: Block information\n- `transactionHash`, `transactionIndex`: Transaction details\n- `logIndex`: Position within the block\n\n**Edge cases & notes**:\n- Large block ranges may be rate-limited—split into smaller chunks\n- Results capped by providers (~10k logs or ~2k block range typically)\n- Topic filtering follows Ethereum's bloom filter logic\n- Empty topics array returns all events from specified addresses\n- Critical for building event-driven applications and analytics"
+  },
+  "eth_getProof": {
+    "params": [
+      "0xd8dA6BF26964aF9D7eEd9e03e53415D37aA96045",
+      [],
+      "latest"
+    ],
+    "description": "Returns the merkle proof for a given account and optionally some storage keys.\n\n**Args**:\n- Address: 20-byte 0x-prefixed Ethereum address (EOA or contract).\n- StorageKeys: Storage keys\n- Block: Block selector: hex block number (0x...), a tag ('latest'|'safe'|'finalized'|'earliest'|'pending'), or a block hash.\n\n**Returns**: Account and storage Merkle proofs for given keys."
+  },
+  "eth_getStorageAt": {
+    "params": [
+      "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+      "0x0",
+      "latest"
+    ],
+    "description": "Returns the value from a storage position at a given address.\n\n**Args**:\n- Address: 20-byte 0x-prefixed Ethereum address (EOA or contract).\n- Storage slot: 32-byte 0x-prefixed value (e.g., storage slot key).\n- Block: Block selector: hex block number (0x...), a tag ('latest'|'safe'|'finalized'|'earliest'|'pending'), or a block hash.\n\n**Returns**: 0x-prefixed byte array."
+  },
+  "eth_getTransactionByBlockHashAndIndex": {
+    "params": [
+      "0xdc0818cf78f21a8e70579cb46a43643f78291264dda342ae31049421c82d21ae",
+      "0x0"
+    ],
+    "description": "Returns information about a transaction by block hash and transaction index position.\n\n**Args**:\n- Block hash: 32-byte 0x-prefixed hash.\n- Transaction index: 0x-hex quantity (no leading zeros except 0 -> '0x0').\n\n**Returns**: Returns JSON-RPC result; see client docs.\n\n**Edge cases & notes**:\n- Returns null if transaction hash is unknown or pruned.\n- Pending transactions have null blockHash and blockNumber."
+  },
+  "eth_getTransactionByBlockNumberAndIndex": {
+    "params": [
+      "latest",
+      "0x0"
+    ],
+    "description": "Returns information about a transaction by block number and transaction index position.\n\n**Args**:\n- Block: Block selector: hex block number (0x...), or tag 'latest'|'safe'|'finalized'|'earliest'|'pending'.\n- Transaction index: 0x-hex quantity (no leading zeros except 0 -> '0x0').\n\n**Returns**: Returns JSON-RPC result; see client docs.\n\n**Edge cases & notes**:\n- Returns null if transaction hash is unknown or pruned.\n- Pending transactions have null blockHash and blockNumber."
+  },
+  "eth_getTransactionByHash": {
+    "params": [
+      "0x07104ffdf32b06b90e604f23c7b4e21fc985b68c5bb8c13140d0d3d2e151a385"
+    ],
+    "description": "Returns the information about a transaction requested by transaction hash.\n\n**Args**:\n- Transaction hash: 32-byte 0x-prefixed hash.\n\n**Returns**: Returns JSON-RPC result; see client docs.\n\n**Edge cases & notes**:\n- Returns null if transaction hash is unknown or pruned.\n- Pending transactions have null blockHash and blockNumber."
+  },
+  "eth_getTransactionCount": {
+    "params": [
+      "0xd8dA6BF26964aF9D7eEd9e03e53415D37aA96045",
+      "latest"
+    ],
+    "description": "Returns the nonce of an account in the state. NOTE: The name eth_getTransactionCount reflects the historical fact that an account's nonce and sent transaction count were the same. After the Pectra fork, with the inclusion of EIP-7702, this is no longer true.\n\n**Args**:\n- Address: 20-byte 0x-prefixed Ethereum address (EOA or contract).\n- Block: Block selector: hex block number (0x...), a tag ('latest'|'safe'|'finalized'|'earliest'|'pending'), or a block hash.\n\n**Returns**: Hex quantity.\n\n**Edge cases & notes**:\n- 'latest' excludes pending txs; use 'pending' to include mempool.\n- Returns 0x0 for unused accounts."
+  },
+  "eth_getTransactionReceipt": {
+    "params": [
+      "0x07104ffdf32b06b90e604f23c7b4e21fc985b68c5bb8c13140d0d3d2e151a385"
+    ],
+    "description": "Returns the receipt of a transaction by transaction hash.\n\n**Args**:\n- Transaction hash: 32-byte 0x-prefixed hash.\n\n**Returns**: Returns JSON-RPC result; see client docs.\n\n**Edge cases & notes**:\n- Returns null until the transaction is mined; 'status' is 0x1 for success, 0x0 for revert.\n- During reorgs, receipt fields can reflect the canonical block only after finalization."
+  },
+  "eth_getUncleCountByBlockHash": {
+    "params": [
+      "0xdc0818cf78f21a8e70579cb46a43643f78291264dda342ae31049421c82d21ae"
+    ],
+    "description": "Returns the number of uncles in a block from a block matching the given block hash.\n\n**Args**:\n- Block hash: 32-byte 0x-prefixed hash.\n\n**Returns**: Returns JSON-RPC result; see client docs.\n\n**Edge cases & notes**:\n- On post-Merge Ethereum, ommers (uncles) are always zero."
+  },
+  "eth_getUncleCountByBlockNumber": {
+    "params": [
+      "0x13738ca"
+    ],
+    "description": "Returns the number of transactions in a block matching the given block number.\n\n**Args**:\n- Block: Block selector: hex block number (0x...), or tag 'latest'|'safe'|'finalized'|'earliest'|'pending'.\n\n**Returns**: Returns JSON-RPC result; see client docs."
+  },
+  "eth_maxPriorityFeePerGas": {
+    "params": [],
+    "description": "Returns the current maxPriorityFeePerGas per gas in wei.\n\n**Returns**: Max priority fee per gas\n\n**Edge cases & notes**:\n- Tip recommendation only; combine with current base fee to form EIP-1559 fees."
+  },
+  "eth_newBlockFilter": {
+    "params": [],
+    "description": "Creates a filter in the node, allowing for later polling. Registers client interest in new blocks, and returns an identifier.\n\n**Returns**: Hex quantity.\n\n**Edge cases & notes**:\n- Filter IDs are ephemeral and may expire if not polled.\n- Prefer eth_getLogs for historical ranges."
+  },
+  "eth_newFilter": {
+    "params": [
+      {
+        "fromBlock": "0x13738ca",
+        "toBlock": "0x13738ca",
+        "address": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+        "topics": []
+      }
+    ],
+    "description": "Install a log filter in the server, allowing for later polling. Registers client interest in logs matching the filter, and returns an identifier.\n\n**Args**:\n- Filter: Filter object for logs (fromBlock,toBlock,address,topics).\n\n**Returns**: Hex quantity.\n\n**Edge cases & notes**:\n- Filter IDs time out if not polled and are not persisted across provider restarts; always uninstall when done."
+  },
+  "eth_newPendingTransactionFilter": {
+    "params": [],
+    "description": "Creates a filter in the node, allowing for later polling. Registers client interest in new transactions, and returns an identifier.\n\n**Returns**: Hex quantity.\n\n**Edge cases & notes**:\n- Filter IDs are ephemeral and may expire if not polled.\n- Prefer eth_getLogs for historical ranges."
+  },
+  "eth_sendRawTransaction": {
+    "params": [
+      "0xf86c808504a817c80082520894d8da6bf26964af9d7eed9e03e53415d37aa9604588016345785d8a00008025a00000000000000000000000000000000000000000000000000000000000000000a00000000000000000000000000000000000000000000000000000000000000000"
+    ],
+    "description": "Submits a pre-signed transaction to the Ethereum network for inclusion in the blockchain. This is the primary method for sending transactions when using external signing (hardware wallets, offline signing, etc.).\n\n**Use cases**:\n- Hardware wallet transaction broadcasting\n- Offline transaction signing and submission\n- Multi-signature wallet implementations\n- Automated trading and MEV bots\n- Layer 2 transaction submission\n- Enterprise wallet integrations\n- Cold storage transaction workflows\n\n**Transaction Types Supported**:\n- Legacy transactions (pre-EIP-155 and EIP-155)\n- EIP-2930 transactions (with access lists)\n- EIP-1559 transactions (with dynamic fees)\n- EIP-4844 transactions (blob transactions with KZG commitments)\n- EIP-7594 transactions (PeerDAS with cell proofs)\n\n**Args**:\n- Transaction: RLP-encoded signed transaction as 0x-prefixed hex string\n  - Must include valid signature (v, r, s values)\n  - For blob transactions: includes blobs, KZG commitments, and proofs\n  - For PeerDAS: includes cell proofs in network format\n\n**Returns**: 32-byte transaction hash as hex string\n\n**Edge cases & notes**:\n- Common errors: nonce too low, insufficient funds, replacement fee too low, already known\n- Gas price too low errors during network congestion\n- Invalid signature errors for malformed transactions\n- Blob transaction handling varies during fork transitions\n- Do not broadcast the example transaction—use properly signed transactions\n- Transaction may be rejected if it would exceed block gas limit"
+  },
+  "eth_sendTransaction": {
+    "params": [
+      {
+        "from": "0xd8dA6BF26964aF9D7eEd9e03e53415D37aA96045",
+        "to": "0xd8dA6BF26964aF9D7eEd9e03e53415D37aA96045",
+        "value": "0x0"
+      }
+    ],
+    "description": "Signs and submits a transaction.\n\n**Args**:\n- Transaction: Transaction call object (from,to,gas,gasPrice|maxFeePerGas|maxPriorityFeePerGas,value,data).\n\n**Returns**: 32 byte hex value\n\n**Edge cases & notes**:\n- Requires an unlocked local account on the node; many hosted nodes disable this method."
+  },
+  "eth_sign": {
+    "params": [
+      "0xd8dA6BF26964aF9D7eEd9e03e53415D37aA96045",
+      "0x48656c6c6f"
+    ],
+    "description": "Returns an EIP-191 signature over the provided data.\n\n**Args**:\n- Address: 20-byte 0x-prefixed Ethereum address (EOA or contract).\n- Message: 0x-prefixed arbitrary-length byte array.\n\n**Returns**: 0x-prefixed byte array."
+  },
+  "eth_signTransaction": {
+    "params": [
+      {
+        "from": "0xd8dA6BF26964aF9D7eEd9e03e53415D37aA96045",
+        "to": "0xd8dA6BF26964aF9D7eEd9e03e53415D37aA96045",
+        "value": "0x0"
+      }
+    ],
+    "description": "Returns an RLP encoded transaction signed by the specified account.\n\n**Args**:\n- Transaction: Transaction call object (from,to,gas,gasPrice|maxFeePerGas|maxPriorityFeePerGas,value,data).\n\n**Returns**: 0x-prefixed byte array."
+  },
+  "eth_simulateV1": {
+    "params": [
+      null,
+      "latest"
+    ],
+    "description": "Executes a sequence of message calls building on each other's state without creating transactions on the block chain, optionally overriding block and state data\n\n**Args**:\n- Payload: Arguments for eth_simulate\n- Block tag: Block selector: hex block number (0x...), a tag ('latest'|'safe'|'finalized'|'earliest'|'pending'), or a block hash.\n\n**Returns**: Full results of eth_simulate"
+  },
+  "eth_syncing": {
+    "params": [],
+    "description": "Returns an object with data about the sync status or false.\n\n**Returns**: Syncing status"
+  },
+  "eth_uninstallFilter": {
+    "params": [
+      "0x1"
+    ],
+    "description": "Uninstalls a filter with given id.\n\n**Args**:\n- Filter identifier: 0x-hex quantity (no leading zeros except 0 -> '0x0').\n\n**Returns**: Returns JSON-RPC result; see client docs.\n\n**Edge cases & notes**:\n- Filter IDs are ephemeral and may expire if not polled.\n- Prefer eth_getLogs for historical ranges."
+  },
+  "alchemy_requestGasAndPaymasterAndData": {
+    "params": [
+      {
+        "policyId": "your-policy-id",
+        "entryPoint": "0x5FF137D4b0FDCD49DcA30c7CF57E578a026d2789",
+        "dummySignature": true,
+        "userOperation": {
+          "sender": "0xd8dA6BF26964aF9D7eEd9e03e53415D37aA96045",
+          "nonce": "0x0",
+          "callData": "0x",
+          "factory": null
+        }
+      }
+    ],
+    "description": "Alchemy's Gas Manager service that provides gas estimation and paymaster sponsorship for ERC-4337 UserOperations. This unified method combines gas estimation and paymaster data generation in a single call.\n\n**Use cases**:\n- Account Abstraction wallet gas estimation and sponsorship\n- Gasless transaction implementation (paymaster sponsorship)\n- UserOperation fee calculation and optimization\n- Smart account deployment and transaction bundling\n- DApp integration with sponsored transactions\n- Enterprise gas management and cost control\n\n**Args**:\n- Request object containing:\n  - `policyId`: Your Alchemy Gas Manager policy identifier\n  - `entryPoint`: ERC-4337 EntryPoint contract address\n  - `userOperation`: Partial UserOperation object with sender, nonce, callData, etc.\n  - `dummySignature` (optional): Whether to use dummy signature for estimation\n  - Additional policy-specific parameters\n\n**Returns**: Object containing gas estimations and paymaster data:\n- `paymasterAndData`: Hex-encoded paymaster address and data\n- `callGasLimit`: Estimated gas for the main execution\n- `verificationGasLimit`: Gas for signature verification\n- `preVerificationGas`: Gas for UserOp validation\n- `maxFeePerGas`: Suggested max fee per gas\n- `maxPriorityFeePerGas`: Suggested priority fee\n\n**Edge cases & notes**:\n- Requires valid Alchemy Gas Manager policy configuration\n- Policy limits may restrict sponsorship based on rules\n- UserOperation must be valid and executable\n- Gas estimates include paymaster overhead\n- May fail if policy quotas exceeded or rules not met"
+  },
+  "alchemy_requestPaymasterAndData": {
+    "params": [
+      {
+        "sender": "0xd8dA6BF26964aF9D7eEd9e03e53415D37aA96045",
+        "nonce": "0x0",
+        "callData": "0x",
+        "callGasLimit": "0x5208",
+        "verificationGasLimit": "0x1e8480",
+        "preVerificationGas": "0x5208",
+        "maxFeePerGas": "0x77359400",
+        "maxPriorityFeePerGas": "0x3b9aca00",
+        "signature": "0x"
+      }
+    ],
+    "description": "Gas Manager (deprecated in favor of alchemy_requestGasAndPaymasterAndData). Requests a paymaster signature.\nArgs:\n- userOperation: ERC-4337 UserOperation fields\nReturns: {paymasterAndData}"
+  },
+  "alchemy_requestPaymasterTokenQuote": {
+    "params": [
+      {
+        "token": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+        "entryPoint": "0x5FF137D4b0FDCD49DcA30c7CF57E578a026d2789"
+      }
+    ],
+    "description": "Returns an estimated conversion rate to sponsor with an ERC-20 token.\nArgs:\n- {token, entryPoint, ...}\nReturns: {minConversionRate, token, expiry}"
+  },
+  "alchemy_requestFeePayer": {
+    "params": [
+      {
+        "message": "base64-encoded-solana-tx"
+      }
+    ],
+    "description": "Solana: Returns a signed transaction sponsored by Alchemy's fee payer.\nArgs:\n- {message}\nReturns: signed transaction with fee payer."
+  },
+  "debug_bundler_clearState": {
+    "params": [],
+    "description": "Clears bundler mempool and reputation (testing only).\nArgs: none.\nReturns: boolean or status string."
+  },
+  "debug_bundler_clearMempool": {
+    "params": [],
+    "description": "Clears the bundler's mempool of UserOperations.\nArgs: none.\nReturns: boolean or status string."
+  },
+  "debug_bundler_sendBundleNow": {
+    "params": [],
+    "description": "Forces the bundler to create and submit a bundle from the current mempool.\nArgs: none.\nReturns: submission result / tx hash."
+  },
+  "debug_bundler_dumpMempool": {
+    "params": [],
+    "description": "Dumps current UserOperation mempool contents.\nArgs: none.\nReturns: Array of UserOperation entries."
+  },
+  "debug_bundler_dumpReputation": {
+    "params": [],
+    "description": "Dumps reputation entries for paymasters/accounts/factories/aggregators.\nArgs: none.\nReturns: Reputation table."
+  },
+  "debug_bundler_dumpPaymasterBalances": {
+    "params": [],
+    "description": "Shows paymaster stake/balances (bundler view).\nArgs: none.\nReturns: Balance map."
+  },
+  "debug_bundler_getStakeStatus": {
+    "params": [
+      {
+        "entity": "0x6B175474E89094C44Da98b954EedeAC495271d0F"
+      }
+    ],
+    "description": "Gets stake status for a given entity (e.g., paymaster/account).\nArgs:\n- entity: address\nReturns: Stake status object."
+  },
+  "debug_bundler_setReputation": {
+    "params": [
+      [
+        {
+          "address": "0x6B175474E89094C44Da98b954EedeAC495271d0F",
+          "opsSeen": 10,
+          "opsIncluded": 5,
+          "status": "ok"
+        }
+      ]
+    ],
+    "description": "Sets reputation entries.\nArgs:\n- reputation: array of {address, opsSeen, opsIncluded, status}\nReturns: boolean or updated entries."
+  },
+  "debug_getBadBlocks": {
+    "params": [],
+    "description": "Returns a list of the last bad blocks that the client has seen on the network."
+  },
+  "debug_getTrieFlushInterval": {
+    "params": [],
+    "description": "Retrieves the current value of in-memory trie flush interval."
+  },
+  "debug_storageRangeAt": {
+    "params": [
+      "0x13738ca",
+      "0x6B175474E89094C44Da98b954EedeAC495271d0F",
+      "0x0",
+      "0x00",
+      128
+    ],
+    "description": "Returns a range of contract storage from an address at a given block.\nArgs:\n- blockNumber: hex\n- address: 20-byte contract address\n- startKey: 32-byte storage slot key (hex)\n- hash: storage hash start (hex)\n- maxResults: integer count\nReturns: {storage: {slotKey: {key,value}}, nextKey?}."
+  },
+  "debug_bundler_setBundlingMode": {
+    "params": [
+      "manual"
+    ],
+    "description": "Sets bundling mode ('auto'|'manual'). In manual, call debug_bundler_sendBundleNow to force a bundle.\nArgs:\n- mode: string\nReturns: current mode."
+  },
+  "alchemy_getTokenBalances": {
+    "params": [
+      "0xd8dA6BF26964aF9D7eEd9e03e53415D37aA96045",
+      [
+        "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+        "0x6B175474E89094C44Da98b954EedeAC495271d0F"
+      ]
+    ],
+    "description": "Alchemy Enhanced API method that returns ERC-20 token balances for a given address. More efficient than multiple individual eth_call requests for token balance queries.\n\n**Use cases**:\n- Wallet portfolio display and management\n- DeFi protocol balance aggregation\n- Multi-token balance monitoring\n- Asset management and accounting systems\n- Token holder analysis and research\n- Portfolio tracking applications\n\n**Args**:\n- address: 20-byte Ethereum address to query balances for\n- contractAddresses: Array of ERC-20 token contract addresses, or 'DEFAULT_TOKENS' for popular tokens\n\n**Returns**: Object with address and tokenBalances array:\n- Each balance includes contractAddress, tokenBalance, and error (if any)\n- Automatically includes token metadata when available\n- Zero balances are included in results\n\n**Edge cases & notes**:\n- Much faster than individual balanceOf calls for multiple tokens\n- 'DEFAULT_TOKENS' includes popular tokens like USDC, USDT, DAI, WETH\n- Returns error field for invalid or non-ERC-20 contracts\n- Balances returned in token's native decimals (not normalized)\n- Maximum of 100 tokens per request to prevent timeouts"
+  },
+  "alchemy_getTokenAllowance": {
+    "params": [
+      {
+        "contract": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+        "owner": "0xd8dA6BF26964aF9D7eEd9e03e53415D37aA96045",
+        "spender": "0x6B175474E89094C44Da98b954EedeAC495271d0F"
+      }
+    ],
+    "description": "Returns ERC-20 allowance for owner->spender.\nArgs:\n- {contract, owner, spender}\nReturns: hex quantity allowance."
+  },
+  "alchemy_getTokenMetadata": {
+    "params": [
+      "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48"
+    ],
+    "description": "Returns ERC-20 metadata for a token address.\nArgs:\n- contractAddress: ERC-20\nReturns: {name, symbol, decimals, logo?}"
+  },
+  "alchemy_getAssetTransfers": {
+    "params": [
+      {
+        "fromBlock": "0x13738ca",
+        "toBlock": "0x13738ca",
+        "fromAddress": "0xd8dA6BF26964aF9D7eEd9e03e53415D37aA96045",
+        "category": [
+          "erc20",
+          "external"
+        ],
+        "withMetadata": true,
+        "maxCount": "0x3"
+      }
+    ],
+    "description": "Fetches historical transfers matching the filter.\nArgs:\n- filter: {fromBlock?, toBlock?, fromAddress?, toAddress?, contractAddresses?, category?, maxCount?, pageKey?, withMetadata?}\nReturns: {transfers: [...], pageKey?}"
+  },
+  "alchemy_getAssetTransfersV2": {
+    "params": [
+      {
+        "block": "0x13738ca",
+        "category": [
+          "erc20",
+          "erc721",
+          "external"
+        ],
+        "order": "asc",
+        "maxCount": "0x5"
+      }
+    ],
+    "description": "V2 variant for asset transfers (single block or filters).\nArgs: filter object (see docs).\nReturns: {transfers: [...], pageKey?}"
+  },
+  "alchemy_simulateAssetChanges": {
+    "params": [
+      {
+        "from": "0xd8dA6BF26964aF9D7eEd9e03e53415D37aA96045",
+        "to": "0x6B175474E89094C44Da98b954EedeAC495271d0F",
+        "data": "0x"
+      }
+    ],
+    "description": "Alchemy Enhanced API method that simulates a transaction and returns detailed asset changes that would occur. Essential for transaction preview, MEV analysis, and user safety features.\n\n**Use cases**:\n- Transaction preview in wallet interfaces\n- MEV detection and sandwich attack analysis\n- DeFi slippage and impact calculation\n- Smart contract interaction safety checks\n- Arbitrage opportunity analysis\n- User education and transaction explanation\n\n**Args**:\n- Transaction object with standard fields:\n  - `from`: Sender address\n  - `to`: Destination address (contract or EOA)\n  - `data`: Contract call data (for smart contract interactions)\n  - `value` (optional): ETH value to send\n  - `gas` (optional): Gas limit\n\n**Returns**: Object containing asset changes:\n- `changes`: Array of asset change objects\n- Each change includes: asset type, from, to, amount, token details\n- Supports ETH, ERC-20, ERC-721, and ERC-1155 assets\n- Shows both positive and negative changes per address\n\n**Edge cases & notes**:\n- Only shows direct asset transfers, not internal state changes\n- Complex DeFi interactions may have cascading effects not captured\n- Simulation uses current blockchain state\n- May not catch all edge cases in complex smart contracts\n- Useful for detecting unexpected asset movements"
+  },
+  "alchemy_simulateExecution": {
+    "params": [],
+    "description": "Simulates a transaction and returns decoded execution traces and decoded logs."
+  },
+  "alchemy_simulateExecutionBundle": {
+    "params": [],
+    "description": "Simulates multiple transactions sequentially and returns decoded execution traces and decoded logs."
+  },
+  "alchemy_simulateAssetChangesBundle": {
+    "params": [
+      [
+        {
+          "from": "0xd8dA6BF26964aF9D7eEd9e03e53415D37aA96045",
+          "to": "0x6B175474E89094C44Da98b954EedeAC495271d0F",
+          "data": "0x"
+        }
+      ]
+    ],
+    "description": "Simulates a bundle of transactions and returns aggregate asset changes.\nArgs:\n- txs: array of call objects\nReturns: {changes: [...]}"
+  },
+  "alchemy_simulateUserOperationAssetChanges": {
+    "params": [],
+    "description": "Simulates a user operation and returns a list of asset changes."
+  },
+  "debug_traceBlockByHash": {
+    "params": [
+      "0xdc0818cf78f21a8e70579cb46a43643f78291264dda342ae31049421c82d21ae",
+      {
+        "tracer": "callTracer"
+      }
+    ],
+    "description": "Traces all transactions in the specified block by hash.\nArgs:\n- blockHash: 32-byte block hash\n- options: tracer options\nReturns: Array/object of traces for each tx."
+  },
+  "debug_traceBlockByNumber": {
+    "params": [
+      "0x13738ca",
+      {
+        "tracer": "callTracer"
+      }
+    ],
+    "description": "Traces all transactions in the specified block by number.\nArgs:\n- blockNumber: hex block number\n- options: tracer options\nReturns: Array/object of traces for each tx."
+  },
+  "debug_traceCall": {
+    "params": [
+      {
+        "to": "0x6B175474E89094C44Da98b954EedeAC495271d0F",
+        "data": "0x70a08231000000000000000000000000d8da6bf26964af9d7eed9e03e53415d37aa96045"
+      },
+      "latest",
+      {
+        "tracer": "callTracer"
+      }
+    ],
+    "description": "Like eth_call but returns a detailed debug trace using the selected tracer.\nArgs:\n- callObject: transaction call object\n- block: hex block number or tag\n- options: {tracer, timeout, tracerConfig}\nReturns: Trace result (depends on tracer)."
+  },
+  "debug_traceTransaction": {
+    "params": [
+      "0x07104ffdf32b06b90e604f23c7b4e21fc985b68c5bb8c13140d0d3d2e151a385",
+      {
+        "tracer": "callTracer"
+      }
+    ],
+    "description": "Executes transaction in the exact same manner and returns structured trace.\nArgs:\n- txHash: 32-byte hash\n- options: {tracer?: 'callTracer'|'prestateTracer'|custom, timeout?: '30s', tracerConfig?: {...}}\nReturns: Trace result object\u2014commonly with 'calls' tree, gas used, errors."
+  },
+  "debug_getRawHeader": {
+    "params": [],
+    "description": "Returns an RLP-encoded header."
+  },
+  "debug_getRawReceipts": {
+    "params": [],
+    "description": "Returns the consensus-encoding of all receipts in a single block."
+  },
+  "debug_getRawBlock": {
+    "params": [],
+    "description": "Retrieves and returns the RLP encoded block by number."
+  },
+  "debug_dbAncient": {
+    "params": [],
+    "description": "DbAncient retrieves an ancient binary blob from the append-only immutable files. It is a mapping to the AncientReaderOp.Ancient method."
+  },
+  "debug_dbAncients": {
+    "params": [],
+    "description": "DbAncients returns the ancient item numbers in the ancient store. It is a mapping to the AncientReaderOp.Ancients method."
+  },
+  "debug_dbGet": {
+    "params": [],
+    "description": "Returns the raw value of a key stored in the database."
+  },
+  "debug_traceCallMany": {
+    "params": [],
+    "description": "Simulates multiple transactions in a single call with optional overrides"
+  },
+  "debug_executionWitness": {
+    "params": [],
+    "description": "Allows for re-execution of a block with the purpose of generating an execution witness"
+  },
+  "trace_replayBlockTransactions": {
+    "params": [
+      "0xdc0818cf78f21a8e70579cb46a43643f78291264dda342ae31049421c82d21ae",
+      [
+        "trace"
+      ]
+    ],
+    "description": "Replays all transactions in a block and returns requested traces.\nArgs:\n- blockHash: 32-byte block hash\n- traceTypes: array\nReturns: Array of per-transaction trace results."
+  },
+  "trace_replayTransaction": {
+    "params": [
+      "0x07104ffdf32b06b90e604f23c7b4e21fc985b68c5bb8c13140d0d3d2e151a385",
+      [
+        "trace",
+        "vmTrace",
+        "stateDiff"
+      ]
+    ],
+    "description": "Replays a transaction and returns requested traces.\nArgs:\n- txHash: 32-byte hash\n- traceTypes: array (trace|vmTrace|stateDiff)\nReturns: Traces for the transaction execution."
+  },
+  "trace_call": {
+    "params": [
+      {
+        "to": "0x6B175474E89094C44Da98b954EedeAC495271d0F",
+        "data": "0x70a08231000000000000000000000000d8da6bf26964af9d7eed9e03e53415d37aa96045"
+      },
+      [
+        "trace"
+      ],
+      "latest"
+    ],
+    "description": "Executes a message call like eth_call but returns comprehensive execution traces. This method combines the functionality of eth_call with detailed tracing capabilities for analysis and debugging.\n\n**Use cases**:\n- Smart contract call analysis and debugging\n- Transaction simulation with full execution details\n- Gas usage profiling for contract optimization\n- MEV strategy development and testing\n- Security analysis of contract interactions\n- DeFi protocol behavior analysis\n- State change impact assessment\n\n**Args**:\n- callObject: Transaction call object with fields:\n  - `to`: Contract address to call\n  - `data`: ABI-encoded function call data\n  - `from` (optional): Caller address\n  - `gas` (optional): Gas limit\n  - `gasPrice|maxFeePerGas|maxPriorityFeePerGas` (optional): Gas pricing\n  - `value` (optional): ETH value to send\n- traceTypes: Array of trace types to return:\n  - `trace`: Call frame execution traces\n  - `vmTrace`: Virtual machine opcode-level traces\n  - `stateDiff`: State changes caused by execution\n- block: Block context for execution\n\n**Returns**: Object containing requested trace information:\n- **trace**: Hierarchical call execution tree\n- **vmTrace**: Detailed opcode execution steps\n- **stateDiff**: Before/after state changes\n\n**Edge cases & notes**:\n- More resource-intensive than regular eth_call\n- Provides detailed insights into contract execution flow\n- Essential for understanding complex DeFi interactions\n- Different clients may format trace data differently\n- Useful for gas optimization and security analysis"
+  },
+  "trace_callMany": {
+    "params": [
+      [
+        [
+          {
+            "to": "0x6B175474E89094C44Da98b954EedeAC495271d0F",
+            "data": "0x70a08231000000000000000000000000d8da6bf26964af9d7eed9e03e53415d37aa96045"
+          },
+          [
+            "trace"
+          ]
+        ]
+      ],
+      "latest"
+    ],
+    "description": "Executes multiple trace_call operations in a single request.\nArgs:\n- calls: array of [callObject, traceTypes]\n- block: hex block number or tag\nReturns: Array of trace results per call."
+  },
+  "trace_rawTransaction": {
+    "params": [
+      "0xf86c808504a817c80082520894d8da6bf26964af9d7eed9e03e53415d37aa9604588016345785d8a00008025a00000000000000000000000000000000000000000000000000000000000000000a00000000000000000000000000000000000000000000000000000000000000000",
+      [
+        "trace"
+      ]
+    ],
+    "description": "Traces a raw, signed transaction without broadcasting.\nArgs:\n- rawTx: RLP-encoded signed tx\n- traceTypes: array of trace types\nReturns: Traces for the simulated transaction."
+  },
+  "trace_filter": {
+    "params": [
+      {
+        "fromBlock": "0x13738ca",
+        "toBlock": "0x13738ca",
+        "fromAddress": [
+          "0xd8dA6BF26964aF9D7eEd9e03e53415D37aA96045"
+        ],
+        "toAddress": [
+          "0x6B175474E89094C44Da98b954EedeAC495271d0F"
+        ]
+      }
+    ],
+    "description": "Returns traces matching given filter criteria.\nArgs:\n- filter: {fromBlock?, toBlock?, fromAddress?, toAddress?, after?, count?}\nReturns: Array of trace objects."
+  },
+  "trace_transaction": {
+    "params": [
+      "0x07104ffdf32b06b90e604f23c7b4e21fc985b68c5bb8c13140d0d3d2e151a385"
+    ],
+    "description": "Returns all traces for the given transaction hash.\nArgs:\n- txHash: 32-byte 0x-prefixed transaction hash.\nReturns: Array of trace objects (type, action, result, traceAddress, subtraces, error)."
+  },
+  "trace_block": {
+    "params": [
+      "0x13738ca"
+    ],
+    "description": "Returns traces created at given block number.\nArgs:\n- blockNumber: hex block number.\nReturns: Array of trace objects for that block."
+  },
+  "trace_get": {
+    "params": [
+      "0x07104ffdf32b06b90e604f23c7b4e21fc985b68c5bb8c13140d0d3d2e151a385",
+      [
+        "0x0"
+      ]
+    ],
+    "description": "Returns a specific trace by transaction hash and trace address path.\nArgs:\n- txHash: 32-byte hash\n- traceAddress: array of integers (hex) describing call path.\nReturns: Single trace object or null."
+  },
+  "alchemy_getProgramAccounts": {
+    "params": [
+      "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA",
+      {
+        "encoding": "jsonParsed",
+        "withContext": true
+      }
+    ],
+    "description": "Returns all accounts owned by the provided program id (Solana).\nArgs:\n- programId: base58\n- config?: with filters and encoding\nReturns: array of accounts."
+  },
+  "alchemy_getTokenAccountsByOwner": {
+    "params": [
+      "H3i9m5sHq3Hhd3uCJ3K1qVdQ7gH3snqA6Zt7fKrYb7gT",
+      {
+        "programId": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"
+      }
+    ],
+    "description": "Solana: Returns token accounts by owner.\nArgs:\n- owner: base58\n- filter: {mint|programId}\nReturns: token accounts list."
+  },
+  "alchemy_getTokenAccountsByDelegate": {
+    "params": [
+      "H3i9m5sHq3Hhd3uCJ3K1qVdQ7gH3snqA6Zt7fKrYb7gT",
+      {
+        "programId": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"
+      }
+    ],
+    "description": "Solana: Returns token accounts approved for a delegate.\nArgs:\n- delegate: base58\n- filter: {mint|programId}\nReturns: token accounts list."
+  },
+  "alchemy_getTokenLargestAccounts": {
+    "params": [
+      "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48"
+    ],
+    "description": "Returns the top token holders for a mint (token-specific support).\nArgs:\n- contractAddress\nReturns: holders list."
+  },
+  "alchemy_getTransactionReceipts": {
+    "params": [
+      {
+        "blockNumber": "0x13738ca"
+      }
+    ],
+    "description": "Gets all transaction receipts for a block.\nArgs:\n- {blockNumber}|{blockHash}\nReturns: {receipts: TransactionReceipt[]}"
+  }
+}
+
+

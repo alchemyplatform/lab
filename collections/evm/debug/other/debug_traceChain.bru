@@ -1,0 +1,50 @@
+meta {
+  name: debug_traceChain
+  type: http
+  seq: 27
+}
+
+post {
+  url: https://eth-mainnet.g.alchemy.com/v2/{{api_key}}
+  body: json
+  auth: none
+}
+
+headers {
+  Content-Type: application/json
+}
+
+body:json {
+  {
+    "jsonrpc": "2.0",
+    "id": "bru",
+    "method": "debug_traceChain",
+    "params": [
+      "0x1000000",
+      "0x1000010"
+    ]
+  }
+}
+
+docs {
+  Returns structured logs created during EVM execution between two blocks (excluding start).
+  
+  This method traces execution across a range of blocks.
+  
+  Parameters:
+  - `start_block`: Starting block number (hex) - excluded from results.
+  - `end_block`: Ending block number (hex) - included in results.
+  
+  Returns:
+  - `array`: Array of structured logs for all transactions in the block range.
+  
+  Example:
+  ```json
+  {
+    "jsonrpc": "2.0",
+    "id": "bru",
+    "method": "debug_traceChain",
+    "params": ["0x1000000", "0x1000010"]
+  }
+  ```
+}

@@ -1,0 +1,34 @@
+meta {
+  name: zks_L1ChainId
+  type: http
+  seq: 5
+}
+
+post {
+  url: https://zksync-mainnet.g.alchemy.com/v2/{{api_key}}
+  body: json
+  auth: none
+}
+
+headers {
+  Content-Type: application/json
+}
+
+body:json {
+  {
+    "jsonrpc": "2.0",
+    "id": 1,
+    "method": "zks_L1ChainId",
+    "params": []
+  }
+}
+
+docs {
+  DEPRECATED: Retrieves the L1 chain ID.
+  
+  Returns:
+  - QUANTITY - L1 chain ID as a hexadecimal string
+  
+  Note: This method is deprecated and may be removed in future versions.
+}
+

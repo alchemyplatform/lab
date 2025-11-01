@@ -1,0 +1,54 @@
+meta {
+  name: sui_executeTransactionBlock
+  type: http
+  seq: 3
+}
+
+post {
+  url: https://sui-mainnet.g.alchemy.com/v2/{{api_key}}
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "jsonrpc": "2.0",
+    "id": "bru",
+    "method": "sui_executeTransactionBlock",
+    "params": [
+      "AAACACBtZaLZXqfIrH3hxUhklX5l3xvFMJM+9pYMjYu2pNfjXQEAAAAAAAAAIEu0ySm7C+VJkDtc3JKp0dUmNDRjzr5hXD6sK/4p9+eiAQEBAQEAAAEBAACbDnwcJRuTbZhGGzCMiKjZ+V1y6ygwJjWAjy0b8K7ksQHJHXgKwTMWxnPtYxjl41SYtl9T9fqPH+d5xHAX0G6bPaDDOgAAAAAAgBF2+dONHfVPl4qnC/2XM/kYfNrCW+kAm5+RGdBvS+TJsAEAAAAAAAAAARoAAAAAAAAA",
+      [
+        "signature_bytes_base64"
+      ],
+      {
+        "showInput": true,
+        "showRawInput": false,
+        "showEffects": true,
+        "showEvents": true,
+        "showObjectChanges": true,
+        "showBalanceChanges": true,
+        "showRawEffects": false
+      },
+      "WaitForLocalExecution"
+    ]
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}
+
+docs {
+  Execute a signed transaction block on the blockchain.
+  
+  **Parameters:**
+  1. txBytes (Base64): Transaction bytes in Base64 format
+  2. signatures (Array<Base64>): Array of signatures
+  3. options (TransactionBlockResponseOptions, optional): Options to control response data
+  4. requestType (ExecuteTransactionRequestType, optional): Request type ("WaitForEffectsCert", "WaitForLocalExecution")
+  
+  **Returns:**
+  TransactionBlockResponse containing the execution results based on requested options
+}
+

@@ -1,0 +1,40 @@
+meta {
+  name: eth_getProof
+  type: http
+  seq: 13
+}
+
+post {
+  url: https://eth-mainnet.g.alchemy.com/v2/{{api_key}}
+  body: json
+  auth: none
+}
+
+headers {
+  Content-Type: application/json
+}
+
+body:json {
+  {
+    "jsonrpc": "2.0",
+    "id": "bru",
+    "method": "eth_getProof",
+    "params": [
+      "0x7F0d15C7FAae65896648C8273B6d7E43f58Fa842",
+      ["0x56e81f171bcc55a6ff8345e692c0f86e5b48e01b996cadc001622fb5e363b421"],
+      "latest"
+    ]
+  }
+}
+
+docs {
+  Returns the account and storage-values of the specified account including the Merkle-proof (EIP-1186).
+  
+  Parameters:
+  1. DATA, 20 Bytes - address of the account
+  2. ARRAY of DATA - array of storage-keys which should be proofed and included
+  3. QUANTITY|TAG - integer block number, or the string "latest", "earliest" or "pending"
+  
+  Returns the account object and storage proof for verification of account state.
+  Essential for light clients and state verification without full node data.
+}

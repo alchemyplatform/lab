@@ -1,0 +1,44 @@
+meta {
+  name: getEpochInfo
+  type: http
+  seq: 12
+}
+
+post {
+  url: https://solana-mainnet.g.alchemy.com/v2/{{api_key}}
+  body: json
+  auth: none
+}
+
+headers {
+  Content-Type: application/json
+}
+
+body:json {
+  {
+    "jsonrpc": "2.0",
+    "id": "bru",
+    "method": "getEpochInfo",
+    "params": [
+      {
+        "commitment": "finalized"
+      }
+    ]
+  }
+}
+
+docs {
+  Returns information about the current epoch.
+  
+  Parameters:
+  1. Configuration object (optional):
+     - commitment: "finalized", "confirmed", "processed"
+  
+  Returns epoch information including:
+  - Current epoch number
+  - Current slot within the epoch
+  - Slots in current epoch
+  - Absolute slot number
+  
+  Essential for understanding Solana's epoch-based consensus mechanism.
+}

@@ -1,0 +1,37 @@
+meta {
+  name: getStakeActivation
+  type: http
+  seq: 38
+}
+
+post {
+  url: https://solana-mainnet.g.alchemy.com/v2/{{api_key}}
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "jsonrpc": "2.0",
+    "id": "bru",
+    "method": "getStakeActivation",
+    "params": [
+      "CYRJWqiSjLitBAcRxPvWpgX3s5TvmN2SuRY3eEYypFvT"
+    ]
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}
+
+docs {
+  Returns epoch activation information for a stake account.
+  
+  **Args**:
+  - Stake account Pubkey (required): Pubkey of the stake account to query
+  - Configuration (optional): Optional configuration object
+  
+  **Returns**: Epoch activation information for the stake account
+}

@@ -1,0 +1,48 @@
+meta {
+  name: trace_block
+  type: http
+  seq: 5
+}
+
+post {
+  url: https://eth-mainnet.g.alchemy.com/v2/{{api_key}}
+  body: json
+  auth: none
+}
+
+headers {
+  Content-Type: application/json
+}
+
+body:json {
+  {
+    "jsonrpc": "2.0",
+    "id": "bru",
+    "method": "trace_block",
+    "params": [
+      "latest"
+    ]
+  }
+}
+
+docs {
+  Returns traces for all transactions in a block.
+  
+  This method provides Parity-style traces for all transactions in the specified block.
+  
+  Parameters:
+  - `block`: Block number (hex), hash, or tag ("latest", "earliest", "pending").
+  
+  Returns:
+  - `array`: Array of LocalizedTransactionTrace objects for all transactions in the block.
+  
+  Example:
+  ```json
+  {
+    "jsonrpc": "2.0",
+    "id": "bru",
+    "method": "trace_block",
+    "params": ["latest"]
+  }
+  ```
+}

@@ -1,0 +1,43 @@
+meta {
+  name: zks_estimateFee
+  type: http
+  seq: 1
+}
+
+post {
+  url: https://zksync-mainnet.g.alchemy.com/v2/{{api_key}}
+  body: json
+  auth: none
+}
+
+headers {
+  Content-Type: application/json
+}
+
+body:json {
+  {
+    "jsonrpc": "2.0",
+    "id": 1,
+    "method": "zks_estimateFee",
+    "params": [
+      {
+        "from": "0x1111111111111111111111111111111111111111",
+        "to": "0x2222222222222222222222222222222222222222",
+        "data": "0x"
+      }
+    ]
+  }
+}
+
+docs {
+  DEPRECATED: Estimates the fee for a transaction.
+  
+  Parameters:
+  1. Object - Transaction call object
+  
+  Returns:
+  - Object containing fee estimates
+  
+  Note: This method is deprecated and may be removed in future versions.
+}
+

@@ -1,0 +1,84 @@
+meta {
+  name: Query Transactions
+  type: graphql
+  seq: 9
+}
+
+post {
+  url: https://graphql.mainnet.sui.io/graphql
+  body: graphql
+  auth: inherit
+}
+
+body:graphql {
+  query GetTransactions($address: SuiAddress!, $function: String) {
+    transactions(
+      first: 10
+      filter: {
+        sentAddress: $address
+        function: $function
+      }
+    ) {
+      nodes {
+        digest
+        sender {
+          address
+        }
+        signatures {
+          signatureBytes
+        }
+        gasInput {
+          gasSponsor {
+            address
+          }
+          gasPrice
+          gasBudget
+        }
+        effects {
+          status
+          timestamp
+          checkpoint {
+            sequenceNumber
+          }
+          epoch {
+            epochId
+          }
+          gasEffects {
+            gasSummary {
+              computationCost
+              storageCost
+              storageRebate
+              nonRefundableStorageFee
+            }
+          }
+        }
+      }
+      pageInfo {
+        hasNextPage
+        endCursor
+      }
+    }
+  }
+}
+
+body:graphql:vars {
+  {
+    "address": "0x94f1a597b4e8f709a396f7f6b1482bdcd65a673d111e49286c527fab7c2d0961",
+    "function": "0x2::transfer"
+  }
+}
+
+docs {
+  Query transaction blocks with optional filters using GraphQL.
+  
+  This query retrieves:
+  - Transaction digest and sender
+  - Signatures
+  - Gas input details
+  - Transaction effects including status, timestamp, and gas costs
+  - Checkpoint and epoch information
+  
+  **Variables:**
+  - address: Filter by signer address
+  - function: Optional filter by function name
+}

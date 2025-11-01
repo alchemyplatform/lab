@@ -1,0 +1,42 @@
+meta {
+  name: suix_getAllBalances
+  type: http
+  seq: 1
+}
+
+post {
+  url: https://sui-mainnet.g.alchemy.com/v2/{{api_key}}
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "jsonrpc": "2.0",
+    "id": "bru",
+    "method": "suix_getAllBalances",
+    "params": [
+      "0x94f1a597b4e8f709a396f7f6b1482bdcd65a673d111e49286c527fab7c2d0961"
+    ]
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}
+
+docs {
+  Return the total coin balance for all coin types owned by the address owner.
+  
+  **Parameters:**
+  1. owner (SuiAddress): The owner's Sui address
+  
+  **Returns:**
+  Array of Balance objects, each containing:
+  - coinType: The coin type identifier
+  - coinObjectCount: Number of coin objects
+  - totalBalance: Total balance for this coin type
+  - lockedBalance: Any locked balance
+}
+

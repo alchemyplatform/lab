@@ -1,0 +1,44 @@
+meta {
+  name: eth_coinbase
+  type: http
+  seq: 5
+}
+
+post {
+  url: https://eth-mainnet.g.alchemy.com/v2/{{api_key}}
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "jsonrpc": "2.0",
+    "method": "eth_coinbase",
+    "params": [],
+    "id": "bru"
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}
+
+docs {
+  Returns the coinbase address of the client (the address that receives mining/validation rewards). In Proof of Stake, this represents the fee recipient address.
+  
+  **Use cases**:
+  - Identifying the node's reward recipient address
+  - Mining pool management and reward distribution
+  - Validator configuration verification
+  - Development environment account identification
+  
+  **Returns**: 20-byte hex-encoded Ethereum address
+  
+  **Edge cases & notes**:
+  - On hosted providers, may return null or a default address
+  - In PoS networks, represents the fee recipient rather than mining rewards
+  - For validators, this is where transaction fees are collected
+  - Not commonly used in modern applications
+  - May require special node configuration to return a meaningful value
+}

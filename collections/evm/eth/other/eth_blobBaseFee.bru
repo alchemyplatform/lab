@@ -1,0 +1,44 @@
+meta {
+  name: eth_blobBaseFee
+  type: http
+  seq: 2
+}
+
+post {
+  url: https://eth-mainnet.g.alchemy.com/v2/{{api_key}}
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "jsonrpc": "2.0",
+    "method": "eth_blobBaseFee",
+    "params": [],
+    "id": "bru"
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}
+
+docs {
+  Returns the current base fee per blob gas in wei for EIP-4844 blob transactions. This method is essential for applications dealing with blob transactions introduced in the Dencun upgrade.
+  
+  **Use cases**:
+  - Calculating fees for blob transactions (EIP-4844)
+  - Layer 2 rollups budgeting blob space costs
+  - Applications monitoring blob gas market dynamics
+  - Fee estimation for data availability transactions
+  
+  **Returns**: Hex-encoded base fee per blob gas in wei
+  
+  **Edge cases & notes**:
+  - Only available on networks that have activated EIP-4844 (Dencun upgrade)
+  - Blob base fee follows similar dynamics to regular base fee but for blob gas market
+  - Essential for rollups using blobs for data availability (cheaper than calldata)
+  - Returns null or error on pre-Dencun networks
+  - Blob gas pricing is independent of regular gas pricing
+}

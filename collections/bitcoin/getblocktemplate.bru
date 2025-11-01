@@ -1,0 +1,49 @@
+meta {
+  name: getblocktemplate
+  type: http
+  seq: 12
+}
+
+post {
+  url: https://bitcoin-mainnet.g.alchemy.com/v2/{{api_key}}
+  body: json
+  auth: basic
+}
+
+headers {
+  Content-Type: application/json
+}
+
+auth:basic {
+  username: {{rpcUser}}
+  password: {{rpcPassword}}
+}
+
+body:json {
+  {
+    "jsonrpc": "1.0",
+    "id": "bru",
+    "method": "getblocktemplate",
+    "params": [
+      {
+        "rules": ["segwit"]
+      }
+    ]
+  }
+}
+
+docs {
+  Returns data needed to construct a block to work on.
+  
+  Parameters:
+  1. template_request (object, optional) - Format specification object with optional rules array
+  
+  Returns a block template including:
+  - Block version and previous block hash
+  - Transactions to include in the block
+  - Coinbase transaction details
+  - Target difficulty and time limits
+  - Merkle branch and witness commitment
+  
+  Essential for mining software and pool operations.
+}

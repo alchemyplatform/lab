@@ -1,0 +1,34 @@
+meta {
+  name: getRecentPerformanceSamples
+  type: http
+  seq: 31
+}
+
+post {
+  url: https://solana-mainnet.g.alchemy.com/v2/{{api_key}}
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "jsonrpc": "2.0",
+    "id": "bru",
+    "method": "getRecentPerformanceSamples",
+    "params": []
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}
+
+docs {
+  Returns a list of recent performance samples, in reverse slot order.
+  
+  **Args**:
+  - limit (optional): The number of samples to return
+  
+  **Returns**: An array of performance sample data
+}

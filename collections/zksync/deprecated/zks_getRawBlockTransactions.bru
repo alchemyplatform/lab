@@ -1,0 +1,39 @@
+meta {
+  name: zks_getRawBlockTransactions
+  type: http
+  seq: 9
+}
+
+post {
+  url: https://zksync-mainnet.g.alchemy.com/v2/{{api_key}}
+  body: json
+  auth: none
+}
+
+headers {
+  Content-Type: application/json
+}
+
+body:json {
+  {
+    "jsonrpc": "2.0",
+    "id": 1,
+    "method": "zks_getRawBlockTransactions",
+    "params": [
+      30098049
+    ]
+  }
+}
+
+docs {
+  DEPRECATED: Lists transactions in a block without processing them.
+  
+  Parameters:
+  1. uint32 - block number
+  
+  Returns:
+  - Array of objects representing raw transactions within the specified block
+  
+  Note: This method is deprecated and may be removed in future versions.
+}
+

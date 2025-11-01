@@ -1,0 +1,37 @@
+meta {
+  name: Subscribe to slots
+  type: grpc
+  seq: 5
+}
+
+grpc {
+  url: https://solana-mainnet.g.alchemy.com/
+  method: /geyser.Geyser/Subscribe
+  body: grpc
+  protoPath: grpc/geyser.proto
+  auth: inherit
+  methodType: bidi-streaming
+}
+
+metadata {
+  x-token: {{solana_x_token}}
+}
+
+body:grpc {
+  name: message 1
+  content: '''
+    {
+      "accounts": {},
+      "slots": {
+        "all_slots": {
+          "filter_by_commitment": true
+        }
+      },
+      "transactions": {},
+      "blocks": {},
+      "blocks_meta": {},
+      "commitment": "PROCESSED"
+    }
+  '''
+}
+

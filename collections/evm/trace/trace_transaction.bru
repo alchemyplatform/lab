@@ -1,0 +1,48 @@
+meta {
+  name: trace_transaction
+  type: http
+  seq: 3
+}
+
+post {
+  url: https://eth-mainnet.g.alchemy.com/v2/{{api_key}}
+  body: json
+  auth: none
+}
+
+headers {
+  Content-Type: application/json
+}
+
+body:json {
+  {
+    "jsonrpc": "2.0",
+    "id": "bru",
+    "method": "trace_transaction",
+    "params": [
+      "0x17104ac9d3312d8c136b7f44d4b8b47852618065ebfa534bd2d3b5ef218ca1f3"
+    ]
+  }
+}
+
+docs {
+  Returns all traces of a given transaction.
+  
+  This method provides all traces generated during a transaction's execution.
+  
+  Parameters:
+  - `tx_hash`: Transaction hash as hex string.
+  
+  Returns:
+  - `array`: Array of LocalizedTransactionTrace objects for all traces in the transaction.
+  
+  Example:
+  ```json
+  {
+    "jsonrpc": "2.0",
+    "id": "bru",
+    "method": "trace_transaction",
+    "params": ["0x17104ac9d3312d8c136b7f44d4b8b47852618065ebfa534bd2d3b5ef218ca1f3"]
+  }
+  ```
+}

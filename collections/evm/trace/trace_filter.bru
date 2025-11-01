@@ -1,0 +1,60 @@
+meta {
+  name: trace_filter
+  type: http
+  seq: 6
+}
+
+post {
+  url: https://eth-mainnet.g.alchemy.com/v2/{{api_key}}
+  body: json
+  auth: none
+}
+
+headers {
+  Content-Type: application/json
+}
+
+body:json {
+  {
+    "jsonrpc": "2.0",
+    "id": "bru",
+    "method": "trace_filter",
+    "params": [
+      {
+        "fromBlock": "0x2ed0c4",
+        "toBlock": "0x2ed128",
+        "toAddress": ["0x8bbB73BCB5d553B5A556358d27625323Fd781D37"],
+        "after": 1000,
+        "count": 100
+      }
+    ]
+  }
+}
+
+docs {
+  Returns traces matching the given filter criteria.
+  
+  This method filters transaction traces based on various criteria.
+  
+  Parameters:
+  - `filter`: Filter object with optional properties:
+    - `fromBlock`: Starting block (number, hash, or tag).
+    - `toBlock`: Ending block (number, hash, or tag).
+    - `fromAddress`: Array of sender addresses to filter by.
+    - `toAddress`: Array of recipient addresses to filter by.
+    - `after`: Offset trace number for pagination.
+    - `count`: Maximum number of traces to return.
+  
+  Returns:
+  - `array`: Array of LocalizedTransactionTrace objects matching the filter.
+  
+  Example:
+  ```json
+  {
+    "jsonrpc": "2.0",
+    "id": "bru",
+    "method": "trace_filter",
+    "params": [{"fromBlock": "0x2ed0c4", "toBlock": "0x2ed128", "toAddress": ["0x8bbB73BCB5d553B5A556358d27625323Fd781D37"]}]
+  }
+  ```
+}

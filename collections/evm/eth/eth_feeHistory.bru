@@ -1,0 +1,40 @@
+meta {
+  name: eth_feeHistory
+  type: http
+  seq: 4
+}
+
+post {
+  url: https://eth-mainnet.g.alchemy.com/v2/{{api_key}}
+  body: json
+  auth: none
+}
+
+headers {
+  Content-Type: application/json
+}
+
+body:json {
+  {
+    "jsonrpc": "2.0",
+    "id": "bru",
+    "method": "eth_feeHistory",
+    "params": [
+      "0x4",
+      "latest",
+      [25, 75]
+    ]
+  }
+}
+
+docs {
+  Returns fee history for a range of blocks (EIP-1559).
+  
+  Parameters:
+  1. QUANTITY - Number of blocks in the requested range (between 1 and 1024)
+  2. QUANTITY|TAG - Highest block of the requested range, or "latest"
+  3. Array - (optional) Array of percentile values (0-100) to sample from each block's effective priority fees
+  
+  Returns historical gas information including base fee per gas and priority fee percentiles.
+  Essential for EIP-1559 fee estimation and gas price optimization.
+}

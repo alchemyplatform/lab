@@ -1,0 +1,47 @@
+meta {
+  name: getMultipleAccounts
+  type: http
+  seq: 29
+}
+
+post {
+  url: https://solana-mainnet.g.alchemy.com/v2/{{api_key}}
+  body: json
+  auth: none
+}
+
+headers {
+  Content-Type: application/json
+}
+
+body:json {
+  {
+    "jsonrpc": "2.0",
+    "id": "bru",
+    "method": "getMultipleAccounts",
+    "params": [
+      [
+        "83astBRguLMdt2h5U1Tpdq5tjFoJ6noeGwaY3mDLVcri",
+        "SysvarC1ock11111111111111111111111111111111"
+      ],
+      {
+        "encoding": "jsonParsed",
+        "commitment": "finalized"
+      }
+    ]
+  }
+}
+
+docs {
+  Returns the account information for a list of Pubkeys.
+  
+  Parameters:
+  1. Array of Pubkeys (required) - Array of Pubkeys to query, as base-58 encoded strings (max 100)
+  2. Configuration object (optional):
+     - encoding: "base58", "base64", "base64+zstd", "jsonParsed"
+     - commitment: "finalized", "confirmed", "processed"
+     - dataSlice: limit returned account data
+  
+  Returns array of account information objects.
+  Efficient way to query multiple accounts in a single request.
+}

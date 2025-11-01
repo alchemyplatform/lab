@@ -1,0 +1,47 @@
+meta {
+  name: unsafe_mergeCoins
+  type: http
+  seq: 2
+}
+
+post {
+  url: https://sui-mainnet.g.alchemy.com/v2/{{api_key}}
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "jsonrpc": "2.0",
+    "id": "bru",
+    "method": "unsafe_mergeCoins",
+    "params": [
+      "0x94f1a597b4e8f709a396f7f6b1482bdcd65a673d111e49286c527fab7c2d0961",
+      "0x123",
+      "0x456",
+      ["0x789", "0xabc"],
+      "0xdef",
+      "1000000"
+    ]
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}
+
+docs {
+  Build a transaction to merge multiple coins into one.
+  
+  **Parameters:**
+  1. signer (SuiAddress): The transaction signer's address
+  2. primaryCoin (ObjectID): The coin object to merge into
+  3. coinToMerge (ObjectID): The coin object to merge
+  4. gas (ObjectID, optional): Gas object to use
+  5. gasBudget (BigInt): Gas budget for the transaction
+  
+  **Returns:**
+  TransactionBlockBytes containing serialized transaction data
+}
+

@@ -1,0 +1,25 @@
+{
+  "version": "1",
+  "name": "solana",
+  "type": "collection",
+  "ignore": [
+    "node_modules",
+    ".git"
+  ],
+  "size": 0.015467643737792969,
+  "filesCount": 21,
+  "protobuf": {
+    "protoFiles": [
+      {
+        "path": "grpc/geyser.proto",
+        "type": "file"
+      }
+    ],
+    "importPaths": [
+      {
+        "path": "grpc",
+        "enabled": true
+      }
+    ]
+  }
+}

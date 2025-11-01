@@ -1,0 +1,44 @@
+meta {
+  name: sendrawtransaction
+  type: http
+  seq: 9
+}
+
+post {
+  url: https://bitcoin-mainnet.g.alchemy.com/v2/{{api_key}}
+  body: json
+  auth: basic
+}
+
+headers {
+  Content-Type: application/json
+}
+
+auth:basic {
+  username: {{rpcUser}}
+  password: {{rpcPassword}}
+}
+
+body:json {
+  {
+    "jsonrpc": "1.0",
+    "id": "bru",
+    "method": "sendrawtransaction",
+    "params": [
+      "01000000010000000000000000000000000000000000000000000000000000000000000000ffffffff0704ffff001d0104ffffffff0100f2052a0100000043410496b538e853519c726a2c91e61ec11600ae1390813a627c66fb8be7947be63c52da7589379515d4e0a604f8141781e62294721166bf621e73a82cbf2342c858eeebf0f0ac00000000"
+    ]
+  }
+}
+
+docs {
+  Submits a raw transaction (serialized, hex-encoded) to local node and network.
+  
+  Parameters:
+  1. hexstring (string, required) - The hex string of the raw transaction
+  2. maxfeerate (numeric, optional, default=0.10) - Reject transactions whose fee rate is higher than the specified value
+  
+  Returns the transaction hash in hex if successful.
+  
+  Note: This is a sample transaction hex. Replace with your actual signed transaction data.
+  The transaction must be properly signed and valid to be accepted by the network.
+}

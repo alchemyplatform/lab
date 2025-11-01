@@ -1,0 +1,56 @@
+meta {
+  name: Delete Variable
+  type: http
+  seq: 14
+}
+
+delete {
+  url: https://dashboard.alchemy.com/api/graphql/variables/my_addresses
+  body: none
+  auth: inherit
+}
+
+headers {
+  X-Alchemy-Token: {{notify_auth_token}}
+}
+
+settings {
+  encodeUrl: true
+}
+
+docs {
+  Permanently deletes a custom webhook variable.
+  
+  **Use cases**:
+  - Clean up unused variables
+  - Remove variables for decommissioned features
+  - Variable lifecycle management
+  - Programmatic variable cleanup
+  - Free up variable quota
+  
+  **Args**:
+  - Path parameter:
+    - `variable`: Name of the custom webhook variable to delete (in URL path)
+  
+  **Returns**: Success confirmation
+  - Empty response with 200 status on success
+  - Error message if variable not found or in use
+  
+  **Edge cases & notes**:
+  - This action is irreversible - variable cannot be recovered
+  - Variable name in URL path (not query parameter)
+  - CANNOT delete if variable is currently referenced by active webhooks
+  - Must remove variable from all webhook queries before deletion
+  - Returns 404 if variable doesn't exist
+  - Returns error if variable is still in use
+  - All values are permanently deleted
+  - Must have team permissions to delete variables
+  
+  **Best practice**:
+  1. Check which webhooks use this variable (via get-all-webhooks)
+  2. Update or delete those webhooks first
+  3. Then delete the variable
+  
+  **Documentation**: https://www.alchemy.com/docs/data/webhooks/webhooks-api-endpoints/notify-api-endpoints/delete-custom-webhook-variable
+}
+

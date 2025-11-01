@@ -1,0 +1,31 @@
+meta {
+  name: getEpochSchedule
+  type: http
+  seq: 13
+}
+
+post {
+  url: https://solana-mainnet.g.alchemy.com/v2/{{api_key}}
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "jsonrpc": "2.0",
+    "id": "bru",
+    "method": "getEpochSchedule",
+    "params": []
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}
+
+docs {
+  Returns the epoch schedule information from the cluster's genesis config.
+  
+  **Returns**: An object containing information about the epoch schedule
+}

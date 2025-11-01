@@ -1,0 +1,36 @@
+meta {
+  name: eth_unsubscribe
+  type: ws
+  seq: 6
+}
+
+ws {
+  url: wss://eth-mainnet.g.alchemy.com/v2/{{api_key}}
+  body: ws
+  auth: inherit
+}
+
+body:ws {
+  name: message 1
+  type: json
+  content: '''
+    {
+      "jsonrpc": "2.0",
+      "id": "bru",
+      "method": "eth_unsubscribe",
+      "params": [
+        "0x9c7c3f3c3c63b1b89ac0c1e0b0d3d4e5f6a7b8c9d0e1f2a3b4c5d6e7f8090a1b"
+      ]
+    }
+  '''
+}
+
+docs {
+  Cancels an active subscription given its subscription ID.
+  
+  Params array expects a single subscription id, provided in early connection response data
+  The reponse contains a boolean flag of the success of cancellation
+  
+  Details Here
+  https://www.alchemy.com/docs/node/op-mainnet/op-mainnet-api-endpoints/eth-unsubscribe
+}

@@ -1,0 +1,39 @@
+meta {
+  name: slotSubscribe
+  type: ws
+  seq: 13
+}
+
+ws {
+  url: wss://solana-mainnet.g.alchemy.com/v2/{{api_key}}
+  body: ws
+  auth: inherit
+}
+
+body:ws {
+  name: subscribe
+  type: json
+  content: '''
+    {
+      "jsonrpc": "2.0",
+      "id": "bru",
+      "method": "slotSubscribe"
+    }
+  '''
+}
+
+docs {
+  Subscribe to receive notification anytime a slot is processed by the validator.
+  
+  **Args**: None required
+  
+  **Returns**: Subscription ID that can be used to unsubscribe.
+  
+  **Notifications**: Returns information about the slot including:
+  - parent: Parent slot number
+  - root: Root slot number
+  - slot: Current slot number
+  
+  **Note**: Slot notifications are sent very frequently (multiple times per second).
+}
+

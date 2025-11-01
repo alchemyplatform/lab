@@ -1,0 +1,45 @@
+meta {
+  name: debug_getBadBlocks
+  type: http
+  seq: 18
+}
+
+post {
+  url: https://eth-mainnet.g.alchemy.com/v2/{{api_key}}
+  body: json
+  auth: none
+}
+
+headers {
+  Content-Type: application/json
+}
+
+body:json {
+  {
+    "jsonrpc": "2.0",
+    "id": "bru",
+    "method": "debug_getBadBlocks",
+    "params": []
+  }
+}
+
+docs {
+  Returns an array of recent bad blocks that the client has seen on the network.
+  
+  This method helps identify problematic blocks that were rejected by the network.
+  
+  Parameters: None
+  
+  Returns:
+  - `array`: Array of bad block objects with details about why they were rejected.
+  
+  Example:
+  ```json
+  {
+    "jsonrpc": "2.0",
+    "id": "bru",
+    "method": "debug_getBadBlocks",
+    "params": []
+  }
+  ```
+}

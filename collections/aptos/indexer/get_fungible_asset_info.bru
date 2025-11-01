@@ -1,0 +1,62 @@
+meta {
+  name: Get Fungible Asset Info
+  type: graphql
+  seq: 4
+}
+
+post {
+  url: https://api.mainnet.aptoslabs.com/v1/graphql
+  body: graphql
+  auth: none
+}
+
+headers {
+  Content-Type: application/json
+}
+
+body:graphql {
+  query GetFungibleAssetMetadata($asset_type: String) {
+    fungible_asset_metadata(
+      where: {asset_type: {_eq: $asset_type}}
+    ) {
+      asset_type
+      creator_address
+      name
+      symbol
+      decimals
+      icon_uri
+      project_uri
+      supply_aggregator_table_handle_v1
+      supply_aggregator_table_key_v1
+      token_standard
+    }
+  }
+}
+
+body:graphql:vars {
+  {
+    "asset_type": "0x1::aptos_coin::AptosCoin"
+  }
+}
+
+docs {
+  Get detailed information about a specific fungible asset.
+  
+  Variables:
+  - asset_type: The type identifier of the fungible asset
+  
+  Returns:
+  - asset_type: Full type identifier
+  - creator_address: Address of the asset creator
+  - name: Human-readable name
+  - symbol: Trading symbol (e.g., "APT")
+  - decimals: Number of decimal places
+  - icon_uri: URI to the asset icon
+  - project_uri: URI to project information
+  - token_standard: Token standard version
+  
+  This query provides comprehensive metadata about a fungible asset on Aptos.
+  
+  https://aptos.dev/build/indexer/indexer-api/asset-info
+}
+

@@ -1,0 +1,50 @@
+meta {
+  name: getTokenAccountsByOwner
+  type: http
+  seq: 43
+}
+
+post {
+  url: https://solana-mainnet.g.alchemy.com/v2/{{api_key}}
+  body: json
+  auth: none
+}
+
+headers {
+  Content-Type: application/json
+}
+
+body:json {
+  {
+    "jsonrpc": "2.0",
+    "id": "bru",
+    "method": "getTokenAccountsByOwner",
+    "params": [
+      "4Qkev8aNZcqFNSRhQzwyLMFSsi94jHqE8WNVTJzTP99F",
+      {
+        "mint": "3wyAj7Rt1TWVPZVteFJPLa26JmLvdb1CAKEFZm3NY75E"
+      },
+      {
+        "encoding": "jsonParsed",
+        "commitment": "finalized"
+      }
+    ]
+  }
+}
+
+docs {
+  Returns all SPL Token accounts by token owner.
+  
+  Parameters:
+  1. Owner Pubkey (string, required) - Pubkey of account owner
+  2. Filter object (required) - Either:
+     - {"mint": "mint_pubkey"} - filter by specific token mint
+     - {"programId": "program_pubkey"} - filter by token program
+  3. Configuration object (optional):
+     - encoding: "base58", "base64", "jsonParsed"
+     - commitment: "finalized", "confirmed", "processed"
+     - dataSlice: limit returned account data
+  
+  Returns array of token accounts owned by the specified address.
+  Essential for wallet applications and token portfolio management.
+}

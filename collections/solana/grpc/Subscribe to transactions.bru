@@ -1,0 +1,40 @@
+meta {
+  name: Subscribe to transactions
+  type: grpc
+  seq: 4
+}
+
+grpc {
+  url: https://solana-mainnet.g.alchemy.com/
+  method: /geyser.Geyser/Subscribe
+  body: grpc
+  protoPath: grpc/geyser.proto
+  auth: inherit
+  methodType: bidi-streaming
+}
+
+metadata {
+  x-token: {{solana_x_token}}
+}
+
+body:grpc {
+  name: message 1
+  content: '''
+    {
+      "accounts": {},
+      "slots": {},
+      "transactions": {
+        "jupiter_swaps": {
+          "vote": false,
+          "failed": true,
+          "account_include": [
+            "JUP6LkbZbjS1jKKwapdHNy74zcZ3tLUZoi5QNyVTaV4"
+          ]
+        }
+      },
+      "blocks": {},
+      "blocks_meta": {}
+    }
+  '''
+}
+

@@ -1,0 +1,46 @@
+meta {
+  name: eth_newFilter
+  type: http
+  seq: 19
+}
+
+post {
+  url: https://eth-mainnet.g.alchemy.com/v2/{{api_key}}
+  body: json
+  auth: none
+}
+
+headers {
+  Content-Type: application/json
+}
+
+body:json {
+  {
+    "jsonrpc": "2.0",
+    "id": "bru",
+    "method": "eth_newFilter",
+    "params": [
+      {
+        "fromBlock": "0x1",
+        "toBlock": "latest",
+        "address": "0x8ba1f109551bD432803012645Hac136c",
+        "topics": [
+          "0x12341234"
+        ]
+      }
+    ]
+  }
+}
+
+docs {
+  Creates a filter object, based on filter options, to notify when the state changes (logs).
+  
+  Parameters:
+  1. Object - The filter options:
+     - fromBlock: QUANTITY|TAG - (optional, default: "latest") Integer block number, or "latest" for the last mined block or "pending", "earliest" for not yet mined transactions
+     - toBlock: QUANTITY|TAG - (optional, default: "latest") Integer block number, or "latest" for the last mined block or "pending", "earliest" for not yet mined transactions
+     - address: DATA|Array - (optional) Contract address or a list of addresses from which logs should originate
+     - topics: Array of DATA - (optional) Array of 32 Bytes DATA topics. Topics are order-dependent
+  
+  Returns a filter id to be used with eth_getFilterChanges.
+}

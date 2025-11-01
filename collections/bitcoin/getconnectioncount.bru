@@ -1,0 +1,36 @@
+meta {
+  name: getconnectioncount
+  type: http
+  seq: 7
+}
+
+post {
+  url: https://bitcoin-mainnet.g.alchemy.com/v2/{{api_key}}
+  body: json
+  auth: basic
+}
+
+headers {
+  Content-Type: application/json
+}
+
+auth:basic {
+  username: {{rpcUser}}
+  password: {{rpcPassword}}
+}
+
+body:json {
+  {
+    "jsonrpc": "1.0",
+    "id": "bru",
+    "method": "getconnectioncount",
+    "params": []
+  }
+}
+
+docs {
+  Returns the number of connections to other nodes.
+  
+  Returns a simple integer count of active peer connections.
+  This is useful for monitoring node connectivity and network health.
+}

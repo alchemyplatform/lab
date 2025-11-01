@@ -1,0 +1,39 @@
+meta {
+  name: requestAirdrop
+  type: http
+  seq: 52
+}
+
+post {
+  url: https://solana-mainnet.g.alchemy.com/v2/{{api_key}}
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "jsonrpc": "2.0",
+    "id": "bru",
+    "method": "requestAirdrop",
+    "params": [
+      "GwsPP9HHhCvEQeu3HTFzsVL6DEtnnYw4ALEtA3fMBC9Q",
+      1000000000000000000
+    ]
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}
+
+docs {
+  Requests an airdrop of lamports to a Pubkey.
+  
+  **Args**:
+  - Pubkey (required): The Pubkey of the account to receive lamports
+  - Lamports (required): The number of lamports to airdrop, as a "u64"
+  - Configuration (optional): Optional configuration object
+  
+  **Returns**: Transaction Signature of the airdrop
+}

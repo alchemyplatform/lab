@@ -1,0 +1,48 @@
+meta {
+  name: debug_getRawHeader
+  type: http
+  seq: 23
+}
+
+post {
+  url: https://eth-mainnet.g.alchemy.com/v2/{{api_key}}
+  body: json
+  auth: none
+}
+
+headers {
+  Content-Type: application/json
+}
+
+body:json {
+  {
+    "jsonrpc": "2.0",
+    "id": "bru",
+    "method": "debug_getRawHeader",
+    "params": [
+      "latest"
+    ]
+  }
+}
+
+docs {
+  Returns an RLP-encoded header.
+  
+  This method returns the raw RLP-encoded block header, useful for header analysis.
+  
+  Parameters:
+  - `block`: Block number (hex), hash (hex), or tag ("latest", "earliest", "pending").
+  
+  Returns:
+  - `string`: RLP-encoded header data as hex string.
+  
+  Example:
+  ```json
+  {
+    "jsonrpc": "2.0",
+    "id": "bru",
+    "method": "debug_getRawHeader",
+    "params": ["latest"]
+  }
+  ```
+}

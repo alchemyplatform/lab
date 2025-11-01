@@ -1,0 +1,75 @@
+meta {
+  name: replace-policy
+  type: http
+}
+
+put {
+  url: https://api.g.alchemy.com/v1/gas-manager/policy/{{policy_id}}
+  body: json
+  auth: inherit
+}
+
+headers {
+  Authorization: Bearer {{gas_manager_api_key}}
+  Content-Type: application/json
+}
+
+body:json {
+  {
+    "name": "Updated Gas Policy",
+    "type": "sponsored",
+    "rules": [
+      {
+        "type": "spending_limit",
+        "maxSpend": "200",
+        "period": "daily"
+      },
+      {
+        "type": "allowed_addresses",
+        "addresses": [
+          "0xd8dA6BF26964aF9D7eEd9e03e53415D37aA96045",
+          "0x742d35Cc6634C0532925a3b844Bc9e7595f0bEb"
+        ]
+      }
+    ]
+  }
+}
+
+settings {
+  encodeUrl: true
+}
+
+docs {
+  Replaces all rules in an existing policy by id.
+  
+  **Use cases**:
+  - Updating policy configuration
+  - Modifying spending limits and restrictions
+  - Changing policy rules based on business needs
+  
+  **Args**:
+  - URL parameter:
+    - `policy_id`: The unique identifier of the policy to update
+  - Request body containing:
+    - `name`: Updated policy name (optional)
+    - `type`: Policy type
+    - `rules`: Complete new array of rules (replaces all existing rules)
+  
+  **Returns**: Object containing:
+  - `policyId`: Policy unique identifier
+  - `name`: Updated policy name
+  - `type`: Policy type
+  - `rules`: New rules configuration
+  - `status`: Current status
+  - `updatedAt`: Timestamp of update
+  
+  **Edge cases & notes**:
+  - Requires Gas Manager API key authentication
+  - This is a full replacement - all existing rules are removed
+  - Policy status remains unchanged (active/inactive)
+  - Returns 404 if policy not found
+  - Validate rules before replacement to avoid disruption
+  
+  **Documentation**: https://www.alchemy.com/docs/wallets/api-reference/gas-manager-admin-api/admin-api-endpoints/replace-policy
+}
+

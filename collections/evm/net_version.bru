@@ -1,0 +1,40 @@
+meta {
+  name: net_version
+  type: http
+  seq: 2
+}
+
+post {
+  url: https://eth-mainnet.g.alchemy.com/v2/{{api_key}}
+  body: json
+  auth: none
+}
+
+headers {
+  Content-Type: application/json
+}
+
+body:json {
+  {
+    "jsonrpc": "2.0",
+    "id": "bru",
+    "method": "net_version",
+    "params": []
+  }
+}
+
+docs {
+  Returns the current network ID.
+  
+  Returns the current network ID as a string.
+  
+  Common network IDs:
+  - "1": Ethereum Mainnet
+  - "3": Ropsten Testnet (deprecated)
+  - "4": Rinkeby Testnet (deprecated)
+  - "5": Goerli Testnet
+  - "11155111": Sepolia Testnet
+  - "137": Polygon Mainnet
+  
+  Note: Network ID can be different from Chain ID in some cases.
+}

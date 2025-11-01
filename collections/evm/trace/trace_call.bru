@@ -1,0 +1,60 @@
+meta {
+  name: trace_call
+  type: http
+  seq: 1
+}
+
+post {
+  url: https://eth-mainnet.g.alchemy.com/v2/{{api_key}}
+  body: json
+  auth: none
+}
+
+headers {
+  Content-Type: application/json
+}
+
+body:json {
+  {
+    "jsonrpc": "2.0",
+    "id": "bru",
+    "method": "trace_call",
+    "params": [
+      {
+        "to": "0x2bd2326c993dfaef84f696526064ff22eba5b362",
+        "data": "0x16c72721"
+      },
+      ["trace"],
+      "latest"
+    ]
+  }
+}
+
+docs {
+  Executes a call and returns a trace of the execution.
+  
+  This method performs an ad-hoc trace of a hypothetical transaction call.
+  
+  Parameters:
+  - `call`: Transaction call object.
+    - `to`: Target address.
+    - `data`: Input data for the call.
+    - `from` (optional): Sender address.
+    - `value` (optional): Value to send.
+    - `gas` (optional): Gas limit.
+  - `trace_types`: Array of trace types ("trace", "vmTrace", "stateDiff").
+  - `block`: Block number (hex), hash, or tag ("latest", "earliest", "pending").
+  
+  Returns:
+  - `object`: TraceResults object with requested trace data.
+  
+  Example:
+  ```json
+  {
+    "jsonrpc": "2.0",
+    "id": "bru",
+    "method": "trace_call",
+    "params": [{"to": "0x2bd2326c993dfaef84f696526064ff22eba5b362", "data": "0x16c72721"}, ["trace"], "latest"]
+  }
+  ```
+}

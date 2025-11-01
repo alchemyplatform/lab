@@ -1,0 +1,33 @@
+meta {
+  name: eth_maxPriorityFeePerGas
+  type: http
+  seq: 18
+}
+
+post {
+  url: https://eth-mainnet.g.alchemy.com/v2/{{api_key}}
+  body: json
+  auth: none
+}
+
+headers {
+  Content-Type: application/json
+}
+
+body:json {
+  {
+    "jsonrpc": "2.0",
+    "id": "bru",
+    "method": "eth_maxPriorityFeePerGas",
+    "params": []
+  }
+}
+
+docs {
+  Returns the current max priority fee per gas (EIP-1559).
+  
+  Returns the suggested priority fee to include in a transaction to be included in a reasonable amount of time.
+  This is the tip that gets paid directly to miners/validators.
+  
+  Used in conjunction with the base fee to construct EIP-1559 transactions.
+}

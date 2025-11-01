@@ -1,0 +1,54 @@
+meta {
+  name: Encode Submission
+  type: http
+  seq: 25
+}
+
+post {
+  url: https://aptos-mainnet.g.alchemy.com/v2/{{api_key}}/v1/transactions/encode_submission
+  body: json
+  auth: none
+}
+
+headers {
+  Content-Type: application/json
+}
+
+body:json {
+  {
+    "sender": "0x1",
+    "sequence_number": "0",
+    "max_gas_amount": "1000",
+    "gas_unit_price": "1",
+    "expiration_timestamp_secs": "1234567890",
+    "payload": {
+      "type": "entry_function_payload",
+      "function": "0x1::aptos_account::transfer",
+      "type_arguments": [],
+      "arguments": ["0x2", "1000"]
+    }
+  }
+}
+
+docs {
+  Encodes a transaction submission request as BCS-encoded bytes.
+  
+  Body:
+  - Unsigned transaction in JSON format (without signature)
+  
+  Returns:
+  - BCS-encoded transaction bytes as hex string
+  
+  This endpoint is useful for:
+  - Generating the signing message for hardware wallets
+  - Creating the transaction payload before signing
+  - Preparing transactions for offline signing
+  
+  Workflow:
+  1. Call this endpoint with your unsigned transaction
+  2. Sign the returned bytes with your private key
+  3. Submit the signed transaction via submit_transaction
+  
+  https://fullnode.mainnet.aptoslabs.com/v1/spec#/operations/encode_submission
+}
+

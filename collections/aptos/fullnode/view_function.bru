@@ -1,0 +1,48 @@
+meta {
+  name: View Function
+  type: http
+  seq: 9
+}
+
+post {
+  url: https://aptos-mainnet.g.alchemy.com/v2/{{api_key}}/v1/view
+  body: json
+  auth: none
+}
+
+headers {
+  Content-Type: application/json
+}
+
+body:json {
+  {
+    "function": "0x1::coin::balance",
+    "type_arguments": [
+      "0x1::aptos_coin::AptosCoin"
+    ],
+    "arguments": [
+      "0x1"
+    ]
+  }
+}
+
+docs {
+  Executes a Move view function without creating a transaction.
+  
+  Body:
+  - function: Fully qualified function name in format "address::module_name::function_name"
+  - type_arguments: Type arguments for generic functions
+  - arguments: Function arguments
+  
+  Query Parameters:
+  - ledger_version (uint64, optional): Ledger version to run the function at
+  
+  Returns:
+  - Array of return values from the view function
+  
+  View functions are read-only and don't modify blockchain state.
+  They're useful for querying data without gas costs.
+  
+  https://fullnode.mainnet.aptoslabs.com/v1/spec#/operations/view
+}
+

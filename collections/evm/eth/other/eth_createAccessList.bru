@@ -1,0 +1,41 @@
+meta {
+  name: eth_createAccessList
+  type: http
+  seq: 4
+}
+
+post {
+  url: https://eth-mainnet.g.alchemy.com/v2/{{api_key}}
+  body: json
+  auth: none
+}
+
+headers {
+  Content-Type: application/json
+}
+
+body:json {
+  {
+    "jsonrpc": "2.0",
+    "id": "bru",
+    "method": "eth_createAccessList",
+    "params": [
+      {
+        "from": "0x8ba1f109551bD432803012645Hac136c",
+        "data": "0x608060405234801561001057600080fd5b50610157806100206000396000f30060806040526004361061004c576000357c0100000000000000000000000000000000000000000000000000000000900463ffffffff1680632e64cec11461005157806370a0823114610086575b600080fd5b34801561005d57600080fd5b50610066610103565b6040518082815260200191505060405180910390f35b34801561009257600080fd5b506100ed600480360381019080803573ffffffffffffffffffffffffffffffffffffffff169060200190929190505050610109565b6040518082815260200191505060405180910390f35b60005481565b60016020528060005260406000206000915090505481565b0000a165627a7a72305820f85b40d5ad70d0b3599200515915dca3074bcf609f27660845ecf48a7165f3770029"
+      },
+      "latest"
+    ]
+  }
+}
+
+docs {
+  Creates an access list for a transaction (EIP-2930).
+  
+  Parameters:
+  1. Object - Transaction call object (same as eth_call)
+  2. QUANTITY|TAG - integer block number, or the string "latest", "earliest" or "pending"
+  
+  Returns an access list and gas used. The access list contains addresses and storage keys
+  that the transaction plans to access, allowing for gas cost reduction in EIP-2930 transactions.
+}

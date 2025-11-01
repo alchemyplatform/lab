@@ -1,0 +1,50 @@
+meta {
+  name: trace_get
+  type: http
+  seq: 4
+}
+
+post {
+  url: https://eth-mainnet.g.alchemy.com/v2/{{api_key}}
+  body: json
+  auth: none
+}
+
+headers {
+  Content-Type: application/json
+}
+
+body:json {
+  {
+    "jsonrpc": "2.0",
+    "id": "bru",
+    "method": "trace_get",
+    "params": [
+      "0x17104ac9d3312d8c136b7f44d4b8b47852618065ebfa534bd2d3b5ef218ca1f3",
+      ["0x0"]
+    ]
+  }
+}
+
+docs {
+  Returns trace at the given position within a transaction.
+  
+  This method retrieves a specific trace from a transaction's execution tree.
+  
+  Parameters:
+  - `tx_hash`: Transaction hash as hex string.
+  - `indices`: Array of trace indices specifying the position in the call tree.
+  
+  Returns:
+  - `object`: LocalizedTransactionTrace object at the specified position.
+  
+  Example:
+  ```json
+  {
+    "jsonrpc": "2.0",
+    "id": "bru",
+    "method": "trace_get",
+    "params": ["0x17104ac9d3312d8c136b7f44d4b8b47852618065ebfa534bd2d3b5ef218ca1f3", ["0x0"]]
+  }
+  ```
+}

@@ -1,0 +1,34 @@
+meta {
+  name: getBlockProduction
+  type: http
+  seq: 7
+}
+
+post {
+  url: https://solana-mainnet.g.alchemy.com/v2/{{api_key}}
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "jsonrpc": "2.0",
+    "id": "bru",
+    "method": "getBlockProduction",
+    "params": []
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}
+
+docs {
+  Returns recent block production information from the current or previous epoch.
+  
+  **Args**:
+  - Configuration (optional): Optional configuration object containing additional settings
+  
+  **Returns**: Block production information for the specified range
+}

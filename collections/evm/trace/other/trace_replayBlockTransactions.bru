@@ -1,0 +1,50 @@
+meta {
+  name: trace_replayBlockTransactions
+  type: http
+  seq: 7
+}
+
+post {
+  url: https://eth-mainnet.g.alchemy.com/v2/{{api_key}}
+  body: json
+  auth: none
+}
+
+headers {
+  Content-Type: application/json
+}
+
+body:json {
+  {
+    "jsonrpc": "2.0",
+    "id": "bru",
+    "method": "trace_replayBlockTransactions",
+    "params": [
+      "latest",
+      ["trace"]
+    ]
+  }
+}
+
+docs {
+  Replays all transactions in a block and returns their traces.
+  
+  This method replays block transactions and provides detailed trace information.
+  
+  Parameters:
+  - `block`: Block number (hex), hash, or tag ("latest", "earliest", "pending").
+  - `trace_types`: Array of trace types ("trace", "vmTrace", "stateDiff").
+  
+  Returns:
+  - `array`: Array of TraceResults objects, one for each transaction in the block.
+  
+  Example:
+  ```json
+  {
+    "jsonrpc": "2.0",
+    "id": "bru",
+    "method": "trace_replayBlockTransactions",
+    "params": ["latest", ["trace"]]
+  }
+  ```
+}

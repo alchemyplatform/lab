@@ -1,0 +1,43 @@
+meta {
+  name: getblock
+  type: http
+  seq: 2
+}
+
+post {
+  url: https://bitcoin-mainnet.g.alchemy.com/v2/{{api_key}}
+  body: json
+  auth: basic
+}
+
+headers {
+  Content-Type: application/json
+}
+
+auth:basic {
+  username: {{rpcUser}}
+  password: {{rpcPassword}}
+}
+
+body:json {
+  {
+    "jsonrpc": "1.0",
+    "id": "bru",
+    "method": "getblock",
+    "params": [
+      "00000000c937983704a73af28acdec37b049d214adbda81d7e2a3dd146f6ed09",
+      2
+    ]
+  }
+}
+
+docs {
+  Returns details of the block with the given block hash.
+  
+  Parameters:
+  1. blockhash (string, required) - The block hash
+  2. verbosity (numeric, optional, default=1) - 0 for hex-encoded data, 1 for a json object, 2 for json object with transaction data
+  
+  Example uses verbosity=2 to get full block details with transaction information.
+  Replace the block hash with an actual hash from your Bitcoin network.
+}

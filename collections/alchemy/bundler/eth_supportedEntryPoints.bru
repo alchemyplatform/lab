@@ -1,0 +1,34 @@
+meta {
+  name: eth_supportedEntryPoints
+  type: http
+}
+
+post {
+  url: https://eth-mainnet.g.alchemy.com/v2/{{api_key}}
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "jsonrpc": "2.0",
+    "id": 1,
+    "method": "eth_supportedEntryPoints",
+    "params": []
+  }
+}
+
+settings {
+  encodeUrl: true
+}
+
+docs {
+  Returns a list of Entrypoint contract addresses supported by the bundler endpoints.
+  
+  Args: None
+  
+  Returns: Array of supported EntryPoint contract addresses
+  
+  Reference: https://www.alchemy.com/docs/wallets/api-reference/bundler-api/bundler-api-endpoints/eth-supported-entry-points
+}
+

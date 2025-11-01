@@ -1,0 +1,35 @@
+meta {
+  name: newHeads
+  type: ws
+  seq: 1
+}
+
+ws {
+  url: wss://eth-mainnet.g.alchemy.com/v2/{{api_key}}
+  body: ws
+  auth: inherit
+}
+
+body:ws {
+  name: message 1
+  type: json
+  content: '''
+    {
+      "jsonrpc": "2.0",
+      "id": "bru",
+      "method": "eth_subscribe",
+      "params": [
+        "newHeads"
+      ]
+    }
+  '''
+}
+
+docs {
+  The newHeads subscription type emits an event any time a new header (block) is added to the chain, including during a chain reorganization.
+  
+  Response includes an object about the new block emit, with properties such as the block hash, gas, nonce, stateRoot, and timestamp
+  
+  
+  https://www.alchemy.com/docs/reference/newheads
+}

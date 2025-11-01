@@ -1,0 +1,34 @@
+meta {
+  name: getLargestAccounts
+  type: http
+  seq: 23
+}
+
+post {
+  url: https://solana-mainnet.g.alchemy.com/v2/{{api_key}}
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "jsonrpc": "2.0",
+    "id": "bru",
+    "method": "getLargestAccounts",
+    "params": []
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}
+
+docs {
+  Returns the 20 largest accounts, by lamport balance.
+  
+  **Args**:
+  - Configuration (optional): Optional configuration object
+  
+  **Returns**: An array of objects containing the address of the account and its lamport balance
+}

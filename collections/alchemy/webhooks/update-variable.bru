@@ -1,0 +1,70 @@
+meta {
+  name: Update Variable
+  type: http
+  seq: 13
+}
+
+put {
+  url: https://dashboard.alchemy.com/api/graphql/variables/my_addresses
+  body: json
+  auth: inherit
+}
+
+headers {
+  X-Alchemy-Token: {{notify_auth_token}}
+  Content-Type: application/json
+}
+
+body:json {
+  {
+    "values_to_add": [
+      "0x6B175474E89094C44Da98b954EedeAC495271d0F",
+      "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
+    ],
+    "values_to_remove": [
+      "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48"
+    ]
+  }
+}
+
+settings {
+  encodeUrl: true
+}
+
+docs {
+  Updates a custom webhook variable by adding or removing values without replacing the entire list.
+  
+  **Use cases**:
+  - Incrementally add new addresses/hashes to track
+  - Remove values no longer needed
+  - Dynamic variable management
+  - Update shared variable configuration
+  - Manage large value lists efficiently
+  
+  **Args**:
+  - Path parameter:
+    - `variable`: Name of the custom webhook variable (in URL path)
+  - Request body:
+    - `values_to_add` (optional): Array of values to add to the variable
+    - `values_to_remove` (optional): Array of values to remove from the variable
+  
+  **Returns**: Success confirmation
+  - Updated variable status
+  - Confirmation of changes applied
+  
+  **Edge cases & notes**:
+  - Variable name in URL path (not query parameter)
+  - Can specify both add and remove in same request
+  - Values are case-insensitive for addresses (internally normalized)
+  - Adding duplicate value is ignored (idempotent)
+  - Removing non-existent value is ignored (idempotent)
+  - Empty arrays are valid - no operation performed
+  - Maximum 10,000 values per variable total
+  - Changes take effect immediately for all webhooks using this variable
+  - All webhooks referencing this variable are updated automatically
+  - Can add/remove up to 100 values per request
+  - Returns 404 if variable doesn't exist
+  
+  **Documentation**: https://www.alchemy.com/docs/data/webhooks/webhooks-api-endpoints/notify-api-endpoints/update-custom-webhook-variable
+}
+

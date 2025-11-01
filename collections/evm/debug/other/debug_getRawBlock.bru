@@ -1,0 +1,48 @@
+meta {
+  name: debug_getRawBlock
+  type: http
+  seq: 22
+}
+
+post {
+  url: https://eth-mainnet.g.alchemy.com/v2/{{api_key}}
+  body: json
+  auth: none
+}
+
+headers {
+  Content-Type: application/json
+}
+
+body:json {
+  {
+    "jsonrpc": "2.0",
+    "id": "bru",
+    "method": "debug_getRawBlock",
+    "params": [
+      "latest"
+    ]
+  }
+}
+
+docs {
+  Retrieves and returns the RLP encoded block by number, hash or tag.
+  
+  This method returns the raw RLP-encoded block data, useful for low-level analysis.
+  
+  Parameters:
+  - `block`: Block number (hex), hash (hex), or tag ("latest", "earliest", "pending").
+  
+  Returns:
+  - `string`: RLP-encoded block data as hex string.
+  
+  Example:
+  ```json
+  {
+    "jsonrpc": "2.0",
+    "id": "bru",
+    "method": "debug_getRawBlock",
+    "params": ["latest"]
+  }
+  ```
+}

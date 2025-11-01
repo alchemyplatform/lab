@@ -1,0 +1,82 @@
+meta {
+  name: create-policy
+  type: http
+}
+
+post {
+  url: https://api.g.alchemy.com/v1/gas-manager/policy
+  body: json
+  auth: inherit
+}
+
+headers {
+  Authorization: Bearer {{gas_manager_api_key}}
+  Content-Type: application/json
+}
+
+body:json {
+  {
+    "name": "My Gas Policy",
+    "type": "sponsored",
+    "rules": [
+      {
+        "type": "spending_limit",
+        "maxSpend": "100",
+        "period": "daily"
+      },
+      {
+        "type": "allowed_addresses",
+        "addresses": [
+          "0xd8dA6BF26964aF9D7eEd9e03e53415D37aA96045"
+        ]
+      },
+      {
+        "type": "chain_id",
+        "chainIds": [1, 137, 10]
+      }
+    ]
+  }
+}
+
+settings {
+  encodeUrl: true
+}
+
+docs {
+  Creates a new gas manager policy with the specified rules.
+  
+  **Use cases**:
+  - Programmatically creating gas sponsorship policies
+  - Automating policy setup for new applications
+  - Dynamic policy management based on business logic
+  
+  **Args**:
+  - Request body containing:
+    - `name`: Human-readable policy name
+    - `type`: Policy type ("sponsored" for gas sponsorship)
+    - `rules`: Array of policy rules (spending limits, allowed addresses, chain restrictions, etc.)
+  
+  **Returns**: Object containing:
+  - `policyId`: Unique identifier for the created policy
+  - `name`: Policy name
+  - `type`: Policy type
+  - `rules`: Configured rules
+  - `status`: Policy status (active/inactive)
+  - `createdAt`: Timestamp of policy creation
+  
+  **Rule Types**:
+  - `spending_limit`: Restrict gas spending by amount and period
+  - `allowed_addresses`: Whitelist specific wallet addresses
+  - `chain_id`: Limit to specific blockchain networks
+  - `contract_method`: Restrict to specific contract methods
+  - And more...
+  
+  **Edge cases & notes**:
+  - Requires Gas Manager API key authentication
+  - Policy is created in "inactive" status by default
+  - Use update-policy-status to activate after creation
+  - Rules are evaluated in order defined
+  
+  **Documentation**: https://www.alchemy.com/docs/wallets/api-reference/gas-manager-admin-api/admin-api-endpoints/create-policy
+}
+

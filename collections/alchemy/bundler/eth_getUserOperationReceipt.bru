@@ -1,0 +1,37 @@
+meta {
+  name: eth_getUserOperationReceipt
+  type: http
+}
+
+post {
+  url: https://eth-mainnet.g.alchemy.com/v2/{{api_key}}
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "jsonrpc": "2.0",
+    "id": 1,
+    "method": "eth_getUserOperationReceipt",
+    "params": [
+      "0x..."
+    ]
+  }
+}
+
+settings {
+  encodeUrl: true
+}
+
+docs {
+  Returns a user operation receipt (metadata associated with the given user operation) based on the given user operation hash. It returns [null] if the user operation has not yet been included.
+  
+  Args:
+  - userOpHash: The user operation hash
+  
+  Returns: User operation receipt metadata, or null if not yet included
+  
+  Reference: https://www.alchemy.com/docs/wallets/api-reference/bundler-api/bundler-api-endpoints/eth-get-user-operation-receipt
+}
+

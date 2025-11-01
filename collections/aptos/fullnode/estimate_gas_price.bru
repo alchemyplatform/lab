@@ -1,0 +1,38 @@
+meta {
+  name: Estimate Gas Price
+  type: http
+  seq: 26
+}
+
+get {
+  url: https://aptos-mainnet.g.alchemy.com/v2/{{api_key}}/v1/estimate_gas_price
+  body: none
+  auth: none
+}
+
+headers {
+  Content-Type: application/json
+}
+
+docs {
+  Get the current estimated gas price for transactions.
+  
+  Returns:
+  - gas_estimate: Current estimated gas unit price
+  - deprioritized_gas_estimate: Lower priority gas price (may take longer to include)
+  - prioritized_gas_estimate: Higher priority gas price (faster inclusion)
+  
+  This endpoint provides gas price estimates to help you set appropriate gas prices
+  for your transactions:
+  
+  - Use deprioritized_gas_estimate for non-urgent transactions
+  - Use gas_estimate for normal transactions
+  - Use prioritized_gas_estimate for urgent transactions
+  
+  The gas price affects:
+  - How quickly your transaction is included in a block
+  - The total transaction cost (gas_used * gas_unit_price)
+  
+  https://fullnode.mainnet.aptoslabs.com/v1/spec#/operations/estimate_gas_price
+}
+

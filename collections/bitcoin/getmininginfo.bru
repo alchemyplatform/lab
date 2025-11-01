@@ -1,0 +1,42 @@
+meta {
+  name: getmininginfo
+  type: http
+  seq: 11
+}
+
+post {
+  url: https://bitcoin-mainnet.g.alchemy.com/v2/{{api_key}}
+  body: json
+  auth: basic
+}
+
+headers {
+  Content-Type: application/json
+}
+
+auth:basic {
+  username: {{rpcUser}}
+  password: {{rpcPassword}}
+}
+
+body:json {
+  {
+    "jsonrpc": "1.0",
+    "id": "bru",
+    "method": "getmininginfo",
+    "params": []
+  }
+}
+
+docs {
+  Returns a JSON object containing mining-related information.
+  
+  Returns information including:
+  - Current block height and difficulty
+  - Network hash rate estimates
+  - Pool difficulty and target
+  - Chain work and warnings
+  - Mining status and errors
+  
+  Useful for monitoring mining operations and network difficulty.
+}

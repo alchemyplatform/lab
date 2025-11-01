@@ -1,0 +1,32 @@
+meta {
+  name: eth_accounts
+  type: http
+  seq: 1
+}
+
+post {
+  url: https://eth-mainnet.g.alchemy.com/v2/{{api_key}}
+  body: json
+  auth: none
+}
+
+headers {
+  Content-Type: application/json
+}
+
+body:json {
+  {
+    "jsonrpc": "2.0",
+    "id": "bru",
+    "method": "eth_accounts",
+    "params": []
+  }
+}
+
+docs {
+  Returns a list of addresses owned by client.
+  
+  Returns an array of 20 Bytes addresses owned by the client.
+  Note: This method is typically disabled on public nodes for security reasons.
+  Mainly used with local development nodes like Ganache or Hardhat.
+}

@@ -1,0 +1,35 @@
+meta {
+  name: Get Account Module
+  type: http
+  seq: 15
+}
+
+get {
+  url: https://aptos-mainnet.g.alchemy.com/v2/{{api_key}}/v1/accounts/0x1/module/coin
+  body: none
+  auth: none
+}
+
+headers {
+  Content-Type: application/json
+}
+
+docs {
+  Retrieves an individual module from a given account and at a specific ledger version.
+  
+  Path Parameters:
+  - address (string, required): Address of account with or without a 0x prefix
+  - module_name (string, required): Name of module to retrieve (e.g., "coin", "account")
+  
+  Query Parameters:
+  - ledger_version (uint64, optional): Ledger version to get state of account
+  
+  Returns MoveModuleBytecode object including:
+  - bytecode: The Move module bytecode
+  - abi: Module ABI with exposed functions, structs, and friends
+  
+  This endpoint is useful for inspecting a specific module's implementation.
+  
+  https://fullnode.mainnet.aptoslabs.com/v1/spec#/operations/get_account_module
+}
+

@@ -1,0 +1,75 @@
+meta {
+  name: Query Checkpoints
+  type: graphql
+  seq: 1
+}
+
+post {
+  url: https://graphql.mainnet.sui.io/graphql
+  body: graphql
+  auth: inherit
+}
+
+body:graphql {
+  query GetCheckpoints {
+    checkpoint(sequenceNumber: 203869583 ) {
+      sequenceNumber
+      timestamp
+      epoch {
+        epochId
+        referenceGasPrice
+      }
+      networkTotalTransactions
+      previousCheckpointDigest
+      validatorSignatures {
+        signature
+      }
+      transactions(first: 10) {
+        nodes {
+          digest
+          sender {
+            address
+          }
+          effects {
+            status
+            gasEffects {
+              gasSummary {
+                computationCost
+                storageCost
+                storageRebate
+              }
+            }
+          }
+        }
+        pageInfo {
+          hasNextPage
+          endCursor
+        }
+      }
+    }
+    checkpoints(first: 5, filter: {}) {
+      nodes {
+        sequenceNumber
+        timestamp
+        networkTotalTransactions
+      }
+      pageInfo {
+        hasNextPage
+        endCursor
+      }
+    }
+  }
+}
+
+docs {
+  Query checkpoint information using GraphQL.
+  
+  This query retrieves:
+  - Specific checkpoint by sequence number
+  - Checkpoint metadata (timestamp, epoch, transaction count)
+  - Transaction blocks in the checkpoint
+  - Recent checkpoints list
+  
+  **Variables:**
+  - sequenceNumber: The checkpoint sequence number to query
+}

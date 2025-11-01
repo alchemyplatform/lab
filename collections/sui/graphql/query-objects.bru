@@ -1,0 +1,63 @@
+meta {
+  name: Query Objects
+  type: graphql
+  seq: 7
+}
+
+post {
+  url: https://graphql.mainnet.sui.io/graphql
+  body: graphql
+  auth: inherit
+}
+
+body:graphql {
+  query GetObjects($owner: SuiAddress!) {
+    owner(address: $owner) {
+      objects(first: 10) {
+        nodes {
+          objectId
+          version
+          digest
+          storageRebate
+          owner {
+            __typename
+            ... on AddressOwner {
+              owner
+            }
+          }
+          asMoveObject {
+            contents {
+              type {
+                repr
+              }
+              data
+            }
+          }
+        }
+        pageInfo {
+          hasNextPage
+          endCursor
+        }
+      }
+    }
+  }
+}
+
+body:graphql:vars {
+  {
+    "owner": "0x94f1a597b4e8f709a396f7f6b1482bdcd65a673d111e49286c527fab7c2d0961"
+  }
+}
+
+docs {
+  Query objects owned by a specific address using GraphQL.
+  
+  This query retrieves:
+  - Basic object information (ID, version, digest, storage rebate)
+  - Owner information
+  - Move object contents including type and data
+  - Pagination information
+  
+  **Variables:**
+  - owner: The Sui address to query objects for
+}

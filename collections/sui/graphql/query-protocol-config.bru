@@ -1,0 +1,45 @@
+meta {
+  name: Query Protocol Config
+  type: graphql
+  seq: 8
+}
+
+post {
+  url: https://graphql.mainnet.sui.io/graphql
+  body: graphql
+  auth: inherit
+}
+
+body:graphql {
+  query GetProtocolConfig {
+    protocolConfigs(version: 100) {
+      protocolVersion
+      featureFlags {
+        key
+        value
+      }
+      configs {
+        key
+        value
+      }
+    }
+  }
+}
+
+body:graphql:vars {
+  {
+    "version": null
+  }
+}
+
+docs {
+  Query protocol configuration using GraphQL.
+  
+  This query retrieves:
+  - Protocol version
+  - Feature flags and their values
+  - Configuration parameters
+  
+  **Variables:**
+  - version: Optional protocol version (null for current version)
+}

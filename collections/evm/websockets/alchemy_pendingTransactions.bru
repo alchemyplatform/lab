@@ -1,0 +1,43 @@
+meta {
+  name: alchemy_pendingTransactions
+  type: ws
+  seq: 4
+}
+
+ws {
+  url: wss://eth-mainnet.g.alchemy.com/v2/{{api_key}}
+  body: ws
+  auth: inherit
+}
+
+body:ws {
+  name: message 1
+  type: json
+  content: '''
+    {
+      "jsonrpc": "2.0",
+      "id": "bru",
+      "method": "eth_subscribe",
+      "params": [
+        "alchemy_pendingTransactions",
+        {
+          "toAddress": [
+            "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+            "0xdAC17F958D2ee523a2206206994597C13D831ec7"
+          ],
+          "hashesOnly": false
+        }
+      ]
+    }
+  '''
+}
+
+docs {
+  The alchemy_pendingTransactions subscribes to pending transactions and filters those transactions based on specified from and/or to addresses. both fromAddress and toAddress properties in the params object of the message can be a single address or an array of addresses.
+  
+  The subscription will return either full transaction objects or just transaction hashes depending on the request.
+  
+  Documentation on the from/to filtering and response structure here
+  
+  https://www.alchemy.com/docs/reference/alchemy-pendingtransactions
+}

@@ -1,0 +1,50 @@
+meta {
+  name: Subscribe to Events
+  type: grpc
+  seq: 1
+}
+
+grpc {
+  url: https://sui-mainnet.g.alchemy.com/
+  method: /sui.SuiNode/SubscribeEvents
+  body: grpc
+  protoPath: grpc/sui.proto
+  auth: inherit
+  methodType: server-streaming
+}
+
+metadata {
+  x-api-key: {{api_key}}
+}
+
+body:grpc {
+  name: message 1
+  content: '''
+    {
+      "eventType": "0x2::coin::CoinMetadata",
+      "package": "0x2"
+    }
+  '''
+}
+
+docs {
+  Subscribe to a stream of events filtered by type, sender, package, or module using gRPC.
+  
+  **Filters available:**
+  - eventType: Filter by event type
+  - sender: Filter by sender address
+  - package: Filter by package ID
+  - module: Filter by module name
+  
+  **Returns:**
+  Stream of EventUpdate messages containing:
+  - eventType: Event type identifier
+  - packageId: Package that emitted the event
+  - module: Module name
+  - sender: Sender address
+  - transactionDigest: Transaction that emitted the event
+  - timestamp: Event timestamp
+  - json: Event data in JSON format
+  - bcs: Event data in BCS format
+}
+

@@ -1,0 +1,45 @@
+meta {
+  name: estimatesmartfee
+  type: http
+  seq: 13
+}
+
+post {
+  url: https://bitcoin-mainnet.g.alchemy.com/v2/{{api_key}}
+  body: json
+  auth: basic
+}
+
+headers {
+  Content-Type: application/json
+}
+
+auth:basic {
+  username: {{rpcUser}}
+  password: {{rpcPassword}}
+}
+
+body:json {
+  {
+    "jsonrpc": "1.0",
+    "id": "bru",
+    "method": "estimatesmartfee",
+    "params": [
+      6,
+      "CONSERVATIVE"
+    ]
+  }
+}
+
+docs {
+  Estimates the approximate fee per kilobyte needed for a transaction to begin confirmation within conf_target blocks.
+  
+  Parameters:
+  1. conf_target (numeric, required) - Confirmation target in blocks (1-1008)
+  2. estimate_mode (string, optional, default="CONSERVATIVE") - "UNSET", "ECONOMICAL", "CONSERVATIVE"
+  
+  Returns fee rate in BTC/kB and the number of blocks for which the estimate is valid.
+  
+  Example requests fee estimate for confirmation within 6 blocks using conservative estimation.
+  Essential for determining appropriate transaction fees.
+}

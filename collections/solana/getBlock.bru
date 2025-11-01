@@ -1,0 +1,47 @@
+meta {
+  name: getBlock
+  type: http
+  seq: 4
+}
+
+post {
+  url: https://solana-mainnet.g.alchemy.com/v2/{{api_key}}
+  body: json
+  auth: none
+}
+
+headers {
+  Content-Type: application/json
+}
+
+body:json {
+  {
+    "jsonrpc": "2.0",
+    "id": "bru",
+    "method": "getBlock",
+    "params": [
+      430,
+      {
+        "encoding": "jsonParsed",
+        "transactionDetails": "full",
+        "rewards": false,
+        "commitment": "finalized"
+      }
+    ]
+  }
+}
+
+docs {
+  Returns identity and transaction information about a confirmed block in the ledger.
+  
+  Parameters:
+  1. Slot (number, required) - Slot number, as u64 integer
+  2. Configuration object (optional):
+     - encoding: "json", "jsonParsed", "base58", "base64"
+     - transactionDetails: "full", "signatures", "none"
+     - rewards: boolean - whether to populate rewards array
+     - commitment: "finalized", "confirmed"
+  
+  Returns block information including transactions, block time, and parent slot.
+  Essential for analyzing block contents and transaction history.
+}

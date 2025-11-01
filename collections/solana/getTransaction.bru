@@ -1,0 +1,44 @@
+meta {
+  name: getTransaction
+  type: http
+  seq: 46
+}
+
+post {
+  url: https://solana-mainnet.g.alchemy.com/v2/{{api_key}}
+  body: json
+  auth: none
+}
+
+headers {
+  Content-Type: application/json
+}
+
+body:json {
+  {
+    "jsonrpc": "2.0",
+    "id": "bru",
+    "method": "getTransaction",
+    "params": [
+      "2nBhEBYYvfaAe16UMNqRHre4YNSskvuYgx3M6E4JP1oDYvZEJHvoPzyUidNgNX5r9sTyN1J9UxtbCXy2rqYcuyuv",
+      {
+        "encoding": "jsonParsed",
+        "commitment": "finalized"
+      }
+    ]
+  }
+}
+
+docs {
+  Returns transaction details for a confirmed transaction.
+  
+  Parameters:
+  1. Transaction Signature (string, required) - Transaction signature as base-58 encoded string
+  2. Configuration object (optional):
+     - encoding: "json", "jsonParsed", "base58", "base64"
+     - commitment: "finalized", "confirmed"
+     - maxSupportedTransactionVersion: number
+  
+  Returns detailed transaction information including instructions, accounts, and results.
+  Essential for transaction analysis and debugging.
+}

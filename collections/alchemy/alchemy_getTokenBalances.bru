@@ -1,0 +1,59 @@
+meta {
+  name: alchemy_getTokenBalances
+  type: http
+  seq: 7
+}
+
+post {
+  url: https://eth-mainnet.g.alchemy.com/v2/{{api_key}}
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "jsonrpc": "2.0",
+    "id": "bru",
+    "method": "alchemy_getTokenBalances",
+    "params": [
+      "0xd8dA6BF26964aF9D7eEd9e03e53415D37aA96045",
+      [
+        "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+        "0x6B175474E89094C44Da98b954EedeAC495271d0F"
+      ]
+    ]
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}
+
+docs {
+  Alchemy Enhanced API method that returns ERC-20 token balances for a given address. More efficient than multiple individual eth_call requests for token balance queries.
+  
+  **Use cases**:
+  - Wallet portfolio display and management
+  - DeFi protocol balance aggregation
+  - Multi-token balance monitoring
+  - Asset management and accounting systems
+  - Token holder analysis and research
+  - Portfolio tracking applications
+  
+  **Args**:
+  - address: 20-byte Ethereum address to query balances for
+  - contractAddresses: Array of ERC-20 token contract addresses, or 'DEFAULT_TOKENS' for popular tokens
+  
+  **Returns**: Object with address and tokenBalances array:
+  - Each balance includes contractAddress, tokenBalance, and error (if any)
+  - Automatically includes token metadata when available
+  - Zero balances are included in results
+  
+  **Edge cases & notes**:
+  - Much faster than individual balanceOf calls for multiple tokens
+  - 'DEFAULT_TOKENS' includes popular tokens like USDC, USDT, DAI, WETH
+  - Returns error field for invalid or non-ERC-20 contracts
+  - Balances returned in token's native decimals (not normalized)
+  - Maximum of 100 tokens per request to prevent timeouts
+}

@@ -1,0 +1,48 @@
+meta {
+  name: debug_getRawTransaction
+  type: http
+  seq: 25
+}
+
+post {
+  url: https://eth-mainnet.g.alchemy.com/v2/{{api_key}}
+  body: json
+  auth: none
+}
+
+headers {
+  Content-Type: application/json
+}
+
+body:json {
+  {
+    "jsonrpc": "2.0",
+    "id": "bru",
+    "method": "debug_getRawTransaction",
+    "params": [
+      "0x88df016429689c079f3b2f6ad39fa052532c56795b733da78a91ebe6a713944b"
+    ]
+  }
+}
+
+docs {
+  Returns an EIP-2718 binary-encoded transaction.
+  
+  This method returns the raw transaction data in EIP-2718 format.
+  
+  Parameters:
+  - `tx_hash`: Transaction hash as hex string.
+  
+  Returns:
+  - `string`: EIP-2718 binary-encoded transaction as hex string.
+  
+  Example:
+  ```json
+  {
+    "jsonrpc": "2.0",
+    "id": "bru",
+    "method": "debug_getRawTransaction",
+    "params": ["0x88df016429689c079f3b2f6ad39fa052532c56795b733da78a91ebe6a713944b"]
+  }
+  ```
+}

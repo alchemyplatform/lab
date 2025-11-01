@@ -1,0 +1,55 @@
+meta {
+  name: Get ANS Name
+  type: graphql
+  seq: 3
+}
+
+post {
+  url: https://api.mainnet.aptoslabs.com/v1/graphql
+  body: graphql
+  auth: none
+}
+
+headers {
+  Content-Type: application/json
+}
+
+body:graphql {
+  query GetANSName($address: String) {
+    current_aptos_names(
+      where: {owner_address: {_eq: $address}, is_primary: {_eq: true}}
+    ) {
+      domain
+      subdomain
+      expiration_timestamp
+      owner_address
+      registered_address
+    }
+  }
+}
+
+body:graphql:vars {
+  {
+    "address": "0x1"
+  }
+}
+
+docs {
+  Retrieve the Aptos Name Service (ANS) name associated with an account.
+  
+  Variables:
+  - address: The account address to look up
+  
+  Returns:
+  - domain: The domain name (e.g., "example")
+  - subdomain: The subdomain (if any)
+  - expiration_timestamp: When the name expires
+  - owner_address: Current owner of the name
+  - registered_address: Originally registered address
+  
+  ANS provides human-readable names for Aptos addresses, similar to ENS on Ethereum.
+  This query returns the primary name associated with an address.
+  
+  https://aptos.dev/build/indexer/indexer-api/ans-lookup
+}
+

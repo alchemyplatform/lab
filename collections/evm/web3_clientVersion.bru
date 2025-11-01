@@ -1,0 +1,35 @@
+meta {
+  name: web3_clientVersion
+  type: http
+  seq: 3
+}
+
+post {
+  url: https://eth-mainnet.g.alchemy.com/v2/{{api_key}}
+  body: json
+  auth: none
+}
+
+headers {
+  Content-Type: application/json
+}
+
+body:json {
+  {
+    "jsonrpc": "2.0",
+    "id": "bru",
+    "method": "web3_clientVersion",
+    "params": []
+  }
+}
+
+docs {
+  Returns the current client version.
+  
+  Returns a string identifying the client software and version.
+  
+  Examples of client versions:
+  - "Geth/v1.10.26-stable/linux-amd64/go1.18.5"
+  - "Besu/v22.7.0/linux-x86_64/openjdk-java-11"
+  - "Nethermind/v1.14.1+commit.12345678/linux-x64"
+}

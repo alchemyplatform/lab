@@ -1,0 +1,47 @@
+meta {
+  name: Get Table Item
+  type: http
+  seq: 19
+}
+
+post {
+  url: https://aptos-mainnet.g.alchemy.com/v2/{{api_key}}/v1/tables/{table_handle}/item
+  body: json
+  auth: none
+}
+
+headers {
+  Content-Type: application/json
+}
+
+body:json {
+  {
+    "key_type": "address",
+    "value_type": "0x1::coin::CoinStore<0x1::aptos_coin::AptosCoin>",
+    "key": "0x1"
+  }
+}
+
+docs {
+  Get a table item by its key from a table identified by the handle.
+  
+  Path Parameters:
+  - table_handle (string, required): Table handle hex string (e.g., from a resource)
+  
+  Body:
+  - key_type: The type of the table key (e.g., "address", "u64")
+  - value_type: The type of the table value (Move type string)
+  - key: The key of the item to retrieve
+  
+  Query Parameters:
+  - ledger_version (uint64, optional): Ledger version to get state of account
+  
+  Returns:
+  - The table item value as JSON
+  
+  Tables are used for efficient key-value storage on-chain.
+  Common use cases include token balances, NFT collections, and mappings.
+  
+  https://fullnode.mainnet.aptoslabs.com/v1/spec#/operations/get_table_item
+}
+

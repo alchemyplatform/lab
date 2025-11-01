@@ -1,0 +1,71 @@
+meta {
+  name: Get NFT Collections
+  type: graphql
+  seq: 5
+}
+
+post {
+  url: https://api.mainnet.aptoslabs.com/v1/graphql
+  body: graphql
+  auth: none
+}
+
+headers {
+  Content-Type: application/json
+}
+
+body:graphql {
+  query GetNFTCollections($owner_address: String, $limit: Int, $offset: Int) {
+    current_collection_ownership_v2_view(
+      where: {owner_address: {_eq: $owner_address}}
+      limit: $limit
+      offset: $offset
+      order_by: {last_transaction_version: desc}
+    ) {
+      collection_id
+      collection_name
+      collection_uri
+      creator_address
+      distinct_tokens
+      last_transaction_version
+      owner_address
+      single_token_uri
+      current_collection {
+        description
+        max_supply
+        total_minted_v2
+        uri
+      }
+    }
+  }
+}
+
+body:graphql:vars {
+  {
+    "owner_address": "0x1",
+    "limit": 10,
+    "offset": 0
+  }
+}
+
+docs {
+  Retrieve NFT collections owned by a specific account.
+  
+  Variables:
+  - owner_address: The account address to query
+  - limit: Number of collections to return
+  - offset: Pagination offset
+  
+  Returns:
+  - collection_id: Unique identifier for the collection
+  - collection_name: Name of the collection
+  - collection_uri: Metadata URI for the collection
+  - creator_address: Address of the collection creator
+  - distinct_tokens: Number of distinct tokens owned in this collection
+  - current_collection: Additional collection metadata including description and supply info
+  
+  This query shows all NFT collections that an account has tokens from.
+  
+  https://aptos.dev/build/indexer/indexer-api/nft-collections
+}
+

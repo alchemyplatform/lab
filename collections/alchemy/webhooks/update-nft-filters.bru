@@ -1,0 +1,74 @@
+meta {
+  name: Update NFT Filters
+  type: http
+  seq: 9
+}
+
+put {
+  url: https://dashboard.alchemy.com/api/update-webhook-nft-filters
+  body: json
+  auth: inherit
+}
+
+headers {
+  X-Alchemy-Token: {{notify_auth_token}}
+  Content-Type: application/json
+}
+
+body:json {
+  {
+    "webhook_id": "wh_example123",
+    "nft_filters": [
+      {
+        "contract_address": "0xBC4CA0EdA7647A8aB7C2061c2E118A18a936f13D"
+      },
+      {
+        "contract_address": "0xb47e3cd837dDF8e4c57F05d70Ab865de6e193BBB",
+        "token_id": "1234"
+      }
+    ]
+  }
+}
+
+settings {
+  encodeUrl: true
+}
+
+docs {
+  Updates NFT filters for an NFT Activity webhook by replacing all existing filters.
+  
+  **Use cases**:
+  - Bulk update NFT collection tracking
+  - Reset webhook to track different NFT collections
+  - Update filter configuration atomically
+  - Track specific NFTs or entire collections
+  - Manage NFT monitoring at scale
+  
+  **Request body**:
+  - `webhook_id` (required): ID of the NFT Activity webhook
+  - `nft_filters` (required): Array of NFT filter objects (replaces all existing)
+    - Each filter object:
+      - `contract_address` (required): NFT collection contract address
+      - `token_id` (optional): Specific token ID (omit to track all tokens in collection)
+  
+  **Returns**: Updated webhook configuration
+  - `data`: Webhook object with new NFT filters
+    - All webhook properties included
+    - Updated filter count reflected
+  
+  **Edge cases & notes**:
+  - Only works with NFT_ACTIVITY webhook type
+  - THIS REPLACES ALL EXISTING FILTERS - previous filters are discarded
+  - Empty array clears all filters (webhook receives no events)
+  - Filter without token_id tracks ALL tokens in that collection
+  - Filter with token_id tracks only that specific NFT
+  - Can mix collection-wide and token-specific filters
+  - Contract addresses are case-insensitive (internally normalized)
+  - Maximum 1000 filters per webhook
+  - Changes take effect immediately
+  - Supports both ERC721 and ERC1155 tokens
+  - Operation is atomic - all or nothing
+  
+  **Documentation**: https://www.alchemy.com/docs/data/webhooks/webhooks-api-endpoints/notify-api-endpoints/update-webhook-nft-filters
+}
+

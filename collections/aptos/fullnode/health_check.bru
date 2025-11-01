@@ -1,0 +1,33 @@
+meta {
+  name: Health Check
+  type: http
+  seq: 11
+}
+
+get {
+  url: https://aptos-mainnet.g.alchemy.com/v2/{{api_key}}/v1/-/healthy
+  body: none
+  auth: none
+}
+
+headers {
+  Content-Type: application/json
+}
+
+docs {
+  Check basic node health.
+  
+  Query Parameters:
+  - duration_secs (uint64, optional): Threshold in seconds to determine if the node is healthy
+  
+  Returns:
+  - 200 if healthy
+  - 503 if unhealthy
+  
+  The node is considered healthy if:
+  - The latest ledger info timestamp is within the duration_secs threshold
+  - The node is not too far behind the latest known version
+  
+  https://fullnode.mainnet.aptoslabs.com/v1/spec#/operations/healthy
+}
+

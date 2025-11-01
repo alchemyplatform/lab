@@ -1,0 +1,36 @@
+meta {
+  name: eth_getFilterChanges
+  type: http
+  seq: 10
+}
+
+post {
+  url: https://eth-mainnet.g.alchemy.com/v2/{{api_key}}
+  body: json
+  auth: none
+}
+
+headers {
+  Content-Type: application/json
+}
+
+body:json {
+  {
+    "jsonrpc": "2.0",
+    "id": "bru",
+    "method": "eth_getFilterChanges",
+    "params": [
+      "0x16"
+    ]
+  }
+}
+
+docs {
+  Polling method for a filter, which returns an array of logs which occurred since last poll.
+  
+  Parameters:
+  1. QUANTITY - the filter id returned by eth_newFilter, eth_newBlockFilter or eth_newPendingTransactionFilter
+  
+  Returns an array of logs or block hashes depending on the filter type.
+  Must be called regularly to prevent filter timeout.
+}

@@ -1,0 +1,40 @@
+meta {
+  name: eth_uninstallFilter
+  type: http
+  seq: 19
+}
+
+post {
+  url: https://eth-mainnet.g.alchemy.com/v2/{{api_key}}
+  body: json
+  auth: none
+}
+
+headers {
+  Content-Type: application/json
+}
+
+body:json {
+  {
+    "jsonrpc": "2.0",
+    "id": "bru",
+    "method": "eth_uninstallFilter",
+    "params": [
+      "0xb"
+    ]
+  }
+}
+
+docs {
+  Uninstalls a filter with given id.
+  
+  Parameters:
+  1. QUANTITY - the filter id returned by eth_newFilter, eth_newBlockFilter or eth_newPendingTransactionFilter
+  
+  Returns true if the filter was successfully uninstalled, otherwise false.
+  Should always be called when work with a filter is complete to free up resources.
+  
+    **Edge cases & notes**:
+  - Filter IDs are ephemeral and may expire if not polled.
+  - Prefer eth_getLogs for historical ranges.
+}

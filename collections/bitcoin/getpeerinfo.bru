@@ -1,0 +1,40 @@
+meta {
+  name: getpeerinfo
+  type: http
+  seq: 6
+}
+
+post {
+  url: https://bitcoin-mainnet.g.alchemy.com/v2/{{api_key}}
+  body: json
+  auth: basic
+}
+
+headers {
+  Content-Type: application/json
+}
+
+auth:basic {
+  username: {{rpcUser}}
+  password: {{rpcPassword}}
+}
+
+body:json {
+  {
+    "jsonrpc": "1.0",
+    "id": "bru",
+    "method": "getpeerinfo",
+    "params": []
+  }
+}
+
+docs {
+  Returns data about each connected network node as an array of objects.
+  
+  Returns detailed information for each peer including:
+  - Peer ID, address, and connection details
+  - Services offered and protocol version
+  - Connection time and last send/receive
+  - Bytes sent/received and ping times
+  - Sync status and block heights
+}

@@ -1,0 +1,32 @@
+meta {
+  name: Get Account Resources
+  type: http
+  seq: 2
+}
+
+get {
+  url: https://aptos-mainnet.g.alchemy.com/v2/{{api_key}}/v1/accounts/0x1/resources
+  body: none
+  auth: none
+}
+
+headers {
+  Content-Type: application/json
+}
+
+docs {
+  Retrieves all account resources for a given account at a specific ledger version.
+  
+  Path Parameters:
+  - address (string, required): Address of account with or without a 0x prefix
+  
+  Query Parameters:
+  - ledger_version (uint64, optional): Ledger version to get state of account
+  - start (string, optional): Cursor specifying where to start for pagination
+  - limit (uint16, optional): Max number of account resources to retrieve
+  
+  Returns array of account resources including type and data.
+  
+  https://fullnode.mainnet.aptoslabs.com/v1/spec#/operations/get_account_resources
+}
+

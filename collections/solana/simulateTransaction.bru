@@ -1,0 +1,53 @@
+meta {
+  name: simulateTransaction
+  type: http
+  seq: 54
+}
+
+post {
+  url: https://solana-mainnet.g.alchemy.com/v2/{{api_key}}
+  body: json
+  auth: none
+}
+
+headers {
+  Content-Type: application/json
+}
+
+body:json {
+  {
+    "jsonrpc": "2.0",
+    "id": "bru",
+    "method": "simulateTransaction",
+    "params": [
+      "4hXTCkRzt9WyecNzV1XPgCDfGAZzQKNxLXgynz5QDuWWPSAZBZSHptvWRL3BjCvzUXRdKvHL2b7yGrRQcWyaqsaBCncVG7BFggS8w9snUts67BSh3EqKpXLUm5UMHfD7ZBe9GhARjbNQMLJ1QD3Spr6oMTBU6EhdB4RD8CP2xUxr2u3d6fos36PD98XS6oX8VkjRC3tuFoQiJh3XtR96jfRBiSwKb4uhb1dqWT6JKUgsbDdXR5yxEyW2cgAQZbbJMhLjUca1o6cmNSRvBYHd6YDiBBusAQn9kP4BCbC5CyeeLr6sor4UbQiNNRCRpw87VpEJnmzJrLFqPaNOM7d4Vbb6SfZZMTWHgiPuLiNJQJ02JI54LkwKaEXvcdsP22a8X7Tg6ihqYKsHSMSMjF5KkvBCGsqDw7JMIEM9fTaIhVe1idUWfVa2tP2haTDyUZck9EqGV9dYqXFgMvfK",
+      {
+        "encoding": "base64",
+        "commitment": "processed",
+        "sigVerify": true,
+        "replaceRecentBlockhash": true
+      }
+    ]
+  }
+}
+
+docs {
+  Simulate sending a transaction.
+  
+  Parameters:
+  1. Transaction (string, required) - Transaction, as encoded string
+  2. Configuration object (optional):
+     - encoding: "base58" or "base64" (default)
+     - commitment: "processed", "confirmed", "finalized"
+     - sigVerify: boolean - verify transaction signatures (default: false)
+     - replaceRecentBlockhash: boolean - replace recent blockhash (default: false)
+     - accounts: object - accounts to return in simulation
+  
+  Returns simulation results including:
+  - Error information (if transaction would fail)
+  - Logs from transaction execution
+  - Accounts modified by transaction
+  - Compute units consumed
+  
+  Essential for testing transactions before submission and debugging failures.
+}

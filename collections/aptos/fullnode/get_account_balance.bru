@@ -1,0 +1,37 @@
+meta {
+  name: Get Account Balance
+  type: http
+  seq: 12
+}
+
+get {
+  url: https://aptos-mainnet.g.alchemy.com/v2/{{api_key}}/v1/accounts/0x1/balance/0x1::aptos_coin::AptosCoin
+  body: none
+  auth: none
+}
+
+headers {
+  Content-Type: application/json
+}
+
+docs {
+  Retrieves account balance for coins / fungible assets (only for primary fungible asset store)
+  for a given account, asset type and a specific ledger version.
+  
+  Path Parameters:
+  - address (string, required): Address of account with or without a 0x prefix
+  - asset_type (string, required): Asset type identifier (e.g., "0x1::aptos_coin::AptosCoin")
+  
+  Query Parameters:
+  - ledger_version (uint64, optional): Ledger version to get state of account
+  
+  Returns:
+  - Balance as uint64
+  
+  Example asset types:
+  - APT: 0x1::aptos_coin::AptosCoin
+  - USDC: 0xf22bede237a07e121b56d91a491eb7bcdfd1f5907926a9e58338f964a01b17fa::asset::USDC
+  
+  https://fullnode.mainnet.aptoslabs.com/v1/spec#/operations/get_account_balance
+}
+

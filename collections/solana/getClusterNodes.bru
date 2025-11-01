@@ -1,0 +1,39 @@
+meta {
+  name: getClusterNodes
+  type: http
+  seq: 11
+}
+
+post {
+  url: https://solana-mainnet.g.alchemy.com/v2/{{api_key}}
+  body: json
+  auth: none
+}
+
+headers {
+  Content-Type: application/json
+}
+
+body:json {
+  {
+    "jsonrpc": "2.0",
+    "id": "bru",
+    "method": "getClusterNodes",
+    "params": []
+  }
+}
+
+docs {
+  Returns information about all the nodes participating in the cluster.
+  
+  No parameters required.
+  
+  Returns array of cluster nodes with:
+  - Node public key (identity)
+  - Gossip network address
+  - TPU (Transaction Processing Unit) address
+  - RPC address (if available)
+  - Version information
+  
+  Useful for network analysis and node discovery.
+}

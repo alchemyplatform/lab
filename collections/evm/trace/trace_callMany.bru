@@ -1,0 +1,67 @@
+meta {
+  name: trace_callMany
+  type: http
+  seq: 2
+}
+
+post {
+  url: https://eth-mainnet.g.alchemy.com/v2/{{api_key}}
+  body: json
+  auth: none
+}
+
+headers {
+  Content-Type: application/json
+}
+
+body:json {
+  {
+    "jsonrpc": "2.0",
+    "id": "bru",
+    "method": "trace_callMany",
+    "params": [
+      [
+        [
+          {
+            "to": "0x2bd2326c993dfaef84f696526064ff22eba5b362",
+            "data": "0x16c72721"
+          },
+          ["trace"]
+        ],
+        [
+          {
+            "to": "0x8ba1f109551bD432803012645Hac136c",
+            "data": "0x70a08231"
+          },
+          ["trace"]
+        ]
+      ],
+      "latest"
+    ]
+  }
+}
+
+docs {
+  Executes multiple calls and returns traces for each execution.
+  
+  This method performs multiple ad-hoc traces in a single request.
+  
+  Parameters:
+  - `calls`: Array of call specifications, each containing:
+    - `call`: Transaction call object.
+    - `trace_types`: Array of trace types ("trace", "vmTrace", "stateDiff").
+  - `block`: Block number (hex), hash, or tag ("latest", "earliest", "pending").
+  
+  Returns:
+  - `array`: Array of TraceResults objects, one for each call.
+  
+  Example:
+  ```json
+  {
+    "jsonrpc": "2.0",
+    "id": "bru",
+    "method": "trace_callMany",
+    "params": [[[{"to": "0x2bd2326c993dfaef84f696526064ff22eba5b362", "data": "0x16c72721"}, ["trace"]]], "latest"]
+  }
+  ```
+}

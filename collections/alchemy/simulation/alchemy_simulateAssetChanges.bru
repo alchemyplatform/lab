@@ -1,0 +1,64 @@
+meta {
+  name: alchemy_simulateAssetChanges
+  type: http
+  seq: 1
+}
+
+post {
+  url: https://eth-mainnet.g.alchemy.com/v2/{{api_key}}
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "jsonrpc": "2.0",
+    "id": "bru",
+    "method": "alchemy_simulateAssetChanges",
+    "params": [
+      {
+        "from": "0xd8dA6BF26964aF9D7eEd9e03e53415D37aA96045",
+        "to": "0x6B175474E89094C44Da98b954EedeAC495271d0F",
+        "data": "0x"
+      }
+    ]
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}
+
+docs {
+  Alchemy Enhanced API method that simulates a transaction and returns detailed asset changes that would occur. Essential for transaction preview, MEV analysis, and user safety features.
+  
+  **Use cases**:
+  - Transaction preview in wallet interfaces
+  - MEV detection and sandwich attack analysis
+  - DeFi slippage and impact calculation
+  - Smart contract interaction safety checks
+  - Arbitrage opportunity analysis
+  - User education and transaction explanation
+  
+  **Args**:
+  - Transaction object with standard fields:
+    - `from`: Sender address
+    - `to`: Destination address (contract or EOA)
+    - `data`: Contract call data (for smart contract interactions)
+    - `value` (optional): ETH value to send
+    - `gas` (optional): Gas limit
+  
+  **Returns**: Object containing asset changes:
+  - `changes`: Array of asset change objects
+  - Each change includes: asset type, from, to, amount, token details
+  - Supports ETH, ERC-20, ERC-721, and ERC-1155 assets
+  - Shows both positive and negative changes per address
+  
+  **Edge cases & notes**:
+  - Only shows direct asset transfers, not internal state changes
+  - Complex DeFi interactions may have cascading effects not captured
+  - Simulation uses current blockchain state
+  - May not catch all edge cases in complex smart contracts
+  - Useful for detecting unexpected asset movements
+}

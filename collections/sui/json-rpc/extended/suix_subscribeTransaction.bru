@@ -1,0 +1,41 @@
+meta {
+  name: suix_subscribeTransaction
+  type: ws
+  seq: 9
+}
+
+ws {
+  url: wss://fullnode.mainnet.sui.io
+  body: ws
+  auth: inherit
+}
+
+body:ws {
+  name: subscribe
+  type: json
+  content: '''
+    {
+      "jsonrpc": "2.0",
+      "id": "bru",
+      "method": "suix_subscribeTransaction",
+      "params": [
+        {
+          "FromAddress": "0x94f1a597b4e8f709a396f7f6b1482bdcd65a673d111e49286c527fab7c2d0961"
+        }
+      ]
+    }
+  '''
+}
+
+docs {
+  Subscribe to transaction stream based on filter criteria. This is a WebSocket subscription.
+  
+  **Parameters:**
+  1. filter (TransactionFilter): The transaction filter to subscribe to
+  
+  **Returns:**
+  Subscription ID that can be used to unsubscribe
+  
+  **Notifications:**
+  Streams TransactionBlockEffects objects matching the filter as transactions are finalized
+}

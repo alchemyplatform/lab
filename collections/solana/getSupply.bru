@@ -1,0 +1,34 @@
+meta {
+  name: getSupply
+  type: http
+  seq: 40
+}
+
+post {
+  url: https://solana-mainnet.g.alchemy.com/v2/{{api_key}}
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "jsonrpc": "2.0",
+    "id": "bru",
+    "method": "getSupply",
+    "params": []
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}
+
+docs {
+  Returns information about the current supply of lamports.
+  
+  **Args**:
+  - Configuration (optional): Optional configuration object containing additional settings
+  
+  **Returns**: An RpcResponse JSON object containing the current supply information
+}

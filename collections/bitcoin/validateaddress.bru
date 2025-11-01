@@ -1,0 +1,47 @@
+meta {
+  name: validateaddress
+  type: http
+  seq: 14
+}
+
+post {
+  url: https://bitcoin-mainnet.g.alchemy.com/v2/{{api_key}}
+  body: json
+  auth: basic
+}
+
+headers {
+  Content-Type: application/json
+}
+
+auth:basic {
+  username: {{rpcUser}}
+  password: {{rpcPassword}}
+}
+
+body:json {
+  {
+    "jsonrpc": "1.0",
+    "id": "bru",
+    "method": "validateaddress",
+    "params": [
+      "1BvBMSEYstWetqTFn5Au4m4GFg7xJaNVN2"
+    ]
+  }
+}
+
+docs {
+  Returns information about the given Bitcoin address.
+  
+  Parameters:
+  1. address (string, required) - The Bitcoin address to validate
+  
+  Returns validation information including:
+  - Whether the address is valid
+  - Address type and script type
+  - Whether it belongs to the wallet (if applicable)
+  - Public key and other address details
+  
+  Example uses a sample Bitcoin address. Replace with the address you want to validate.
+  Useful for address validation and format checking.
+}

@@ -1,0 +1,51 @@
+meta {
+  name: alchemy_minedTransactions
+  type: ws
+  seq: 5
+}
+
+ws {
+  url: wss://eth-mainnet.g.alchemy.com/v2/{{api_key}}
+  body: ws
+  auth: inherit
+}
+
+body:ws {
+  name: message 1
+  type: json
+  content: '''
+    {
+      "jsonrpc": "2.0",
+      "id": "bru",
+      "method": "eth_subscribe",
+      "params": [
+        "alchemy_minedTransactions",
+        {
+          "addresses": [
+            {
+              "to": "0x9f3ce0ad29b767d809642a53c2bccc9a130659d7",
+              "from": "0x228f108fd09450d083bb33fe0cc50ae449bc7e11"
+            },
+            {
+              "to": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48"
+            }
+          ],
+          "includeRemoved": false,
+          "hashesOnly": true
+        }
+      ]
+    }
+  '''
+}
+
+docs {
+  The alchemy_minedTransactions subscribes to mined transactions and filters those transactions based on specified from and/or to addresses.
+  
+  The subscription will return either full transaction objects or just transaction hashes depending on the request.
+  
+  Further documentation on filtering and response structure here
+  
+  https://www.alchemy.com/docs/reference/alchemy-minedtransactions
+  
+  
+}

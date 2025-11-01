@@ -1,0 +1,39 @@
+meta {
+  name: eth_getUncleCountByBlockHash
+  type: http
+  seq: 12
+}
+
+post {
+  url: https://eth-mainnet.g.alchemy.com/v2/{{api_key}}
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "jsonrpc": "2.0",
+    "method": "eth_getUncleCountByBlockHash",
+    "params": [
+      "0xdc0818cf78f21a8e70579cb46a43643f78291264dda342ae31049421c82d21ae"
+    ],
+    "id": "bru"
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}
+
+docs {
+  Returns the number of uncles in a block from a block matching the given block hash.
+  
+  **Args**:
+  - Block hash: 32-byte 0x-prefixed hash.
+  
+  **Returns**: Returns JSON-RPC result; see client docs.
+  
+  **Edge cases & notes**:
+  - On post-Merge Ethereum, ommers (uncles) are always zero.
+}

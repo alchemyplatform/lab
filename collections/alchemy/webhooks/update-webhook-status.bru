@@ -1,0 +1,64 @@
+meta {
+  name: Update Webhook Status
+  type: http
+  seq: 4
+}
+
+patch {
+  url: https://dashboard.alchemy.com/api/update-webhook
+  body: json
+  auth: inherit
+}
+
+headers {
+  X-Alchemy-Token: {{notify_auth_token}}
+  Content-Type: application/json
+}
+
+body:json {
+  {
+    "webhook_id": "wh_example123",
+    "is_active": false
+  }
+}
+
+settings {
+  encodeUrl: true
+}
+
+docs {
+  Updates the active status of a webhook (enable/disable).
+  
+  **Use cases**:
+  - Temporarily pause webhook notifications
+  - Enable webhooks after testing
+  - Disable webhooks during maintenance
+  - Toggle webhooks based on application state
+  - Gradual rollout of webhook integrations
+  
+  **Request body**:
+  - `webhook_id` (required): Unique identifier of the webhook
+  - `is_active` (required): Boolean to activate (true) or deactivate (false)
+  
+  **Returns**: Updated webhook object
+  - `id`: Webhook identifier
+  - `network`: Blockchain network
+  - `webhook_type`: Type of webhook
+  - `webhook_url`: Configured endpoint URL
+  - `is_active`: Updated status
+  - `time_created`: Original creation timestamp
+  - `signing_key`: Secret key for signature validation
+  - `version`: Webhook version
+  
+  **Edge cases & notes**:
+  - Deactivated webhooks do NOT receive events
+  - Events that occur while deactivated are NOT queued
+  - Re-activating a webhook resumes normal operation immediately
+  - Does not affect webhook configuration (addresses, filters, etc.)
+  - Useful for debugging without deleting webhook
+  - Status changes are immediate (no delay)
+  - Webhook configuration remains intact when inactive
+  
+  **Documentation**: https://www.alchemy.com/docs/data/webhooks/webhooks-api-endpoints/notify-api-endpoints/update-webhook
+}
+

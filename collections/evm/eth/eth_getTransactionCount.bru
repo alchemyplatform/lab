@@ -1,0 +1,38 @@
+meta {
+  name: eth_getTransactionCount
+  type: http
+  seq: 16
+}
+
+post {
+  url: https://eth-mainnet.g.alchemy.com/v2/{{api_key}}
+  body: json
+  auth: none
+}
+
+headers {
+  Content-Type: application/json
+}
+
+body:json {
+  {
+    "jsonrpc": "2.0",
+    "id": "bru",
+    "method": "eth_getTransactionCount",
+    "params": [
+      "0x407d73d8a49eeb85d32cf465507dd71d507100c1",
+      "latest"
+    ]
+  }
+}
+
+docs {
+  Returns the number of transactions sent from an address (nonce).
+  
+  Parameters:
+  1. DATA, 20 Bytes - address
+  2. QUANTITY|TAG - integer block number, or the string "latest", "earliest" or "pending"
+  
+  Returns the integer of the number of transactions sent from this address.
+  This is commonly used to get the nonce for sending new transactions.
+}

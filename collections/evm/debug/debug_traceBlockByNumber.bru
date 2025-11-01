@@ -1,0 +1,54 @@
+meta {
+  name: debug_traceBlockByNumber
+  type: http
+  seq: 4
+}
+
+post {
+  url: https://eth-mainnet.g.alchemy.com/v2/{{api_key}}
+  body: json
+  auth: none
+}
+
+headers {
+  Content-Type: application/json
+}
+
+body:json {
+  {
+    "jsonrpc": "2.0",
+    "id": "bru",
+    "method": "debug_traceBlockByNumber",
+    "params": [
+      "latest",
+      {
+        "tracer": "callTracer"
+      }
+    ]
+  }
+}
+
+docs {
+  Traces a block that is already present in the database by its number.
+  
+  Similar to debug_traceBlockByHash but accepts a block number instead of hash.
+  
+  Parameters:
+  - `block_number`: Block number (hex), or tag ("latest", "earliest", "pending").
+  - `opts` (optional): Tracing options object.
+    - `tracer`: Tracer type ("callTracer", "prestateTracer", etc.).
+    - `timeout`: Timeout for the trace operation.
+  
+  Returns:
+  - `array`: Array of transaction traces with opcode-level details.
+  
+  Example:
+  ```json
+  {
+    "jsonrpc": "2.0",
+    "id": "bru",
+    "method": "debug_traceBlockByNumber",
+    "params": ["latest", {"tracer": "callTracer"}]
+  }
+  ```
+}

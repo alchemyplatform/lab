@@ -1,0 +1,76 @@
+meta {
+  name: Token Balances By Wallet
+  type: http
+  seq: 2
+}
+
+post {
+  url: https://api.g.alchemy.com/data/v1/{{api_key}}/assets/tokens/balances/by-address
+  body: json
+  auth: none
+}
+
+headers {
+  Content-Type: application/json
+}
+
+body:json {
+  {
+    "addresses": [
+      {
+        "address": "0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045",
+        "networks": [
+          "eth-mainnet",
+          "base-mainnet"
+        ]
+      }
+    ],
+    "includeNativeTokens": true,
+    "includeErc20Tokens": true
+  }
+}
+
+docs {
+  # Token Balances By Wallet
+  
+  Fetches fungible tokens (native, ERC-20, and SPL) for multiple wallet addresses and networks. Returns a list of tokens with balances for each wallet/network combination.
+  
+  This is a lightweight version of the `get-tokens-by-address` endpoint that returns only balances without metadata or prices.
+  
+  This endpoint is supported on Ethereum, Solana, and 30+ EVM chains.
+  
+  ## Request Parameters
+  
+  - `addresses` (required): Array of address and network pairs
+    - Limit 3 pairs
+    - Max 20 networks
+  - `includeNativeTokens` (optional, default: true): Include native tokens (e.g., ETH)
+  - `includeErc20Tokens` (optional, default: true): Include ERC-20 tokens
+  - `pageKey` (optional): Pagination key for next page
+  
+  ## Example Response
+  
+  ```json
+  {
+    "data": {
+      "tokens": [
+        {
+          "network": "eth-mainnet",
+          "address": "0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045",
+          "tokenAddress": "0x6B175474E89094C44Da98b954EedeAC495271d0F",
+          "tokenBalance": "1000000000000000000"
+        }
+      ],
+      "pageKey": "string"
+    }
+  }
+  ```
+  
+  ## Test Wallet
+  
+  Uses Vitalik Buterin's wallet: `0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045`
+  
+  ## Reference
+  
+  https://www.alchemy.com/docs/data/portfolio-apis/portfolio-api-endpoints/portfolio-api-endpoints/get-token-balances-by-address
+}

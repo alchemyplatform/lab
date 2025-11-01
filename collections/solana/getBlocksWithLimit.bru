@@ -1,0 +1,39 @@
+meta {
+  name: getBlocksWithLimit
+  type: http
+  seq: 9
+}
+
+post {
+  url: https://solana-mainnet.g.alchemy.com/v2/{{api_key}}
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "jsonrpc": "2.0",
+    "id": "bru",
+    "method": "getBlocksWithLimit",
+    "params": [
+      237158000,
+      5
+    ]
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}
+
+docs {
+  Returns a list of confirmed blocks starting at the given slot.
+  
+  **Args**:
+  - start_slot (required): The starting slot
+  - limit (required): The limit for the number of blocks to return
+  - Configuration (optional): Optional configuration object
+  
+  **Returns**: An array of u64 integers listing confirmed blocks starting at the start_slot
+}

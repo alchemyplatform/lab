@@ -1,0 +1,43 @@
+meta {
+  name: zks_getL2ToL1MsgProof
+  type: http
+  seq: 6
+}
+
+post {
+  url: https://zksync-mainnet.g.alchemy.com/v2/{{api_key}}
+  body: json
+  auth: none
+}
+
+headers {
+  Content-Type: application/json
+}
+
+body:json {
+  {
+    "jsonrpc": "2.0",
+    "id": 1,
+    "method": "zks_getL2ToL1MsgProof",
+    "params": [
+      42,
+      "0x0000000000000000000000000000000000000000000000000000000000000000",
+      0
+    ]
+  }
+}
+
+docs {
+  DEPRECATED: Retrieves the proof for an L2 to L1 message.
+  
+  Parameters:
+  1. uint32 - block number
+  2. DATA, 32 bytes - sender address
+  3. uint256 - message hash
+  
+  Returns:
+  - Object containing proof data
+  
+  Note: This method is deprecated and may be removed in future versions. Use zks_getL2ToL1LogProof instead.
+}
+

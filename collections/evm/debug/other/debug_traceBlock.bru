@@ -1,0 +1,54 @@
+meta {
+  name: debug_traceBlock
+  type: http
+  seq: 26
+}
+
+post {
+  url: https://eth-mainnet.g.alchemy.com/v2/{{api_key}}
+  body: json
+  auth: none
+}
+
+headers {
+  Content-Type: application/json
+}
+
+body:json {
+  {
+    "jsonrpc": "2.0",
+    "id": "bru",
+    "method": "debug_traceBlock",
+    "params": [
+      "0xf90277f90208a0...",
+      {
+        "tracer": "callTracer"
+      }
+    ]
+  }
+}
+
+docs {
+  Returns a full stack trace of all invoked opcodes of all transactions in a block.
+  
+  This method expects an RLP-encoded block. The parent block must be present.
+  
+  Parameters:
+  - `rlp`: RLP-encoded block data as hex string.
+  - `opts` (optional): Tracing options object.
+    - `tracer`: Tracer type ("callTracer", "prestateTracer", etc.).
+    - `timeout`: Timeout for the trace operation.
+  
+  Returns:
+  - `array`: Array of transaction traces with opcode-level details.
+  
+  Example:
+  ```json
+  {
+    "jsonrpc": "2.0",
+    "id": "bru",
+    "method": "debug_traceBlock",
+    "params": ["0xf90277f90208a0...", {"tracer": "callTracer"}]
+  }
+  ```
+}

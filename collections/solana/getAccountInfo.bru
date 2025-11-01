@@ -1,0 +1,44 @@
+meta {
+  name: getAccountInfo
+  type: http
+  seq: 2
+}
+
+post {
+  url: https://solana-mainnet.g.alchemy.com/v2/{{api_key}}
+  body: json
+  auth: none
+}
+
+headers {
+  Content-Type: application/json
+}
+
+body:json {
+  {
+    "jsonrpc": "2.0",
+    "id": "bru",
+    "method": "getAccountInfo",
+    "params": [
+      "83astBRguLMdt2h5U1Tpdq5tjFoJ6noeGwaY3mDLVcri",
+      {
+        "encoding": "jsonParsed",
+        "commitment": "finalized"
+      }
+    ]
+  }
+}
+
+docs {
+  Returns all information associated with the account of provided Pubkey.
+  
+  Parameters:
+  1. Pubkey (string, required) - Pubkey of account to query, as base-58 encoded string
+  2. Configuration object (optional):
+     - encoding: "base58", "base64", "base64+zstd", "jsonParsed"
+     - commitment: "finalized", "confirmed", "processed"
+     - dataSlice: limit returned account data
+  
+  Returns account data, executable status, lamports, owner, and rent epoch.
+  Essential for querying any Solana account state.
+}

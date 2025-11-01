@@ -1,0 +1,213 @@
+syntax = "proto3";
+
+package aptos.transaction.v1;
+
+option go_package = "github.com/aptos-labs/aptos-go-sdk/transaction/v1";
+
+// Service for streaming transactions from Aptos blockchain
+service TransactionStream {
+  // Streams transactions starting from a specific version
+  rpc StreamTransactions(TransactionsRequest) returns (stream TransactionsResponse) {}
+}
+
+// Request to stream transactions
+message TransactionsRequest {
+  // Optional starting version (default: start from latest)
+  optional uint64 starting_version = 1;
+  
+  // Number of transactions per batch (default: 1)
+  optional uint32 transactions_count = 2;
+}
+
+// Response containing a batch of transactions
+message TransactionsResponse {
+  // The chain ID
+  uint32 chain_id = 1;
+  
+  // Array of transactions
+  repeated Transaction transactions = 2;
+}
+
+// Represents a transaction on Aptos
+message Transaction {
+  // Transaction version (ledger version)
+  uint64 version = 1;
+  
+  // Block height
+  uint64 block_height = 2;
+  
+  // Transaction hash
+  string hash = 3;
+  
+  // Transaction type
+  TransactionType type = 4;
+  
+  // Transaction payload
+  oneof payload {
+    EntryFunctionPayload entry_function_payload = 5;
+    ScriptPayload script_payload = 6;
+    ModuleBundlePayload module_bundle_payload = 7;
+  }
+  
+  // Transaction sender
+  string sender = 8;
+  
+  // Sequence number
+  uint64 sequence_number = 9;
+  
+  // Max gas amount
+  uint64 max_gas_amount = 10;
+  
+  // Gas unit price
+  uint64 gas_unit_price = 11;
+  
+  // Gas used
+  uint64 gas_used = 12;
+  
+  // Transaction success status
+  bool success = 13;
+  
+  // VM status
+  string vm_status = 14;
+  
+  // Transaction timestamp (microseconds since epoch)
+  uint64 timestamp = 15;
+  
+  // Events emitted by the transaction
+  repeated Event events = 16;
+  
+  // Changes made by the transaction
+  repeated WriteSetChange changes = 17;
+  
+  // Transaction signature
+  Signature signature = 18;
+  
+  // Expiration timestamp seconds
+  uint64 expiration_timestamp_secs = 19;
+}
+
+// Transaction types
+enum TransactionType {
+  TRANSACTION_TYPE_UNSPECIFIED = 0;
+  TRANSACTION_TYPE_GENESIS = 1;
+  TRANSACTION_TYPE_BLOCK_METADATA = 2;
+  TRANSACTION_TYPE_STATE_CHECKPOINT = 3;
+  TRANSACTION_TYPE_USER = 4;
+}
+
+// Entry function payload
+message EntryFunctionPayload {
+  string function = 1;
+  repeated string type_arguments = 2;
+  repeated string arguments = 3;
+}
+
+// Script payload
+message ScriptPayload {
+  bytes code = 1;
+  repeated string type_arguments = 2;
+  repeated string arguments = 3;
+}
+
+// Module bundle payload
+message ModuleBundlePayload {
+  repeated Module modules = 1;
+}
+
+// Module
+message Module {
+  bytes bytecode = 1;
+}
+
+// Event emitted by a transaction
+message Event {
+  string key = 1;
+  uint64 sequence_number = 2;
+  string type = 3;
+  string data = 4;
+}
+
+// Write set change
+message WriteSetChange {
+  WriteSetChangeType type = 1;
+  string address = 2;
+  string state_key_hash = 3;
+  oneof change {
+    WriteResource write_resource = 4;
+    WriteModule write_module = 5;
+    DeleteResource delete_resource = 6;
+    DeleteModule delete_module = 7;
+  }
+}
+
+// Write set change types
+enum WriteSetChangeType {
+  WRITE_SET_CHANGE_TYPE_UNSPECIFIED = 0;
+  WRITE_SET_CHANGE_TYPE_DELETE_MODULE = 1;
+  WRITE_SET_CHANGE_TYPE_DELETE_RESOURCE = 2;
+  WRITE_SET_CHANGE_TYPE_DELETE_TABLE_ITEM = 3;
+  WRITE_SET_CHANGE_TYPE_WRITE_MODULE = 4;
+  WRITE_SET_CHANGE_TYPE_WRITE_RESOURCE = 5;
+  WRITE_SET_CHANGE_TYPE_WRITE_TABLE_ITEM = 6;
+}
+
+// Write resource
+message WriteResource {
+  string type = 1;
+  string data = 2;
+}
+
+// Write module
+message WriteModule {
+  bytes bytecode = 1;
+}
+
+// Delete resource
+message DeleteResource {
+  string resource = 1;
+}
+
+// Delete module
+message DeleteModule {
+  string module = 1;
+}
+
+// Transaction signature
+message Signature {
+  SignatureType type = 1;
+  oneof signature {
+    Ed25519Signature ed25519 = 2;
+    MultiEd25519Signature multi_ed25519 = 3;
+    MultiAgentSignature multi_agent = 4;
+  }
+}
+
+// Signature types
+enum SignatureType {
+  SIGNATURE_TYPE_UNSPECIFIED = 0;
+  SIGNATURE_TYPE_ED25519 = 1;
+  SIGNATURE_TYPE_MULTI_ED25519 = 2;
+  SIGNATURE_TYPE_MULTI_AGENT = 3;
+}
+
+// Ed25519 signature
+message Ed25519Signature {
+  bytes public_key = 1;
+  bytes signature = 2;
+}
+
+// Multi-Ed25519 signature
+message MultiEd25519Signature {
+  repeated bytes public_keys = 1;
+  repeated bytes signatures = 2;
+  uint32 threshold = 3;
+  bytes bitmap = 4;
+}
+
+// Multi-agent signature
+message MultiAgentSignature {
+  Signature sender = 1;
+  repeated string secondary_signer_addresses = 2;
+  repeated Signature secondary_signers = 3;
+}
+

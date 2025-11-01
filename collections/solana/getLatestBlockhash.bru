@@ -1,0 +1,40 @@
+meta {
+  name: getLatestBlockhash
+  type: http
+  seq: 24
+}
+
+post {
+  url: https://solana-mainnet.g.alchemy.com/v2/{{api_key}}
+  body: json
+  auth: none
+}
+
+headers {
+  Content-Type: application/json
+}
+
+body:json {
+  {
+    "jsonrpc": "2.0",
+    "id": "bru",
+    "method": "getLatestBlockhash",
+    "params": [
+      {
+        "commitment": "finalized"
+      }
+    ]
+  }
+}
+
+docs {
+  Returns the latest blockhash.
+  
+  Parameters:
+  1. Configuration object (optional):
+     - commitment: "finalized", "confirmed", "processed"
+  
+  Returns the latest blockhash and last valid block height.
+  Essential for transaction construction - transactions must reference a recent blockhash.
+  Replaces the deprecated getRecentBlockhash method.
+}

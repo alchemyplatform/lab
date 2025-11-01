@@ -1,0 +1,38 @@
+meta {
+  name: eth_chainId
+  type: http
+  seq: 3
+}
+
+post {
+  url: https://eth-mainnet.g.alchemy.com/v2/{{api_key}}
+  body: json
+  auth: none
+}
+
+headers {
+  Content-Type: application/json
+}
+
+body:json {
+  {
+    "jsonrpc": "2.0",
+    "id": "bru",
+    "method": "eth_chainId",
+    "params": []
+  }
+}
+
+docs {
+  Returns the currently configured chain ID, a value used in replay-protected transaction signing.
+  
+  Returns the chain ID as a hexadecimal string.
+  
+  Common chain IDs:
+  - 0x1: Ethereum Mainnet
+  - 0x3: Ropsten Testnet (deprecated)
+  - 0x4: Rinkeby Testnet (deprecated)
+  - 0x5: Goerli Testnet
+  - 0xaa36a7: Sepolia Testnet
+  - 0x89: Polygon Mainnet
+}

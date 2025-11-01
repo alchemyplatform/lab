@@ -1,0 +1,38 @@
+meta {
+  name: eth_simulateV1
+  type: http
+  seq: 21
+}
+
+post {
+  url: https://eth-mainnet.g.alchemy.com/v2/{{api_key}}
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "jsonrpc": "2.0",
+    "method": "eth_simulateV1",
+    "params": [
+      null,
+      "latest"
+    ],
+    "id": "bru"
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}
+
+docs {
+  Executes a sequence of message calls building on each other's state without creating transactions on the block chain, optionally overriding block and state data
+  
+  **Args**:
+  - Payload: Arguments for eth_simulate
+  - Block tag: Block selector: hex block number (0x...), a tag ('latest'|'safe'|'finalized'|'earliest'|'pending'), or a block hash.
+  
+  **Returns**: Full results of eth_simulate
+}

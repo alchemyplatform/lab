@@ -1,0 +1,46 @@
+meta {
+  name: eth_call
+  type: http
+  seq: 2
+}
+
+post {
+  url: https://eth-mainnet.g.alchemy.com/v2/{{api_key}}
+  body: json
+  auth: none
+}
+
+headers {
+  Content-Type: application/json
+}
+
+body:json {
+  {
+    "jsonrpc": "2.0",
+    "id": "bru",
+    "method": "eth_call",
+    "params": [
+      {
+        "to": "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
+        "data": "0x06fdde03"
+      },
+      "latest"
+    ]
+  }
+}
+
+docs {
+  Executes a new message call immediately without creating a transaction on the blockchain.
+  
+  Parameters:
+  1. Object - The transaction call object:
+     - from: DATA, 20 Bytes - (optional) The address the transaction is sent from
+     - to: DATA, 20 Bytes - The address the transaction is directed to
+     - gas: QUANTITY - (optional) Integer of the gas provided for the transaction execution
+     - gasPrice: QUANTITY - (optional) Integer of the gasPrice used for each paid gas
+     - value: QUANTITY - (optional) Integer of the value sent with this transaction
+     - data: DATA - (optional) Hash of the method signature and encoded parameters
+  2. QUANTITY|TAG - integer block number, or the string "latest", "earliest" or "pending"
+  
+  Example shows calling balanceOf(address) method on an ERC-20 token contract.
+}

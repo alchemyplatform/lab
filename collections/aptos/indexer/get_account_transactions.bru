@@ -1,0 +1,73 @@
+meta {
+  name: Get Account Transactions
+  type: graphql
+  seq: 2
+}
+
+post {
+  url: https://api.mainnet.aptoslabs.com/v1/graphql
+  body: graphql
+  auth: none
+}
+
+headers {
+  Content-Type: application/json
+}
+
+body:graphql {
+  query GetAccountTransactions($address: String, $limit: Int, $offset: Int) {
+    account_transactions(
+      where: {account_address: {_eq: $address}}
+      limit: $limit
+      offset: $offset
+      order_by: {transaction_version: desc}
+    ) {
+      transaction_version
+      account_address
+      token_activities_v2 {
+        type
+        token_data_id
+        property_version_v1
+        transfer_type
+        from_address
+        to_address
+        token_amount
+      }
+      coin_activities {
+        activity_type
+        amount
+        coin_type
+        entry_function_id_str
+      }
+    }
+  }
+}
+
+body:graphql:vars {
+  {
+    "address": "0x1",
+    "limit": 10,
+    "offset": 0
+  }
+}
+
+docs {
+  Get all transactions impacting an account.
+  
+  Variables:
+  - address: The account address to query
+  - limit: Number of transactions to return (default: 10)
+  - offset: Pagination offset
+  
+  Returns:
+  - transaction_version: The ledger version of the transaction
+  - account_address: The account address
+  - token_activities_v2: Token activity details (NFTs, fungible tokens)
+  - coin_activities: Coin transfer activities
+  
+  This query retrieves all on-chain transactions that involve the specified account,
+  including both coin and token activities.
+  
+  https://aptos.dev/build/indexer/indexer-api/account-transactions
+}
+

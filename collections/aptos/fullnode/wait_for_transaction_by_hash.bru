@@ -1,0 +1,36 @@
+meta {
+  name: Wait for Transaction by Hash
+  type: http
+  seq: 22
+}
+
+get {
+  url: https://aptos-mainnet.g.alchemy.com/v2/{{api_key}}/v1/transactions/wait_by_hash/0x
+  body: none
+  auth: none
+}
+
+headers {
+  Content-Type: application/json
+}
+
+docs {
+  Wait for a transaction to be committed and return its details.
+  
+  Path Parameters:
+  - txn_hash (string, required): Hash of transaction to retrieve
+  
+  This endpoint will wait (block) until the transaction is committed to the blockchain
+  or a timeout occurs. It's useful for applications that need to know when a transaction
+  has been finalized.
+  
+  Returns:
+  - Full transaction details once committed
+  - Times out after a configured duration if transaction is not found
+  
+  Best practice: Use this immediately after submitting a transaction to wait for
+  confirmation rather than polling get_transaction_by_hash.
+  
+  https://fullnode.mainnet.aptoslabs.com/v1/spec#/operations/wait_for_transaction_by_hash
+}
+

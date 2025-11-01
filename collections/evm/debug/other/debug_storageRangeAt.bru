@@ -1,0 +1,42 @@
+meta {
+  name: debug_storageRangeAt
+  type: http
+  seq: 20
+}
+
+post {
+  url: https://eth-mainnet.g.alchemy.com/v2/{{api_key}}
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "jsonrpc": "2.0",
+    "id": "bru",
+    "method": "debug_storageRangeAt",
+    "params": [
+      "0x13738ca",
+      "0x6B175474E89094C44Da98b954EedeAC495271d0F",
+      "0x0",
+      "0x00",
+      128
+    ]
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}
+
+docs {
+  Returns a range of contract storage from an address at a given block.
+  Args:
+  - blockNumber: hex
+  - address: 20-byte contract address
+  - startKey: 32-byte storage slot key (hex)
+  - hash: storage hash start (hex)
+  - maxResults: integer count
+  Returns: {storage: {slotKey: {key,value}}, nextKey?}.
+}

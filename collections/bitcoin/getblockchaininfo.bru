@@ -1,0 +1,41 @@
+meta {
+  name: getblockchaininfo
+  type: http
+  seq: 4
+}
+
+post {
+  url: https://bitcoin-mainnet.g.alchemy.com/v2/{{api_key}}
+  body: json
+  auth: basic
+}
+
+headers {
+  Content-Type: application/json
+}
+
+auth:basic {
+  username: {{rpcUser}}
+  password: {{rpcPassword}}
+}
+
+body:json {
+  {
+    "jsonrpc": "1.0",
+    "id": "bru",
+    "method": "getblockchaininfo",
+    "params": []
+  }
+}
+
+docs {
+  Returns an object containing various state info regarding blockchain processing.
+  
+  Returns comprehensive information including:
+  - Chain name (main, test, regtest)
+  - Current block count and best block hash
+  - Difficulty and median time
+  - Verification progress and chain work
+  - Size on disk and pruning status
+  - Active softforks and their status
+}

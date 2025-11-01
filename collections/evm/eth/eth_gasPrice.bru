@@ -1,0 +1,34 @@
+meta {
+  name: eth_gasPrice
+  type: http
+  seq: 5
+}
+
+post {
+  url: https://eth-mainnet.g.alchemy.com/v2/{{api_key}}
+  body: json
+  auth: none
+}
+
+headers {
+  Content-Type: application/json
+}
+
+body:json {
+  {
+    "jsonrpc": "2.0",
+    "id": "bru",
+    "method": "eth_gasPrice",
+    "params": []
+  }
+}
+
+docs {
+  Returns the current price per gas in wei.
+  
+  Returns the current gas price as a hexadecimal string.
+  This represents the amount of wei you need to pay per unit of gas.
+  
+  Note: After EIP-1559, this method returns the base fee + priority fee.
+  For more precise gas pricing, consider using eth_feeHistory or eth_maxPriorityFeePerGas.
+}

@@ -1,0 +1,55 @@
+meta {
+  name: Get Fungible Asset Balances
+  type: graphql
+  seq: 1
+}
+
+post {
+  url: https://api.mainnet.aptoslabs.com/v1/graphql
+  body: graphql
+  auth: none
+}
+
+headers {
+  Content-Type: application/json
+}
+
+body:graphql {
+  query GetFungibleAssetBalances($address: String, $offset: Int) {
+    current_fungible_asset_balances(
+      where: {owner_address: {_eq: $address}}
+      offset: $offset
+      limit: 100
+      order_by: [{amount: desc}]
+    ) {
+      asset_type
+      amount
+      __typename
+    }
+  }
+}
+
+body:graphql:vars {
+  {
+    "address": "0x1",
+    "offset": 0
+  }
+}
+
+docs {
+  Get all fungible assets an account currently owns.
+  
+  Variables:
+  - address: The account address to query
+  - offset: Pagination offset
+  
+  Returns:
+  - asset_type: The type identifier of the fungible asset
+  - amount: The balance amount
+  
+  This query retrieves all fungible asset balances for a given account,
+  ordered by amount in descending order.
+  
+  https://aptos.dev/build/indexer/indexer-api/asset-balances
+}
+

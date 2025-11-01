@@ -1,0 +1,62 @@
+meta {
+  name: Get Variable Elements
+  type: http
+  seq: 12
+}
+
+get {
+  url: https://dashboard.alchemy.com/api/graphql/variables/my_addresses?limit=100&after=
+  body: none
+  auth: inherit
+}
+
+params:query {
+  limit: 100
+  ~after: 
+  ~pageKey: 0
+}
+
+headers {
+  X-Alchemy-Token: {{notify_auth_token}}
+}
+
+settings {
+  encodeUrl: true
+}
+
+docs {
+  Retrieves all values stored in a custom webhook variable with pagination support.
+  
+  **Use cases**:
+  - Audit variable contents
+  - Verify variable configuration
+  - Build variable management UIs
+  - Export variable data
+  - Debug webhook variable issues
+  
+  **Args**:
+  - Path parameter:
+    - `variable`: Name of the custom webhook variable (in URL path)
+  - Query parameters:
+    - `limit` (optional): Number of values to return per page (default: 100, max: 1000)
+    - `after` (optional): Cursor for pagination to get next page
+    - `pageKey` (optional): Alternative pagination parameter (default: 0)
+  
+  **Returns**: Object containing:
+  - `data`: Array of values (addresses or hashes)
+  - `pagination`: Pagination information
+    - `cursors.after`: Cursor for next page (if more results exist)
+    - `total_count`: Total number of values in this variable
+  
+  **Edge cases & notes**:
+  - Variable name in URL path (not query parameter)
+  - Returns 404 if variable doesn't exist
+  - Results are paginated for large variable sets
+  - Use the 'after' cursor for subsequent pages
+  - Empty array if variable has no values
+  - Maximum 10,000 values per variable
+  - Values returned match variable_type (ADDRESS or TX_HASH)
+  
+  **Documentation**: https://www.alchemy.com/docs/data/webhooks/webhooks-api-endpoints/notify-api-endpoints/read-custom-webhook-variable
+}
+

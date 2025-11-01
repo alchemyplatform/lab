@@ -1,0 +1,66 @@
+meta {
+  name: Stream Transactions
+  type: grpc
+  seq: 1
+}
+
+grpc {
+  url: grpc.mainnet.aptoslabs.com:443
+  method: /aptos.transaction.v1.TransactionStream/StreamTransactions
+  body: grpc
+  protoPath: txn-stream/aptos.proto
+  auth: inherit
+  methodType: server-streaming
+}
+
+metadata {
+  x-aptos-data-authorization: {{aptos_api_key}}
+}
+
+body:grpc {
+  name: message 1
+  content: '''
+    {
+      "starting_version": "0",
+      "transactions_count": 10
+    }
+  '''
+}
+
+docs {
+  Streams transactions from the Aptos blockchain starting from a specific version.
+  
+  This is a server-streaming gRPC endpoint that continuously sends transactions
+  as they are added to the blockchain.
+  
+  Request Parameters:
+  - starting_version: The ledger version to start streaming from (optional)
+    - If not provided, starts from the latest version
+    - Can be set to 0 to stream from genesis
+  - transactions_count: Number of transactions to include per batch (default: 1)
+    - Larger batches are more efficient but increase latency
+  
+  Response:
+  - Stream of TransactionsResponse messages containing batches of transactions
+  - Each transaction includes:
+    - Version, hash, sender, type
+    - Payload (entry function, script, or module bundle)
+    - Gas information
+    - Success status and VM status
+    - Events and state changes
+    - Signature information
+  
+  Authentication:
+  - Requires x-aptos-data-authorization header with API key
+  - Contact Aptos Labs to get access to the hosted Transaction Stream Service
+  
+  Use Cases:
+  - Real-time transaction monitoring
+  - Building custom indexers
+  - Event tracking and notifications
+  - Analytics and data processing
+  
+  https://aptos.dev/build/indexer/txn-stream
+  https://aptos.dev/build/indexer/txn-stream/aptos-hosted-txn-stream
+}
+

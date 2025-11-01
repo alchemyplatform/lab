@@ -1,0 +1,41 @@
+meta {
+  name: sui_getProtocolConfig
+  type: http
+  seq: 7
+}
+
+post {
+  url: https://sui-mainnet.g.alchemy.com/v2/{{api_key}}
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "jsonrpc": "2.0",
+    "id": "bru",
+    "method": "sui_getProtocolConfig",
+    "params": [
+      "1"
+    ]
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}
+
+docs {
+  Get protocol configuration for a specific protocol version.
+  
+  **Parameters:**
+  1. version (BigInt, optional): Protocol version to query. If null, returns current version
+  
+  **Returns:**
+  ProtocolConfig object containing:
+  - protocolVersion: The protocol version
+  - attributes: Map of configuration attributes and their values
+  - featureFlags: Map of feature flags
+}
+

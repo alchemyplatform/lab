@@ -1,0 +1,45 @@
+meta {
+  name: getTokenSupply
+  type: http
+  seq: 45
+}
+
+post {
+  url: https://solana-mainnet.g.alchemy.com/v2/{{api_key}}
+  body: json
+  auth: none
+}
+
+headers {
+  Content-Type: application/json
+}
+
+body:json {
+  {
+    "jsonrpc": "2.0",
+    "id": "bru",
+    "method": "getTokenSupply",
+    "params": [
+      "3wyAj7Rt1TWVPZVteFJPLa26JmLvdb1CAKEFZm3NY75E",
+      {
+        "commitment": "finalized"
+      }
+    ]
+  }
+}
+
+docs {
+  Returns the total supply of an SPL Token type.
+  
+  Parameters:
+  1. Token Mint Pubkey (string, required) - Pubkey of token mint
+  2. Configuration object (optional):
+     - commitment: "finalized", "confirmed", "processed"
+  
+  Returns token supply information including:
+  - Total supply amount
+  - Number of decimal places
+  - UI amount (human-readable format)
+  
+  Essential for token analytics and supply monitoring.
+}

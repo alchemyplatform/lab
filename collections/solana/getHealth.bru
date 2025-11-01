@@ -1,0 +1,37 @@
+meta {
+  name: getHealth
+  type: http
+  seq: 17
+}
+
+post {
+  url: https://solana-mainnet.g.alchemy.com/v2/{{api_key}}
+  body: json
+  auth: none
+}
+
+headers {
+  Content-Type: application/json
+}
+
+body:json {
+  {
+    "jsonrpc": "2.0",
+    "id": "bru",
+    "method": "getHealth",
+    "params": []
+  }
+}
+
+docs {
+  Returns the current health of the node.
+  
+  No parameters required.
+  
+  Returns:
+  - "ok" if the node is healthy
+  - Error if the node is unhealthy
+  
+  Essential for monitoring node status and availability.
+  Used by load balancers and monitoring systems.
+}

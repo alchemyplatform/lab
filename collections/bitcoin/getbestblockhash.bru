@@ -1,0 +1,36 @@
+meta {
+  name: getbestblockhash
+  type: http
+  seq: 1
+}
+
+post {
+  url: https://bitcoin-mainnet.g.alchemy.com/v2/{{api_key}}
+  body: json
+  auth: basic
+}
+
+headers {
+  Content-Type: application/json
+}
+
+auth:basic {
+  username: {{rpcUser}}
+  password: {{rpcPassword}}
+}
+
+body:json {
+  {
+    "jsonrpc": "1.0",
+    "id": "bru",
+    "method": "getbestblockhash",
+    "params": []
+  }
+}
+
+docs {
+  Returns the hash of the best (tip) block in the most-work fully-validated chain.
+  
+  This method returns the block hash as a hex string of the current blockchain tip.
+  The "best" block is the one with the most cumulative proof-of-work.
+}

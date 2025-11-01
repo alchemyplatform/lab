@@ -1,0 +1,39 @@
+meta {
+  name: zks_getBlockDetails
+  type: http
+  seq: 6
+}
+
+post {
+  url: https://zksync-mainnet.g.alchemy.com/v2/{{api_key}}
+  body: json
+  auth: none
+}
+
+headers {
+  Content-Type: application/json
+}
+
+body:json {
+  {
+    "jsonrpc": "2.0",
+    "id": 1,
+    "method": "zks_getBlockDetails",
+    "params": [
+      30098049
+    ]
+  }
+}
+
+docs {
+  Retrieves detailed information about a specific block.
+  
+  Parameters:
+  1. uint32 - block number
+  
+  Returns:
+  - Object with comprehensive block details including number, timestamp, L1 batch number, transactions, operator address, protocol version, etc.
+  
+  Note: EraVM endpoint only
+}
+

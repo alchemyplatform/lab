@@ -1,0 +1,77 @@
+meta {
+  name: Get NFTs
+  type: graphql
+  seq: 6
+}
+
+post {
+  url: https://api.mainnet.aptoslabs.com/v1/graphql
+  body: graphql
+  auth: none
+}
+
+headers {
+  Content-Type: application/json
+}
+
+body:graphql {
+  query GetNFTs($owner_address: String, $limit: Int, $offset: Int) {
+    current_token_ownerships_v2(
+      where: {owner_address: {_eq: $owner_address}, amount: {_gt: "0"}}
+      limit: $limit
+      offset: $offset
+      order_by: {last_transaction_version: desc}
+    ) {
+      token_data_id
+      owner_address
+      amount
+      last_transaction_version
+      property_version_v1
+      current_token_data {
+        token_name
+        token_uri
+        description
+        collection_id
+        current_collection {
+          collection_name
+          creator_address
+          uri
+        }
+        token_properties
+      }
+    }
+  }
+}
+
+body:graphql:vars {
+  {
+    "owner_address": "0x1",
+    "limit": 10,
+    "offset": 0
+  }
+}
+
+docs {
+  Retrieve individual NFTs owned by a specific account.
+  
+  Variables:
+  - owner_address: The account address to query
+  - limit: Number of NFTs to return
+  - offset: Pagination offset
+  
+  Returns:
+  - token_data_id: Unique identifier for the token
+  - owner_address: Current owner address
+  - amount: Number of tokens owned (1 for NFTs, >1 for semi-fungible)
+  - current_token_data: Token metadata including:
+    - token_name: Name of the NFT
+    - token_uri: Metadata URI
+    - description: Token description
+    - token_properties: Additional properties
+    - current_collection: Collection information
+  
+  This query retrieves all NFTs currently owned by an account with detailed metadata.
+  
+  https://aptos.dev/build/indexer/indexer-api/get-nfts
+}
+

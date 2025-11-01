@@ -1,0 +1,87 @@
+meta {
+  name: Query Dynamic Fields
+  type: graphql
+  seq: 4
+}
+
+post {
+  url: https://graphql.mainnet.sui.io/graphql
+  body: graphql
+  auth: inherit
+}
+
+body:graphql {
+  query GetDynamicFields($objectId: SuiAddress!) {
+    object(address: $objectId) {
+      objectId
+      version
+      dynamicFields(first: 10) {
+        nodes {
+          name {
+            type {
+              repr
+            }
+            data
+            bcs
+          }
+          value {
+            ... on MoveValue {
+              type {
+                repr
+              }
+              data
+              bcs
+            }
+            ... on MoveObject {
+              contents {
+                type {
+                  repr
+                }
+                data
+              }
+            }
+          }
+        }
+        pageInfo {
+          hasNextPage
+          endCursor
+        }
+      }
+      dynamicObjectFields(first: 10) {
+        nodes {
+          name {
+            type {
+              repr
+            }
+            data
+          }
+        }
+        pageInfo {
+          hasNextPage
+          endCursor
+        }
+      }
+    }
+  }
+}
+
+body:graphql:vars {
+  {
+    "objectId": "0x5"
+  }
+}
+
+docs {
+  Query dynamic fields of an object using GraphQL.
+  
+  This query retrieves:
+  - Object basic information
+  - Dynamic fields with their names and values
+  - Dynamic object fields
+  - Pagination information
+  
+  Dynamic fields are a Sui-specific feature for attaching additional data to objects.
+  
+  **Variables:**
+  - objectId: The object ID to query dynamic fields for
+}

@@ -1,0 +1,46 @@
+meta {
+  name: getrawmempool
+  type: http
+  seq: 16
+}
+
+post {
+  url: https://bitcoin-mainnet.g.alchemy.com/v2/{{api_key}}
+  body: json
+  auth: basic
+}
+
+headers {
+  Content-Type: application/json
+}
+
+auth:basic {
+  username: {{rpcUser}}
+  password: {{rpcPassword}}
+}
+
+body:json {
+  {
+    "jsonrpc": "1.0",
+    "id": "bru",
+    "method": "getrawmempool",
+    "params": [
+      true
+    ]
+  }
+}
+
+docs {
+  Returns all transaction ids in memory pool as a json array of string transaction ids.
+  
+  Parameters:
+  1. verbose (boolean, optional, default=false) - True for a json object, false for array of transaction ids
+  
+  When verbose=true, returns detailed information for each transaction including:
+  - Transaction size and fees
+  - Time entered mempool
+  - Ancestor and descendant information
+  - Fee rate and priority
+  
+  Example uses verbose=true to get detailed mempool transaction information.
+}

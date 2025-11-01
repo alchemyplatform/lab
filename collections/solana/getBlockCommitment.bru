@@ -1,0 +1,36 @@
+meta {
+  name: getBlockCommitment
+  type: http
+  seq: 5
+}
+
+post {
+  url: https://solana-mainnet.g.alchemy.com/v2/{{api_key}}
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "jsonrpc": "2.0",
+    "id": "bru",
+    "method": "getBlockCommitment",
+    "params": [
+      237158054
+    ]
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}
+
+docs {
+  Returns the commitment for a particular block.
+  
+  **Args**:
+  - block (required): Block number, identified by Slot
+  
+  **Returns**: The commitment and total active stake for the block
+}

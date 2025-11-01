@@ -1,0 +1,105 @@
+meta {
+  name: NFT Contracts By Wallet
+  type: http
+  seq: 4
+}
+
+post {
+  url: https://api.g.alchemy.com/data/v1/{{api_key}}/assets/nfts/contracts/by-address
+  body: json
+  auth: none
+}
+
+headers {
+  Content-Type: application/json
+}
+
+body:json {
+  {
+    "addresses": [
+      {
+        "address": "0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045",
+        "networks": [
+          "eth-mainnet"
+        ],
+        "excludeFilters": [
+          "SPAM"
+        ],
+        "spamConfidenceLevel": "MEDIUM"
+      }
+    ],
+    "withMetadata": true,
+    "pageSize": 100,
+    "orderBy": "transferTime",
+    "sortOrder": "desc"
+  }
+}
+
+docs {
+  # NFT Contracts By Wallet
+  
+  Fetches NFT collections (contracts) owned by given wallet addresses across networks. Includes contract metadata, token type, deployer info, spam classification, and OpenSea data (floor price, collection images).
+  
+  Supported networks: Ethereum, Polygon, Arbitrum, Optimism, Base, World Chain, and more.
+  
+  ## Request Parameters
+  
+  - `addresses` (required): Array of addresses with their network configurations
+    - `address`: Wallet address
+    - `networks`: Array of network identifiers
+    - `excludeFilters`: Filter out content (e.g., "SPAM")
+    - `includeFilters`: Include specific content
+    - `spamConfidenceLevel`: Spam detection threshold ("LOW", "MEDIUM", "HIGH")
+  - `withMetadata` (optional, default: true): Include contract metadata
+  - `pageKey` (optional): Pagination key for next page
+  - `pageSize` (optional): Number of results per page (max 100)
+  - `orderBy` (optional): Sort field (e.g., "transferTime")
+  - `sortOrder` (optional): "asc" or "desc"
+  
+  ## Example Response
+  
+  ```json
+  {
+    "data": {
+      "contracts": [
+        {
+          "network": "eth-mainnet",
+          "address": "0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045",
+          "contract": {
+            "address": "0xBC4CA0EdA7647A8aB7C2061c2E118A18a936f13D",
+            "name": "Bored Ape Yacht Club",
+            "symbol": "BAYC",
+            "tokenType": "ERC721",
+            "contractDeployer": "0x...",
+            "deployedBlockNumber": 12287507,
+            "openseaMetadata": {
+              "floorPrice": 30.5,
+              "collectionName": "Bored Ape Yacht Club",
+              "imageUrl": "https://..."
+            }
+          },
+          "totalBalance": "3"
+        }
+      ],
+      "totalCount": 10,
+      "pageKey": "next-page-key"
+    }
+  }
+  ```
+  
+  ## Test Wallet
+  
+  Uses Vitalik Buterin's wallet: `0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045`
+  
+  ## Notes
+  
+  - Returns unique NFT contracts (collections) rather than individual NFTs
+  - Includes OpenSea metadata like floor price when available
+  - Spam classification helps identify suspicious contracts
+  - Use this to get an overview of all NFT collections in a wallet
+  
+  ## Reference
+  
+  https://www.alchemy.com/docs/data/portfolio-apis/portfolio-api-endpoints/portfolio-api-endpoints/get-nft-contracts-by-address
+}
+

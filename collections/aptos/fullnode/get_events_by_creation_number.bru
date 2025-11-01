@@ -1,0 +1,38 @@
+meta {
+  name: Get Events by Creation Number
+  type: http
+  seq: 17
+}
+
+get {
+  url: https://aptos-mainnet.g.alchemy.com/v2/{{api_key}}/v1/accounts/0x1/events/0?limit=10
+  body: none
+  auth: none
+}
+
+headers {
+  Content-Type: application/json
+}
+
+docs {
+  Retrieves events by event key creation number for a given account.
+  
+  Path Parameters:
+  - address (string, required): Address of account with or without a 0x prefix
+  - creation_number (uint64, required): Creation number of event stream
+  
+  Query Parameters:
+  - start (uint64, optional): Starting sequence number of events
+  - limit (uint16, optional): Max number of events to retrieve
+  
+  Returns array of events including:
+  - guid: Global unique identifier for the event stream
+  - sequence_number: Sequence number of the event
+  - type: The event type (Move struct tag)
+  - data: The event data
+  
+  Events are used to emit notifications about on-chain actions.
+  
+  https://fullnode.mainnet.aptoslabs.com/v1/spec#/operations/get_events_by_creation_number
+}
+

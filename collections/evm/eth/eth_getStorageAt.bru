@@ -1,0 +1,40 @@
+meta {
+  name: eth_getStorageAt
+  type: http
+  seq: 14
+}
+
+post {
+  url: https://eth-mainnet.g.alchemy.com/v2/{{api_key}}
+  body: json
+  auth: none
+}
+
+headers {
+  Content-Type: application/json
+}
+
+body:json {
+  {
+    "jsonrpc": "2.0",
+    "id": "bru",
+    "method": "eth_getStorageAt",
+    "params": [
+      "0x295a70b2de5e3953354a6a8344e616ed314d7251",
+      "0x0",
+      "latest"
+    ]
+  }
+}
+
+docs {
+  Returns the value from a storage position at a given address.
+  
+  Parameters:
+  1. DATA, 20 Bytes - address of the storage
+  2. QUANTITY - integer of the position in the storage
+  3. QUANTITY|TAG - integer block number, or the string "latest", "earliest" or "pending"
+  
+  Returns the value at this storage position as a 32-byte hex string.
+  Useful for reading contract storage variables directly.
+}

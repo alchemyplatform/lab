@@ -1,0 +1,37 @@
+meta {
+  name: eth_syncing
+  type: http
+  seq: 18
+}
+
+post {
+  url: https://eth-mainnet.g.alchemy.com/v2/{{api_key}}
+  body: json
+  auth: none
+}
+
+headers {
+  Content-Type: application/json
+}
+
+body:json {
+  {
+    "jsonrpc": "2.0",
+    "id": "bru",
+    "method": "eth_syncing",
+    "params": []
+  }
+}
+
+docs {
+  Returns an object with data about the sync status or false.
+  
+  Returns either:
+  - false: when not syncing
+  - Object with sync progress:
+    - startingBlock: block at which import started
+    - currentBlock: current block, same as eth_blockNumber
+    - highestBlock: estimated highest block
+  
+  Useful for determining if the node is fully synchronized with the network.
+}

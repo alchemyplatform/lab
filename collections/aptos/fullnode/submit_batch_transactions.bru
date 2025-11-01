@@ -1,0 +1,59 @@
+meta {
+  name: Submit Batch Transactions
+  type: http
+  seq: 24
+}
+
+post {
+  url: https://aptos-mainnet.g.alchemy.com/v2/{{api_key}}/v1/transactions/batch
+  body: json
+  auth: none
+}
+
+headers {
+  Content-Type: application/json
+}
+
+body:json {
+  [
+    {
+      "sender": "0x1",
+      "sequence_number": "0",
+      "max_gas_amount": "1000",
+      "gas_unit_price": "1",
+      "expiration_timestamp_secs": "1234567890",
+      "payload": {
+        "type": "entry_function_payload",
+        "function": "0x1::aptos_account::transfer",
+        "type_arguments": [],
+        "arguments": ["0x2", "1000"]
+      },
+      "signature": {
+        "type": "ed25519_signature",
+        "public_key": "0x...",
+        "signature": "0x..."
+      }
+    }
+  ]
+}
+
+docs {
+  Submits multiple transactions in a single batch request.
+  
+  Body:
+  - Array of signed transactions in JSON format
+  
+  Returns:
+  - Array of transaction submission results with hashes and status
+  
+  This endpoint allows you to submit multiple transactions efficiently in a single
+  HTTP request. Each transaction in the batch must be properly signed.
+  
+  Benefits:
+  - Reduced network overhead
+  - Faster submission of multiple transactions
+  - Atomic batch processing
+  
+  https://fullnode.mainnet.aptoslabs.com/v1/spec#/operations/submit_batch_transactions
+}
+

@@ -1,0 +1,38 @@
+meta {
+  name: getSlotLeaders
+  type: http
+  seq: 37
+}
+
+post {
+  url: https://solana-mainnet.g.alchemy.com/v2/{{api_key}}
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "jsonrpc": "2.0",
+    "id": "bru",
+    "method": "getSlotLeaders",
+    "params": [
+      100,
+      10
+    ]
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}
+
+docs {
+  Returns the slot leaders for a given slot range.
+  
+  **Args**:
+  - Start slot (required): The starting slot as a u64 integer
+  - Limit (required): The number of slot leaders to return, between 1 and 5,000
+  
+  **Returns**: An array of node identity public keys as base-58 encoded strings
+}

@@ -1,0 +1,34 @@
+meta {
+  name: zks_getTestnetPaymaster
+  type: http
+  seq: 10
+}
+
+post {
+  url: https://sepolia.era.zksync.dev
+  body: json
+  auth: none
+}
+
+headers {
+  Content-Type: application/json
+}
+
+body:json {
+  {
+    "jsonrpc": "2.0",
+    "id": 1,
+    "method": "zks_getTestnetPaymaster",
+    "params": []
+  }
+}
+
+docs {
+  DEPRECATED: Retrieves the testnet paymaster address, specifically for interactions within the ZKsync Sepolia Testnet environment.
+  
+  Returns:
+  - DATA, 20 bytes - address of the testnet paymaster
+  
+  Note: This method is only applicable for ZKsync Sepolia Testnet. This method is deprecated and may be removed in future versions.
+}
+

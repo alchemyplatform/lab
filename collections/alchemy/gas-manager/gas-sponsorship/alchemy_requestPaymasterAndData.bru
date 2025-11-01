@@ -1,0 +1,67 @@
+meta {
+  name: alchemy_requestPaymasterAndData
+  type: http
+}
+
+post {
+  url: https://eth-mainnet.g.alchemy.com/v2/{{api_key}}
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "jsonrpc": "2.0",
+    "id": "bru",
+    "method": "alchemy_requestPaymasterAndData",
+    "params": [
+      {
+        "policyId": "your-policy-id",
+        "entryPoint": "0x5FF137D4b0FDCD49DcA30c7CF57E578a026d2789",
+        "userOperation": {
+          "sender": "0xd8dA6BF26964aF9D7eEd9e03e53415D37aA96045",
+          "nonce": "0x0",
+          "callData": "0x",
+          "callGasLimit": "0x5208",
+          "verificationGasLimit": "0x1e8480",
+          "preVerificationGas": "0x5208",
+          "maxFeePerGas": "0x77359400",
+          "maxPriorityFeePerGas": "0x3b9aca00",
+          "signature": "0x"
+        }
+      }
+    ]
+  }
+}
+
+settings {
+  encodeUrl: true
+}
+
+docs {
+  **[To be deprecated]** Requests gas sponsorship for a UserOperation on EVM networks. If approved, returns paymaster and paymasterData.
+  
+  **Note**: This method is being deprecated in favor of `alchemy_requestGasAndPaymasterAndData` which provides both gas estimates and paymaster data in a single call.
+  
+  **Use cases**:
+  - Legacy gas sponsorship implementation
+  - Gasless transactions for smart accounts
+  - UserOperation paymaster field population
+  
+  **Args**:
+  - Request object containing:
+    - `policyId`: Your Alchemy Gas Manager policy identifier
+    - `entryPoint`: ERC-4337 EntryPoint contract address
+    - `userOperation`: Complete UserOperation object with all gas fields populated
+  
+  **Returns**: Object containing:
+  - `paymasterAndData`: Hex-encoded paymaster address and data to include in UserOperation
+  
+  **Edge cases & notes**:
+  - Requires all gas fields to be pre-populated (unlike requestGasAndPaymasterAndData)
+  - Policy must approve the sponsorship request
+  - Consider migrating to alchemy_requestGasAndPaymasterAndData for better developer experience
+  
+  **Documentation**: https://www.alchemy.com/docs/wallets/api-reference/gas-manager-admin-api/gas-abstraction-api-endpoints/alchemy-request-paymaster-and-data
+}
+

@@ -1,0 +1,36 @@
+meta {
+  name: alchemy_getTransactionReceipts
+  type: http
+  seq: 9
+}
+
+post {
+  url: https://eth-mainnet.g.alchemy.com/v2/{{api_key}}
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "jsonrpc": "2.0",
+    "id": "bru",
+    "method": "alchemy_getTransactionReceipts",
+    "params": [
+      {
+        "blockNumber": "latest"
+      }
+    ]
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}
+
+docs {
+  Gets all transaction receipts for a block.
+  Args:
+  - {blockNumber}|{blockHash}
+  Returns: {receipts: TransactionReceipt[]}
+}

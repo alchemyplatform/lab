@@ -1,0 +1,41 @@
+meta {
+  name: getmempoolinfo
+  type: http
+  seq: 15
+}
+
+post {
+  url: https://bitcoin-mainnet.g.alchemy.com/v2/{{api_key}}
+  body: json
+  auth: basic
+}
+
+headers {
+  Content-Type: application/json
+}
+
+auth:basic {
+  username: {{rpcUser}}
+  password: {{rpcPassword}}
+}
+
+body:json {
+  {
+    "jsonrpc": "1.0",
+    "id": "bru",
+    "method": "getmempoolinfo",
+    "params": []
+  }
+}
+
+docs {
+  Returns details on the active state of the TX memory pool.
+  
+  Returns information including:
+  - Number of transactions in mempool
+  - Total size and memory usage
+  - Minimum and maximum fee rates
+  - Memory pool limits and usage
+  
+  Useful for monitoring network congestion and fee market conditions.
+}

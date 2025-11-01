@@ -1,0 +1,76 @@
+meta {
+  name: Get Token Metadata
+  type: graphql
+  seq: 7
+}
+
+post {
+  url: https://api.mainnet.aptoslabs.com/v1/graphql
+  body: graphql
+  auth: none
+}
+
+headers {
+  Content-Type: application/json
+}
+
+body:graphql {
+  query GetTokenMetadata($token_data_id: String) {
+    current_token_datas_v2(
+      where: {token_data_id: {_eq: $token_data_id}}
+    ) {
+      token_data_id
+      token_name
+      token_uri
+      description
+      decimals
+      maximum
+      supply
+      is_fungible_v2
+      largest_property_version_v1
+      token_properties
+      token_standard
+      current_collection {
+        collection_id
+        collection_name
+        creator_address
+        description
+        uri
+        current_supply
+        max_supply
+        total_minted_v2
+      }
+    }
+  }
+}
+
+body:graphql:vars {
+  {
+    "token_data_id": "0x..."
+  }
+}
+
+docs {
+  Get metadata information for a specific token.
+  
+  Variables:
+  - token_data_id: The unique identifier for the token data
+  
+  Returns:
+  - token_data_id: Unique identifier
+  - token_name: Name of the token
+  - token_uri: Metadata URI
+  - description: Token description
+  - decimals: Decimal places (for fungible tokens)
+  - maximum: Maximum supply for this token
+  - supply: Current circulating supply
+  - is_fungible_v2: Whether the token is fungible
+  - token_properties: Custom properties
+  - token_standard: Token standard version
+  - current_collection: Collection metadata
+  
+  This query provides complete metadata for a specific token, including its collection.
+  
+  https://aptos.dev/build/indexer/indexer-api/token-metadata
+}
+

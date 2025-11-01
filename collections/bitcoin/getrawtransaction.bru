@@ -1,0 +1,44 @@
+meta {
+  name: getrawtransaction
+  type: http
+  seq: 8
+}
+
+post {
+  url: https://bitcoin-mainnet.g.alchemy.com/v2/{{api_key}}
+  body: json
+  auth: basic
+}
+
+headers {
+  Content-Type: application/json
+}
+
+auth:basic {
+  username: {{rpcUser}}
+  password: {{rpcPassword}}
+}
+
+body:json {
+  {
+    "jsonrpc": "1.0",
+    "id": "bru",
+    "method": "getrawtransaction",
+    "params": [
+      "0e3e2357e806b6cdb1f70b54c3a3a17b6714ee1f0e68bebb44a74b1efd512098",
+      true
+    ]
+  }
+}
+
+docs {
+  Returns the raw transaction data for a given transaction ID.
+  
+  Parameters:
+  1. txid (string, required) - The transaction ID
+  2. verbose (boolean, optional, default=false) - If false, return hex string. If true, return a json object
+  3. blockhash (string, optional) - The block hash to look for the transaction in
+  
+  Example uses verbose=true to get detailed transaction information.
+  Replace the txid with an actual transaction hash from your Bitcoin network.
+}

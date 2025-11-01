@@ -1,0 +1,41 @@
+meta {
+  name: getLeaderSchedule
+  type: http
+  seq: 25
+}
+
+post {
+  url: https://solana-mainnet.g.alchemy.com/v2/{{api_key}}
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "jsonrpc": "2.0",
+    "id": "bru",
+    "method": "getLeaderSchedule",
+    "params": [
+      null,
+      {
+        "commitment": "processed",
+        "identity": "dv2eQHeP4RFrJZ6UeiZWoc3XTtmtZCUKxxCApCDcRNV"
+      }
+    ]
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}
+
+docs {
+  Returns the leader schedule for a given epoch.
+  
+  **Args**:
+  - Slot (optional): The slot to fetch the leader schedule for. If unspecified, returns the leader schedule for the current epoch
+  - Configuration (optional): Optional configuration object containing additional settings (commitment, identity)
+  
+  **Returns**: Leader schedule information for the specified epoch
+}

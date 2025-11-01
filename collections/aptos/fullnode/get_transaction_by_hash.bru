@@ -1,0 +1,28 @@
+meta {
+  name: Get Transaction by Hash
+  type: http
+  seq: 6
+}
+
+get {
+  url: https://aptos-mainnet.g.alchemy.com/v2/{{api_key}}/v1/transactions/by_hash/0x
+  body: none
+  auth: none
+}
+
+headers {
+  Content-Type: application/json
+}
+
+docs {
+  Retrieves a transaction by its hash.
+  
+  Path Parameters:
+  - txn_hash (string, required): Hash of transaction to retrieve
+  
+  Returns the transaction details including version, hash, sender, sequence number,
+  payload, signature, events, timestamp, and success status.
+  
+  https://fullnode.mainnet.aptoslabs.com/v1/spec#/operations/get_transaction_by_hash
+}
+

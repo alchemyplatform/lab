@@ -1,0 +1,78 @@
+meta {
+  name: Create Variable
+  type: http
+  seq: 11
+}
+
+post {
+  url: https://dashboard.alchemy.com/api/graphql/variables
+  body: json
+  auth: inherit
+}
+
+headers {
+  X-Alchemy-Token: {{notify_auth_token}}
+  Content-Type: application/json
+}
+
+body:json {
+  {
+    "variable_name": "my_addresses",
+    "variable_type": "ADDRESS",
+    "values": [
+      "0xd8dA6BF26964aF9D7eEd9e03e53415D37aA96045",
+      "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48"
+    ]
+  }
+}
+
+settings {
+  encodeUrl: true
+}
+
+docs {
+  Creates a custom webhook variable that can be used in GraphQL webhook queries.
+  
+  **Use cases**:
+  - Create reusable address lists for multiple webhooks
+  - Manage dynamic filter sets across webhooks
+  - Centralize address/hash management
+  - Build variable-based webhook architectures
+  - Share configuration across webhook instances
+  
+  **Request body**:
+  - `variable_name` (required): Unique name for the variable (alphanumeric, underscores)
+  - `variable_type` (required): Type of values stored
+    - `ADDRESS`: Ethereum addresses
+    - `TX_HASH`: Transaction hashes
+  - `values` (required): Array of values (addresses or hashes)
+  
+  **Returns**: Created variable object
+  - `variable_name`: Name of the variable
+  - `variable_type`: Type of variable
+  - `created_at`: Timestamp of creation
+  
+  **Usage in GraphQL queries**:
+  ```graphql
+  {
+    block {
+      logs(filter: { addresses: $my_addresses }) {
+        # ... query fields
+      }
+    }
+  }
+  ```
+  
+  **Edge cases & notes**:
+  - Variable name must be unique across your team
+  - Use $ prefix when referencing in GraphQL queries
+  - Variables can be shared across multiple webhooks
+  - Updates to variable affect all webhooks using it
+  - Maximum 100 variables per team
+  - Maximum 10,000 values per variable
+  - Variable names are case-sensitive
+  - Values are validated based on variable_type
+  
+  **Documentation**: https://www.alchemy.com/docs/data/webhooks/webhooks-api-endpoints/notify-api-endpoints/create-custom-webhook-variable
+}
+

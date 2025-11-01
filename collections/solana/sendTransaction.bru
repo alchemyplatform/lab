@@ -1,0 +1,49 @@
+meta {
+  name: sendTransaction
+  type: http
+  seq: 53
+}
+
+post {
+  url: https://solana-mainnet.g.alchemy.com/v2/{{api_key}}
+  body: json
+  auth: none
+}
+
+headers {
+  Content-Type: application/json
+}
+
+body:json {
+  {
+    "jsonrpc": "2.0",
+    "id": "bru",
+    "method": "sendTransaction",
+    "params": [
+      "4hXTCkRzt9WyecNzV1XPgCDfGAZzQKNxLXgynz5QDuWWPSAZBZSHptvWRL3BjCvzUXRdKvHL2b7yGrRQcWyaqsaBCncVG7BFggS8w9snUts67BSh3EqKpXLUm5UMHfD7ZBe9GhARjbNQMLJ1QD3Spr6oMTBU6EhdB4RD8CP2xUxr2u3d6fos36PD98XS6oX8VkjRC3tuFoQiJh3XtR96jfRBiSwKb4uhb1dqWT6JKUgsbDdXR5yxEyW2cgAQZbbJMhLjUca1o6cmNSRvBYHd6YDiBBusAQn9kP4BCbC5CyeeLr6sor4UbQiNNRCRpw87VpEJnmzJrLFqPaNOM7d4Vbb6SfZZMTWHgiPuLiNJQJ02JI54LkwKaEXvcdsP22a8X7Tg6ihqYKsHSMSMjF5KkvBCGsqDw7JMIEM9fTaIhVe1idUWfVa2tP2haTDyUZck9EqGV9dYqXFgMvfK",
+      {
+        "encoding": "base64",
+        "skipPreflight": false,
+        "preflightCommitment": "processed",
+        "maxRetries": 3
+      }
+    ]
+  }
+}
+
+docs {
+  Submits a signed transaction to the cluster for processing.
+  
+  Parameters:
+  1. Transaction (string, required) - Fully-signed Transaction, as encoded string
+  2. Configuration object (optional):
+     - encoding: "base58" or "base64" (default)
+     - skipPreflight: boolean - skip transaction verification (default: false)
+     - preflightCommitment: "processed", "confirmed", "finalized"
+     - maxRetries: number - maximum retry attempts (0-3)
+  
+  Returns transaction signature if successful.
+  
+  Note: This is a sample transaction. Replace with your actual signed transaction data.
+  Essential for submitting transactions to the Solana network.
+}

@@ -1,0 +1,31 @@
+meta {
+  name: getGenesisHash
+  type: http
+  seq: 16
+}
+
+post {
+  url: https://solana-mainnet.g.alchemy.com/v2/{{api_key}}
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "jsonrpc": "2.0",
+    "id": "bru",
+    "method": "getGenesisHash",
+    "params": []
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}
+
+docs {
+  Returns the genesis hash.
+  
+  **Returns**: The genesis hash as a base-58 encoded string
+}

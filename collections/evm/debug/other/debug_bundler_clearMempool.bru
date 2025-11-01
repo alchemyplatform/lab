@@ -1,0 +1,31 @@
+meta {
+  name: debug_bundler_clearMempool
+  type: http
+  seq: 5
+}
+
+post {
+  url: https://eth-mainnet.g.alchemy.com/v2/{{api_key}}
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "jsonrpc": "2.0",
+    "id": "bru",
+    "method": "debug_bundler_clearMempool",
+    "params": []
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}
+
+docs {
+  Clears the bundler's mempool of UserOperations.
+  Args: none.
+  Returns: boolean or status string.
+}

@@ -1,0 +1,48 @@
+meta {
+  name: logsSubscribe
+  type: ws
+  seq: 5
+}
+
+ws {
+  url: wss://solana-mainnet.g.alchemy.com/v2/{{api_key}}
+  body: ws
+  auth: inherit
+}
+
+body:ws {
+  name: subscribe
+  type: json
+  content: '''
+    {
+      "jsonrpc": "2.0",
+      "id": "bru",
+      "method": "logsSubscribe",
+      "params": [
+        {
+          "mentions": [ "11111111111111111111111111111111" ]
+        },
+        {
+          "commitment": "finalized"
+        }
+      ]
+    }
+  '''
+}
+
+docs {
+  Subscribe to transaction logging. Receive notifications when transaction logs are emitted.
+  
+  **Args**:
+  1. Filter (required): Can be one of:
+     - "all" - subscribe to all transactions except simple vote transactions
+     - "allWithVotes" - subscribe to all transactions including simple vote transactions
+     - { "mentions": [ "address" ] } - subscribe to transactions that mention the provided Pubkey
+  2. Configuration object (optional):
+     - commitment: "finalized", "confirmed", "processed"
+  
+  **Returns**: Subscription ID that can be used to unsubscribe.
+  
+  **Notifications**: Contains signature, error (if any), and logs array.
+}
+
