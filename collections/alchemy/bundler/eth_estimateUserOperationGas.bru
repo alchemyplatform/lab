@@ -1,0 +1,44 @@
+meta {
+  name: eth_estimateUserOperationGas
+  type: http
+}
+
+post {
+  url: https://eth-mainnet.g.alchemy.com/v2/{{api_key}}
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "jsonrpc": "2.0",
+    "id": 1,
+    "method": "eth_estimateUserOperationGas",
+    "params": [
+      {
+        "sender": "0x...",
+        "nonce": "0x...",
+        "callData": "0x...",
+        "signature": "0x..."
+      },
+      "0x5FF137D4b0FDCD49DcA30c7CF57E578a026d2789"
+    ]
+  }
+}
+
+settings {
+  encodeUrl: true
+}
+
+docs {
+  Estimates the gas values for a user operation. It returns the [preVerificationGas], [verificationGasLimit], and [callGasLimit] values associated with the provided user operation.
+  
+  Args:
+  - UserOperation: The UserOperation object to estimate gas for
+  - Entrypoint address: The EntryPoint address
+  
+  Returns: Gas estimates including preVerificationGas, verificationGasLimit, and callGasLimit
+  
+  Reference: https://www.alchemy.com/docs/wallets/api-reference/bundler-api/bundler-api-endpoints/eth-estimate-user-operation-gas
+}
+
