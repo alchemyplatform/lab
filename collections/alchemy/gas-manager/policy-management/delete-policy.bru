@@ -1,0 +1,46 @@
+meta {
+  name: delete-policy
+  type: http
+}
+
+delete {
+  url: https://api.g.alchemy.com/v1/gas-manager/policy/{{policy_id}}
+  body: none
+  auth: inherit
+}
+
+headers {
+  Authorization: Bearer {{gas_manager_api_key}}
+}
+
+settings {
+  encodeUrl: true
+}
+
+docs {
+  Deletes a policy by id.
+  
+  **Use cases**:
+  - Removing unused or deprecated policies
+  - Cleaning up test policies
+  - Policy lifecycle management
+  
+  **Args**:
+  - URL parameter:
+    - `policy_id`: The unique identifier of the policy to delete
+  
+  **Returns**: Success response
+  - `success`: Boolean indicating successful deletion
+  - `policyId`: ID of the deleted policy
+  
+  **Edge cases & notes**:
+  - Requires Gas Manager API key authentication
+  - Returns 404 if policy not found
+  - Deletion is permanent and cannot be undone
+  - Consider deactivating instead of deleting for audit trail
+  - Active policies should be deactivated before deletion
+  - Any pending transactions using this policy may fail
+  
+  **Documentation**: https://www.alchemy.com/docs/wallets/api-reference/gas-manager-admin-api/admin-api-endpoints/delete-policy
+}
+

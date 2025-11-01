@@ -1,0 +1,48 @@
+meta {
+  name: get-policy
+  type: http
+}
+
+get {
+  url: https://api.g.alchemy.com/v1/gas-manager/policy/{{policy_id}}
+  body: none
+  auth: inherit
+}
+
+headers {
+  Authorization: Bearer {{gas_manager_api_key}}
+}
+
+settings {
+  encodeUrl: true
+}
+
+docs {
+  Returns a policy by id.
+  
+  **Use cases**:
+  - Retrieving policy configuration details
+  - Auditing policy rules and settings
+  - Validating policy status before sponsorship
+  
+  **Args**:
+  - URL parameter:
+    - `policy_id`: The unique identifier of the policy to retrieve
+  
+  **Returns**: Object containing:
+  - `policyId`: Policy unique identifier
+  - `name`: Policy name
+  - `type`: Policy type
+  - `rules`: Array of configured rules
+  - `status`: Current status (active/inactive)
+  - `createdAt`: Timestamp of creation
+  - `updatedAt`: Timestamp of last update
+  
+  **Edge cases & notes**:
+  - Requires Gas Manager API key authentication
+  - Returns 404 if policy not found
+  - Returns full policy configuration including all rules
+  
+  **Documentation**: https://www.alchemy.com/docs/wallets/api-reference/gas-manager-admin-api/admin-api-endpoints/get-policy
+}
+

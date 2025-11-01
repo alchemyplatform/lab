@@ -1,0 +1,57 @@
+meta {
+  name: update-policy-status
+  type: http
+}
+
+patch {
+  url: https://api.g.alchemy.com/v1/gas-manager/policy/{{policy_id}}/status
+  body: json
+  auth: inherit
+}
+
+headers {
+  Authorization: Bearer {{gas_manager_api_key}}
+  Content-Type: application/json
+}
+
+body:json {
+  {
+    "status": "active"
+  }
+}
+
+settings {
+  encodeUrl: true
+}
+
+docs {
+  Modifies the status of a policy to either "active" or "inactive".
+  
+  **Use cases**:
+  - Activating newly created policies
+  - Temporarily disabling policies without deletion
+  - Emergency policy deactivation
+  - Policy lifecycle management
+  
+  **Args**:
+  - URL parameter:
+    - `policy_id`: The unique identifier of the policy to update
+  - Request body containing:
+    - `status`: New status value ("active" or "inactive")
+  
+  **Returns**: Object containing:
+  - `policyId`: Policy unique identifier
+  - `status`: Updated status
+  - `updatedAt`: Timestamp of status change
+  
+  **Edge cases & notes**:
+  - Requires Gas Manager API key authentication
+  - Only accepts "active" or "inactive" as valid status values
+  - Inactive policies will reject all sponsorship requests
+  - Active policies immediately begin accepting requests
+  - Returns 404 if policy not found
+  - Status changes are immediate
+  
+  **Documentation**: https://www.alchemy.com/docs/wallets/api-reference/gas-manager-admin-api/admin-api-endpoints/update-policy-status
+}
+

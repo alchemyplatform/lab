@@ -1,0 +1,60 @@
+meta {
+  name: get-policy-stats
+  type: http
+}
+
+get {
+  url: https://api.g.alchemy.com/v1/gas-manager/policy/{{policy_id}}/stats
+  body: none
+  auth: inherit
+}
+
+params:query {
+  ~startTime: 2024-01-01T00:00:00Z
+  ~endTime: 2024-12-31T23:59:59Z
+}
+
+headers {
+  Authorization: Bearer {{gas_manager_api_key}}
+}
+
+settings {
+  encodeUrl: true
+}
+
+docs {
+  Returns stats about a policy specified by ID.
+  
+  **Use cases**:
+  - Monitoring policy usage and spending
+  - Analyzing gas sponsorship patterns
+  - Budget tracking and cost management
+  - Policy performance optimization
+  
+  **Args**:
+  - URL parameter:
+    - `policy_id`: The unique identifier of the policy
+  - Query parameters (optional):
+    - `startTime`: Start time for stats period (ISO 8601 format)
+    - `endTime`: End time for stats period (ISO 8601 format)
+  
+  **Returns**: Object containing:
+  - `policyId`: Policy unique identifier
+  - `totalSponsored`: Total number of sponsored transactions
+  - `totalSpent`: Total gas spent (in native currency)
+  - `totalSpentUSD`: Total gas spent in USD
+  - `averageGasCost`: Average gas cost per transaction
+  - `dailyStats`: Array of daily usage statistics
+  - `topUsers`: Most active users by sponsorship count
+  - `chainBreakdown`: Spending breakdown by blockchain
+  
+  **Edge cases & notes**:
+  - Requires Gas Manager API key authentication
+  - Returns 404 if policy not found
+  - Stats are updated near real-time (slight delay possible)
+  - Time range defaults to last 30 days if not specified
+  - USD values calculated using historical exchange rates
+  
+  **Documentation**: https://www.alchemy.com/docs/wallets/api-reference/gas-manager-admin-api/admin-api-endpoints/get-policy-stats
+}
+

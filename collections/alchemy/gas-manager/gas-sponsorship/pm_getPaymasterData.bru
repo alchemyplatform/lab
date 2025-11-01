@@ -1,0 +1,68 @@
+meta {
+  name: pm_getPaymasterData
+  type: http
+}
+
+post {
+  url: https://eth-mainnet.g.alchemy.com/v2/{{api_key}}
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "jsonrpc": "2.0",
+    "id": "bru",
+    "method": "pm_getPaymasterData",
+    "params": [
+      {
+        "sender": "0xd8dA6BF26964aF9D7eEd9e03e53415D37aA96045",
+        "nonce": "0x0",
+        "initCode": "0x",
+        "callData": "0x",
+        "callGasLimit": "0x5208",
+        "verificationGasLimit": "0x1e8480",
+        "preVerificationGas": "0x5208",
+        "maxFeePerGas": "0x77359400",
+        "maxPriorityFeePerGas": "0x3b9aca00",
+        "paymasterAndData": "0x",
+        "signature": "0x..."
+      },
+      "0x5FF137D4b0FDCD49DcA30c7CF57E578a026d2789",
+      "0x1"
+    ]
+  }
+}
+
+settings {
+  encodeUrl: true
+}
+
+docs {
+  Returns values to be used in paymaster-related fields of a signed user operation on EVM networks. These are NOT stub values and will be included in a signed user operation as part of an eth_sendUserOperation call.
+  
+  **Use cases**:
+  - Getting final paymaster data after UserOperation is signed
+  - Preparing UserOperation for submission to bundler
+  - Finalizing sponsored transaction fields
+  
+  **Args**:
+  - Complete UserOperation object (with all fields including signature)
+  - EntryPoint contract address
+  - Chain ID (hex-encoded)
+  
+  **Returns**: Object containing actual paymaster fields:
+  - `paymasterAndData`: Actual paymaster address and signed data for execution
+  - `sponsor`: Object with sponsor details
+    - `name`: Name of the paymaster sponsor
+    - `icon`: Optional icon URL
+  
+  **Edge cases & notes**:
+  - Requires a signed UserOperation (unlike pm_getPaymasterStubData)
+  - This data is valid for actual transaction submission
+  - Use this as the final step before calling eth_sendUserOperation
+  - Paymaster data includes signature from paymaster service
+  
+  **Documentation**: https://www.alchemy.com/docs/wallets/api-reference/gas-manager-admin-api/gas-abstraction-api-endpoints/pm-get-paymaster-data
+}
+

@@ -1,0 +1,76 @@
+meta {
+  name: alchemy_requestPaymasterTokenQuote
+  type: http
+}
+
+post {
+  url: https://eth-mainnet.g.alchemy.com/v2/{{api_key}}
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "jsonrpc": "2.0",
+    "id": "bru",
+    "method": "alchemy_requestPaymasterTokenQuote",
+    "params": [
+      {
+        "policyId": "your-policy-id",
+        "entryPoint": "0x5FF137D4b0FDCD49DcA30c7CF57E578a026d2789",
+        "userOperation": {
+          "sender": "0xd8dA6BF26964aF9D7eEd9e03e53415D37aA96045",
+          "nonce": "0x0",
+          "callData": "0x"
+        },
+        "feeToken": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+        "overrides": {
+          "maxFeePerGas": "0x77359400",
+          "maxPriorityFeePerGas": "0x3b9aca00",
+          "callGasLimit": "0x5208",
+          "verificationGasLimit": "0x1e8480",
+          "preVerificationGas": "0x5208"
+        }
+      }
+    ]
+  }
+}
+
+settings {
+  encodeUrl: true
+}
+
+docs {
+  Requests ERC20 fee quote for a UserOperation. Optionally accepts fee parameter overrides to be used in the UserOperation.
+  
+  **Use cases**:
+  - Enabling users to pay gas fees with ERC-20 tokens (USDC, DAI, etc.)
+  - Getting conversion rates for token-based gas payment
+  - Implementing flexible gas payment options
+  
+  **Args**:
+  - Request object containing:
+    - `policyId`: Your Alchemy Gas Manager policy identifier
+    - `entryPoint`: ERC-4337 EntryPoint contract address
+    - `userOperation`: Partial or complete UserOperation object
+    - `feeToken`: ERC-20 token address to use for gas payment
+    - `overrides` (optional): Override gas fee parameters
+  
+  **Returns**: Object containing:
+  - `paymasterAndData`: Paymaster data for ERC-20 token payment
+  - `feeTokenQuote`: Object with token conversion details
+    - `minConversionRate`: Minimum token amount required
+    - `token`: Token address
+    - `decimals`: Token decimals
+    - `expiry`: Quote expiration timestamp
+  - Gas estimation fields (if not provided in overrides)
+  
+  **Edge cases & notes**:
+  - Token must be supported by the configured paymaster
+  - Quote has expiration time - use before expiry
+  - Conversion rates may fluctuate based on market conditions
+  - User must have sufficient token balance for payment
+  
+  **Documentation**: https://www.alchemy.com/docs/wallets/api-reference/gas-manager-admin-api/gas-abstraction-api-endpoints/alchemy-request-paymaster-token-quote
+}
+

@@ -1,0 +1,64 @@
+meta {
+  name: get-sponsorships
+  type: http
+}
+
+get {
+  url: https://api.g.alchemy.com/v1/gas-manager/policy/{{policy_id}}/sponsorships
+  body: none
+  auth: inherit
+}
+
+params:query {
+  limit: 10
+  offset: 0
+  ~status: completed
+  ~startTime: 2024-01-01T00:00:00Z
+  ~endTime: 2024-12-31T23:59:59Z
+}
+
+headers {
+  Authorization: Bearer {{gas_manager_api_key}}
+}
+
+settings {
+  encodeUrl: true
+}
+
+docs {
+  Returns a list of sponsorships associated with the specified policy ID. The results are paginated.
+  
+  **Use cases**:
+  - Auditing sponsored transactions
+  - Tracking individual sponsorship requests
+  - Analyzing transaction patterns
+  - Debugging sponsorship issues
+  
+  **Args**:
+  - URL parameter:
+    - `policy_id`: The unique identifier of the policy
+  - Query parameters:
+    - `limit` (optional): Number of sponsorships to return (default: 10, max: 100)
+    - `offset` (optional): Number of sponsorships to skip for pagination (default: 0)
+    - `status` (optional): Filter by status ("pending", "completed", "failed")
+    - `startTime` (optional): Filter sponsorships after this time (ISO 8601)
+    - `endTime` (optional): Filter sponsorships before this time (ISO 8601)
+  
+  **Returns**: Object containing:
+  - `sponsorships`: Array of sponsorship objects
+    - Each includes: sponsorshipId, userOpHash, status, sender, gasSpent, timestamp, chain
+  - `total`: Total number of sponsorships matching filters
+  - `limit`: Applied limit
+  - `offset`: Applied offset
+  
+  **Edge cases & notes**:
+  - Requires Gas Manager API key authentication
+  - Results are paginated - use offset/limit for navigation
+  - Sponsorships ordered by timestamp (newest first)
+  - Returns 404 if policy not found
+  - Maximum limit is 100 sponsorships per request
+  - Use time filters for specific date ranges
+  
+  **Documentation**: https://www.alchemy.com/docs/wallets/api-reference/gas-manager-admin-api/admin-api-endpoints/get-sponsorships
+}
+
