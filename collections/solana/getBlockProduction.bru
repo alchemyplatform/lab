@@ -1,6 +1,7 @@
 meta {
   name: getBlockProduction
   type: http
+  seq: 1
 }
 
 post {
@@ -12,14 +13,15 @@ post {
 body:json {
   {
     "jsonrpc": "2.0",
+    "id": "bru",
     "method": "getBlockProduction",
-    "params": [],
-    "id": "bru"
+    "params": []
   }
 }
 
 settings {
   encodeUrl: true
+  timeout: 0
 }
 
 docs {
@@ -30,4 +32,3 @@ docs {
   
   **Returns**: Block production information for the specified range
 }
-
