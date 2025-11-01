@@ -11,51 +11,18 @@ post {
 }
 
 body:graphql {
-  query GetCoinBalances($owner: SuiAddress!, $coinType: String) {
-    owner(address: $owner) {
-      address
-      balance(type: $coinType) {
-        coinType {
-          repr
-        }
-        coinObjectCount
-        totalBalance
-      }
-      balances(first: 10) {
+  query GetCoinBalances {
+    address(address: "0x5094652429957619e6efa79a404a6714d1126e63f551f4b6c7fb76440f8118c9") {
+      objects(
+        first: 3,
+        after: "vBIzCwAAAADMAQBQlGUkKZV2Gebvp5pASmcU0RJuY/VR9LbH+3ZED4EYyQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAARjb2luAAAAAAAAAARDb2luAAAAAAAAAAEAAAAHAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAA3N1aQAAAAAAAAADU1VJAAAAAAAAAAAB/////XBZUf9feyhb9cW+AOBraL10O9t0D9JAr+tIq2wXDJdl5/zP5w==",
+        filter: { type: "0x2::coin::Coin<0x2::sui::SUI>" }
+      ) {
         nodes {
-          coinType {
-            repr
-          }
-          coinObjectCount
-          totalBalance
-        }
-        pageInfo {
-          hasNextPage
-          endCursor
-        }
-      }
-      coins(first: 10, type: $coinType) {
-        nodes {
-          coinBalance
-          contents {
-            type {
-              repr
-            }
-          }
-        }
-        pageInfo {
-          hasNextPage
-          endCursor
+          address
         }
       }
     }
-  }
-}
-
-body:graphql:vars {
-  {
-    "owner": "0x94f1a597b4e8f709a396f7f6b1482bdcd65a673d111e49286c527fab7c2d0961",
-    "coinType": "0x2::sui::SUI"
   }
 }
 

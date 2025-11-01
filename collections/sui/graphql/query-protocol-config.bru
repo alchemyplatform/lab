@@ -11,8 +11,8 @@ post {
 }
 
 body:graphql {
-  query GetProtocolConfig($version: Int) {
-    protocolConfig(protocolVersion: $version) {
+  query GetProtocolConfig {
+    protocolConfigs(version: 100) {
       protocolVersion
       featureFlags {
         key

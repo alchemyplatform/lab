@@ -11,8 +11,8 @@ post {
 }
 
 body:graphql {
-  query GetCheckpoints($sequenceNumber: Int) {
-    checkpoint(id: { sequenceNumber: $sequenceNumber }) {
+  query GetCheckpoints {
+    checkpoint(sequenceNumber: 203869583 ) {
       sequenceNumber
       timestamp
       epoch {
@@ -21,8 +21,10 @@ body:graphql {
       }
       networkTotalTransactions
       previousCheckpointDigest
-      validatorSignatures
-      transactionBlocks(first: 10) {
+      validatorSignatures {
+        signature
+      }
+      transactions(first: 10) {
         nodes {
           digest
           sender {
@@ -56,12 +58,6 @@ body:graphql {
         endCursor
       }
     }
-  }
-}
-
-body:graphql:vars {
-  {
-    "sequenceNumber": 203869583
   }
 }
 

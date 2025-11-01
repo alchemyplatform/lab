@@ -12,10 +12,10 @@ post {
 
 body:graphql {
   query GetTransactions($address: SuiAddress!, $function: String) {
-    transactionBlocks(
+    transactions(
       first: 10
       filter: {
-        signAddress: $address
+        sentAddress: $address
         function: $function
       }
     ) {
@@ -24,7 +24,9 @@ body:graphql {
         sender {
           address
         }
-        signatures
+        signatures {
+          signatureBytes
+        }
         gasInput {
           gasSponsor {
             address
@@ -42,9 +44,6 @@ body:graphql {
             epochId
           }
           gasEffects {
-            gasObject {
-              objectId
-            }
             gasSummary {
               computationCost
               storageCost
@@ -65,7 +64,7 @@ body:graphql {
 body:graphql:vars {
   {
     "address": "0x94f1a597b4e8f709a396f7f6b1482bdcd65a673d111e49286c527fab7c2d0961",
-    "function": "transfer"
+    "function": "0x2::transfer"
   }
 }
 
