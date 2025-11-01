@@ -1,0 +1,32 @@
+meta {
+  name: Get Transaction by Version
+  type: http
+  seq: 21
+}
+
+get {
+  url: https://aptos-mainnet.g.alchemy.com/v2/{{api_key}}/v1/transactions/by_version/1000000
+  body: none
+  auth: none
+}
+
+headers {
+  Content-Type: application/json
+}
+
+docs {
+  Retrieves a transaction by its ledger version.
+  
+  Path Parameters:
+  - txn_version (uint64, required): Ledger version to lookup transaction by
+  
+  Returns:
+  - Full transaction details including version, hash, sender, payload, events, changes, and success status
+  
+  Each transaction is assigned a unique ledger version (sequence number) when it's
+  committed to the blockchain. This endpoint allows you to retrieve a transaction
+  by that version number.
+  
+  https://fullnode.mainnet.aptoslabs.com/v1/spec#/operations/get_transaction_by_version
+}
+

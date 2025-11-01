@@ -1,0 +1,38 @@
+meta {
+  name: Get Account Resource
+  type: http
+  seq: 14
+}
+
+get {
+  url: https://aptos-mainnet.g.alchemy.com/v2/{{api_key}}/v1/accounts/0x1/resource/0x1::account::Account
+  body: none
+  auth: none
+}
+
+headers {
+  Content-Type: application/json
+}
+
+docs {
+  Retrieves an individual resource from a given account and at a specific ledger version.
+  
+  Path Parameters:
+  - address (string, required): Address of account with or without a 0x prefix
+  - resource_type (string, required): Name of struct to retrieve (e.g., "0x1::account::Account")
+  
+  Query Parameters:
+  - ledger_version (uint64, optional): Ledger version to get state of account
+  
+  Returns:
+  - type: The resource type string
+  - data: The resource data as JSON
+  
+  Common resource types:
+  - Account info: 0x1::account::Account
+  - Coin store: 0x1::coin::CoinStore<0x1::aptos_coin::AptosCoin>
+  - Token store: 0x3::token::TokenStore
+  
+  https://fullnode.mainnet.aptoslabs.com/v1/spec#/operations/get_account_resource
+}
+

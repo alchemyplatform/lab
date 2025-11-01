@@ -1,0 +1,37 @@
+meta {
+  name: Show OpenAPI Explorer
+  type: http
+  seq: 27
+}
+
+get {
+  url: https://aptos-mainnet.g.alchemy.com/v2/{{api_key}}/v1/spec
+  body: none
+  auth: none
+}
+
+headers {
+  Content-Type: application/json
+}
+
+docs {
+  Returns the OpenAPI specification for the Aptos Node API.
+  
+  Returns:
+  - Full OpenAPI 3.0 specification in YAML or JSON format
+  
+  This endpoint provides the complete API specification including:
+  - All available endpoints
+  - Request/response schemas
+  - Parameter descriptions
+  - Error responses
+  
+  Useful for:
+  - Generating API clients
+  - Understanding the full API surface
+  - API documentation
+  - Schema validation
+  
+  https://fullnode.mainnet.aptoslabs.com/v1/spec#/operations/spec
+}
+

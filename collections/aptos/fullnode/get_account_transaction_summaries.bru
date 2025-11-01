@@ -1,0 +1,39 @@
+meta {
+  name: Get Account Transaction Summaries
+  type: http
+  seq: 23
+}
+
+get {
+  url: https://aptos-mainnet.g.alchemy.com/v2/{{api_key}}/v1/accounts/0x1/transaction_summaries?limit=10
+  body: none
+  auth: none
+}
+
+headers {
+  Content-Type: application/json
+}
+
+docs {
+  Retrieves summary information for transactions from an account.
+  
+  Path Parameters:
+  - address (string, required): Address of account with or without a 0x prefix
+  
+  Query Parameters:
+  - start (uint64, optional): Account sequence number to start list of transactions
+  - limit (uint16, optional): Max number of transactions to retrieve
+  
+  Returns array of transaction summaries (lightweight version without full details):
+  - version: Transaction version
+  - hash: Transaction hash
+  - success: Whether the transaction succeeded
+  - vm_status: VM status message
+  - gas_used: Gas consumed
+  
+  This endpoint is more efficient than get_account_transactions when you only need
+  summary information and not full transaction details with events and changes.
+  
+  https://fullnode.mainnet.aptoslabs.com/v1/spec#/operations/get_account_transaction_summaries
+}
+

@@ -1,0 +1,59 @@
+meta {
+  name: Simulate Transaction
+  type: http
+  seq: 8
+}
+
+post {
+  url: https://aptos-mainnet.g.alchemy.com/v2/{{api_key}}/v1/transactions/simulate
+  body: json
+  auth: none
+}
+
+headers {
+  Content-Type: application/json
+}
+
+body:json {
+  {
+    "sender": "0x1",
+    "sequence_number": "0",
+    "max_gas_amount": "1000",
+    "gas_unit_price": "1",
+    "expiration_timestamp_secs": "1234567890",
+    "payload": {
+      "type": "entry_function_payload",
+      "function": "0x1::aptos_account::transfer",
+      "type_arguments": [],
+      "arguments": [
+        "0x2",
+        "1000"
+      ]
+    },
+    "signature": {
+      "type": "ed25519_signature",
+      "public_key": "0x...",
+      "signature": "0x..."
+    }
+  }
+}
+
+docs {
+  Simulates a transaction without submitting it to the blockchain.
+  
+  Query Parameters:
+  - estimate_gas_unit_price (boolean, optional): If set to true, gas unit price will be estimated
+  - estimate_max_gas_amount (boolean, optional): If set to true, max gas amount will be estimated
+  - estimate_prioritized_gas_unit_price (boolean, optional): If set to true, prioritized gas unit price will be estimated
+  
+  Body:
+  - Signed or unsigned transaction in JSON format
+  
+  Returns:
+  - Simulation results including success status, gas used, changes, events, etc.
+  
+  Useful for testing transactions before submission and estimating gas costs.
+  
+  https://fullnode.mainnet.aptoslabs.com/v1/spec#/operations/simulate_transaction
+}
+

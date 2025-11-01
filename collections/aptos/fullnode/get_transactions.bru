@@ -1,0 +1,31 @@
+meta {
+  name: Get Transactions
+  type: http
+  seq: 4
+}
+
+get {
+  url: https://aptos-mainnet.g.alchemy.com/v2/{{api_key}}/v1/transactions?limit=10
+  body: none
+  auth: none
+}
+
+headers {
+  Content-Type: application/json
+}
+
+docs {
+  Retrieves on-chain committed transactions. The page size and start position 
+  can be provided to get a specific sequence of transactions.
+  
+  Query Parameters:
+  - start (uint64, optional): Ledger version to start list of transactions
+  - limit (uint16, optional): Max number of transactions to retrieve (default: 25, max: 1000)
+  
+  Returns array of transactions ordered by version from start.
+  
+  Note: If the start param is not provided, the genesis transaction will be retrieved.
+  
+  https://fullnode.mainnet.aptoslabs.com/v1/spec#/operations/get_transactions
+}
+

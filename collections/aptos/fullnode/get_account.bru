@@ -1,0 +1,31 @@
+meta {
+  name: Get Account
+  type: http
+  seq: 1
+}
+
+get {
+  url: https://aptos-mainnet.g.alchemy.com/v2/{{api_key}}/v1/accounts/0x1
+  body: none
+  auth: none
+}
+
+headers {
+  Content-Type: application/json
+}
+
+docs {
+  Retrieves the authentication key and the sequence number for an account.
+  
+  Path Parameters:
+  - address (string, required): Address of account with or without a 0x prefix
+  
+  Query Parameters:
+  - ledger_version (uint64, optional): Ledger version to get state of account
+  
+  Returns:
+  - sequence_number: A string containing a 64-bit unsigned integer
+  - authentication_key: All bytes (Vec<u8>) data is represented as hex-encoded string prefixed with 0x
+  
+  https://fullnode.mainnet.aptoslabs.com/v1/spec#/operations/get_account
+}

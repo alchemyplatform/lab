@@ -1,0 +1,38 @@
+meta {
+  name: Get Events by Event Handle
+  type: http
+  seq: 18
+}
+
+get {
+  url: https://aptos-mainnet.g.alchemy.com/v2/{{api_key}}/v1/accounts/0x1/events/0x1::account::Account/coin_register_events?limit=10
+  body: none
+  auth: none
+}
+
+headers {
+  Content-Type: application/json
+}
+
+docs {
+  Retrieves events for a specific event handle (event stream).
+  
+  Path Parameters:
+  - address (string, required): Address of account with or without a 0x prefix
+  - event_handle (string, required): Name of struct to look up event handle (e.g., "0x1::account::Account")
+  - field_name (string, required): Name of field to look up event handle (e.g., "coin_register_events")
+  
+  Query Parameters:
+  - start (uint64, optional): Starting sequence number of events
+  - limit (uint16, optional): Max number of events to retrieve
+  
+  Returns array of events from the specified event handle.
+  
+  Common event handles:
+  - Coin register: 0x1::account::Account / coin_register_events
+  - Coin withdraw: 0x1::coin::CoinStore<CoinType> / withdraw_events
+  - Coin deposit: 0x1::coin::CoinStore<CoinType> / deposit_events
+  
+  https://fullnode.mainnet.aptoslabs.com/v1/spec#/operations/get_events_by_event_handle
+}
+

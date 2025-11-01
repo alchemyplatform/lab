@@ -1,0 +1,44 @@
+meta {
+  name: Get Raw Table Item
+  type: http
+  seq: 20
+}
+
+post {
+  url: https://aptos-mainnet.g.alchemy.com/v2/{{api_key}}/v1/tables/{table_handle}/raw_item
+  body: json
+  auth: none
+}
+
+headers {
+  Content-Type: application/json
+}
+
+body:json {
+  {
+    "key": "0x..."
+  }
+}
+
+docs {
+  Get a table item by its raw (unhashed) key from a table identified by the handle.
+  
+  Path Parameters:
+  - table_handle (string, required): Table handle hex string
+  
+  Body:
+  - key: The raw key bytes as hex string
+  
+  Query Parameters:
+  - ledger_version (uint64, optional): Ledger version to get state of account
+  
+  Returns:
+  - The raw table item value as bytes
+  
+  This is a lower-level endpoint compared to get_table_item. It requires you to
+  provide the raw key bytes and returns raw value bytes. Useful for cases where
+  you need direct access to the raw table data.
+  
+  https://fullnode.mainnet.aptoslabs.com/v1/spec#/operations/get_raw_table_item
+}
+
