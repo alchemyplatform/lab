@@ -1,0 +1,53 @@
+meta {
+  name: Get All Webhooks
+  type: http
+  seq: 2
+}
+
+get {
+  url: https://dashboard.alchemy.com/api/team-webhooks
+  body: none
+  auth: inherit
+}
+
+headers {
+  X-Alchemy-Token: {{notify_auth_token}}
+}
+
+settings {
+  encodeUrl: true
+}
+
+docs {
+  Retrieves all webhooks associated with your Alchemy team.
+  
+  **Use cases**:
+  - Audit and manage existing webhooks
+  - Build webhook management dashboards
+  - Monitor webhook configurations
+  - Bulk operations on webhooks
+  - Debugging webhook setup
+  
+  **Returns**: Object containing:
+  - `data`: Array of webhook objects
+    - Each webhook includes:
+      - `id`: Unique webhook identifier
+      - `network`: Blockchain network
+      - `webhook_type`: Type of webhook (GRAPHQL, ADDRESS_ACTIVITY, etc.)
+      - `webhook_url`: Configured endpoint URL
+      - `is_active`: Whether webhook is active
+      - `time_created`: Unix timestamp of creation
+      - `signing_key`: Secret key for signature validation
+      - `version`: Webhook version
+      - Additional type-specific fields (addresses, nft_filters, etc.)
+  
+  **Edge cases & notes**:
+  - Returns all webhooks regardless of status (active/inactive)
+  - Includes webhooks from all team members
+  - Response includes signing keys - keep secure
+  - No pagination - returns all webhooks
+  - Filter and process results client-side as needed
+  
+  **Documentation**: https://www.alchemy.com/docs/data/webhooks/webhooks-api-endpoints/notify-api-endpoints/team-webhooks
+}
+

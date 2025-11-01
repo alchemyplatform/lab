@@ -1,0 +1,53 @@
+meta {
+  name: Delete Webhook
+  type: http
+  seq: 3
+}
+
+delete {
+  url: https://dashboard.alchemy.com/api/delete-webhook?webhook_id=wh_example123
+  body: none
+  auth: inherit
+}
+
+params:query {
+  webhook_id: wh_example123
+}
+
+headers {
+  X-Alchemy-Token: {{notify_auth_token}}
+}
+
+settings {
+  encodeUrl: true
+}
+
+docs {
+  Permanently deletes a webhook by its ID.
+  
+  **Use cases**:
+  - Clean up unused or test webhooks
+  - Remove webhooks for decommissioned services
+  - Webhook lifecycle management
+  - Programmatic webhook cleanup
+  - Security cleanup after key rotation
+  
+  **Args**:
+  - Query parameter:
+    - `webhook_id` (required): The unique ID of the webhook to delete
+  
+  **Returns**: Success confirmation
+  - Empty response with 200 status on success
+  - Error message if webhook not found or unauthorized
+  
+  **Edge cases & notes**:
+  - This action is irreversible - webhook cannot be recovered
+  - All webhook history and logs are deleted
+  - In-flight webhook deliveries may still occur briefly after deletion
+  - Must have team permissions to delete webhooks
+  - Webhook ID can be found using get-all-webhooks endpoint
+  - Invalid or non-existent webhook_id returns 404 error
+  
+  **Documentation**: https://www.alchemy.com/docs/data/webhooks/webhooks-api-endpoints/notify-api-endpoints/delete-webhook
+}
+

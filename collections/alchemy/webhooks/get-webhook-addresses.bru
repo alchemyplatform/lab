@@ -1,0 +1,60 @@
+meta {
+  name: Get Webhook Addresses
+  type: http
+  seq: 5
+}
+
+get {
+  url: https://dashboard.alchemy.com/api/webhook-addresses?webhook_id=wh_example123&limit=100&after=
+  body: none
+  auth: inherit
+}
+
+params:query {
+  webhook_id: wh_example123
+  limit: 100
+  ~after: 
+}
+
+headers {
+  X-Alchemy-Token: {{notify_auth_token}}
+}
+
+settings {
+  encodeUrl: true
+}
+
+docs {
+  Retrieves all addresses tracked by a specific Address Activity webhook.
+  
+  **Use cases**:
+  - Audit which addresses are being monitored
+  - Verify webhook configuration
+  - Build address management UIs
+  - Debugging webhook behavior
+  - Address inventory management
+  
+  **Args**:
+  - Query parameters:
+    - `webhook_id` (required): ID of the Address Activity webhook
+    - `limit` (optional): Number of addresses to return per page (default: 100, max: 1000)
+    - `after` (optional): Cursor for pagination to get next page of results
+  
+  **Returns**: Object containing:
+  - `data`: Array of address strings (checksummed Ethereum addresses)
+  - `pagination`: Pagination information
+    - `cursors.after`: Cursor for next page (if more results exist)
+    - `total_count`: Total number of addresses tracked by this webhook
+  
+  **Edge cases & notes**:
+  - Only works with ADDRESS_ACTIVITY webhook type
+  - Returns error if webhook_id is not an Address Activity webhook
+  - Addresses are returned in checksummed format
+  - Results are paginated for webhooks tracking many addresses
+  - Use the 'after' cursor for subsequent pages
+  - Empty array if no addresses configured
+  - Maximum 150,000 addresses per webhook
+  
+  **Documentation**: https://www.alchemy.com/docs/data/webhooks/webhooks-api-endpoints/notify-api-endpoints/webhook-addresses
+}
+

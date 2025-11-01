@@ -1,0 +1,57 @@
+meta {
+  name: Get NFT Filters
+  type: http
+  seq: 8
+}
+
+get {
+  url: https://dashboard.alchemy.com/api/webhook-nft-filters?webhook_id=wh_example123
+  body: none
+  auth: inherit
+}
+
+params:query {
+  webhook_id: wh_example123
+}
+
+headers {
+  X-Alchemy-Token: {{notify_auth_token}}
+}
+
+settings {
+  encodeUrl: true
+}
+
+docs {
+  Retrieves all NFT filters configured for an NFT Activity webhook.
+  
+  **Use cases**:
+  - Audit which NFT collections are being tracked
+  - Verify webhook NFT filter configuration
+  - Build NFT filter management UIs
+  - Debug NFT webhook behavior
+  - NFT collection inventory management
+  
+  **Args**:
+  - Query parameters:
+    - `webhook_id` (required): ID of the NFT Activity webhook
+  
+  **Returns**: Object containing:
+  - `data`: Array of NFT filter objects
+    - Each filter includes:
+      - `contract_address`: NFT collection contract address
+      - `token_id` (optional): Specific token ID to track (omit for all tokens)
+  
+  **Edge cases & notes**:
+  - Only works with NFT_ACTIVITY webhook type
+  - Returns error if webhook_id is not an NFT Activity webhook
+  - Empty array if no filters configured
+  - Contract addresses are checksummed
+  - Filter with no token_id tracks ALL tokens in that collection
+  - Filter with token_id tracks only that specific NFT
+  - Maximum 1000 filters per webhook
+  - Supports both ERC721 and ERC1155 tokens
+  
+  **Documentation**: https://www.alchemy.com/docs/data/webhooks/webhooks-api-endpoints/notify-api-endpoints/webhook-nft-filters
+}
+

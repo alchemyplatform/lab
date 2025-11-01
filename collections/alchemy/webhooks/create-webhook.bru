@@ -1,0 +1,80 @@
+meta {
+  name: Create Webhook
+  type: http
+  seq: 1
+}
+
+post {
+  url: https://dashboard.alchemy.com/api/create-webhook
+  body: json
+  auth: inherit
+}
+
+headers {
+  X-Alchemy-Token: {{notify_auth_token}}
+  Content-Type: application/json
+}
+
+body:json {
+  {
+    "network": "ETH_SEPOLIA",
+    "webhook_type": "GRAPHQL",
+    "webhook_url": "https://webhook.site/unique-id",
+    "graphql_query": {
+      "skip_empty_messages": true,
+      "query": "{\n  block {\n    number\n    hash\n    logs(\n      filter: {\n        addresses: [\"0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48\"]\n        topics: [[\"0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef\"]]\n      }\n    ) {\n      account { address }\n      topics\n      data\n      transaction { hash }\n    }\n  }\n}"
+    }
+  }
+}
+
+settings {
+  encodeUrl: true
+}
+
+docs {
+  Creates a new webhook to receive real-time notifications about blockchain events.
+  
+  **Use cases**:
+  - Track smart contract events and activities
+  - Monitor address transactions and balances
+  - Get notified about NFT transfers and mints
+  - Build real-time dApps and notification systems
+  - Track transaction confirmations and drops
+  
+  **Webhook Types**:
+  - `GRAPHQL` (Custom): Flexible GraphQL queries for any blockchain data
+  - `ADDRESS_ACTIVITY`: Track all activity for specific addresses
+  - `NFT_ACTIVITY`: Monitor NFT transfers (ERC721/ERC1155)
+  - `NFT_METADATA_UPDATE`: Get notified when NFT metadata changes
+  - `MINED_TRANSACTION`: Track mined transactions (deprecated)
+  - `DROPPED_TRANSACTION`: Monitor dropped transactions (deprecated)
+  
+  **Request body**:
+  - `network`: Blockchain network (e.g., ETH_MAINNET, MATIC_MAINNET, ETH_SEPOLIA)
+  - `webhook_type`: Type of webhook to create
+  - `webhook_url`: HTTPS endpoint to receive webhook payloads
+  - `graphql_query`: (For GRAPHQL type) Custom query with filters
+  - `addresses`: (For ADDRESS_ACTIVITY) Array of addresses to track
+  - `nft_filters`: (For NFT_ACTIVITY) Array of NFT filter objects
+  
+  **Returns**:
+  - `id`: Unique webhook identifier
+  - `network`: Network configuration
+  - `webhook_type`: Type of webhook
+  - `webhook_url`: Configured endpoint URL
+  - `is_active`: Webhook status (true/false)
+  - `time_created`: Unix timestamp of creation
+  - `signing_key`: Secret key for signature validation
+  - `version`: Webhook version (V2 recommended)
+  
+  **Edge cases & notes**:
+  - Webhook URL must be publicly accessible HTTPS endpoint
+  - Validate webhook signatures using the signing_key
+  - Custom webhooks support complex GraphQL filters
+  - Use skip_empty_messages to reduce noise
+  - Webhooks are created in active state by default
+  - Maximum 1000 webhooks per team
+  
+  **Documentation**: https://www.alchemy.com/docs/reference/create-webhook
+}
+

@@ -1,0 +1,68 @@
+meta {
+  name: Add/Remove Webhook Addresses
+  type: http
+  seq: 6
+}
+
+patch {
+  url: https://dashboard.alchemy.com/api/update-webhook-addresses
+  body: json
+  auth: inherit
+}
+
+headers {
+  X-Alchemy-Token: {{notify_auth_token}}
+  Content-Type: application/json
+}
+
+body:json {
+  {
+    "webhook_id": "wh_example123",
+    "addresses_to_add": [
+      "0xd8dA6BF26964aF9D7eEd9e03e53415D37aA96045",
+      "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48"
+    ],
+    "addresses_to_remove": [
+      "0x6B175474E89094C44Da98b954EedeAC495271d0F"
+    ]
+  }
+}
+
+settings {
+  encodeUrl: true
+}
+
+docs {
+  Adds or removes addresses from an Address Activity webhook without replacing the entire list.
+  
+  **Use cases**:
+  - Incrementally add new addresses to track
+  - Remove addresses no longer needed
+  - Dynamic address management based on user actions
+  - Update webhook configuration without downtime
+  - Manage large address lists efficiently
+  
+  **Request body**:
+  - `webhook_id` (required): ID of the Address Activity webhook
+  - `addresses_to_add` (optional): Array of addresses to start tracking
+  - `addresses_to_remove` (optional): Array of addresses to stop tracking
+  
+  **Returns**: Updated webhook configuration
+  - `data`: Webhook object with updated addresses
+    - Includes all webhook properties
+    - Updated address count reflected
+  
+  **Edge cases & notes**:
+  - Only works with ADDRESS_ACTIVITY webhook type
+  - Can specify both add and remove in same request
+  - Addresses are case-insensitive (internally normalized)
+  - Adding duplicate address is ignored (idempotent)
+  - Removing non-existent address is ignored (idempotent)
+  - Empty arrays are valid - no operation performed
+  - Maximum 150,000 addresses per webhook total
+  - Changes take effect immediately
+  - Can add/remove up to 100 addresses per request
+  
+  **Documentation**: https://www.alchemy.com/docs/data/webhooks/webhooks-api-endpoints/notify-api-endpoints/update-webhook-addresses
+}
+
