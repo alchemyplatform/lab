@@ -1,0 +1,39 @@
+meta {
+  name: zks_getL1BatchDetails
+  type: http
+  seq: 11
+}
+
+post {
+  url: https://zksync-mainnet.g.alchemy.com/v2/{{api_key}}
+  body: json
+  auth: none
+}
+
+headers {
+  Content-Type: application/json
+}
+
+body:json {
+  {
+    "jsonrpc": "2.0",
+    "id": 1,
+    "method": "zks_getL1BatchDetails",
+    "params": [
+      217565
+    ]
+  }
+}
+
+docs {
+  Retrieves detailed information about a specific L1 batch.
+  
+  Parameters:
+  1. uint32 - L1 batch number
+  
+  Returns:
+  - Object containing comprehensive batch details including number, timestamp, transaction hashes, root hash, commitment, and more
+  
+  Note: EraVM endpoint only
+}
+

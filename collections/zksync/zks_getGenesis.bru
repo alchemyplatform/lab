@@ -1,0 +1,34 @@
+meta {
+  name: zks_getGenesis
+  type: http
+  seq: 3
+}
+
+post {
+  url: https://zksync-mainnet.g.alchemy.com/v2/{{api_key}}
+  body: json
+  auth: none
+}
+
+headers {
+  Content-Type: application/json
+}
+
+body:json {
+  {
+    "jsonrpc": "2.0",
+    "id": 1,
+    "method": "zks_getGenesis",
+    "params": []
+  }
+}
+
+docs {
+  Returns the details about genesis deployment, including the initial contracts deployed, additional storage, the execution version used, and the expected root hash of the genesis state.
+  
+  Note: This endpoint is only available on the ZKsync OS Server. It is not available for EraVM chains.
+  
+  Returns:
+  - Object containing detailed information about genesis including initialContracts, initialStorage, executionVersion, and expectedRootHash
+}
+

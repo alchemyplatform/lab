@@ -1,0 +1,32 @@
+meta {
+  name: zks_getBridgehubContract
+  type: http
+  seq: 1
+}
+
+post {
+  url: https://zksync-mainnet.g.alchemy.com/v2/{{api_key}}
+  body: json
+  auth: none
+}
+
+headers {
+  Content-Type: application/json
+}
+
+body:json {
+  {
+    "jsonrpc": "2.0",
+    "id": 1,
+    "method": "zks_getBridgehubContract",
+    "params": []
+  }
+}
+
+docs {
+  Retrieves the bridge hub contract address.
+  
+  Returns:
+  - DATA, 20 bytes - a single string value representing the bridge hub contract address.
+}
+

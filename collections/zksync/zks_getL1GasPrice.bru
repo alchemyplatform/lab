@@ -1,0 +1,34 @@
+meta {
+  name: zks_getL1GasPrice
+  type: http
+  seq: 12
+}
+
+post {
+  url: https://zksync-mainnet.g.alchemy.com/v2/{{api_key}}
+  body: json
+  auth: none
+}
+
+headers {
+  Content-Type: application/json
+}
+
+body:json {
+  {
+    "jsonrpc": "2.0",
+    "id": 1,
+    "method": "zks_getL1GasPrice",
+    "params": []
+  }
+}
+
+docs {
+  Retrieves the current L1 gas price.
+  
+  Returns:
+  - QUANTITY - L1 gas price as a hexadecimal string
+  
+  Note: EraVM endpoint only
+}
+

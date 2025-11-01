@@ -1,0 +1,34 @@
+meta {
+  name: zks_gasPerPubdata
+  type: http
+  seq: 5
+}
+
+post {
+  url: https://zksync-mainnet.g.alchemy.com/v2/{{api_key}}
+  body: json
+  auth: none
+}
+
+headers {
+  Content-Type: application/json
+}
+
+body:json {
+  {
+    "jsonrpc": "2.0",
+    "id": 1,
+    "method": "zks_gasPerPubdata",
+    "params": []
+  }
+}
+
+docs {
+  Returns the current gas price per unit of public data.
+  
+  Returns:
+  - QUANTITY - gas per pubdata as a hexadecimal string
+  
+  Note: EraVM endpoint only
+}
+

@@ -1,0 +1,46 @@
+meta {
+  name: zks_estimateGasL1ToL2
+  type: http
+  seq: 4
+}
+
+post {
+  url: https://zksync-mainnet.g.alchemy.com/v2/{{api_key}}
+  body: json
+  auth: none
+}
+
+headers {
+  Content-Type: application/json
+}
+
+body:json {
+  {
+    "jsonrpc": "2.0",
+    "id": 1,
+    "method": "zks_estimateGasL1ToL2",
+    "params": [
+      {
+        "from": "0x1111111111111111111111111111111111111111",
+        "to": "0x2222222222222222222222222222222222222222",
+        "data": "0x"
+      }
+    ]
+  }
+}
+
+docs {
+  Estimates the gas required for an L1 to L2 transaction.
+  
+  Parameters:
+  1. Object - Transaction call object
+     - from: DATA, 20 bytes - address the transaction is sent from
+     - to: DATA, 20 bytes - address the transaction is directed to
+     - data: DATA - encoded transaction data
+  
+  Returns:
+  - QUANTITY - estimated gas amount as a hexadecimal string
+  
+  Note: EraVM endpoint only
+}
+

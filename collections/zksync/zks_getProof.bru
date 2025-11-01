@@ -1,0 +1,47 @@
+meta {
+  name: zks_getProof
+  type: http
+  seq: 13
+}
+
+post {
+  url: https://zksync-mainnet.g.alchemy.com/v2/{{api_key}}
+  body: json
+  auth: none
+}
+
+headers {
+  Content-Type: application/json
+}
+
+body:json {
+  {
+    "jsonrpc": "2.0",
+    "id": 1,
+    "method": "zks_getProof",
+    "params": [
+      "0x0000000000000000000000000000000000008003",
+      [
+        "0x8b65c0cf1012ea9f393197eb24619fd814379b298b238285649e14f936a5eb12"
+      ],
+      30098049
+    ]
+  }
+}
+
+docs {
+  Retrieves the Merkle proof for a storage value at a specific block.
+  
+  Parameters:
+  1. DATA, 20 bytes - contract address
+  2. Array of DATA, 32 bytes - array of storage keys
+  3. uint32 - block number
+  
+  Returns:
+  - Object containing:
+    - address: DATA, 20 bytes - contract address
+    - storageProof: Array of storage proofs with key, value, index and proof data
+  
+  Note: EraVM endpoint only
+}
+

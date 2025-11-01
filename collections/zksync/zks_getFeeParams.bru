@@ -1,0 +1,38 @@
+meta {
+  name: zks_getFeeParams
+  type: http
+  seq: 9
+}
+
+post {
+  url: https://zksync-mainnet.g.alchemy.com/v2/{{api_key}}
+  body: json
+  auth: none
+}
+
+headers {
+  Content-Type: application/json
+}
+
+body:json {
+  {
+    "jsonrpc": "2.0",
+    "id": 1,
+    "method": "zks_getFeeParams",
+    "params": []
+  }
+}
+
+docs {
+  Retrieves the current fee parameters.
+  
+  Returns:
+  - Object containing:
+    - V2: Object with fee configuration
+      - config: Object with pubdata pricing mode and parameters
+      - l1_gas_price: uint64 - L1 gas price
+      - l1_pubdata_price: uint64 - L1 pubdata price
+  
+  Note: EraVM endpoint only
+}
+

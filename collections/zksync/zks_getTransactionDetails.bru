@@ -1,0 +1,39 @@
+meta {
+  name: zks_getTransactionDetails
+  type: http
+  seq: 14
+}
+
+post {
+  url: https://zksync-mainnet.g.alchemy.com/v2/{{api_key}}
+  body: json
+  auth: none
+}
+
+headers {
+  Content-Type: application/json
+}
+
+body:json {
+  {
+    "jsonrpc": "2.0",
+    "id": 1,
+    "method": "zks_getTransactionDetails",
+    "params": [
+      "0x22de7debaa98758afdaee89f447ff43bab5da3de6acca7528b281cc2f1be2ee9"
+    ]
+  }
+}
+
+docs {
+  Retrieves detailed information about a transaction by its hash.
+  
+  Parameters:
+  1. DATA, 32 bytes - transaction hash
+  
+  Returns:
+  - Object containing comprehensive transaction details including status, fee, initiator address, received timestamp, and eth execution details
+  
+  Note: EraVM endpoint only
+}
+

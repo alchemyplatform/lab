@@ -1,0 +1,40 @@
+meta {
+  name: zks_getL2ToL1LogProof
+  type: http
+  seq: 2
+}
+
+post {
+  url: https://zksync-mainnet.g.alchemy.com/v2/{{api_key}}
+  body: json
+  auth: none
+}
+
+headers {
+  Content-Type: application/json
+}
+
+body:json {
+  {
+    "jsonrpc": "2.0",
+    "id": 1,
+    "method": "zks_getL2ToL1LogProof",
+    "params": [
+      "0x2a1c6c74b184965c0cb015aae9ea134fd96215d2e4f4979cfec12563295f610e"
+    ]
+  }
+}
+
+docs {
+  Retrieves the log proof for an L2 to L1 transaction.
+  
+  Parameters:
+  1. DATA, 32 bytes - transaction hash
+  2. integer - index of the log (Optional for EraVM chains)
+  
+  Returns:
+  - proof: Array of DATA, 32 bytes - array of strings, each representing a piece of the proof
+  - id: integer - identifier of the log within the transaction
+  - root: DATA, 32 bytes - root hash of the proof
+}
+
