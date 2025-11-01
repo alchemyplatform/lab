@@ -1,0 +1,49 @@
+meta {
+  name: Subscribe to Objects
+  type: grpc
+  seq: 2
+}
+
+grpc {
+  url: https://sui-mainnet.g.alchemy.com/
+  method: /sui.SuiNode/SubscribeObjects
+  body: grpc
+  protoPath: grpc/sui.proto
+  auth: inherit
+  methodType: server-streaming
+}
+
+metadata {
+  x-api-key: {{api_key}}
+}
+
+body:grpc {
+  name: message 1
+  content: '''
+    {
+      "owner": "0x94f1a597b4e8f709a396f7f6b1482bdcd65a673d111e49286c527fab7c2d0961",
+      "objectType": "0x2::coin::Coin"
+    }
+  '''
+}
+
+docs {
+  Subscribe to a stream of object changes filtered by object ID, type, or owner using gRPC.
+  
+  **Filters available:**
+  - objectId: Filter by specific object ID
+  - objectType: Filter by object type
+  - owner: Filter by owner address
+  
+  **Returns:**
+  Stream of ObjectUpdate messages containing:
+  - objectId: Object identifier
+  - version: Object version
+  - digest: Object digest
+  - objectType: Object type
+  - owner: Owner address
+  - data: Object data
+  - previousTransaction: Previous transaction digest
+  - storageRebate: Storage rebate amount
+}
+

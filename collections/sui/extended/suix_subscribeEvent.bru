@@ -1,0 +1,44 @@
+meta {
+  name: suix_subscribeEvent
+  type: ws
+  seq: 8
+}
+
+ws {
+  url: wss://sui-mainnet.g.alchemy.com/v2/alch-demo
+  body: ws
+  auth: inherit
+}
+
+body:ws {
+  name: subscribe
+  type: json
+  content: '''
+    {
+      "jsonrpc": "2.0",
+      "id": "bru",
+      "method": "suix_subscribeEvent",
+      "params": [
+        {
+          "MoveModule": {
+            "package": "0x2",
+            "module": "devnet_nft"
+          }
+        }
+      ]
+    }
+  '''
+}
+
+docs {
+  Subscribe to event stream based on filter criteria. This is a WebSocket subscription.
+  
+  **Parameters:**
+  1. filter (EventFilter): The event filter to subscribe to
+  
+  **Returns:**
+  Subscription ID that can be used to unsubscribe
+  
+  **Notifications:**
+  Streams Event objects matching the filter as they occur on-chain
+}

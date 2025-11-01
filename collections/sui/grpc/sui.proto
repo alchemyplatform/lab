@@ -1,0 +1,107 @@
+syntax = "proto3";
+
+package sui;
+
+// Sui Full Node gRPC Service
+// Based on: https://docs.sui.io/references/fullnode-protocol
+
+service SuiNode {
+  // Subscribe to transaction stream
+  rpc SubscribeTransactions(SubscribeTransactionsRequest) returns (stream TransactionUpdate) {}
+  
+  // Subscribe to event stream
+  rpc SubscribeEvents(SubscribeEventsRequest) returns (stream EventUpdate) {}
+  
+  // Subscribe to object changes
+  rpc SubscribeObjects(SubscribeObjectsRequest) returns (stream ObjectUpdate) {}
+}
+
+message SubscribeTransactionsRequest {
+  // Filter for specific transaction types
+  optional TransactionFilter filter = 1;
+}
+
+message TransactionFilter {
+  // Filter by sender address
+  optional string from_address = 1;
+  // Filter by recipient address
+  optional string to_address = 2;
+  // Filter by package
+  optional string package = 3;
+  // Filter by module
+  optional string module = 4;
+  // Filter by function
+  optional string function = 5;
+}
+
+message TransactionUpdate {
+  // Transaction digest
+  string digest = 1;
+  // Transaction sender
+  string sender = 2;
+  // Timestamp
+  uint64 timestamp = 3;
+  // Transaction data (JSON or BCS encoded)
+  bytes transaction_data = 4;
+  // Transaction effects
+  bytes effects = 5;
+}
+
+message SubscribeEventsRequest {
+  // Event type filter
+  optional string event_type = 1;
+  // Sender filter
+  optional string sender = 2;
+  // Package filter
+  optional string package = 3;
+  // Module filter
+  optional string module = 4;
+}
+
+message EventUpdate {
+  // Event type
+  string event_type = 1;
+  // Package address
+  string package_id = 2;
+  // Module name
+  string module = 3;
+  // Sender address
+  string sender = 4;
+  // Transaction digest that emitted the event
+  string transaction_digest = 5;
+  // Timestamp
+  uint64 timestamp = 6;
+  // Event data (JSON encoded)
+  string json = 7;
+  // Event data (BCS encoded)
+  bytes bcs = 8;
+}
+
+message SubscribeObjectsRequest {
+  // Object ID filter
+  optional string object_id = 1;
+  // Object type filter
+  optional string object_type = 2;
+  // Owner address filter
+  optional string owner = 3;
+}
+
+message ObjectUpdate {
+  // Object ID
+  string object_id = 1;
+  // Object version
+  uint64 version = 2;
+  // Object digest
+  string digest = 3;
+  // Object type
+  string object_type = 4;
+  // Owner information
+  string owner = 5;
+  // Object data (JSON or BCS encoded)
+  bytes data = 6;
+  // Previous transaction
+  string previous_transaction = 7;
+  // Storage rebate
+  uint64 storage_rebate = 8;
+}
+

@@ -1,0 +1,46 @@
+meta {
+  name: sui_verifyZkLoginSignature
+  type: http
+  seq: 14
+}
+
+post {
+  url: https://sui-mainnet.g.alchemy.com/v2/{{api_key}}
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "jsonrpc": "2.0",
+    "id": "bru",
+    "method": "sui_verifyZkLoginSignature",
+    "params": [
+      "example_address",
+      "example_signature",
+      "example_intent_scope",
+      "example_intent_data"
+    ]
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}
+
+docs {
+  Verify a zkLogin signature.
+  
+  **Parameters:**
+  1. address (SuiAddress): The address to verify
+  2. signature (string): The signature to verify
+  3. intentScope (ZkLoginIntentScope): The intent scope
+  4. intentData (Base64): The intent data
+  
+  **Returns:**
+  ZkLoginVerifyResult containing:
+  - success: Boolean indicating if verification succeeded
+  - errors: Array of error messages if verification failed
+}
+

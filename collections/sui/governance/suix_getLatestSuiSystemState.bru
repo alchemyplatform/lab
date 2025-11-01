@@ -1,0 +1,73 @@
+meta {
+  name: suix_getLatestSuiSystemState
+  type: http
+  seq: 2
+}
+
+post {
+  url: https://sui-mainnet.g.alchemy.com/v2/{{api_key}}
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "jsonrpc": "2.0",
+    "id": "bru",
+    "method": "suix_getLatestSuiSystemState",
+    "params": []
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}
+
+docs {
+  Get the latest Sui system state object.
+  
+  **Parameters:**
+  None
+  
+  **Returns:**
+  SuiSystemStateSummary object containing:
+  - epoch: Current epoch number
+  - protocolVersion: Current protocol version
+  - systemStateVersion: System state version
+  - storageFundTotalObjectStorageRebates: Total storage rebates
+  - storageFundNonRefundableBalance: Non-refundable storage fund balance
+  - referenceGasPrice: Reference gas price for the epoch
+  - safeMode: Whether safe mode is enabled
+  - safeModeStorageRewards: Storage rewards in safe mode
+  - safeModeComputationRewards: Computation rewards in safe mode
+  - safeModeStorageRebates: Storage rebates in safe mode
+  - safeModeNonRefundableStorageFee: Non-refundable storage fee in safe mode
+  - epochStartTimestampMs: Epoch start timestamp
+  - epochDurationMs: Expected epoch duration
+  - stakeSubsidyStartEpoch: Epoch when stake subsidy started
+  - maxValidatorCount: Maximum number of validators
+  - minValidatorJoiningStake: Minimum stake required to join as validator
+  - validatorLowStakeThreshold: Low stake threshold for validators
+  - validatorVeryLowStakeThreshold: Very low stake threshold
+  - validatorLowStakeGracePeriod: Grace period for low stake
+  - stakeSubsidyBalance: Current stake subsidy balance
+  - stakeSubsidyDistributionCounter: Distribution counter
+  - stakeSubsidyCurrentDistributionAmount: Current distribution amount
+  - stakeSubsidyPeriodLength: Period length for subsidy
+  - stakeSubsidyDecreaseRate: Decrease rate
+  - totalStake: Total stake in the system
+  - activeValidators: Array of active validators
+  - pendingActiveValidatorsId: ID of pending active validators
+  - pendingActiveValidatorsSize: Size of pending list
+  - pendingRemovals: Validators pending removal
+  - stakingPoolMappingsId: ID of staking pool mappings
+  - stakingPoolMappingsSize: Size of mappings
+  - inactivePoolsId: ID of inactive pools
+  - inactivePoolsSize: Size of inactive pools
+  - validatorCandidatesId: ID of validator candidates
+  - validatorCandidatesSize: Number of candidates
+  - atRiskValidators: Validators at risk
+  - validatorReportRecords: Validator report records
+}
+

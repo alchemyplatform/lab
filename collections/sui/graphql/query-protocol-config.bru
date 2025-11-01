@@ -1,0 +1,46 @@
+meta {
+  name: Query Protocol Config
+  type: graphql
+  seq: 7
+}
+
+post {
+  url: https://sui-mainnet.g.alchemy.com/graphql/v2/{{api_key}}
+  body: graphql
+  auth: inherit
+}
+
+body:graphql {
+  query GetProtocolConfig($version: Int) {
+    protocolConfig(protocolVersion: $version) {
+      protocolVersion
+      featureFlags {
+        key
+        value
+      }
+      configs {
+        key
+        value
+      }
+    }
+  }
+}
+
+body:graphql:vars {
+  {
+    "version": null
+  }
+}
+
+docs {
+  Query protocol configuration using GraphQL.
+  
+  This query retrieves:
+  - Protocol version
+  - Feature flags and their values
+  - Configuration parameters
+  
+  **Variables:**
+  - version: Optional protocol version (null for current version)
+}
+

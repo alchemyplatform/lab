@@ -1,0 +1,80 @@
+meta {
+  name: Query Checkpoints
+  type: graphql
+  seq: 1
+}
+
+post {
+  url: https://sui-mainnet.g.alchemy.com/graphql/v2/{{api_key}}
+  body: graphql
+  auth: inherit
+}
+
+body:graphql {
+  query GetCheckpoints($sequenceNumber: Int) {
+    checkpoint(id: { sequenceNumber: $sequenceNumber }) {
+      sequenceNumber
+      timestamp
+      epoch {
+        epochId
+        referenceGasPrice
+      }
+      networkTotalTransactions
+      previousCheckpointDigest
+      validatorSignatures
+      transactionBlocks(first: 10) {
+        nodes {
+          digest
+          sender {
+            address
+          }
+          effects {
+            status
+            gasEffects {
+              gasSummary {
+                computationCost
+                storageCost
+                storageRebate
+              }
+            }
+          }
+        }
+        pageInfo {
+          hasNextPage
+          endCursor
+        }
+      }
+    }
+    checkpoints(first: 5, filter: {}) {
+      nodes {
+        sequenceNumber
+        timestamp
+        networkTotalTransactions
+      }
+      pageInfo {
+        hasNextPage
+        endCursor
+      }
+    }
+  }
+}
+
+body:graphql:vars {
+  {
+    "sequenceNumber": 203869583
+  }
+}
+
+docs {
+  Query checkpoint information using GraphQL.
+  
+  This query retrieves:
+  - Specific checkpoint by sequence number
+  - Checkpoint metadata (timestamp, epoch, transaction count)
+  - Transaction blocks in the checkpoint
+  - Recent checkpoints list
+  
+  **Variables:**
+  - sequenceNumber: The checkpoint sequence number to query
+}
+

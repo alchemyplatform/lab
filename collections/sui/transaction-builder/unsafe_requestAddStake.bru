@@ -1,0 +1,48 @@
+meta {
+  name: unsafe_requestAddStake
+  type: http
+  seq: 8
+}
+
+post {
+  url: https://sui-mainnet.g.alchemy.com/v2/{{api_key}}
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "jsonrpc": "2.0",
+    "id": "bru",
+    "method": "unsafe_requestAddStake",
+    "params": [
+      "0x94f1a597b4e8f709a396f7f6b1482bdcd65a673d111e49286c527fab7c2d0961",
+      ["0x123"],
+      "1000000000",
+      "0x456",
+      "0x789",
+      "10000000"
+    ]
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}
+
+docs {
+  Build a transaction to add stake to a validator.
+  
+  **Parameters:**
+  1. signer (SuiAddress): The transaction signer's address
+  2. coins (Array<ObjectID>): Coin objects to stake
+  3. amount (BigInt, optional): Amount to stake
+  4. validator (SuiAddress): Validator address to stake with
+  5. gas (ObjectID, optional): Gas object to use
+  6. gasBudget (BigInt): Gas budget for the transaction
+  
+  **Returns:**
+  TransactionBlockBytes containing serialized transaction data
+}
+

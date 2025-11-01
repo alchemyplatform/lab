@@ -1,0 +1,84 @@
+meta {
+  name: Query Epoch Info
+  type: graphql
+  seq: 4
+}
+
+post {
+  url: https://sui-mainnet.g.alchemy.com/graphql/v2/{{api_key}}
+  body: graphql
+  auth: inherit
+}
+
+body:graphql {
+  query GetEpochInfo($epochId: Int) {
+    epoch(id: $epochId) {
+      epochId
+      referenceGasPrice
+      startTimestamp
+      endTimestamp
+      totalCheckpoints
+      totalTransactions
+      totalGasFees
+      totalStakeRewards
+      totalStakeSubsidies
+      fundSize
+      netInflow
+      systemStateVersion
+      validatorSet {
+        totalStake
+        activeValidators(first: 10) {
+          nodes {
+            name
+            description
+            imageUrl
+            projectUrl
+            address {
+              address
+            }
+            votingPower
+            gasPrice
+            commissionRate
+            stakingPoolActivationEpoch
+            stakingPoolSuiBalance
+            rewardsPool
+            poolTokenBalance
+            pendingStake
+            pendingTotalSuiWithdraw
+            exchangeRatesSize
+            apy
+          }
+          pageInfo {
+            hasNextPage
+            endCursor
+          }
+        }
+      }
+    }
+  }
+}
+
+body:graphql:vars {
+  {
+    "epochId": null
+  }
+}
+
+docs {
+  Query epoch information and validator details using GraphQL.
+  
+  This query retrieves:
+  - Epoch metadata (ID, timestamps, gas price)
+  - Transaction and checkpoint statistics
+  - Stake rewards and subsidies
+  - Fund size and net inflow
+  - Validator set information including:
+    - Validator details (name, description, URLs)
+    - Staking metrics (voting power, gas price, commission)
+    - Pool balances and rewards
+    - APY for each validator
+  
+  **Variables:**
+  - epochId: The epoch ID to query (null for current epoch)
+}
+

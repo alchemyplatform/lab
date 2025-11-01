@@ -5,5 +5,19 @@
   "ignore": [
     "node_modules",
     ".git"
-  ]
+  ],
+  "protobuf": {
+    "protoFiles": [
+      {
+        "path": "grpc/sui.proto",
+        "type": "file"
+      }
+    ],
+    "importPaths": [
+      {
+        "path": "grpc",
+        "enabled": true
+      }
+    ]
+  }
 }
