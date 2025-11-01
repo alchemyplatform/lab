@@ -1,6 +1,7 @@
 meta {
-  name: alchemy_simulateExecution
+  name: alchemy_simulateExecutionBundle
   type: http
+  seq: 4
 }
 
 post {
@@ -13,15 +14,16 @@ body:json {
   {
     "jsonrpc": "2.0",
     "id": "bru",
-    "method": "alchemy_simulateExecution",
+    "method": "alchemy_simulateExecutionBundle",
     "params": []
   }
 }
 
 settings {
   encodeUrl: true
+  timeout: 0
 }
 
 docs {
-  Simulates a transaction and returns decoded execution traces and decoded logs.
+  Simulates multiple transactions sequentially and returns decoded execution traces and decoded logs.
 }

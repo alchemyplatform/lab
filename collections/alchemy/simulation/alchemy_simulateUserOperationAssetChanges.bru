@@ -1,6 +1,7 @@
 meta {
-  name: alchemy_simulateExecutionBundle
+  name: alchemy_simulateUserOperationAssetChanges
   type: http
+  seq: 5
 }
 
 post {
@@ -13,15 +14,16 @@ body:json {
   {
     "jsonrpc": "2.0",
     "id": "bru",
-    "method": "alchemy_simulateExecutionBundle",
+    "method": "alchemy_simulateUserOperationAssetChanges",
     "params": []
   }
 }
 
 settings {
   encodeUrl: true
+  timeout: 0
 }
 
 docs {
-  Simulates multiple transactions sequentially and returns decoded execution traces and decoded logs.
+  Simulates a user operation and returns a list of asset changes.
 }
