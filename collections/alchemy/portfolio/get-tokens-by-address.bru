@@ -1,60 +1,91 @@
 meta {
-  name: "Tokens By Wallet"
-  type: "request"
+  name: Tokens By Wallet
+  type: http
   seq: 1
 }
 
-request {
-  method: "POST"
-  url: "https://api.g.alchemy.com/data/v1/{apiKey}/assets/tokens/by-address"
-  headers: {
-    "Content-Type": "application/json"
-  }
-  body: json({
+post {
+  url: https://api.g.alchemy.com/data/v1/{{api_key}}/assets/tokens/by-address
+  body: json
+  auth: none
+}
+
+headers {
+  Content-Type: application/json
+}
+
+body:json {
+  {
     "addresses": [
       {
-        "address": "0xd8dA6BF26964aF9D7eEd9e03e53415D37aA96045",
-        "networks": ["eth-mainnet", "polygon-mainnet"]
+        "address": "0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045",
+        "networks": [
+          "eth-mainnet"
+        ]
       }
     ],
     "withMetadata": true,
     "withPrices": true,
     "includeNativeTokens": true,
-    "includeErc20Tokens": true,
-    "pageKey": "string"
-  })
-  description: """
-  Fetches fungible tokens (native, ERC-20, and SPL) for multiple wallet addresses and networks.
-  Returns a list of tokens with balances, prices, and metadata for each wallet/network combination.
+    "includeErc20Tokens": true
+  }
+}
 
-  Supported networks: Ethereum, Solana, and 30+ EVM-compatible chains.
-
-  Example Response:
+docs {
+  # Tokens By Wallet
+  
+  Fetches fungible tokens (native, ERC-20 and SPL) for multiple wallet addresses and networks. Returns a list of tokens with balances, prices, and metadata for each wallet/network combination.
+  
+  This endpoint is supported on Ethereum, Solana, and 30+ EVM chains.
+  
+  ## Request Parameters
+  
+  - `addresses` (required): Array of wallet addresses and networks to query
+    - Maximum 2 addresses
+    - Maximum 5 networks per address
+  - `withMetadata` (optional, default: true): Include token metadata
+  - `withPrices` (optional, default: true): Include token prices
+  - `includeNativeTokens` (optional, default: true): Include native tokens (e.g., ETH)
+  - `includeErc20Tokens` (optional, default: true): Include ERC-20 tokens
+  - `pageKey` (optional): Pagination key for next page
+  
+  ## Example Response
+  
+  ```json
   {
     "data": {
       "tokens": [
         {
-          "address": "0xd8dA6BF26964aF9D7eEd9e03e53415D37aA96045",
+          "address": "0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045",
           "network": "eth-mainnet",
           "tokenAddress": "0x6B175474E89094C44Da98b954EedeAC495271d0F",
-          "tokenBalance": "123000000000000000000",
+          "tokenBalance": "1000000000000000000",
           "tokenMetadata": {
-            "name": "DAI Stablecoin",
-            "symbol": "DAI",
-            "decimals": 18
+            "decimals": 18,
+            "logo": "https://...",
+            "name": "Dai Stablecoin",
+            "symbol": "DAI"
           },
           "tokenPrices": [
-            {"currency": "USD", "value": "1.00", "lastUpdatedAt": "2025-10-13T00:00:00Z"}
+            {
+              "currency": "usd",
+              "value": "1.00",
+              "lastUpdatedAt": "2025-08-26T20:17:27Z"
+            }
           ]
         }
       ],
-      "pageKey": "next-page-key"
+      "pageKey": "string"
     }
   }
-
-  Edge cases:
-  - 400 Bad Request for malformed JSON or missing fields.
-  - 429 Too Many Requests when rate limit exceeded.
-  - Some tokens may omit metadata for non-standard ERC-20s.
-  """
+  ```
+  
+  ## Test Wallet
+  
+  Uses Vitalik Buterin's wallet: `0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045`
+  
+  ## Reference
+  
+  https://www.alchemy.com/docs/data/portfolio-apis/portfolio-api-endpoints/portfolio-api-endpoints/get-tokens-by-address
 }
+
