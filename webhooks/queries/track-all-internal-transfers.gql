@@ -13,6 +13,7 @@
       type
       traceAddressPath
       subtraceCount
+      txHash
       # error
       # revertReason
     }

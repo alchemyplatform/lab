@@ -110,6 +110,7 @@ query {
       revertReason
       subtraceCount
       traceAddressPath
+      txHash
     }
   }
 }
