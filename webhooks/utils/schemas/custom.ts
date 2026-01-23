@@ -141,7 +141,7 @@ const CallTracerTrace = pipe(
     revertReason: optional(nullable(string())),
     subtraceCount: optional(Integer),
     traceAddressPath: optional(array(Integer)),
-    txHash: optional(Hash),
+    txHash: optional(nullable(Hash)),
   }),
   check(
     (input) => Object.keys(input).length > 0,
