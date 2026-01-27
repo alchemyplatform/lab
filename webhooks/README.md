@@ -104,3 +104,108 @@ If you can't find what you're looking for, feel free to create an issue.
 - Track ALL user operations
 
 - Track user operations FOR specific users (i.e. sent by specific smart contract wallets)
+
+## Backend Setup
+
+The example backend included in this repo demonstrates how to run a simple **Hono server with Deno** to receive and validate **Alchemy Webhooks**.  
+
+It includes signature validation, payload validation, and conversion utilities for NFT activity events.
+
+---
+
+### Prerequisites
+
+- [Deno CLI](https://deno.com/runtime)  
+- [Node.js + npm](https://nodejs.org/) (needed to install `localtunnel`)  
+- An [Alchemy account](https://dashboard.alchemy.com/) with access to the **Webhooks dashboard**  
+
+---
+
+### Installation
+
+#### 1. Install Deno CLI
+Follow the instructions for your platform:  
+
+```bash
+npm install -g deno
+```
+
+Verify installation:
+```bash
+deno --version
+```
+
+#### 2. Install Localtunnel CLI
+Localtunnel provides a public URL that forwards requests to your local dev server.  
+
+```bash
+npm install -g localtunnel
+```
+
+Verify installation:
+```bash
+lt --help
+```
+
+---
+
+### Configuration
+
+1. Get your **Signing Key** from the **Alchemy Webhooks dashboard**.  
+   - Go to your webhook in the dashboard and copy the **Signing Key**.  
+2. Update the signing key inside `examples/backend/index.ts`:
+
+```ts
+validateSignature({
+  signingKey: "whsec_test1", // replace with your real signing key
+}),
+```
+
+---
+
+### Running the Backend
+
+From the project root (`webhooks/`):
+
+```bash
+deno run --allow-net --allow-env --env --watch examples/backend/index.ts
+```
+
+By default, the server runs at:
+```
+http://localhost:8000
+```
+
+---
+
+### Exposing the Server
+
+Start Localtunnel to forward port **8000** to a public URL:
+
+```bash
+lt --port 8000
+```
+
+This will print a URL like:
+```
+https://wild-goose-42.loca.lt
+```
+
+---
+
+### Connecting to Alchemy
+
+1. Copy the Localtunnel public URL.  
+2. Go to the **Alchemy Dashboard** and paste the Localtunnel URL into the **Webhook URL** field.  
+3. Activate the webhook.  
+
+Now, Alchemy services can send webhook payloads to your local Hono server.
+
+---
+
+### Notes on Payload Validation
+
+- The backend validates payloads against expected schemas.  
+- If you create a **Custom Webhook** for testing, you may see validation errors (e.g., mismatched data types) depending on the event type.  
+- For production, ensure you are using the correct schema for the chosen webhook type.  
+
