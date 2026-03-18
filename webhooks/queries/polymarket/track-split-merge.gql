@@ -1,0 +1,43 @@
+# Track Polymarket split / merge events where stakeholder matches tracked wallets
+#
+# This uses the Neg Risk Adapter contract, which emits explicit PositionSplit and
+# PositionsMerge events with stakeholder as an indexed field.
+#
+# Note - You'll need to create a custom webhook variable named 'trackedWallets'
+# containing padded addresses. See the TypeScript example for setup details.
+
+query ($trackedWallets: [Bytes32!]!) {
+  block {
+    number
+    logs(
+      filter: {
+        addresses: [
+          # Conditional Tokens
+          "0x4d97dcd97ec945f40cf65f87097ace5ea0476045"
+          # Neg Risk Adapter
+          "0xd91e80cf2e7be2e162c6513ced06f1dd0da35296"
+        ]
+        topics: [
+          [
+            # PositionSplit(address,bytes32,uint256)
+            "0xbbed930dbfb7907ae2d60ddf78345610214f26419a0128df39b6cc3d9e5df9b0"
+            # PositionsMerge(address,bytes32,uint256)
+            "0xba33ac50d8894676597e6e35dc09cff59854708b642cd069d21eb9c7ca072a04"
+          ]
+          # stakeholder address is in topic[1]
+          $trackedWallets
+          []
+        ]
+      }
+    ) {
+      data
+      topics
+      account {
+        address
+      }
+      transaction {
+        hash
+      }
+    }
+  }
+}
