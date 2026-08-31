@@ -41,6 +41,16 @@
       transaction {
         hash
         index
+        from {
+          address
+        }
+        to {
+          address
+        }
+        value
+        status
+        gasUsed
+        effectiveGasPrice
       }
     }
   }
