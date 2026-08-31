@@ -1,0 +1,64 @@
+# Track Aave V3 Pool supplies (deposits) and withdrawals
+#
+# The Aave V3 Pool contract emits:
+#   Supply(address indexed reserve, address user, address indexed onBehalfOf, uint256 amount, uint16 indexed referralCode)
+#   Withdraw(address indexed reserve, address indexed user, address indexed to, uint256 amount)
+#
+# Note - `reserve` (the token being supplied/withdrawn, e.g. USDC/WETH) is topics[1] on BOTH
+# events, so you can filter by reserve across both events in one webhook. The "actor" position
+# differs though: onBehalfOf is topics[2] on Supply, while user/to are topics[2]/topics[3] on
+# Withdraw. To filter by a specific wallet, create two webhooks (one per event) instead of
+# OR'ing topics.
+#
+# This example uses the Aave V3 Pool on Ethereum mainnet; see https://aave.com
+# Replace the pool address below to track Aave on another network (addresses differ per chain -
+# see https://aave.com/docs/resources/addresses).
+
+{
+  block {
+    hash
+    number
+    logs(
+      filter: {
+        addresses: [
+          # Aave V3 Pool (Ethereum mainnet)
+          # https://etherscan.io/address/0x87870Bca3F3fD6335C3F4ce8392D69350B4fA4E2
+          "0x87870Bca3F3fD6335C3F4ce8392D69350B4fA4E2"
+        ]
+        topics: [
+          [
+            # event Supply(address indexed reserve, address user, address indexed onBehalfOf, uint256 amount, uint16 indexed referralCode)
+            "0x2b627736bca15cd5381dcf80b0bf11fd197d01a037c52b927a881a10fb73ba61"
+
+            # event Withdraw(address indexed reserve, address indexed user, address indexed to, uint256 amount)
+            "0x3115d1449a7b732c986cba18244e897a450f61e1bb8d589cd2e69e6c8924f9f7"
+          ]
+
+          # Uncomment to filter by a specific reserve (token). Example: USDC
+          # ["0x000000000000000000000000A0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48"]
+        ]
+      }
+    ) {
+      data
+      topics
+      index
+      account {
+        address
+      }
+      transaction {
+        hash
+        index
+        from {
+          address
+        }
+        to {
+          address
+        }
+        value
+        status
+        gasUsed
+        effectiveGasPrice
+      }
+    }
+  }
+}
