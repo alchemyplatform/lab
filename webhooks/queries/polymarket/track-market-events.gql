@@ -1,0 +1,35 @@
+# Track Polymarket market creation and resolution events
+#
+# This webhook tracks ConditionPreparation and ConditionResolution events,
+# which occur when new markets are created or resolved.
+
+{
+  block {
+    number
+    logs(
+      filter: {
+        addresses: [
+          # Conditional Tokens
+          "0x4d97dcd97ec945f40cf65f87097ace5ea0476045"
+        ]
+        topics: [
+          [
+            # ConditionPreparation event signature
+            "0xab3760c3bd2bb38b5bcf54dc79802ed67338b4cf29f3054ded67ed24661e4177"
+            # ConditionResolution event signature
+            "0xb44d84d3289691f71497564b85d4233648d9dbae8cbdbb4329f301c3a0185894"
+          ]
+        ]
+      }
+    ) {
+      data
+      topics
+      account {
+        address
+      }
+      transaction {
+        hash
+      }
+    }
+  }
+}

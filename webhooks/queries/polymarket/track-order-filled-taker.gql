@@ -1,0 +1,39 @@
+# Track Polymarket OrderFilled events where taker matches tracked wallets
+#
+# We filter by taker address in the event topics.
+#
+# Note - You'll need to create a custom webhook variable named 'trackedWallets'
+# containing padded addresses. See the TypeScript example for setup details.
+
+query ($trackedWallets: [Bytes32!]!) {
+  block {
+    number
+    logs(
+      filter: {
+        addresses: [
+          # CTF Exchange
+          "0x4bFb41d5B3570DeFd03C39a9A4D8dE6Bd8B8982E"
+          # Neg Risk CTF Exchange
+          "0xC5d563A36AE78145C45a50134d48A1215220f80a"
+        ]
+        topics: [
+          # OrderFilled event signature
+          "0xd0a08e8c493f9c94f29311604c9de1b4e8c8d4c06bd0c789af57f2d65bfec0f6"
+          []
+          []
+          # taker address is in topic[3]
+          $trackedWallets
+        ]
+      }
+    ) {
+      data
+      topics
+      account {
+        address
+      }
+      transaction {
+        hash
+      }
+    }
+  }
+}
