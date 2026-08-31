@@ -104,3 +104,5 @@ If you can't find what you're looking for, feel free to create an issue.
 - Track ALL user operations
 
 - Track user operations FOR specific users (i.e. sent by specific smart contract wallets)
+
+- Track ERC-4626 vault deposits and withdrawals (e.g. Morpho)

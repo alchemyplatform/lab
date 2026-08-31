@@ -1,0 +1,57 @@
+# Track ERC-4626 vault deposits and withdrawals
+#
+# ERC-4626 vaults emit:
+#   Deposit(address indexed sender, address indexed owner, uint256 assets, uint256 shares)
+#   Withdraw(address indexed sender, address indexed receiver, address indexed owner, uint256 assets, uint256 shares)
+#
+# Replace the vault addresses with the ERC-4626 vaults you want to track.
+# This example uses a Morpho (MetaMorpho) vault; see https://app.morpho.org
+#
+# Note - owner is topic[2] on Deposit and topic[3] on Withdraw. To filter by
+# specific users, create two webhooks (one per event) instead of OR'ing topics.
+
+{
+  block {
+    hash
+    number
+    logs(
+      filter: {
+        addresses: [
+          # Steakhouse USDC on Ethereum
+          # https://app.morpho.org/ethereum/vault/0xBEEF01735c132Ada46AA9aA4c54623cAA92A64CB/steakhouse-usdc
+          "0xBEEF01735c132Ada46AA9aA4c54623cAA92A64CB"
+        ]
+        topics: [
+          [
+            # event Deposit(address indexed sender, address indexed owner, uint256 assets, uint256 shares)
+            "0xdcbc1c05240f31ff3ad067ef1ee35ce4997762752e3a095284754544f4c709d7"
+
+            # event Withdraw(address indexed sender, address indexed receiver, address indexed owner, uint256 assets, uint256 shares)
+            "0xfbde797d201c681b91056529119e0b02407c7bb96a4a2c75c01fc9667232c8db"
+          ]
+        ]
+      }
+    ) {
+      data
+      topics
+      index
+      account {
+        address
+      }
+      transaction {
+        hash
+        index
+        from {
+          address
+        }
+        to {
+          address
+        }
+        value
+        status
+        gasUsed
+        effectiveGasPrice
+      }
+    }
+  }
+}
