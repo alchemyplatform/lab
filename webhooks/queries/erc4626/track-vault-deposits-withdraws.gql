@@ -1,11 +1,11 @@
-# Track Morpho vault deposits and withdrawals
+# Track ERC-4626 vault deposits and withdrawals
 #
-# Morpho (MetaMorpho) vaults are ERC-4626. They emit:
+# ERC-4626 vaults emit:
 #   Deposit(address indexed sender, address indexed owner, uint256 assets, uint256 shares)
 #   Withdraw(address indexed sender, address indexed receiver, address indexed owner, uint256 assets, uint256 shares)
 #
-# Replace the vault addresses with the Morpho vaults you want to track.
-# You can find vault addresses at https://app.morpho.org
+# Replace the vault addresses with the ERC-4626 vaults you want to track.
+# This example uses a Morpho (MetaMorpho) vault; see https://app.morpho.org
 #
 # Note - owner is topic[2] on Deposit and topic[3] on Withdraw. To filter by
 # specific users, create two webhooks (one per event) instead of OR'ing topics.
