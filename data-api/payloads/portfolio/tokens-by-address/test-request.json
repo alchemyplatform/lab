@@ -1,0 +1,22 @@
+{
+  "addresses": [
+    {
+      "address": "0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045",
+      "networks": [
+        "eth-mainnet",
+        "base-mainnet"
+      ]
+    },
+    {
+      "address": "0x1E6E8695FAb3Eb382534915eA8d7Cc1D1994B152",
+      "networks": [
+        "eth-mainnet",
+        "base-mainnet"
+      ]
+    }
+  ],
+  "withMetadata": true,
+  "withPrices": true,
+  "includeNativeTokens": true,
+  "includeErc20Tokens": true
+}

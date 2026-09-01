@@ -1,0 +1,77 @@
+{
+  "data": {
+    "tokens": [
+      {
+        "address": "0x1e6e8695fab3eb382534915ea8d7cc1d1994b152",
+        "network": "eth-mainnet",
+        "tokenAddress": null,
+        "tokenBalance": "0x00000000000000000000000000000000000000000000000009cbebbc25efff3c",
+        "tokenMetadata": {
+          "symbol": null,
+          "decimals": null,
+          "name": null,
+          "logo": null
+        },
+        "tokenPrices": [
+          {
+            "currency": "usd",
+            "value": "1721.65",
+            "lastUpdatedAt": "2026-06-15T06:54:18.742Z"
+          }
+        ]
+      },
+      {
+        "address": "0x1e6e8695fab3eb382534915ea8d7cc1d1994b152",
+        "network": "eth-mainnet",
+        "tokenAddress": "0x70a6d0d1561ba98711e935a76b1c167c612978a2",
+        "tokenBalance": "0x0000000000000000000000000000000000000000000000000000000005d03e4e",
+        "tokenMetadata": {
+          "decimals": 9,
+          "logo": null,
+          "name": "dragonflyprotocol.com",
+          "symbol": "DFLY"
+        },
+        "tokenPrices": []
+      },
+      {
+        "address": "0x1e6e8695fab3eb382534915ea8d7cc1d1994b152",
+        "network": "eth-mainnet",
+        "tokenAddress": "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
+        "tokenBalance": "0x00000000000000000000000000000000000000000000000000000000017ab20c",
+        "tokenMetadata": {
+          "decimals": 6,
+          "logo": "https://static.alchemyapi.io/images/assets/3408.png",
+          "name": "USDC",
+          "symbol": "USDC"
+        },
+        "tokenPrices": [
+          {
+            "currency": "usd",
+            "value": "0.9998",
+            "lastUpdatedAt": "2026-06-15T06:52:55.324Z"
+          }
+        ]
+      },
+      {
+        "address": "0x1e6e8695fab3eb382534915ea8d7cc1d1994b152",
+        "network": "eth-mainnet",
+        "tokenAddress": "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2",
+        "tokenBalance": "0x0000000000000000000000000000000000000000000000000000000000000000",
+        "tokenMetadata": {
+          "decimals": 18,
+          "logo": "https://static.alchemyapi.io/images/assets/2396.png",
+          "name": "WETH",
+          "symbol": "WETH"
+        },
+        "tokenPrices": [
+          {
+            "currency": "usd",
+            "value": "1719.6172692579798",
+            "lastUpdatedAt": "2026-06-15T06:52:52Z"
+          }
+        ]
+      }
+    ],
+    "pageKey": null
+  }
+}
